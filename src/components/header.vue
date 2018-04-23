@@ -36,7 +36,7 @@
 				this.$emit('show',true)
 			},
 			sendSearch(){//enter发请求  通过 子传夫  把拿到的数据  传到 searcb里面
-					
+					//吧类别 存到longstage里
 				if(this.text && this.part){
 					this.$router.push({ path:'/search', query: { val:this.text , id:this.part} })
 				}else{

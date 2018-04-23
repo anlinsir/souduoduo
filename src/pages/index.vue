@@ -32,20 +32,20 @@
 			<!-- 选项部分  -->
 			<section class="partWarp">
 				<ul>
-					<li v-for="(item,index) in li" :key='index'>
-						<img :src="item.img">
-						<span>{{item.text}}</span>
-						<span v-if='item.new' class="new">new</span>
+					<li @touchstart='topart' :data-to='item.to' v-for="(item,index) in li" :key='index'>
+						<img :data-to='item.to' :src="item.img">
+						<span :data-to='item.to'>{{item.text}}</span>
+						<span :data-to='item.to' v-if='item.new' class="new">new</span>
 					</li>
 					
 					
 					
 				</ul>
 				<ul>
-					<li  v-for="(item,index) in lis" :key='index'>
-						<img :src="item.img">
-						<span>{{item.text}}</span>
-						<span v-if='item.new' class="new">new</span>
+					<li @touchstart='topart' :data-to='item.to' v-for="(item,index) in lis" :key='index'>
+						<img :data-to='item.to' :src="item.img">
+						<span :data-to='item.to'>{{item.text}}</span>
+						<span :data-to='item.to' v-if='item.new' class="new">new</span>
 
 					</li>				
 				</ul>
@@ -72,7 +72,7 @@
 				</div>
 				<ul class="merchantShow">
 					<li :data-merchant-id='item.merchant_id' :data-shop-id='item.shop_id' v-for='(item,index) in merchant' :key='index'>
-						<img :src="item.image">
+						<img :src="item.image + '200_200.jpg'">
 						<p>
 							<span :title="item.zh_name">{{item.zh_name}}</span>
 							<span>精选商家 </span>
@@ -92,7 +92,7 @@
 				</div>
 				<div class="routerView">
 					<dl v-for='(item,index) in newest'  :key='index'>
-						<dt><img :src="item.image" /></dt>
+						<dt><img :src="item.image + '200_200.jpg' " /></dt>
 						<dd>
 							<p>{{item.title}} <span v-show='hows' >dslfm</span></p>
 							<p><span>${{item.price}}</span><span>{{item.type}}</span></p>
@@ -140,48 +140,67 @@
 				li:[
 					{
 						img:'/static/img/home_icon_second.png',
-						text:'闲置二手'
+						text:'闲置二手',
+						to:'/part/used'
 					},
 					{
 						img:'/static/img/home_icon_vehicle.png',
-						text:'新旧车辆'
+						text:'新旧车辆',
+						to:'/part'
+
 					},
 					{
 						img:'/static/img/home_icon_work.png',
-						text:'工作招聘'
+						text:'工作招聘',
+						to:'/part'
+
 					},
 					{
 						img:'/static/img/home_icon_housing.png',
-						text:'房屋租赁'
+						text:'房屋租赁',
+						to:'/part'
+
 					},
 					{
 						img:'/static/img/home_icon_service.png',
-						text:'商家服务'
+						text:'商家服务',
+						to:'/part'
+
 					},
 
 				],
 				lis:[
 					{
 						img:'/static/img/home_icon_food.png',
-						text:'附近美食'
+						text:'附近美食',
+						to:'/part'
+
 					},
 					{
 						img:'/static/img/home_icon_preferential.png',
-						text:'附近优惠'
+						text:'附近优惠',
+						to:'/part'
+
 					},
 					{
 						img:'/static/img/home_icon_tourism.png',
-						text:'周边游'
+						text:'周边游',
+						to:'/part'
+
 					},
 					{
 						img:'/static/img/home_icon_exr.png',
 						text:'汇率换算',
-						new:true
+						new:true,
+						to:'/part'
+
 					},
 					{
 						img:'/static/img/home_icon_trlt.png',
 						text:'在线翻译',
-						new:true
+						new:true,
+						to:'/part'
+
 					}
 				],
 				discounts:[
@@ -268,6 +287,10 @@
 
 					this.showw = false
 				}
+			},
+			topart(e){//跳转到相应的部分
+				console.log(e.target.dataset.to)
+				this.$router.push(e.target.dataset.to)
 			}
 		},
 		mounted(){
