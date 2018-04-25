@@ -1,18 +1,32 @@
 <template>
-	<div>
+	<div @touchmove='move' id='aa'>
 		<ul v-show='sets'>
-			<li @click='toDetali' :data-id='item.id' v-for='(item,index) in data' :key='index'>
+			<li @click.stop.prevent='toDetali' :data-id='item.id' v-for='(item,index) in data' :key='index'>
 				<dl :data-id='item.id'>
 					<dt><img :data-id='item.id' :src="item.image + '200_200.jpg'"></dt>
 					<dd :data-id='item.id'>
 						<p :data-id='item.id'><span :data-id='item.id'>置顶</span> <span :data-id='item.id'>{{item.title}}</span></p>
-						<p :data-id='item.id'><span :data-id='item.id'>${{item.price}}</span><span :data-id='item.id'>{{item.type}}</span></p>
+						<p :data-id='item.id'><span :data-id='item.id'>${{item.price}}</span>
+
+
+
+							<span :data-id='item.id' v-if='item.role == 1' class="listProson">个人</span>
+							<span :data-id='item.id' v-if='item.role == 2' class="merchant">商家</span>
+							<span :data-id='item.id' v-if='item.role == 3' class="proxy">经纪人</span>
+
+
+
+
+
+
+						</p>
 						<p :data-id='item.id'><span :data-id='item.id'>{{item.city}}</span> <span :data-id='item.id'>{{item.area}}</span> <span :data-id='item.id'>{{item.create_time}}</span></p>
 					</dd>
 				</dl>
 			</li>
 		</ul>
-		<p v-show='!sets'>loading...</p>
+		<p v-show='!sets' id="set">loading...</p>
+		<p @click='getnext'>next</p>
 	</div>
 
 </template>
@@ -29,24 +43,39 @@
 		data(){
 			return({
 				newData:null,
-				sets:0
+				sets:0,
+				flag:1
 			})
 		},
 		methods:{
-			toDetali(e){
-				this.$emit('detali',e.target.dataset.id)
+			toDetali(e){			
+				if(!this.flag){
+					this.$emit('detali',e.target.dataset.id)
+				}
+				this.flag = 0
+
+
 				
 
+			},
+			move(e){
+				
+			},
+			getnext(){
+				this.$emit('next',1)				
 			}
+			
 		},
 		mounted(){
+
+
+
 			if(!this.data.length){
 				var timer =  setInterval(()=>{
 
 			 		if(this.data.length){ clearInterval(timer) ;this.sets = 1}
 			 		this.newData = this.data
 			 		
-			 		console.log(this.newData) 
 		 		},100)		
 			 }
 			 if(this.data.length){this.sets = 1}
@@ -58,6 +87,9 @@
 
 
 <style lang="scss" scoped>
+#set{
+	color: red;
+}
 	ul{
 		width: 100%;
 
@@ -117,6 +149,19 @@
 						:nth-child(2){
 							float: right;
 						}
+						>.listProson , .merchant , .proxy{
+							width: 9.2vw;
+							display:inline-block;
+							height: 4vw;
+							border: 1px solid;
+							font-size: 2.66vw;
+							text-align: center;
+							line-height: 4vw;
+							border-radius: 1vw;
+						}
+						>.listProson{color: #00d1b2;border-color: #00d1b2;}
+						>.proxy{color: #ffa84b;border-color: #ffa84b;}
+						>.merchant{color: #fb6b5c;border-color: #fb6b5c;}
 
 					}
 					:nth-child(3){

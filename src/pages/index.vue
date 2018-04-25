@@ -5,7 +5,7 @@
 				<span @click='otherShow'>></span><span>选择类别</span>
 			</div>
 			<ul>
-				<li @click='getPart' :data-id='index' :key='index'  v-for='(item,index) in parts'>
+				<li @touchstart='getPart' :data-id='index' :key='index'  v-for='(item,index) in parts'>
 					<p :data-id='index'><img :data-id='index' :src="item.img"></p>
 					<p :data-id='index'>{{item.text}}</p>
 				</li>
@@ -55,7 +55,7 @@
 				<img src="/static/img/jgDiscounts.png">
 				<transition-group class='Warp' tag='div'  name="slide-fade" mode="out-in">
 					<dl :data-id='item.privilege_id' v-show='yes == index' v-for='(item,index) in discounts' :key='index'>
-						<dt><img :src="item.image"></dt>
+						<dt><img :src="item.image + '200_200.jpg'"></dt>
 						<dd>
 							<p>{{item.title}}</p>
 							<p>{{item.cate_title}}</p>
@@ -146,7 +146,7 @@
 					{
 						img:'/static/img/home_icon_vehicle.png',
 						text:'新旧车辆',
-						to:'/part'
+						to:'/part/car'
 
 					},
 					{
@@ -158,13 +158,13 @@
 					{
 						img:'/static/img/home_icon_housing.png',
 						text:'房屋租赁',
-						to:'/part'
+						to:'/part/rent'
 
 					},
 					{
 						img:'/static/img/home_icon_service.png',
 						text:'商家服务',
-						to:'/part'
+						to:'/part/merchant'
 
 					},
 

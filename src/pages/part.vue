@@ -76,6 +76,25 @@
 				
 
 			}
+		},
+		created(){
+			if(this.$route.path.substring(6) == 'merchant'){
+				this.nav = [
+						{
+							name:'分类',
+							sel:true
+						},
+						{
+							name:"距离"
+						},
+						{
+							name:'评分'
+						},
+						{
+							name:'营业'
+						}
+					]
+			}
 		}
 		
 	}
