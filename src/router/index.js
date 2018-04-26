@@ -9,6 +9,10 @@ const Used = r =>require.ensure([],() => r(require('@/components/part/used')),'u
 const Car = r =>require.ensure([],() => r(require('@/components/part/car')),'car')
 const Rent = r =>require.ensure([],() => r(require('@/components/part/houserent')),'rent')
 const Merchant = r =>require.ensure([],() => r(require('@/components/part/merchant')),'merchant')
+const Cate = r =>require.ensure([],() => r(require('@/components/part/cate')),'cate')
+const Jour = r =>require.ensure([],() => r(require('@/components/part/jour')),'jour')
+
+
 
 //component in Part end 
 
@@ -50,6 +54,14 @@ export default new Router({
                 {
                     path:'/part/merchant',
                     component:Merchant
+                },
+                {
+                    path:'/part/cate',
+                    component:Cate
+                },
+                {
+                    path:'/part/jour',
+                    component:Jour
                 }
             ]
     },

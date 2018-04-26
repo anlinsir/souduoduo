@@ -92,12 +92,20 @@
 }
 	ul{
 		width: 100%;
-
-		>li{
+		box-sizing: border-box;
+		padding-left:4vw; 
+		margin-top: 2vw;
+	>li:not(:nth-child(1)){
 			border-top: 1px solid #eee;
+			padding-top: 4vw;
 			height: 28.53vw;
-			padding: 4vw 0;
+		}
+		>li{
+			height: 24.53vw;
+			padding-right:4vw; 			
 			box-sizing: border-box;
+
+	
 			>dl{
 				display: flex;
 				>dt{

@@ -78,7 +78,7 @@
 			}
 		},
 		created(){
-			if(this.$route.path.substring(6) == 'merchant'){
+			if(this.$route.path.substring(6) == 'merchant' || this.$route.path.substring(6) =='cate' || this.$route.path.substring(6) =='jour'){
 				this.nav = [
 						{
 							name:'分类',
@@ -109,6 +109,7 @@
 		display: flex;
 		flex-direction: column;
 		background-color: #f3f3f3;
+
 		>main{
 			width: 100%;
 			height: 100%;
@@ -118,6 +119,8 @@
 			>.choose{
 				width: 100%;
 				height: 10.66vw;
+			border-bottom: 1px solid #f2f2f2;
+
 				background-color: #fff;
 				>ul{
 					display: flex;
@@ -150,7 +153,6 @@
 				}
 			}
 			>.main{
-				padding:  0 4vw;
 				box-sizing: border-box;
 
 			}

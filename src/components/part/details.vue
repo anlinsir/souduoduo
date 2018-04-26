@@ -189,27 +189,31 @@
 			}
 		},
 		created(){
-			axios.get(`https://time2.jglist.com/index.php?r=magor/five/details&auth_name=name&grand_id=${this.$route.query.g}&id=${this.$route.params.id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff&user_id=1402`)
-					.then(res => {						
-						this.details = [res.data.data]
+			// https://time2.jglist.com/index.php?r=merchant/shop/shopinfo&auth_name=name&name=1&shop_id=8663&tx=3f556f66353c5945a3633ae209a3e0ff&user_id=1402  /商家服务的链接  改id的值   新开一个details页面
 
-						this.status = this.details[0].role
-						this.nickname = this.details[0].nickname
-						this.role = this.details[0].role
-						this.thumbs = this.details[0].thumbs
 			
+				axios.get(`https://time2.jglist.com/index.php?r=magor/five/details&auth_name=name&grand_id=${this.$route.query.g}&id=${this.$route.params.id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff&user_id=1402`)
+						.then(res => {						
+							this.details = [res.data.data]
 
-						axios.get(`https://time2.jglist.com/index.php?r=magor/five/comments&auth_name=name&grand_id=${this.details[0].grand_id}&id=${this.details[0].user_id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
-							.then(res=>{
-								if(res.data.data.length == 0){
-									this.comment = '快来发布第一条评论吧'
-								}else{
-									this.comments = res.data.data
-								}
+							this.status = this.details[0].role
+							this.nickname = this.details[0].nickname
+							this.role = this.details[0].role
+							this.thumbs = this.details[0].thumbs
+				
 
-							})
+							axios.get(`https://time2.jglist.com/index.php?r=magor/five/comments&auth_name=name&grand_id=${this.details[0].grand_id}&id=${this.details[0].user_id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
+								.then(res=>{
+									if(res.data.data.length == 0){
+										this.comment = '快来发布第一条评论吧'
+									}else{
+										this.comments = res.data.data
+									}
 
-			})
+								})
+
+				})
+
 				
 					
 		},

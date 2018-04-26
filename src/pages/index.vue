@@ -173,7 +173,7 @@
 					{
 						img:'/static/img/home_icon_food.png',
 						text:'附近美食',
-						to:'/part'
+						to:'/part/cate'
 
 					},
 					{
@@ -185,7 +185,7 @@
 					{
 						img:'/static/img/home_icon_tourism.png',
 						text:'周边游',
-						to:'/part'
+						to:'/part/jour'
 
 					},
 					{
