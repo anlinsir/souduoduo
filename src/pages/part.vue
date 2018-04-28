@@ -95,6 +95,52 @@
 						}
 					]
 			}
+			if(this.$route.path.substring(6) == 'work'){
+				this.nav = [
+						{
+							name:'区域',
+							sel:true
+						},
+						{
+							name:"职位",
+							sel:true
+						},
+						{
+							name:'时间'
+						},
+						{
+							name:'薪资',
+							sel:true
+
+						}
+						,
+						{
+							name:'来源',
+							sel:true
+							
+						}
+					]
+			}
+			if(this.$route.path.substring(6) == 'privilege'){
+				this.nav = [
+						{
+							name:'分类',
+							sel:true
+						},
+						{
+							name:"距离",
+						},
+						{
+							name:'评分'
+						},
+						{
+							name:'筛选',
+							sel:true
+
+						}
+					
+					]
+			}
 		}
 		
 	}

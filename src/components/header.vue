@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<!-- @click='toSearch' -->
-			<span @click='toIndex' v-if='left'>></span><input v-model='text' @touchmove='shows' @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称（滑动更改类别）" />
+			<span @click='toIndex' v-if='left' class="back"><</span><input v-model='text' @touchmove='shows' @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称（滑动更改类别）" />
 			<span class="posi" v-show='0'>dsdddsdsds</span>
 	</header>
 
@@ -65,7 +65,15 @@
 		box-sizing: border-box;
 		text-align: center;
 		background-color: #04d6b6;
-
+			>.back{
+				display: inline-block;
+				width: 5vw;
+				color: #fff;
+				height: 100%;
+				line-height:8.33vw; 
+				font-size: 8vw;
+				margin-right: 5vw;
+			}
 			>input{
 				width: 100%;
 				border: none;

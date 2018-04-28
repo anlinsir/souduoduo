@@ -152,7 +152,7 @@
 					{
 						img:'/static/img/home_icon_work.png',
 						text:'工作招聘',
-						to:'/part'
+						to:'/part/work'
 
 					},
 					{
@@ -179,7 +179,7 @@
 					{
 						img:'/static/img/home_icon_preferential.png',
 						text:'附近优惠',
-						to:'/part'
+						to:'/part/privilege'
 
 					},
 					{
@@ -487,8 +487,13 @@
 							height: 10.66vw;
 							margin: 0;
 						}
-						>span{
+						>span:not(.new){
 							font-size: 2.8vw;
+
+overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
 						}
 						.new{
 							display: inline-block;
@@ -609,6 +614,10 @@
 								margin-top:1vw;
 								line-height: 3.46vw;
 								padding : .5vw 0;
+									
+overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
 								color:  #00d1b2;
 							}

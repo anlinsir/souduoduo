@@ -11,6 +11,10 @@ const Rent = r =>require.ensure([],() => r(require('@/components/part/houserent'
 const Merchant = r =>require.ensure([],() => r(require('@/components/part/merchant')),'merchant')
 const Cate = r =>require.ensure([],() => r(require('@/components/part/cate')),'cate')
 const Jour = r =>require.ensure([],() => r(require('@/components/part/jour')),'jour')
+const Work = r =>require.ensure([],() => r(require('@/components/part/work')),'work')
+const Privilege = r =>require.ensure([],() => r(require('@/components/part/privilege')),'privilege')
+
+
 
 
 
@@ -18,6 +22,8 @@ const Jour = r =>require.ensure([],() => r(require('@/components/part/jour')),'j
 
 
 const Details = r =>require.ensure([],() => r(require('@/components/part/details')),'details')//详情模块
+const DetailT = r =>require.ensure([],() => r(require('@/components/part/detailT')),'detailT')//详情模块222
+
 
 
 Vue.use(Router)
@@ -62,6 +68,15 @@ export default new Router({
                 {
                     path:'/part/jour',
                     component:Jour
+                },
+                {
+                    path:'/part/work',
+                    component:Work
+                }
+                ,
+                {
+                    path:'/part/privilege',
+                    component:Privilege
                 }
             ]
     },
@@ -69,6 +84,11 @@ export default new Router({
         path:'/details/:id',
         name:'details',
         component:Details
+    },
+    {
+        path:'/detailT/:id',
+        name:'detailT',
+        component:DetailT
     },
     {path:"/",redirect:"/index"}
   ]

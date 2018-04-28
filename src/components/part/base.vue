@@ -5,7 +5,7 @@
 				<dl :data-id='item.id'>
 					<dt><img :data-id='item.id' :src="item.image + '200_200.jpg'"></dt>
 					<dd :data-id='item.id'>
-						<p :data-id='item.id'><span :data-id='item.id'>置顶</span> <span :data-id='item.id'>{{item.title}}</span></p>
+						<p :data-id='item.id'><span :data-id='item.id' v-if='item.isStick' class="issss">置顶</span> <span :data-id='item.id'>{{item.title}}</span></p>
 						<p :data-id='item.id'><span :data-id='item.id'>${{item.price}}</span>
 
 
@@ -131,7 +131,7 @@
 						font-size: 4vw;
 					}
 					:nth-child(1){
-						:nth-child(1){
+						>.issss{
 							display: inline-block;
 							width: 7.2VW;
 							height: 4vw;

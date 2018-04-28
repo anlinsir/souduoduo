@@ -101,7 +101,8 @@
 								<p><span>服务水平</span><span>0.0</span></p>
 							</li>
 							<li>
-								星星*5
+								<span>{{item.score || '0.0'}}</span>
+								<p :style="{width:item.score? item.score : 100  + '%'}"><img  src="/static/img/vehicle_icon_star.png"></p>
 							</li>
 
 						</ul>
@@ -189,9 +190,7 @@
 			}
 		},
 		created(){
-			// https://time2.jglist.com/index.php?r=merchant/shop/shopinfo&auth_name=name&name=1&shop_id=8663&tx=3f556f66353c5945a3633ae209a3e0ff&user_id=1402  /商家服务的链接  改id的值   新开一个details页面
 
-			
 				axios.get(`https://time2.jglist.com/index.php?r=magor/five/details&auth_name=name&grand_id=${this.$route.query.g}&id=${this.$route.params.id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff&user_id=1402`)
 						.then(res => {						
 							this.details = [res.data.data]
@@ -510,7 +509,33 @@
 								width: 33.3%;
 								height: 22vw;
 
-								border-right: 1px solid red;
+								border-right: 1px solid #eee;
+							}
+							>:nth-child(2){
+								>p{
+									padding-left: 7.5vw;
+									box-sizing: border-box; 
+								}
+							}
+							>:nth-child(3){
+									float: right;
+								    padding-left: 6vw;
+								    padding-top: 4vw;
+									width: 20.8vw;
+									text-align: center;
+								>p{
+
+									overflow: hidden;
+
+									>img{
+										width: 20.8vw;
+										height: 3.73vw;
+									}
+								}
+								>span{
+									font-size: 4vw;
+									margin-top: 4vw;
+								}
 							}
 							>:nth-child(1){
 								padding-top: 1vw;
