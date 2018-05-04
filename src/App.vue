@@ -27,6 +27,9 @@ html, body{
 ul li {
   list-style:none;
 }
+a{
+  text-decoration: none;
+}
 body{
   display: flex;
   flex-direction: column;

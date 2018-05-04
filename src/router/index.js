@@ -4,6 +4,8 @@ import Router from 'vue-router'
 const Index = r =>require.ensure([],() => r(require('@/pages/index')),'index')//首页
 const Search = r =>require.ensure([],() => r(require('@/pages/search')),'search')//搜索
 const Part = r =>require.ensure([],() => r(require('@/pages/part')),'part')//选项的页面
+const Regard = r =>require.ensure([],() => r(require('@/pages/regard')),'regard')//关于
+
 //component in Part
 const Used = r =>require.ensure([],() => r(require('@/components/part/used')),'used')
 const Car = r =>require.ensure([],() => r(require('@/components/part/car')),'car')
@@ -23,6 +25,7 @@ const Privilege = r =>require.ensure([],() => r(require('@/components/part/privi
 
 const Details = r =>require.ensure([],() => r(require('@/components/part/details')),'details')//详情模块
 const DetailT = r =>require.ensure([],() => r(require('@/components/part/detailT')),'detailT')//详情模块222
+const PrivilegeDetail = r =>require.ensure([],() => r(require('@/components/part/privilegeDetail')),'privilegeDetail')//优惠详情
 
 
 
@@ -89,6 +92,21 @@ export default new Router({
         path:'/detailT/:id',
         name:'detailT',
         component:DetailT
+    },
+    {
+        path:'/pridetail/:id',
+        name:'privilegeDetail',
+        component:PrivilegeDetail
+    },
+    {
+        path:'/regard',
+        name:'regard',
+        component:Regard
+    },
+     {
+        path:'/help',
+        name:'help',
+        component:Regard
     },
     {path:"/",redirect:"/index"}
   ]

@@ -5,7 +5,7 @@
 				<span @click='otherShow'>></span><span>选择类别</span>
 			</div>
 			<ul>
-				<li @touchstart='getPart' :data-id='index' :key='index'  v-for='(item,index) in parts'>
+				<li @click='getPart' :data-id='index' :key='index'  v-for='(item,index) in parts'>
 					<p :data-id='index'><img :data-id='index' :src="item.img"></p>
 					<p :data-id='index'>{{item.text}}</p>
 				</li>
@@ -26,7 +26,7 @@
 						</dd>
 					</dl>
 					<button  class="openApp">打开简购生活</button>
-					<button class="downApp">下载APP想优惠</button>
+					<button class="downApp" @touchstart = 'downAPP'>下载APP想优惠</button>
 				</div>
 			</section>
 			<!-- 选项部分  -->
@@ -54,7 +54,7 @@
 			<section class="discountsWarp"> 
 				<img src="/static/img/jgDiscounts.png">
 				<transition-group class='Warp' tag='div'  name="slide-fade" mode="out-in">
-					<dl :data-id='item.privilege_id' v-show='yes == index' v-for='(item,index) in discounts' :key='index'>
+					<dl @touchstart='getpri(item.privilege_id)' :data-id='item.privilege_id' v-show='yes == index' v-for='(item,index) in discounts' :key='index'>
 						<dt><img :src="item.image + '200_200.jpg'"></dt>
 						<dd>
 							<p>{{item.title}}</p>
@@ -68,10 +68,10 @@
 			<section class="merchantWarp">
 				<div class="merchantWarpHeader">
 					<p>精选商家</p>
-					<p>更多 < </p>
+					<p @click='toMer'>更多 > </p>
 				</div>
 				<ul class="merchantShow">
-					<li :data-merchant-id='item.merchant_id' :data-shop-id='item.shop_id' v-for='(item,index) in merchant' :key='index'>
+					<li @click='touseddetail(item.merchant_id)' :data-merchant-id='item.merchant_id' :data-shop-id='item.shop_id' v-for='(item,index) in merchant' :key='index'>
 						<img :src="item.image + '200_200.jpg'">
 						<p>
 							<span :title="item.zh_name">{{item.zh_name}}</span>
@@ -91,11 +91,11 @@
 					</p>
 				</div>
 				<div class="routerView">
-					<dl v-for='(item,index) in newest'  :key='index'>
+					<dl id='getid' :data-id="  item.id?item.id:'' "  v-for='(item,index) in newest'  :key='index'>
 						<dt><img :src="item.image + '200_200.jpg' " /></dt>
 						<dd>
 							<p>{{item.title}} <span v-show='hows' >dslfm</span></p>
-							<p><span>${{item.price}}</span><span>{{item.type}}</span></p>
+							<p><span>${{item.price}}</span><span :style="{height:'4vw',width:'9.6vw',fontSize:'2.8vw',border:'1px solid',color:item.role == 1 ? '#00d1b2' : '#fb6b5c'}">{{item.role == 1 ? '个人' : item.role == 2 ? '商家'  : '经纪人' }}</span></p>
 							<p><span>{{item.address}}</span><span>{{item.create_time}}</span></p>
 						</dd>
 						
@@ -110,7 +110,7 @@
 			<!-- 结尾 -->
 				<section class="endWarp">
 					<div class="endText">
-						<p>关于&nbsp; | &nbsp;帮助&nbsp; | &nbsp;下载</p>
+						<p><span @click='toRegard(0)'>关于</span>&nbsp; | &nbsp;<span @click='toRegard(1)'>帮助</span>&nbsp; | &nbsp;<span>下载</span></p>
 						<p>Copyright © 2017 , JGlist.com</p>
 					</div>				
 
@@ -126,7 +126,7 @@
 </template>
 
 
-
+<!-- https://time2.jglist.com/index.php?r=homepage/home/basedata&auth_name=id&id=1&tx=3f556f66353c5945a3633ae209a3e0ff   加载筛选列表-->
 
 <script>
 	import axios from 'axios'
@@ -135,6 +135,7 @@
 	import Footer from '../components/footer'
 
 	export default {
+	
 		data(){
 			return({
 				li:[
@@ -218,6 +219,7 @@
 				tem2:[],
 				newest:[],//最新发布 和 附近商家,
 				hows:false,
+
 				parts:[
 					{
 						img:'/static/img/search_icon_1.png',
@@ -261,6 +263,33 @@
 			'Footer':Footer
 		},
 		methods:{
+			getpri(id){
+				this.$router.push({path:`/pridetail/${id}`})
+
+			}
+			,
+			touseddetail(id){
+				console.log(id)
+				this.$router.push({path:`/detailT/${id}`,query:{tyep:"mer"}})
+			}
+			,
+			downAPP(){
+				 window.location.href=`https://nodejs.org/dist/v8.11.1/node-v8.11.1-x64.msi`;
+			},
+			toRegard(num){
+				if(!num){
+					this.$router.push('/regard')
+				}else{
+					this.$router.push('/help')
+
+				}
+
+			}
+			,
+			toMer(){
+				this.$router.push('/part/merchant')
+			}
+			,
 			changeActive(index){
 				this.active = index
 				if(index == 1){//记载第二个				
@@ -281,8 +310,14 @@
 				this.showw = false
 			},
 			getPart(e){
+				console.log(e.target.dataset.id)
 				this.part = Number(e.target.dataset.id) + 1
-				
+				localStorage.Part = this.part 
+				if(!localStorage.text && localStorage.text != this.text){
+						alert('请输入关键词')
+						return
+					}
+				this.$router.push({path:'/search',query:{part:this.part}})
 				if(typeof this.part != 'undefined'){
 
 					this.showw = false
@@ -292,6 +327,12 @@
 				console.log(e.target.dataset.to)
 				this.$router.push(e.target.dataset.to)
 			}
+		},
+		beforeCreate(){
+			axios.get('https://time2.jglist.com/index.php?r=homepage/home/basedata&auth_name=id&id=1&tx=3f556f66353c5945a3633ae209a3e0ff')
+				.then(res=>{
+					localStorage.basedata = JSON.stringify(res.data.data)
+				})
 		},
 		mounted(){
 			if(this.yes <=0){
@@ -317,6 +358,7 @@
 				.then(res=>{
 					this.tem = res.data.data
 					this.newest = this.tem
+					console.log(this.newest)
 			})
 				//附近商家
 			axios.get('http://106.14.56.22:9529/index.php?r=v2/home/fresh&auth_name=id&id=1&tx=3f556f66353c5945a3633ae209a3e0ff')
@@ -729,6 +771,7 @@ overflow: hidden;
 					:nth-child(1){
 						margin-bottom: 2vw;
 					}
+
 				}
 
 			}

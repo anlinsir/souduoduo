@@ -12,7 +12,7 @@
 
 		<main>
 			<!-- 基本信息 -->
-			<div class="basic">
+			<div v-if='work != 3' class="basic">
 				<div class="header" v-for='(item,index) in details' :key='index'>
 					<dl>
 						<dt><img :src="item.header_img"></dt>
@@ -33,7 +33,7 @@
 					</dl>
 
 					<!-- 介绍 -->
-					<div class="introduce">
+					<div  class="introduce">
 						<span>{{item.introduce}}</span>
 					</div>
 					<!-- 介绍  end -->
@@ -49,7 +49,7 @@
 			</div>		
 			<!-- 基本信息  end -->
 
-			<div class="want">
+			<div v-if='work != 3' class="want">
 				<div class="heImg">
 					<img v-if='thumbs && thumbs.length > 0' src="#" v-for='(item,index) in thumbs' :key='index'>
 					
@@ -59,6 +59,28 @@
 
 				<p>浏览100次</p>
 			</div>
+
+			<div v-if='work == 3' class="workWarp" v-for='(item,index) in details' :key='index'>
+				<div class="workTop">
+					<p>{{item.title}}</p>
+					<p>${{item.price}}/每月</p>
+					<p><span>更新：{{item.create_time}}</span><span>{{item.browse}}</span></p>
+				</div>
+				<div class="workBot">
+					职位：<span>{{item.category_name}}</span>地点：<span>{{item.city}}{{item.area}}</span>
+				</div>
+
+			</div>
+
+			<div v-if='work == 3' class="workDiscription">
+				<p>职位描述</p>
+				<p>{{introduce}}</p>
+
+			</div>
+
+
+
+
 
 			<div class="downLoad">
 				<dl>
@@ -80,7 +102,7 @@
 					<p class="headerShow"><span>{{ role == 2 ? '商家': '经纪人'}}信息</span><span>查看详细信息></span></p>
 					<dl v-for='(item,index) in details' :key='index'>
 						<dt>
-							<img :src="item.merchant.header">
+							<img :src="item.merchant.header ? item.merchant.header :item.merchant.header_img">
 						</dt>
 						<dd>
 							<span>{{item.merchant.zh_name}} <img style="width: 3.46vw;height: 3.46vw;" src="/static/img/businessservice_icon_vip.png"></span>
@@ -90,9 +112,9 @@
 					<div class="detail">
 						<ul>
 							<li>
-								<p><img src="/static/img/recruitment_icon_businessmen.png"><span>商家</span></p>
+								<p><img src="/static/img/recruitment_icon_businessmen.png"><span>{{role == 2 ? '商家' : '经纪人'}}</span></p>
 								<p><img src="/static/img/recruitment_icon_weixin_gray.png"><span>微信认证</span></p>
-								<p><img src="/static/img/businessservice_icon_zhizhao_gray.png"><span>营业执照认证</span></p>
+								<p><img src="/static/img/businessservice_icon_zhizhao_gray.png"><span>{{role == 2 ? '营业执照认证' : '身份证认证'}}</span></p>
 
 							</li>
 							<li>
@@ -175,7 +197,8 @@
 				role:-1,
 				comment:null,
 				comments:[],
-				thumbs:false
+				thumbs:false,
+				work:0
 			})
 		}
 		,
@@ -183,22 +206,29 @@
 			Footer
 		},
 		methods:{
+		introduce(){
+
+		},
 			toIndex(){
 				//this.$router.push('/index')
 				//退后
 				history.back(1)
+
 			}
 		},
 		created(){
-
+			 this.work = this.$route.query.g
+			 console.log(this.work)
 				axios.get(`https://time2.jglist.com/index.php?r=magor/five/details&auth_name=name&grand_id=${this.$route.query.g}&id=${this.$route.params.id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff&user_id=1402`)
 						.then(res => {						
 							this.details = [res.data.data]
+							console.log(this.details)
 
 							this.status = this.details[0].role
 							this.nickname = this.details[0].nickname
 							this.role = this.details[0].role
 							this.thumbs = this.details[0].thumbs
+							this.introduce = this.details[0].introduce ?  this.details[0].introduce : ''
 				
 
 							axios.get(`https://time2.jglist.com/index.php?r=magor/five/comments&auth_name=name&grand_id=${this.details[0].grand_id}&id=${this.details[0].user_id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
@@ -269,9 +299,73 @@
 
 		}
 		>main{
-			margin-top: 1vw;
+			margin-top: 1px;
 			flex:1;
 			overflow: auto;
+			>.workWarp{
+				width: 100%;
+				height: 38.13vw;
+				background-color: #fff;
+				margin-bottom: 2.66vw;
+				font-size: 4vw;
+				>.workTop{
+					width: 100%;
+					height: 26.26vw;
+					border: 1px solid #eee;
+					padding: 4.66vw 4vw 3.5vw;
+					box-sizing: border-box;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					>:nth-child(1){
+						font-size: 4.5vw;
+					}
+					>:nth-child(2){
+						font-size: 3.6vw;
+						color: #fb6b5c;
+					}
+					>:nth-child(3){
+						font-size: 2.93vw;
+						color: #999999;
+						:nth-child(2){
+							float: right;
+						}
+					}
+				}
+				>.workBot{
+					padding: 4vw 4vw 0;
+					box-sizing: border-box;
+					font-size: 3.2vw;
+					color: #666666;
+
+					:nth-child(1){
+						color: #333333;
+						margin-right: 5.5vw;
+					}
+					:nth-child(2){
+						color: #333333;
+					}
+				}
+			}
+			>.workDiscription{
+				width: 100%;
+				min-height: 28.66vw;
+				background-color: #fff;
+				margin-bottom: 2.66vw;
+				>:nth-child(1){
+					padding: 3.5vw 4vw 0;
+					box-sizing: border-box;
+					height: 11.73vw;
+					color: #999999;
+					font-size: 4vw;
+					border-bottom: 1px solid #eee;
+				}
+				>:nth-child(2){
+					padding: 3.5vw 4vw 3.5vw;
+					font-size: 4vw;
+					color: #333333;
+				}
+			}
 			>.basic{
 				width: 100%;
 				min-height: 20vw;

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<BaseT :data='data' @toDetails='todetail'></BaseT>
+		<BaseT :data='data' @next='next'  @toDetails='todetail'></BaseT>
 
 	</div>
 
@@ -16,11 +16,28 @@
 		,
 		data(){
 			return({
-				data:[]
+				data:[],
+				
+
 			})
 		}
 		,
+		mounted(){
+		
+		},
 		methods:{
+			next(num){
+				localStorage.Merpages = Number(localStorage.Merpages) + 1
+				console.log(localStorage.Merpages)
+				axios.get(`https://time2.jglist.com/index.php?r=merchant/shop/list&auth_name=id&category_child=0&category_parent=0&grand_id=5&id=1&lat=32&lng=123&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.Merpages}`)
+				.then(res=>{
+					for(let i in res.data.data){
+						this.data.push(res.data.data[i])
+					}
+
+
+				})
+			},
 			todetail(id){
 				console.log(id)
 				// this.$router.push({path:`/details/${id}`,query:{g:5}})
@@ -32,12 +49,20 @@
 			}
 		},
 		created(){
+			localStorage.Merpages = 1
+			
 			// https://time2.jglist.com/index.php?r=merchant/shop/shopinfo&auth_name=name&name=1&shop_id=8663&tx=3f556f66353c5945a3633ae209a3e0ff&user_id=1402  /商家服务的链接  改id的值   新开一个details页面
+			if(localStorage.dataMer){
+				this.data = JSON.parse(localStorage.dataMer)
+				return
+			}
 			
 			axios.get('https://time2.jglist.com/index.php?r=merchant/shop/list&auth_name=id&category_child=0&category_parent=0&grand_id=5&id=1&lat=32&lng=123&tx=3f556f66353c5945a3633ae209a3e0ff')//page
 				.then(res=>{
 					this.data =  res.data.data
-					console.log(this.data)
+					localStorage.dataMer = JSON.stringify(res.data.data)
+
+					
 				})
 		}
 

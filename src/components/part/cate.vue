@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<BaseT :data='data' @toDetails='todetail'/>
+		<BaseT :data='data' @next='next' @toDetails='todetail'/>
 
 	</div>
 
@@ -17,11 +17,26 @@
 		},
 		data(){
 			return({
-				data:[]
+				data:[],
+				f:1
 			})
 		},
 		methods:{
+			next(){
+				localStorage.Catepages = Number(localStorage.Catepages) + 1
+				console.log(localStorage.Catepages)
+				axios.get(`https://time2.jglist.com/index.php?r=delicacy/food/list&auth_name=id&grand_id=6&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.Catepages}`)
+				.then(res=>{
+					for(let i in res.data.data){
+						this.data.push(res.data.data[i])
+					}
+
+
+				})
+			},
 			todetail(id){
+				// if(!this.f){
+
 				console.log(id)
 				// this.$router.push({path:`/details/${id}`,query:{g:5}})
 				// if(id){
@@ -29,13 +44,23 @@
 				// }
 				this.$router.push({path:`/detailT/${id}`,query:{tyep:"cate"}})
 				//跳到 新的详情页  传id
+				// }
+				// this.f = 0
+
 			}
 		},
 		created(){
+			localStorage.Catepages = 1
+			if(localStorage.dataCate){
+				this.data = JSON.parse(localStorage.dataCate)
+				return
+			}
+			
 			axios.get('https://time2.jglist.com/index.php?r=delicacy/food/list&auth_name=id&grand_id=6&id=1&tx=3f556f66353c5945a3633ae209a3e0ff')
 				.then(res=>{
 					console.log(res.data.data)
 					this.data = res.data.data
+					localStorage.dataCate = JSON.stringify(res.data.data)
 				})
 		}
 

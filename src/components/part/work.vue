@@ -1,12 +1,12 @@
 <template>
 	
 	<div>
-		<div @click.capture='aaa($event,item.id)' :data-id='item.id' id='id' class="workBaseWarp" v-for='(item,index) in list' :key='index'>
+		<div @touchstart='aaa($event,item.id)' :data-id='item.id' id='id' class="workBaseWarp" v-for='(item,index) in list' :key='index'>
 			<div class="workBase bx">
 				<div class="top">
 					<p class="topOne">
 						<span>{{item.title}}</span>
-						<span data-id='call' @click='bb'>立即联系</span>
+						<span data-id='call' >立即联系</span>
 					</p>
 
 					<p class="topTwo">
@@ -26,7 +26,31 @@
 
 
 		</div>
+
+
+
+
+			<div v-show='!sets' id="set">
+						<div class="in">
+							<span class="o"></span>
+							<span class="t"></span>
+							<span class="e"></span>
+							<i id="texxxt">简购中 ...</i>
+						</div>
+					</div>
+					<p v-show='sets' @touchstart='next'>ugvhgjk</p>
+				</div>
+
+
+
+			</div>
 	</div>
+
+
+
+
+
+
 
 </template>
 
@@ -36,33 +60,65 @@
 	export default {
 		data(){
 			return({
-				list:[]
+				list:[],
+				flag:1,
+				sets:false
 
 
 			})
 		},
 		methods:{
+			next(){
+				this.sets  = false
+				localStorage.Workpages = Number(localStorage.Workpages) + 1
+				console.log(localStorage.Workpages)
+				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=3&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.Workpages}`)
+				.then(res=>{
+					for(let i in res.data.data){
+						this.list.push(res.data.data[i])
+					}
+				this.sets  = true
+				
+
+
+
+				})
+			},
 			aaa(e,id){
 				if(e.target.dataset.id == 'call'){
 					console.log('bknjl')
 					return
 				}
-
-				console.log(id)
-				this.$router.push({path:`/details/${id}`,query:{g:3}})		
-
-			},
-			bb(e){
+				//if(!this.flag){
+				//console.log(id)
+				this.$router.push({path:`/details/${id}`,query:{g:3}})	
+				//}
+				//this.flag = 0	
 
 			}
 		},
+		mounted(){
+			if(!this.list.length){
+				var timer =  setInterval(()=>{
 
+			 		if(this.list.length){ clearInterval(timer) ;this.sets = 1}
+			 		
+			 		
+		 		},100)		
+			 }
+			 if(this.list.length){this.sets = 1}
+		},
 		created(){
-			
+			localStorage.Workpages = 1
+			if(localStorage.dataWork){
+				this.list = JSON.parse(localStorage.dataWork)
+				return
+			}
 			axios.get('https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=3&id=1&tx=3f556f66353c5945a3633ae209a3e0ff')
 				.then(res=>{
 					console.log(res.data.data)
 					this.list = res.data.data
+					localStorage.dataWork = JSON.stringify(res.data.data)
 				})
 			
 		}
@@ -72,6 +128,102 @@
 
 
 <style scoped lang="scss">
+@keyframes o{
+			0%{
+
+				transform: translateX(0px);
+			}
+			50%{
+				transform: translateX(2.66vw) translateY(-2vw) ;
+
+			}
+			100%{
+				transform: translateX(0px) ;
+			}
+		}
+		@keyframes t{
+			0%{
+				transform: translateY(-11.3vw);
+			}
+			50%{
+				transform: translateY(-10vw);
+
+			}
+			100%{
+				transform: translateY(-11.3vw);
+			}
+		}
+		@keyframes e{
+			0%{
+				transform: translateX(0px);
+			}
+			50%{
+				transform: translateX(-2.66vw) translateY(-2vw);
+
+			}
+			100%{
+				transform: translateX(0px);
+			}
+
+		}
+	
+#set{
+		width: 100%;
+			height: 60vw;
+			position: relative;
+	>.in{
+			width: 26vw;
+			height: 26vw;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			line-height: 26vw;
+			margin:auto;
+			bottom: 0;
+			/*animation: tr 5s infinite;*/
+			transform-origin: center center ;
+				>span{
+					width: 6.66vw;
+					height: 6.66vw;
+					background-color: #334;
+					display: inline-block;
+					border-radius: 50%; 
+
+				}
+				>:nth-child(2){
+					background-color: #00d1b2;
+					transform: translateY(-11.4vw);
+				}
+				>:nth-child(1){
+					animation: o 1s infinite;
+				}
+				>:nth-child(2){
+					animation: t 1s infinite;
+
+				}
+				>:nth-child(3){
+					animation: e 1s infinite;
+
+				}
+			>#texxxt{
+				display: inline-block;
+				color: red;
+				font-size: 5vw;
+				font-style: normal;
+				font-weight: 600;	
+				/*font-size: 20vw;*/
+				animation:  aa 1s infinite;
+				background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#00d1b2), to(#fff));
+			    -webkit-background-clip: text;
+			    -webkit-text-fill-color: transparent;
+			}
+
+		}
+
+}
+
 .bx{
 	box-sizing: border-box;
 }

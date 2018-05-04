@@ -1,10 +1,10 @@
 <template>
 	<div class="warp">
-		<Header left='1'></Header>
+		<Header left='1' color='#00d1b2'></Header>
 
 		<main>
 			 <dl v-for='(item,index) in productList' :key='index'>
-				<dt><img :src="item.image.img"></dt>
+				<dt><img :src="item.image+'200_200.jpg'"></dt>
 				<dd>
 					<p>{{item.title}}</p>
 					<p><span>${{item.price}}</span><span>1</span></p>
@@ -38,8 +38,13 @@
 		},
 		mounted(){
 			let  val =  this.$route.query.val
-			let part = this.$route.query.id
-			axios.get(`https://time2.jglist.com/index.php?r=homepage/home/search&search=${val}&page=1&auth_name=id&id=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
+			let part = this.$route.query.part
+			if(!localStorage.text){
+				alert('输入关键词')
+				this.$router.replace('/index')
+			}
+			console.log(localStorage.text)
+			axios.get(`https://time2.jglist.com/index.php?r=homepage/home/search&search=${localStorage.text}&page=1&auth_name=id&id=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
 				.then((res)=>{
 					var a = res.data.data.splice(10)
 					console.log(res.data.data)
@@ -78,6 +83,10 @@
 					width: 20.53vw;
 					height: 20.53vw;
 					margin-right: 2.93vw;
+					>img{
+						width: 100%;
+						height: 100%;
+					}
 				}
 				>dd{
 					width: 70vw;

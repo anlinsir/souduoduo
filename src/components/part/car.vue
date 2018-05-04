@@ -43,7 +43,6 @@
 		created(){
 			localStorage.pages2 = 1
 
-			console.log(localStorage.dataG2) 
 				if(localStorage.dataG2){
 					this.data = JSON.parse(localStorage.dataG2)
 					return

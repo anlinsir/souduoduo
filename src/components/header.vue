@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<!-- @click='toSearch' -->
-			<span @click='toIndex' v-if='left' class="back"><</span><input v-model='text' @touchmove='shows' @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称（滑动更改类别）" />
+			<span @click='toIndex' v-if='left' :style="{color: color ? color : '' }"  class="back"><</span><input v-model='text'  @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称（滑动更改类别）" />
 			<span class="posi" v-show='0'>dsdddsdsds</span>
 	</header>
 
@@ -17,6 +17,9 @@
 			},
 			part:{
 				type:Number|| String  || Object
+			},
+			color:{
+				type:String
 			}
 		},
 		data(){
@@ -31,12 +34,17 @@
 
 			// 	}
 			// }
-			shows(){
-				console.log(this.part)
-				this.$emit('show',true)
-			},
+			
 			sendSearch(){//enter发请求  通过 子传夫  把拿到的数据  传到 searcb里面
 					//吧类别 存到longstage里
+					console.log(this.part)
+					this.$emit('show',true)
+					localStorage.text = this.text
+					if(!localStorage.text && localStorage.text != this.text){
+						return
+					}
+
+					return
 				if(this.text && this.part){
 					this.$router.push({ path:'/search', query: { val:this.text , id:this.part} })
 				}else{

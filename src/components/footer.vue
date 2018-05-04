@@ -31,6 +31,8 @@
 
 <style lang="scss" scoped>
 		footer{
+			box-shadow:0px 13px 38px #000;
+
 			width: 100%;
 			height: 18vw;
 			background-color: #fff;

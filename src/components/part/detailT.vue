@@ -17,7 +17,7 @@
 
 		<!--  图片展示页面 -->
 
-		<main class="main" v-if='imgShow'>
+		<main class="main" v-if='imgShow' >
 			
 			<div class="mainConent">
 				<ul>
@@ -60,13 +60,13 @@
 					<span>{{item.cate_title}}</span>
 				</p>
 					<!-- ... -->
-				<p class="score" v-if="query != query">
+				<p class="score" v-if="query != jour">
 					<span>经验 {{item.in_score}}</span>
 					<span>水平 {{item.se_score}}</span>
 					<span>质量 {{item.se_score}}</span>
 					<i>{{item.distance}} 英里</i>
 				</p>
-				<p class="palyTime" v-if="query == query">
+				<p class="palyTime" v-if="query == jour">
 					<span>游玩时长：{{item.playtime  || '1-2小时'}}</span>
 					<i>{{item.distance || '0'}} 英里</i>
 
@@ -74,12 +74,13 @@
 
 			</div>
 			<div  class="discounts">
-				<p v-if='item.activity.length' v-for='(item,index) in item.activity' :key='index'>
+				<p :data-id='item.privilege_id'  v-for='(item,index) in item.activity' :key='index'>
 					<span v-if='item.verify || item.has_game '>{{item.verify ? item.verify == 1 ? '券' :'惠' : item.has_game ? '玩' : ''}}</span>
 					<span>{{item.title}}</span>
 					<span class="spanBtn" v-if='item.has_game'>游戏</span>
 					<span class="rows" v-if='!item.has_game' style="float: right;">></span>
 				</p>
+
 				<p>下载简购生活APP，享受更多优惠</p>
 
 			</div>
@@ -197,6 +198,9 @@
 			Footer
 		},
 		methods:{
+			jour(){
+
+			},	
 			toIndex(){
 				//this.$router.push('/index')
 				//退后
@@ -211,6 +215,8 @@
 			showImg(){
 				this.imgShow = true
 			if(this.$route.query.tyep == 'mer'){
+
+
 				axios.get(`https://time2.jglist.com/index.php?r=merchant/shop/images&auth_name=name&name=1&shop_id=${this.$route.params.id}&tx=3f556f66353c5945a3633ae209a3e0ff`)
 								.then(res=>{
 									console.log(res.data.data)
@@ -275,6 +281,7 @@
 
 
 			if(this.$route.query.tyep == 'cate'){
+																																			//变量
 				axios.get(`https://time2.jglist.com/index.php?r=delicacy/food/details&auth_name=name&food_id=${this.$route.params.id}&lat=30.55102013717875&lng=104.06901177707833&name=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
 						.then(res=>{
 							console.log(res.data.data)
