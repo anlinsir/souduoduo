@@ -27,6 +27,7 @@
 		</ul>
 		
 		<div v-show='!sets' id="set">
+
 			<div class="in">
 				<span class="o"></span>
 				<span class="t"></span>
@@ -34,7 +35,12 @@
 				<i id="texxxt">简购中 ...</i>
 			</div>
 		</div>
-		<p v-show='sets' id='next' @click='getnext'><span id='xia' data-iid='id'>></span></p>
+		<div v-show='sets' id='next' @click='getnext'>
+			<div v-show='show' class="fff"></div>
+
+			<span id='xia' data-iid='id'>></span>
+
+		</div>
 	</div>
 
 </template>
@@ -52,7 +58,8 @@
 			return({
 				newData:null,
 				sets:0,
-				flag:true
+				flag:true,
+				show:false
 			})
 		},
 		methods:{
@@ -86,9 +93,10 @@
 
 			},
 			getnext(e){
-			
-
-
+				this.show = true
+				setTimeout(()=>{
+					this.show = false
+				},2500)
 				this.$emit('next',1)				
 			}
 			
@@ -118,6 +126,7 @@
 	width: 100%;
 	height: 20vw;
 	background-color: #eee;
+	position: relative;
 	color: #334;
 	text-align: center;
 	line-height: 20vw;
@@ -128,64 +137,25 @@
 		color: #01d2b3;
 		animation: xia 1s infinite;
 	}
+	.fff{
+			position: absolute;
+			top: 0;
+			width: 100%;
+			height: 20vw;
+			background-color: #00d1b2;
+			opacity: .7;
+			animation: change 5s infinite;
+		}
 }
 
-@keyframes xia{
-	0%{
-		transform: translateY(0) rotateZ(90deg);
-	}
-	50%{
-		transform: translateY(7vw) rotateZ(90deg);
-	}
-	100%{
-		transform: translateY(0) rotateZ(90deg);
 
-	}
-}
 
-		@keyframes o{
-			0%{
-
-				transform: translateX(0px);
-			}
-			50%{
-				transform: translateX(2.66vw) translateY(-2vw) ;
-
-			}
-			100%{
-				transform: translateX(0px) ;
-			}
-		}
-		@keyframes t{
-			0%{
-				transform: translateY(-11.3vw);
-			}
-			50%{
-				transform: translateY(-10vw);
-
-			}
-			100%{
-				transform: translateY(-11.3vw);
-			}
-		}
-		@keyframes e{
-			0%{
-				transform: translateX(0px);
-			}
-			50%{
-				transform: translateX(-2.66vw) translateY(-2vw);
-
-			}
-			100%{
-				transform: translateX(0px);
-			}
-
-		}
 	
 #set{
 		width: 100%;
 			height: 60vw;
 			position: relative;
+	
 	>.in{
 			width: 26vw;
 			height: 26vw;
@@ -236,6 +206,7 @@
 			}
 
 		}
+
 
 }
 	ul{

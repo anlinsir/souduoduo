@@ -11,7 +11,7 @@
 						<span  v-if='item.sel'></span>
 						<ul style="overflow: auto;height: 80vw;box-sizing: border-box;overflow-x:hidden;" v-if='item.sel' v-show='showPart == index' :key='index' id='chooseItem'>
 							<li  @touchstart='chooseItem(indexs,$event,items.child)' @touchend='chooseItem(indexs,$event,items.child)' data-iss='inn'   @touchmove='chooseItem(indexs,$event,items.child)' @mouseenter="chooseItem(indexs,$event)" :key='indexs' :data-id='items.id' :data-role="item.role ? item.role: '' " v-for="(items,indexs) in useClassify  ? useClassify[0].child?  useClassify[0].child.length ?   useClassify[0].child: useClassify : useClassify : '' ">
-								{{items.title}}
+									<span v-if='items.child && items.child.length'>></span>{{items.title}}
 								<ul v-if='items.child && showPartItem == indexs'>
 									<li @touchstart='hide' v-for='(props,indexs) in items.child' :key='indexs' :data-id='props.id '>
 										{{props.title}}

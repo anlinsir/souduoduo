@@ -55,7 +55,7 @@
 				</p>
 				<!-- .. -->
 				<p class="star">
-					<span>星星</span>
+					<span class="starIMG"><span :style="{width: Number(item.score)*10 + '%'}"><img src="/static/img/vehicle_icon_star.png"></span></span>
 					<span>{{item.mc_count || item.comments}}评价</span>
 					<span>{{item.cate_title}}</span>
 				</p>
@@ -92,7 +92,7 @@
 				<div class="other">
 					<p class="infomation">{{item.info ? item.info : '还没有介绍哦'}}</p>
 					<p class="poenMore" v-if='item.info'>展开全文</p>
-					<p class="phone">电话  <span class="text">{{item.tel}}</span><span class="call">拨号</span></p>
+					<p class="phone">电话  <span class="text">{{item.tel}}</span><span class="call">拨号 <a href="tel:13980552337">13980552337</a>	</span></p>
 					<p class="add"><span class="adddd">地址</span> <span class="text">{{item.address}}</span></p>
 				</div>
 
@@ -151,10 +151,17 @@
 
 
 
-					<div class="commends" v-for='(it,index) in recommend'>
+					<div @click='moreDetail(it.id)' :data-id='it.id' class="commends" v-for='(it,index) in recommend'>
 						<img :src="it.image + '200_200.jpg'">
 						<p class="commendsTitle">{{it.zh_name ? it.zh_name : it.title}}</p>
-						<p class="commendsStar"><span>星星</span><span>${{it.price}}/人</span></p>
+						<p class="commendsStar">
+							<span class="comstartIMg">
+								<span :style="{width: Number(it.score) ? Number(it.score) * 10 + '%' : Number(it.star) * 10 + '%'}">
+									<img src="/static/img/vehicle_icon_star.png">
+								</span>
+							</span>
+							<span>${{it.price}}/人</span>
+						</p>
 						<p class="commendsWhere"><span>{{it.cate_title ? it.cate_title : it.category_title ? it.category_title : '游玩时长：' + it.playtime}}</span><span>{{it.distance}}m</span></p>
 
 					</div>
@@ -201,6 +208,12 @@
 			jour(){
 
 			},	
+			moreDetail(id){
+				this.$router.push({path:`/detailT/${id}`,query:{tyep:"mer"}})
+					location.reload()
+
+			},
+
 			toIndex(){
 				//this.$router.push('/index')
 				//退后
@@ -209,7 +222,11 @@
 					return
 				}
 				history.back(1)
-
+				setTimeout(()=>{
+					if(this.$route.params.id){
+						location.reload()
+					}
+				},200)
 				
 			},
 			showImg(){
@@ -219,14 +236,12 @@
 
 				axios.get(`https://time2.jglist.com/index.php?r=merchant/shop/images&auth_name=name&name=1&shop_id=${this.$route.params.id}&tx=3f556f66353c5945a3633ae209a3e0ff`)
 								.then(res=>{
-									console.log(res.data.data)
 									this.imgs = res.data.data
 				})
 			}
 			if(this.$route.query.tyep == 'cate'){
 				axios.get(`https://time2.jglist.com/index.php?r=delicacy/food/images&auth_name=name&food_id=${this.$route.params.id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
 					.then(res=>{
-						console.log(res.data.data)
 						this.imgs = res.data.data
 				})		
 
@@ -284,7 +299,7 @@
 																																			//变量
 				axios.get(`https://time2.jglist.com/index.php?r=delicacy/food/details&auth_name=name&food_id=${this.$route.params.id}&lat=30.55102013717875&lng=104.06901177707833&name=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
 						.then(res=>{
-							console.log(res.data.data)
+							console.table(res.data.data)
 							this.data = [res.data.data]
 							this.title = res.data.data.title
 					})
@@ -485,6 +500,7 @@
 				padding: 0 4vw;
 				overflow: hidden;
 				>.zh_name{
+					width: 92vw;
 					font-size: 4.26vw;
 					margin-top: 4vw;
 					overflow: hidden;
@@ -517,6 +533,22 @@ overflow: hidden;
 					margin-bottom: 3.2vw;
 				}
 				>.star{
+					>.starIMG{
+						display: inline-block;
+						height: 3.73vw;
+						width: 20.8vw;
+						>span{
+							display: inline-block;
+							width: 10.8vw;
+							overflow:hidden;
+							height: 3.73vw;
+
+							>img{
+								width: 20.8vw;
+								height: 100%;
+							}
+						}
+					}
 					>:nth-child(1){
 						margin-right: 3vw;
 					}
@@ -847,6 +879,21 @@ overflow: hidden;
 						>.commendsStar{
 							font-size: 2.26vw;
 							color: #999999;
+							>.comstartIMg{
+								width: 20.8vw;
+								display: inline-block;
+								height: 3.73vw;
+								>span{
+									display: inline-block;
+									height: 3.73vw;
+									overflow: hidden;
+									>img{
+										width: 20.8vw;
+									height: 3.73vw;
+									}
+								}
+
+							}
 							>:nth-child(2){
 								float: right;
 							}

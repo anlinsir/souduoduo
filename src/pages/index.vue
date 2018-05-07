@@ -1,18 +1,7 @@
 <template>
 	<div class="warp">
-		<div v-show='showw' class="float">
-			<div class="header">
-				<span @click='otherShow'>></span><span>选择类别</span>
-			</div>
-			<ul>
-				<li @click='getPart' :data-id='index' :key='index'  v-for='(item,index) in parts'>
-					<p :data-id='index'><img :data-id='index' :src="item.img"></p>
-					<p :data-id='index'>{{item.text}}</p>
-				</li>
-				
-			</ul>
-		</div>
-		<Header @show='show' :part='part'></Header>
+	
+		<Header></Header>
 
 		<main>
 			<!-- 下载的部分 -->
@@ -32,7 +21,7 @@
 			<!-- 选项部分  -->
 			<section class="partWarp">
 				<ul>
-					<li @touchstart='topart' :data-to='item.to' v-for="(item,index) in li" :key='index'>
+					<li @touchstart='topart' @touchend='topart' @touchmove='topart' :data-to='item.to' v-for="(item,index) in li" :key='index'>
 						<img :data-to='item.to' :src="item.img">
 						<span :data-to='item.to'>{{item.text}}</span>
 						<span :data-to='item.to' v-if='item.new' class="new">new</span>
@@ -42,7 +31,7 @@
 					
 				</ul>
 				<ul>
-					<li @touchstart='topart' :data-to='item.to' v-for="(item,index) in lis" :key='index'>
+					<li @touchstart='topart' @touchend='topart' @touchmove='topart' :data-to='item.to' v-for="(item,index) in lis" :key='index'>
 						<img :data-to='item.to' :src="item.img">
 						<span :data-to='item.to'>{{item.text}}</span>
 						<span :data-to='item.to' v-if='item.new' class="new">new</span>
@@ -57,7 +46,7 @@
 					<dl @touchstart='getpri(item.privilege_id)' :data-id='item.privilege_id' v-show='yes == index' v-for='(item,index) in discounts' :key='index'>
 						<dt><img :src="item.image + '200_200.jpg'"></dt>
 						<dd>
-							<p>{{item.title}}</p>
+							<p class="oncep">{{item.title}}</p>
 							<p>{{item.cate_title}}</p>
 						</dd>
 					</dl>
@@ -86,12 +75,12 @@
 			<!-- .. -->
 			<section class="routerPart">
 				<div class="routerLink">
-					<p :data-id='index' @click='changeActive(index)' :class="active == index ? 'active' : '' " v-for='(item,index) in two' :key ='index'>
+					<p :data-id='index' @click='changeActive(index)' :class="active == index ? 'active' : '' " v-for='(item,index) in two' :key ='index' >
 						{{item}}
 					</p>
 				</div>
 				<div class="routerView">
-					<dl id='getid' :data-id="  item.id?item.id:'' "  v-for='(item,index) in newest'  :key='index'>
+					<dl @click='toUsedDetail(item.id)' id='getid' :data-id="item.id?item.id:'' "  v-for='(item,index) in newest'  :key='index'>
 						<dt><img :src="item.image + '200_200.jpg' " /></dt>
 						<dd>
 							<p>{{item.title}} <span v-show='hows' >dslfm</span></p>
@@ -210,8 +199,6 @@
 					],
 				yes:0,
 				active:0,
-				showw:false,
-				part:null,
 				two:['最近发布','附近商家'],
 				merchant:[],
 				
@@ -220,41 +207,6 @@
 				newest:[],//最新发布 和 附近商家,
 				hows:false,
 
-				parts:[
-					{
-						img:'/static/img/search_icon_1.png',
-						text:"闲置二手"
-					},
-					{
-						img:'/static/img/search_icon_2.png',
-						text:"新旧车辆"
-					},
-					{
-						img:'/static/img/search_icon_3.png',
-						text:"工作招聘"
-					},
-					{
-						img:'/static/img/search_icon_4.png',
-						text:"房屋租赁"
-					},
-					{
-						img:'/static/img/search_icon_5.png',
-						text:"商家服务"
-					},
-					{
-						img:'/static/img/search_icon_6.png',
-						text:"附近美食"
-					},
-					{
-						img:'/static/img/search_icon_7.png',
-						text:"附近优惠"
-					},
-					{
-						img:'/static/img/search_icon_8.png',
-						text:"周边游"
-					}
-
-				]//选择类别
 			
 			})
 		},
@@ -263,6 +215,12 @@
 			'Footer':Footer
 		},
 		methods:{
+			toUsedDetail(id){
+				console.log(id)
+				this.$router.push({path:`/details/${id}`,query:{g:1}})		
+				
+			}
+			,
 			getpri(id){
 				this.$router.push({path:`/pridetail/${id}`})
 
@@ -303,29 +261,27 @@
 				}
 				//判断点击的是哪一个  加载数据
 			},
-			show(foo){
-				this.showw = foo
-			},
-			otherShow(){
-				this.showw = false
-			},
-			getPart(e){
-				console.log(e.target.dataset.id)
-				this.part = Number(e.target.dataset.id) + 1
-				localStorage.Part = this.part 
-				if(!localStorage.text && localStorage.text != this.text){
-						alert('请输入关键词')
-						return
-					}
-				this.$router.push({path:'/search',query:{part:this.part}})
-				if(typeof this.part != 'undefined'){
-
-					this.showw = false
-				}
-			},
+		
+		
 			topart(e){//跳转到相应的部分
-				console.log(e.target.dataset.to)
-				this.$router.push(e.target.dataset.to)
+				 switch (e.type) {
+	                case 'touchstart':
+	                    this.flag = true;
+	                    break;
+	                case 'touchmove':
+	                    this.flag = false;
+	                    break;
+	                case 'touchend':
+	                    if(this.flag){
+								this.$router.push(e.target.dataset.to)
+	                     	 
+	                    }else{
+	                    // 滑动事件
+	                    console.log('move')
+	                    }
+	                        default:
+	                            break;
+	                    } 
 			}
 		},
 		beforeCreate(){
@@ -382,57 +338,7 @@
 		display: flex;
 		flex-direction: column;
 		background-color: #f3f3f3;
-		>.float{
-			padding: 0 4vw;
-			box-sizing: border-box;
-			position: fixed;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #fff;
-			z-index: 2;
-			font-size: 4vw;
 
-			>.header{
-				width: 100%;
-				height: 11.6vw;
-				background-color: #fff;
-				border-bottom: 1px solid #eeeeee;
-				text-align: center;
-				line-height: 11vw;
-				overflow: hidden;
-				:nth-child(1){
-					position: absolute;
-					top: 0;
-					left: -1vw;
-					width: 20vw;
-					float: left;
-				}
-			}
-			>ul{
-				width: 100%;
-				margin-top: 5vw;
-				display: flex;
-				
-				flex-wrap: wrap;
-				padding:  0  0  0 5.73vw  ;
-				box-sizing: border-box;
-
-				>li{
-					margin-right: 8vw;
-					width: 20vw;
-					height: 20vw;
-					margin-bottom:5vw; 
-					text-align: center;
-					border: 1px solid;
-					:nth-child(1){
-						display: inline-block;
-						width: 10vw;
-						height: 10vw;
-					}
-				}
-			}
-		}
 		main{
 			flex: 1;
 			overflow: auto;
@@ -595,6 +501,10 @@ overflow: hidden;
 							>p{
 								font-size: 3vw;
 								color: #333333;
+							}
+							>.oncep{
+
+								margin-bottom: 1vw;
 							}
 						}
 					}

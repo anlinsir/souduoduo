@@ -318,7 +318,8 @@
 			>.cardInfo{
 				width: 93.6vw;
 				min-height: 64vw;
-				margin: 0 auto;
+				
+				margin: 0 auto;margin-bottom: 5vw;
 				background-color: #fff;
 				border: 1px solid #eee;
 				position: relative;

@@ -17,7 +17,7 @@
 								{{item.score || item.star}}
 								</span>
 								<span>评论{{item.comments}}条</span>
-								<span v-if='item.open.length' class="isOpen">营业中</span>
+								<span v-if='item.open && item.open.length' class="isOpen">营业中</span>
 							</p>
 							<p class="where" :data-id='item.shop_id'>
 								<span class="cate_title" v-if='item.cate_title || item.category_title'>{{item.cate_title  || item.category_title | re}}</span>
@@ -54,12 +54,20 @@
 					<i id="texxxt">简购中 ...</i>
 				</div>
 			</div>
-			<p v-show='sets' @touchstart='next'>{{textNext}}</p>
+
+		<div v-show='sets' id='next' @touchstart='next'>
+					<div v-show='showff' class="fff"></div>
+
+					<span id='xia' data-iid='id'>></span>
+
+		</div>
+			
+
+
 		</div>
 
 
 
-	</div>
 
 
 </template>
@@ -75,7 +83,8 @@
 				id:null,
 				sets:0,
 				flag:1,
-				count:0
+				count:0,
+				showff:false
 
 				
 		
@@ -83,7 +92,10 @@
 		},
 		methods:{
 			next(){
-				console.log('next')
+				this.showff = 1
+				setTimeout(()=>{
+					this.showff = 0
+				},3000)
 				this.$emit('next',1)				
 
 			},
@@ -166,45 +178,32 @@
 
 
 <style scoped lang="scss">
-@keyframes o{
-			0%{
-
-				transform: translateX(0px);
-			}
-			50%{
-				transform: translateX(2.66vw) translateY(-2vw) ;
-
-			}
-			100%{
-				transform: translateX(0px) ;
-			}
+#next{
+	width: 100%;
+	height: 20vw;
+	background-color: #eee;
+	position: relative;
+	color: #334;
+	text-align: center;
+	line-height: 20vw;
+	#xia{
+		display: inline-block;
+		font-size: 10vw;
+		transform: rotateZ(90deg);
+		color: #01d2b3;
+		animation: xia 1s infinite;
+	}
+	.fff{
+			position: absolute;
+			top: 0;
+			width: 100%;
+			height: 20vw;
+			background-color: #00d1b2;
+			opacity: .7;
+			animation: change 5s infinite;
 		}
-		@keyframes t{
-			0%{
-				transform: translateY(-11.3vw);
-			}
-			50%{
-				transform: translateY(-10vw);
+}
 
-			}
-			100%{
-				transform: translateY(-11.3vw);
-			}
-		}
-		@keyframes e{
-			0%{
-				transform: translateX(0px);
-			}
-			50%{
-				transform: translateX(-2.66vw) translateY(-2vw);
-
-			}
-			100%{
-				transform: translateX(0px);
-			}
-
-		}
-	
 #set{
 		width: 100%;
 			height: 60vw;

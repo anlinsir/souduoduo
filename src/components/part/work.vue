@@ -1,7 +1,7 @@
 <template>
 	
 	<div>
-		<div @touchstart='aaa($event,item.id)' :data-id='item.id' id='id' class="workBaseWarp" v-for='(item,index) in list' :key='index'>
+		<div @touchstart='aaa($event,item.id)' @touchend='aaa($event,item.id)' @touchmove='aaa($event,item.id)' :data-id='item.id' id='id' class="workBaseWarp" v-for='(item,index) in list' :key='index'>
 			<div class="workBase bx">
 				<div class="top">
 					<p class="topOne">
@@ -38,14 +38,19 @@
 							<i id="texxxt">简购中 ...</i>
 						</div>
 					</div>
-					<p v-show='sets' @touchstart='next'>ugvhgjk</p>
+
+
+
+
+					<div @touchstart='next' id='next'>
+						<span id='xia' v-show='sets' >></span>
+					</div>
 				</div>
 
 
 
 			</div>
 	</div>
-
 
 
 
@@ -62,13 +67,16 @@
 			return({
 				list:[],
 				flag:1,
-				sets:false
+				sets:false,
+				flags:false,
+				showfff:false
 
 
 			})
 		},
 		methods:{
 			next(){
+
 				this.sets  = false
 				localStorage.Workpages = Number(localStorage.Workpages) + 1
 				console.log(localStorage.Workpages)
@@ -85,15 +93,36 @@
 				})
 			},
 			aaa(e,id){
-				if(e.target.dataset.id == 'call'){
-					console.log('bknjl')
-					return
-				}
-				//if(!this.flag){
-				//console.log(id)
-				this.$router.push({path:`/details/${id}`,query:{g:3}})	
-				//}
-				//this.flag = 0	
+
+					 switch (e.type) {
+	                case 'touchstart':
+	                    this.flags = true;
+	                    break;
+	                case 'touchmove':
+	                    this.flags = false;
+	                    break;
+	                case 'touchend':
+	                    if(this.flags){
+
+							if(e.target.dataset.id == 'call'){
+								console.log('bknjl')
+								return
+							}
+						
+							this.$router.push({path:`/details/${id}`,query:{g:3}})	
+
+	                    }else{
+	                    // 滑动事件
+	                    
+
+	                    }
+	                        default:
+	                            break;
+	                    }   
+
+
+
+			
 
 			}
 		},
@@ -128,44 +157,25 @@
 
 
 <style scoped lang="scss">
-@keyframes o{
-			0%{
 
-				transform: translateX(0px);
-			}
-			50%{
-				transform: translateX(2.66vw) translateY(-2vw) ;
+#next{
+	width: 100%;
+	height: 20vw;
+	background-color: #eee;
+	position: relative;
+	color: #334;
+	text-align: center;
+	line-height: 20vw;
+	#xia{
+		display: inline-block;
+		font-size: 10vw;
+		transform: rotateZ(90deg);
+		color: #01d2b3;
+		animation: xia 1s infinite;
+	}
 
-			}
-			100%{
-				transform: translateX(0px) ;
-			}
-		}
-		@keyframes t{
-			0%{
-				transform: translateY(-11.3vw);
-			}
-			50%{
-				transform: translateY(-10vw);
+}
 
-			}
-			100%{
-				transform: translateY(-11.3vw);
-			}
-		}
-		@keyframes e{
-			0%{
-				transform: translateX(0px);
-			}
-			50%{
-				transform: translateX(-2.66vw) translateY(-2vw);
-
-			}
-			100%{
-				transform: translateX(0px);
-			}
-
-		}
 	
 #set{
 		width: 100%;

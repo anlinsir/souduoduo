@@ -57,7 +57,7 @@
 
 				</div>
 
-				<p>浏览100次</p>
+				<p>浏览{{want}}次</p>
 			</div>
 
 			<div v-if='work == 3' class="workWarp" v-for='(item,index) in details' :key='index'>
@@ -198,7 +198,8 @@
 				comment:null,
 				comments:[],
 				thumbs:false,
-				work:0
+				work:0,
+				want:0
 			})
 		}
 		,
@@ -229,6 +230,7 @@
 							this.role = this.details[0].role
 							this.thumbs = this.details[0].thumbs
 							this.introduce = this.details[0].introduce ?  this.details[0].introduce : ''
+							this.want = this.details[0].browse
 				
 
 							axios.get(`https://time2.jglist.com/index.php?r=magor/five/comments&auth_name=name&grand_id=${this.details[0].grand_id}&id=${this.details[0].user_id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
