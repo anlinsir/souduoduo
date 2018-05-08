@@ -1,7 +1,7 @@
 <template>
 	<div class="warp">
 		<header>
-			<span @click='toIndex'>></span>
+			<span @click='toIndex'><</span>
 			<span>详情</span>
 			<p>
 				<img src="/static/img/businessservice_icon_phone_m.png">
@@ -102,10 +102,10 @@
 					<p class="headerShow"><span>{{ role == 2 ? '商家': '经纪人'}}信息</span><span>查看详细信息></span></p>
 					<dl v-for='(item,index) in details' :key='index'>
 						<dt>
-							<img :src="item.merchant.header ? item.merchant.header :item.merchant.header_img">
+							<img :src="item.merchant.header ? item.merchant.header : item.merchant.header_img ">
 						</dt>
 						<dd>
-							<span>{{item.merchant.zh_name}} <img style="width: 3.46vw;height: 3.46vw;" src="/static/img/businessservice_icon_vip.png"></span>
+							<span>{{item.merchant.zh_name ? item.merchant.zh_name : ' '}} <img style="width: 3.46vw;height: 3.46vw;" src="/static/img/businessservice_icon_vip.png"></span>
 							<span>{{item.merchant.en_name}}</span>
 						</dd>						
 					</dl>
@@ -177,7 +177,7 @@
 			
 		</main>
 
-		<Footer></Footer>
+		<Footer isShow='ture'></Footer>
 
 	</div>
 
@@ -280,6 +280,8 @@
 				float: left;
 				width: 10vw;
 				display: inline-block;
+				font-size: 8vw;
+				color: #00d1b2;
 			}
 			:nth-child(3){
 				float: right;
@@ -416,12 +418,12 @@
 					}
 					>.introduce{
 						margin-top: 4vw;
-						min-height: 5vw;
-						text-align: center;
+						min-height: 3vw;
+						text-align: left;
 						margin-bottom: 4.2vw;
+						margin-top: 5vw;
 						>span{
 						display: inline-block;
-						text-align: justify;
 
 						}
 					}

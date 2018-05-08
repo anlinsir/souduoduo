@@ -37,9 +37,9 @@
 
 
 		<main v-if='!imgShow' v-for='(item,index) in data' :key='index'>
-			<div @click='showImg' class="bigImg">
+			<div @touchstart='showImg' class="bigImg">
 				<img :src="item.image + '200_200.jpg' ">
-				<span class="viewM">查看商家</span>
+				<span class="viewM" @touchstart='down'>查看商家</span>
 				<span class="photoNum"><img src="/static/img/businessservice_icon_photo.png">共{{item.mci_count ? item.mci_count : item.img_count ? item.img_count : "0"}}张照片</span>
 			</div>
 			<div class="infomation">
@@ -74,14 +74,14 @@
 
 			</div>
 			<div  class="discounts">
-				<p :data-id='item.privilege_id'  v-for='(item,index) in item.activity' :key='index'>
+				<p @touchstart='down' :data-id='item.privilege_id'  v-for='(item,index) in item.activity' :key='index'>
 					<span v-if='item.verify || item.has_game '>{{item.verify ? item.verify == 1 ? '券' :'惠' : item.has_game ? '玩' : ''}}</span>
 					<span>{{item.title}}</span>
 					<span class="spanBtn" v-if='item.has_game'>游戏</span>
 					<span class="rows" v-if='!item.has_game' style="float: right;">></span>
 				</p>
 
-				<p>下载简购生活APP，享受更多优惠</p>
+				<p @toushstart='down'>下载简购生活APP，享受更多优惠</p>
 
 			</div>
 
@@ -92,7 +92,7 @@
 				<div class="other">
 					<p class="infomation">{{item.info ? item.info : '还没有介绍哦'}}</p>
 					<p class="poenMore" v-if='item.info'>展开全文</p>
-					<p class="phone">电话  <span class="text">{{item.tel}}</span><span class="call">拨号 <a href="tel:13980552337">13980552337</a>	</span></p>
+					<p class="phone">电话  <span class="text">{{item.tel}}</span><span class="call">拨号</span></p>
 					<p class="add"><span class="adddd">地址</span> <span class="text">{{item.address}}</span></p>
 				</div>
 
@@ -103,7 +103,7 @@
 
 			<div class="comment" >
 				
-					<dl  class="down">
+					<dl @touchstart='down'  class="down">
 						<dt><img src="/static/img/phone.png"></dt>
 						<dd>
 							<p>想参加{{item.zh_name ? item.zh_name : item.title}}的评论？</p>
@@ -174,9 +174,9 @@
 
 			</div>
 
-			<div class="bottomTip">
+			<div @click='down' class="bottomTip">
 				<div class="Warptext">
-					<p>
+					<p >
 					更多华人资讯，安装简购生活APP即可获得
 					</p>
 					<p>工作.房屋.车辆.二手.美食.优惠 本非生活</p>
@@ -188,7 +188,7 @@
 		</main>
 
 
-		<Footer></Footer>
+		<Footer isShow='true'></Footer>
 
 
 
@@ -205,10 +205,43 @@
 			Footer
 		},
 		methods:{
+			down(){
+				this.imgShow = false
+				if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
+						if(this.$route.query.tyep == 'mer'){
+						 	window.location.href =`jglist://deeplinks/openWith?grand_id=12&id=${this.$route.params.id}`
+						}else if(this.$route.query.tyep == 'cate'){
+						 	window.location.href =`jglist://deeplinks/openWith?grand_id=6&id=${this.$route.params.id}`
+						}else if(this.$route.query.tyep == 'jour'){
+						 	window.location.href =`jglist://deeplinks/openWith?grand_id=8&id=${this.$route.params.id}`
+						}
+					setTimeout(()=>{
+						window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+					},1500)
+					
+				}else if(window.navigator.userAgent.indexOf('Android') != -1){
+						if(this.$route.query.tyep == 'mer'){
+						 	window.location.href =`jglist://deeplinks/openWith?grand_id=12&id=${this.$route.params.id}`
+						}else if(this.$route.query.tyep == 'cate'){
+						 	window.location.href =`jglist://deeplinks/openWith?grand_id=6&id=${this.$route.params.id}`
+						}else if(this.$route.query.tyep == 'jour'){
+						 	window.location.href =`jglist://deeplinks/openWith?grand_id=8&id=${this.$route.params.id}`
+						}
+						setTimeout(()=>{
+							window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+						},1500)
+				}
+			},
 			jour(){
 
 			},	
 			moreDetail(id){
+			if(this.$route.query.tyep == 'jour'){
+				this.$router.push({path:`/detailT/${id}`,query:{tyep:"jour"}})
+				location.reload()
+				return
+			}
+
 				this.$router.push({path:`/detailT/${id}`,query:{tyep:"mer"}})
 					location.reload()
 
@@ -229,7 +262,12 @@
 				},200)
 				
 			},
-			showImg(){
+			showImg(e){
+				if(e.target.className == 'viewM'){
+					return
+				}
+
+				
 				this.imgShow = true
 			if(this.$route.query.tyep == 'mer'){
 

@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<!-- @click='toSearch' -->
-			<span @click='toIndex' v-if='left' :style="{color: color ? color : '' }"  class="back"><</span><input v-model='text' @click='toseac'  @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称（滑动更改类别）" />
+			<span @click='toIndex' v-if='left' :style="{color: color ? color : '' }"  class="back"><</span><input v-model='text' @click='toseac'  @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称" />
 			<span class="posi" v-show='0'>dsdddsdsds</span>
 	</header>
 

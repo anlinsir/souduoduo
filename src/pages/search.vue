@@ -24,7 +24,7 @@
 				</dd>
 			</dl> 
 
-<div v-show='!sets' id="set">
+<div v-show='sets' id="set">
 				<div class="in">
 					<span class="o"></span>
 					<span class="t"></span>
@@ -102,10 +102,12 @@
 		methods:{
 			show(foo){
 				this.showw = foo
+
 			},
 
 			otherShow(){
 				this.showw = false
+				this.sets = true
 			},
 				getPart(e){
 				this.showw = false
@@ -127,7 +129,7 @@
 				.then((res)=>{
 					var a = res.data.data.splice(20)					
 					this.productList =  res.data.data
-					this.sets = true
+					this.sets = false
 					if(! this.productList.length ){
 						document.getElementsByTagName('main')[0].innerHTML='没有摘掉'
 					}

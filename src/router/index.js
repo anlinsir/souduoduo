@@ -15,6 +15,8 @@ const Cate = r =>require.ensure([],() => r(require('@/components/part/cate')),'c
 const Jour = r =>require.ensure([],() => r(require('@/components/part/jour')),'jour')
 const Work = r =>require.ensure([],() => r(require('@/components/part/work')),'work')
 const Privilege = r =>require.ensure([],() => r(require('@/components/part/privilege')),'privilege')
+const Rate = r =>require.ensure([],() => r(require('@/components/part/rate')),'rate')
+
 
 
 
@@ -108,6 +110,12 @@ export default new Router({
         name:'help',
         component:Regard
     },
+    {
+        path:'/rate',
+        component:Rate
+    },
     {path:"/",redirect:"/index"}
+    ,
+     { path: '*', redirect: "/"}
   ]
 })

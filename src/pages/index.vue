@@ -14,7 +14,7 @@
 							<p>华人生活的百宝箱</p>
 						</dd>
 					</dl>
-					<button  class="openApp">打开简购生活</button>
+					<button  class="openApp"  @touchstart = 'downAPP'>打开简购生活</button>
 					<button class="downApp" @touchstart = 'downAPP'>下载APP想优惠</button>
 				</div>
 			</section>
@@ -43,7 +43,7 @@
 			<section class="discountsWarp"> 
 				<img src="/static/img/jgDiscounts.png">
 				<transition-group class='Warp' tag='div'  name="slide-fade" mode="out-in">
-					<dl @touchstart='getpri(item.privilege_id)' :data-id='item.privilege_id' v-show='yes == index' v-for='(item,index) in discounts' :key='index'>
+					<dl @touchstart='getpri(item.privilege_id,$event)' @touchend='getpri(item.privilege_id,$event)' @touchmove='getpri(item.privilege_id,$event)' :data-id='item.privilege_id' v-show='yes == index' v-for='(item,index) in discounts' :key='index'>
 						<dt><img :src="item.image + '200_200.jpg'"></dt>
 						<dd>
 							<p class="oncep">{{item.title}}</p>
@@ -60,7 +60,7 @@
 					<p @click='toMer'>更多 > </p>
 				</div>
 				<ul class="merchantShow">
-					<li @click='touseddetail(item.merchant_id)' :data-merchant-id='item.merchant_id' :data-shop-id='item.shop_id' v-for='(item,index) in merchant' :key='index'>
+					<li @click='touseddetail(item.shop_id)' :data-merchant-id='item.merchant_id' :data-shop-id='item.shop_id' v-for='(item,index) in merchant' :key='index'>
 						<img :src="item.image + '200_200.jpg'">
 						<p>
 							<span :title="item.zh_name">{{item.zh_name}}</span>
@@ -80,12 +80,12 @@
 					</p>
 				</div>
 				<div class="routerView">
-					<dl @click='toUsedDetail(item.id)' id='getid' :data-id="item.id?item.id:'' "  v-for='(item,index) in newest'  :key='index'>
+					<dl @click='toUsedDetail(item.id? item.id : item.shop_id ,active)' id='getid' :data-id="item.id ?  item.id : 'item.shop_id' "  v-for='(item,index) in newest'  :key='index'>
 						<dt><img :src="item.image + '200_200.jpg' " /></dt>
 						<dd>
-							<p>{{item.title}} <span v-show='hows' >dslfm</span></p>
-							<p><span>${{item.price}}</span><span :style="{height:'4vw',width:'9.6vw',fontSize:'2.8vw',border:'1px solid',color:item.role == 1 ? '#00d1b2' : '#fb6b5c'}">{{item.role == 1 ? '个人' : item.role == 2 ? '商家'  : '经纪人' }}</span></p>
-							<p><span>{{item.address}}</span><span>{{item.create_time}}</span></p>
+							<p>{{item.title ? item.title : item.zh_name}} <span v-show='hows' > </span></p>
+							<p><span :style="{color:item.score ? '#999' : ''}">{{ item.price ? '$' + item.price : item.score + '分'}}</span><span v-if='item.price' :style="{height:'4vw',width:'9.6vw',fontSize:'2.8vw',border:'1px solid',color:item.role == 1 ? '#00d1b2' : '#fb6b5c'}">{{item.role == 1 ? '个人' : item.role == 2 ? '商家'  : '经纪人' }}</span></p>
+							<p><span >{{item.address ? item.address : item.cate_title}}</span><span>{{item.create_time ? item.create_time : item.distance + '英里'}}</span></p>
 						</dd>
 						
 					</dl>
@@ -99,7 +99,7 @@
 			<!-- 结尾 -->
 				<section class="endWarp">
 					<div class="endText">
-						<p><span @click='toRegard(0)'>关于</span>&nbsp; | &nbsp;<span @click='toRegard(1)'>帮助</span>&nbsp; | &nbsp;<span>下载</span></p>
+						<p><span @click='toRegard(0)'>关于</span>&nbsp; | &nbsp;<span @click='toRegard(1)'>帮助</span>&nbsp; | &nbsp;<span @touchstart='downAPP'>下载</span></p>
 						<p>Copyright © 2017 , JGlist.com</p>
 					</div>				
 
@@ -182,7 +182,7 @@
 						img:'/static/img/home_icon_exr.png',
 						text:'汇率换算',
 						new:true,
-						to:'/part'
+						to:'/rate'
 
 					},
 					{
@@ -206,6 +206,7 @@
 				tem2:[],
 				newest:[],//最新发布 和 附近商家,
 				hows:false,
+				flag:1
 
 			
 			})
@@ -215,14 +216,37 @@
 			'Footer':Footer
 		},
 		methods:{
-			toUsedDetail(id){
-				console.log(id)
+			toUsedDetail(id,ind){
+				if(ind == 0){
 				this.$router.push({path:`/details/${id}`,query:{g:1}})		
+				}else{
+					this.$router.push({path:`/detailT/${id}`,query:{tyep:"mer"}})
+						
+
+				}
+
 				
 			}
 			,
-			getpri(id){
-				this.$router.push({path:`/pridetail/${id}`})
+			getpri(id,e){
+				 switch (e.type) {
+	                case 'touchstart':
+	                    this.flag = true;
+	                    break;
+	                case 'touchmove':
+	                    this.flag = false;
+	                    break;
+	                case 'touchend':
+	                    if(this.flag){
+	                     	 this.$router.push({path:`/pridetail/${id}`})
+	                    }else{
+	                    // 滑动事件
+	                    console.log('move')
+	                    }
+	                        default:
+	                            break;
+	                    }
+				
 
 			}
 			,
@@ -232,10 +256,24 @@
 			}
 			,
 			downAPP(){
-				 window.location.href=`https://nodejs.org/dist/v8.11.1/node-v8.11.1-x64.msi`;
+				if( window.navigator.userAgent.indexOf('iPhone' || 'iPad') != -1){
+						 window.location.href =`jglist://deeplinks/openWith?grand_id=1&id=140241`
+					setTimeout(()=>{
+						window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+					},1500)
+					setTimeout(()=>{
+						window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+					},1500)
+				}else if(window.navigator.userAgent.indexOf('Android') != -1){
+							 window.location.href =`jglist://deeplinks/openWith?grand_id=1&id=140241`
+						setTimeout(()=>{
+							window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+						},1500)
+				}
+			
 			},
 			toRegard(num){
-				if(!num){
+				if(!num){ 
 					this.$router.push('/regard')
 				}else{
 					this.$router.push('/help')
@@ -317,7 +355,7 @@
 					console.log(this.newest)
 			})
 				//附近商家
-			axios.get('http://106.14.56.22:9529/index.php?r=v2/home/fresh&auth_name=id&id=1&tx=3f556f66353c5945a3633ae209a3e0ff')
+			axios.get('https://time2.jglist.com/index.php?r=merchant/shop/list&auth_name=id&category_child=0&category_parent=0&grand_id=5&id=1&lat=32&lng=123&tx=3f556f66353c5945a3633ae209a3e0ff')
 					.then((res)=>{
 						this.tem2 = res.data.data
 

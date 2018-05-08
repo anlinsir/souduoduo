@@ -1,11 +1,11 @@
 <template>
 	<div>
 		<ul v-show='sets'>
-			<li @touchend='getDetails(index,$event)' @touchstart='getDetails(index,$event)' @touchmove='getDetails(index,$event)' :data-id='item.shop_id && item.shop_id !=0 ? item.shop_id : item.id' v-for='(item,index) in data' :key='index' :style="{minHeight: change ? '24.9vw' : '36.66vw' }" class='dataid'>
+			<li @touchend='getDetails(index,$event)' @touchstart='getDetails(index,$event)' @touchmove='getDetails(index,$event)' :data-id='item.shop_id && item.shop_id !=0 ? item.shop_id : item.id' v-for='(item,index) in data' :key='index' :style="{minHeight: change ? '24.9vw' : '25vw' }" class='dataid'>
 				<dl :data-id='item.shop_id'>
 					<dt><img  :data-id='item.shop_id' :src="item.image + '200_200.jpg'"></dt>
 					<dd>
-						<div :data-id='item.shop_id' class="top" :style="{borderBottom: change ? 'none': '1px dashed #eee' , padding: change ? '0':'0 0 1vw 0'}">
+						<div :data-id='item.shop_id' class="top"  :style="{borderBottom: change ? 'none': item.activity  &&  item.activity.length == 0 ? 'none' :  '1px dashed #eee' , padding: change ? '0':'0 0 1vw 0'}">
 							<p :data-id='item.shop_id' class="title"><span v-if='item.recommend == 1' class="recommend">推荐</span><span class="zh_name">{{item.zh_name || item.title}}</span>
 							<img :data-id='item.shop_id' v-if='item.license' src="/static/img/businessservice_icon_vip.png">
 							</p>
@@ -36,7 +36,7 @@
 								<span class="activityCon" :data-id='item.id'>{{item.info}}</span>
 								<span @click='showMore(index)' id='more' >8个活动▼</span>
 							</p>
-							 <p :data-id='item.shop_id' v-if='item.activity.length == 0' style="text-align: center;">此商家还没有活动和优惠哟</p>
+							 <!-- <p :data-id='item.shop_id' v-if='item.activity.length == 0' style="text-align: center;">此商家还没有活动和优惠哟</p> -->
 							
 
 						</div>

@@ -8,7 +8,13 @@
 				</dd>
 								
 			</dl>
-			<button>立即下载APP</button>
+			<button @touchstart='showDown'>立即下载APP</button>
+
+			<div class="show" v-if='show'>
+				<p>在APP store 中打开？</p>
+				<span class="qu" @touchend='nowDown'>取消</span>
+				<span @touchend='nowDown' class="co">立即下载</span>
+			</div>
 		</footer>
 
 
@@ -17,10 +23,38 @@
 
 <script>
 	export default {
+		props:{
+			isShow:{
+				type:String
+			}
+		}
+		,
 		data(){
 			return({
-
+				show:false
 			})
+		},
+		methods:{
+			showDown(){
+				this.show = true
+			},
+			nowDown(e){
+				console.log(e.target.className)
+				if(e.target.className =='qu'){
+					this.show = false
+				}else if(e.target.className =='co'){
+					window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+					this.show = false
+
+
+				}
+				
+			}
+		},
+		mounted(){
+			setTimeout(()=>{
+				this.show = this.isShow
+			},1000)
 		}
 	}
 
@@ -38,6 +72,37 @@
 			background-color: #fff;
 			padding: 3.2vw 3.2vw 0 ;
 			box-sizing: border-box;
+			>.show{
+				width: 70vw;
+				height: 25vw;
+				font-size: 4vw;
+				background-color: #fff;
+				border: 1px solid #eee;
+				border-radius: 2vw;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				text-align: center;
+				transform: translateX(-50%) translateY(-50%);
+				>p{
+					height: 12.5vw;
+					border-bottom: 1px solid #eee;
+					line-height: 12.5vw;
+
+				}
+				>span{
+					display: inline-block;
+					width: 34vw;
+					height: 12.5vw;
+					line-height: 12.5vw;
+				}
+				>.qu{
+					border-right: 1px solid #eee;
+				}	
+				>.co{
+					color: #00d1b2;
+				}
+			}
 			>dl{
 				display: flex;
 				float: left;
