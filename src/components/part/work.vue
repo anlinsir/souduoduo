@@ -10,8 +10,8 @@
 					</p>
 
 					<p class="topTwo">
-						<span>${{item.price}}/月</span>
-						<span><img src="/static/img/work_icon_position.png"> &nbsp;{{item.position}}</span>
+						<span><span>$</span>{{item.price}}/月</span>
+						<span><img src="/static/img/work_icon_position.png"> &nbsp;<span>{{item.position}}</span></span>
 					</p>
 					
 				</div>
@@ -43,7 +43,7 @@
 
 
 					<div @touchstart='next' id='next'>
-						<span id='xia' v-show='sets' >></span>
+						<span id='xia' v-show='sets' >点击加载更多...</span>
 					</div>
 				</div>
 
@@ -168,10 +168,8 @@
 	line-height: 20vw;
 	#xia{
 		display: inline-block;
-		font-size: 10vw;
-		transform: rotateZ(90deg);
+		font-size: 5vw;
 		color: #01d2b3;
-		animation: xia 1s infinite;
 	}
 
 }
@@ -240,14 +238,14 @@
 
 	.workBaseWarp{
 		width: 100%;
-		height: 32vw;
+		height: 28vw;
 		border-bottom: 2.66vw solid #eee;
 		>.workBase{
 			width: 100%;
 			height: 100%;
 			padding:4vw 4vw 0; 
 			>.top{
-				height: 18.4vw;
+				height: 14.4vw;
 				border-bottom: 1px solid #eee;
 				font-size: 4vw;
 				>.topOne{
@@ -270,7 +268,7 @@
 						border-radius: 1vw;
 						float: right;
 						text-align: center;
-						line-height: 6.66vw;
+						line-height: 7.5vw;
 					}
 
 				}
@@ -279,8 +277,14 @@
 
 					>:nth-child(1){
 						color: #f15a4a;
+						font-size: 3.63vw;
+						>:nth-child(1){
+							font-size: 2.4vw;
+						}
 					}
 					>:nth-child(2){
+							transform: translateY(0.5vw);
+
 						box-sizing: border-box;
 						color: #999999;
 						font-size: 2.66vw;
@@ -292,7 +296,12 @@
 						>img{
 							width: 2.93vw;
 							height: 3.73vw;
-							vertical-align: top;
+							vertical-align: bottom;
+						}
+						>span{
+							display: inline-block;
+							transform: translateY(0.5vw);
+
 						}
 					}
 				}
@@ -300,7 +309,7 @@
 			>.bom{
 				height: 7.6vw;
 				>.bomOne{
-					font-size: 2.66vw;
+					font-size: 3vw;
 					color: #999999;
 					line-height: 8.8vw;
 						>:nth-child(1){

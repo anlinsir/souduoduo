@@ -18,6 +18,8 @@
 								</span>
 								<span>评论{{item.comments}}条</span>
 								<span v-if='item.open && item.open.length' class="isOpen">营业中</span>
+								<span v-if='item.open && !item.open.length' class="isOpens">歇业中</span>
+
 							</p>
 							<p class="where" :data-id='item.shop_id'>
 								<span class="cate_title" v-if='item.cate_title || item.category_title'>{{item.cate_title  || item.category_title | re}}</span>
@@ -277,7 +279,7 @@
 
 		}
 		>li{
-			padding: 4vw 0;
+			padding-top: 4.5vw ;
 			min-height: 36.66vw;
 			box-sizing: border-box;
 			font-size: 2.66vw;
@@ -317,7 +319,8 @@
 								height: 4vw;
 								background-color: #ffec12;
 								color: #6f3f15;
-								line-height: 4vw;
+								line-height: 5vw;
+								border-radius: 1vw;
 								text-align: center;
 								margin-right: 1.6vw;
 							}
@@ -334,7 +337,7 @@
 
 						}
 						>.star{
-							>.isOpen{
+							>.isOpen,.isOpens{
 								width: 8.93vw;
 								height: 3.2vw;
 								display: inline-block;
@@ -343,10 +346,18 @@
 								background: linear-gradient(to right ,#41e9d0, #01d1b2);
 								float: right;
 								text-align: center;
-								line-height: 3.2vw;
+								line-height: 4vw;
+							}
+							>.isOpens{
+								background: linear-gradient(to right ,#ff8777, #fb6b5c);
+
 							}
 							>.starNUm{
-								margin-right: 4vw;
+								margin-right: 5vw;
+								background-image: url(/static/img/unstar.png);
+								background-size: 15.66vw 2.66vw;
+								background-repeat: no-repeat;
+
 								>div{
 									display: inline-block;
 									width: 15.46vw;
@@ -359,6 +370,7 @@
 										line-height: 2.66vw;
 										display: inline-block;
 										overflow: hidden;
+										    transform: translateY(0.3vw);
 										>img{
 											width: 15.46vw;
 											height: 2.66vw;

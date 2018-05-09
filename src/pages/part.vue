@@ -357,10 +357,10 @@
 						position: relative;
 						>span{
 						    border: 2vw solid;
-						    border-top: 1vw solid #666;
-						    border-right: 1vw solid transparent;
-						    border-left: 1vw solid transparent;
-						    border-bottom: 1vw solid transparent;
+						    border-top: 0.8vw solid #666;
+						    border-right: 0.8vw solid transparent;
+						    border-left: 0.8vw solid transparent;
+						    border-bottom: 0.8vw solid transparent;
 						    position: absolute;
 					        top: 4.5vw;
 							left: 14vw;

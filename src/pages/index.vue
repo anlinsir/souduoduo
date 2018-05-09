@@ -43,7 +43,8 @@
 			<section class="discountsWarp"> 
 				<img src="/static/img/jgDiscounts.png">
 				<transition-group class='Warp' tag='div'  name="slide-fade" mode="out-in">
-					<dl @touchstart='getpri(item.privilege_id,$event)' @touchend='getpri(item.privilege_id,$event)' @touchmove='getpri(item.privilege_id,$event)' :data-id='item.privilege_id' v-show='yes == index' v-for='(item,index) in discounts' :key='index'>
+					<!-- @touchstart='getpri(item.privilege_id,$event)' @touchend='getpri(item.privilege_id,$event)' @touchmove='getpri(item.privilege_id,$event)' -->
+					<dl @click='getpri(item.privilege_id)'  :data-id='item.privilege_id' v-show='yes == index' v-for='(item,index) in discounts' :key='index'>
 						<dt><img :src="item.image + '200_200.jpg'"></dt>
 						<dd>
 							<p class="oncep">{{item.title}}</p>
@@ -57,7 +58,7 @@
 			<section class="merchantWarp">
 				<div class="merchantWarpHeader">
 					<p>精选商家</p>
-					<p @click='toMer'>更多 > </p>
+					<p @click='toMer'>更多 <img src="/static/img/home_icon_hkjt.png">	</p>
 				</div>
 				<ul class="merchantShow">
 					<li @click='touseddetail(item.shop_id)' :data-merchant-id='item.merchant_id' :data-shop-id='item.shop_id' v-for='(item,index) in merchant' :key='index'>
@@ -75,17 +76,35 @@
 			<!-- .. -->
 			<section class="routerPart">
 				<div class="routerLink">
-					<p :data-id='index' @click='changeActive(index)' :class="active == index ? 'active' : '' " v-for='(item,index) in two' :key ='index' >
+					<div class="routerText" :data-id='index' @click='changeActive(index)' :class="active == index ? 'active' : '' " v-for='(item,index) in two' :key ='index' >
+						<div class="routerBorder" v-if='active == index'></div>
 						{{item}}
-					</p>
+					</div>
 				</div>
 				<div class="routerView">
 					<dl @click='toUsedDetail(item.id? item.id : item.shop_id ,active)' id='getid' :data-id="item.id ?  item.id : 'item.shop_id' "  v-for='(item,index) in newest'  :key='index'>
 						<dt><img :src="item.image + '200_200.jpg' " /></dt>
 						<dd>
-							<p>{{item.title ? item.title : item.zh_name}} <span v-show='hows' > </span></p>
-							<p><span :style="{color:item.score ? '#999' : ''}">{{ item.price ? '$' + item.price : item.score + '分'}}</span><span v-if='item.price' :style="{height:'4vw',width:'9.6vw',fontSize:'2.8vw',border:'1px solid',color:item.role == 1 ? '#00d1b2' : '#fb6b5c'}">{{item.role == 1 ? '个人' : item.role == 2 ? '商家'  : '经纪人' }}</span></p>
-							<p><span >{{item.address ? item.address : item.cate_title}}</span><span>{{item.create_time ? item.create_time : item.distance + '英里'}}</span></p>
+							<p class="viewp1">{{item.title ? item.title : item.zh_name}} <span class="ren" v-if='item.license == 2 '><img src="/static/img/businessservice_icon_vip.png"></span> </p>
+							<p class="viewp2">
+								<span class="prisoc" :style="{color:item.score ? '#999' : ''}">
+									<span class="sWarp" v-if='item.score'>
+										<span class="stars" :style="{width:Number(item.score)*10  + '%'}" >
+											<img src="/static/img/vehicle_icon_star.png">
+										</span>
+									</span>
+									<span v-if='item.price' class="pSpan">$</span>{{ item.price ? item.price : item.score }}
+									<span v-if='item.comments'>评论{{item.comments}}条</span>
+									<span v-if='item.open && item.open.length' class="open">营业中</span>
+									<span v-if='item.open && !item.open.length' class="openn">歇业中</span>
+
+								</span>
+
+								<span class="type" v-if='item.price' :style="{height:'4vw',width:'9.6vw',fontSize:'2.8vw',border:'1px solid',color:item.role == 1 ? '#00d1b2' : '#fb6b5c',lineHeight:'4.8vw'}">
+									{{item.role == 1 ? '个人' : item.role == 2 ? '商家'  : '经纪人' }}
+								</span>
+							</p>
+							<p class="viewp3"><span >{{item.address ? item.address : item.cate_title}}</span><span>{{item.create_time ? item.create_time : item.distance + '英里'}}</span></p>
 						</dd>
 						
 					</dl>
@@ -206,7 +225,7 @@
 				tem2:[],
 				newest:[],//最新发布 和 附近商家,
 				hows:false,
-				flag:1
+				flag:true
 
 			
 			})
@@ -229,7 +248,9 @@
 			}
 			,
 			getpri(id,e){
-				 switch (e.type) {
+				 this.$router.push({path:`/pridetail/${id}`})
+				 return
+				 switch (e.type) { 
 	                case 'touchstart':
 	                    this.flag = true;
 	                    break;
@@ -239,8 +260,10 @@
 	                case 'touchend':
 	                    if(this.flag){
 	                     	 this.$router.push({path:`/pridetail/${id}`})
+
 	                    }else{
 	                    // 滑动事件
+
 	                    console.log('move')
 	                    }
 	                        default:
@@ -434,6 +457,7 @@
 						background-color: #fff;
 						color: #00d1b2;
 						margin-right: 3.2vw;
+						border:1px solid;
 					}
 					>.downApp{
 						box-sizing: border-box;
@@ -474,11 +498,10 @@
 							margin: 0;
 						}
 						>span:not(.new){
-							font-size: 2.8vw;
-
-overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+							font-size: 3vw;
+							overflow: hidden;
+						    text-overflow: ellipsis;
+						    white-space: nowrap;
 
 						}
 						.new{
@@ -534,10 +557,11 @@ overflow: hidden;
 						>dd{
 							float: left;
 							padding-left: 4.8vw;
+							font-weight: 600;
 							box-sizing: border-box;
 						
 							>p{
-								font-size: 3vw;
+								font-size: 3.5vw;
 								color: #333333;
 							}
 							>.oncep{
@@ -562,13 +586,22 @@ overflow: hidden;
 						font-size: 4vw;
 						color: #9e7141;
 						float: left;
-						font-weight: 600;
+						font-weight: bold;
 					}
 					:nth-child(2){
 						font-size: 3.2vw;
 						color: #999;
+							margin-top: 0.5vw;
+
 						float: right;
-						margin-top: 0.5vw;
+						>img{
+							margin-left: 1.33vw;
+							height: 2.16vw;
+							width:1.06vw;
+							    margin-top: 0.8vw;
+							float: right;
+							vertical-align: middle;
+						}
 					}
 				}
 				>.merchantShow{
@@ -594,15 +627,15 @@ overflow: hidden;
 							}
 							:nth-child(2){
 								display: inline-block;
-								font-size: 2.53vw;
+								font-size: 2.9vw;
 								text-align: center;
 								margin-left: 1.5vw;
 								border: 1px solid #00d1b2;
 								border-radius: 1vw;
-								width: 13.53vw;
-								height: 3.46vw;
+								width: 13vw;
+								height: 2.5vw;
 								margin-top:1vw;
-								line-height: 3.46vw;
+								line-height: 3.5vw;
 								padding : .5vw 0;
 									
 overflow: hidden;
@@ -629,17 +662,28 @@ overflow: hidden;
 					display: flex;
 					justify-content: space-between;
 					margin-bottom:2px; 
-					>p{
+					>.routerText{
 						width: 50%;
 						height: 100%;
 						line-height: 11.86vw;
 						text-align: center;
 						font-size: 3.33vw;
 						color: #999;
+						font-weight: bold;
+						position: relative;
+						>.routerBorder{
+
+							position: absolute;
+							width: 10.66vw;
+							border: 2px solid #00d1b2;
+						    bottom: -2px;
+							left: 50%;
+							transform: translateX(-50%);
+						}
 					}
 					>.active{
-							border-bottom: 1px solid #00d1b2;
 							color: #333;
+
 						}
 				}
 				>.routerView{
@@ -664,7 +708,8 @@ overflow: hidden;
 								text-overflow: ellipsis;
 							    white-space: nowrap;
 							    overflow: hidden;
-							:nth-child(1){
+							>.viewp1{
+								margin-bottom: 0vw;
 								width: 68vw;
 								margin-left: 4vw;
 								font-size: 4vw;
@@ -672,13 +717,28 @@ overflow: hidden;
 								text-overflow: ellipsis;
 							    white-space: nowrap;
 							    overflow: hidden;
+							    >.ren{
+							    	display: inline-block;
+							    	width: 3.46vw;
+							    	height: 3.46vw;
+							    	float: right;
+							    	>img{
+							    	width: 3.46vw;
+							    	height: 3.46vw;
+							    	    transform: translateX(-0.7vw);
+							    	}
+							    }
+
 							}
-							:nth-child(2){
-								:nth-child(1){
+							>.viewp2{
+								margin-left: 4vw;
+
+								margin-bottom:4vw;
+								>.prisoc{
 									color: #f15a4a;
-									font-size: 3.33vw;
+									font-size: 3.63vw;
 								}
-								:nth-child(2){
+								>.type{
 									display: inline-block;
 									width: 9.3vw;
 									height: 4vw;
@@ -687,13 +747,59 @@ overflow: hidden;
 									line-height: 4vw;
 									float: right;
 								}
+								.pSpan{
+									margin-left: 0;
+									font-size: 2.4vw;
+								}
+								.open,.openn{
+									float: right;
+									margin-top: 1vw;
+									width: 8.93vw;
+									height: 3.2vw;
+									font-size: 2.26vw;
+									color: #fff;
+									text-align: center;
+									line-height: 3.5vw;
+									display: inline-block;
+									background: linear-gradient(to right ,#41e9d0, #01d1b2);
+								}
+									
+								.openn{
+									background: linear-gradient(to right ,#ff8777, #fb6b5c);
+								}
+								
+								.sWarp{
+										display: inline-block;
+											width: 15.66vw;
+											height: 2.66vw;
+											overflow: hidden;
+											background-image: url(/static/img/unstar.png);
+											background-repeat: no-repeat;
+											background-size: 15.66vw 2.66vw;
+										.stars{
+											display: inline-block;
+											
+											overflow: hidden;
+
+											>img{
+												vertical-align: top;
+												width: 15.66vw;
+												height: 2.66vw;
+											}
+									}
+								}
+								
+							
 							}
-							:nth-child(3){
+							>.viewp3{
+								margin-left: 4vw;
+
 								:nth-child(1){
-									font-size: 2.66vw;
+									font-size: 3vw;
 									color: #999999;
 								}
 								:nth-child(2){
+									margin-top:1.3vw;
 									float: right;
 									font-size: 2.66vw;
 									color: #999999;

@@ -7,7 +7,7 @@
 
 
 		<header>
-			<span @click='toIndex' class="back"><</span>
+			<span @click='toIndex' class="back"><img src="/static/img/trader_icon_jdown_green.png"></span>
 			<span>{{title}}</span>
 			<p @click='goToIndex'>
 				<img class="aa" src="/static/img/home_icon_home_gray.png">
@@ -151,7 +151,7 @@
 
 
 
-					<div @click='moreDetail(it.id)' :data-id='it.id' class="commends" v-for='(it,index) in recommend'>
+					<div @touchstart='moreDetail(it.id)'  @touchend='moreDetail(it.id)'  @touchmove='moreDetail(it.id)' :data-id='it.id' class="commends" v-for='(it,index) in recommend'>
 						<img :src="it.image + '200_200.jpg'">
 						<p class="commendsTitle">{{it.zh_name ? it.zh_name : it.title}}</p>
 						<p class="commendsStar">
@@ -236,14 +236,33 @@
 
 			},	
 			moreDetail(id){
-			if(this.$route.query.tyep == 'jour'){
-				this.$router.push({path:`/detailT/${id}`,query:{tyep:"jour"}})
-				location.reload()
-				return
-			}
 
-				this.$router.push({path:`/detailT/${id}`,query:{tyep:"mer"}})
-					location.reload()
+				 switch (e.type) {
+	                case 'touchstart':
+	                    this.flag = true;
+	                    break;
+	                case 'touchmove':
+	                    this.flag = false;
+	                    break;
+	                case 'touchend':
+	                    if(this.flag){
+	                       if(this.$route.query.tyep == 'jour'){
+								this.$router.push({path:`/detailT/${id}`,query:{tyep:"jour"}})
+								location.reload()
+								return
+							}
+
+								this.$router.push({path:`/detailT/${id}`,query:{tyep:"mer"}})
+									location.reload()
+	                    }else{
+	                    // 滑动事件
+	                    
+
+	                    }
+	                        default:
+	                            break;
+	                    } 
+			
 
 			},
 
@@ -307,7 +326,8 @@
 				imgs:[],
 				title:null,
 				query:null,
-				imgShow:false
+				imgShow:false,
+				flag:true
 			})
 		},
 		created(){
@@ -436,6 +456,11 @@
 				width: 5vw;
 				font-size: 8vw;
 				color: #00d1b2;
+				>img{
+				transform: rotateZ(90deg) translateX(5vw);
+				width: 5vw;
+				height: 2.26vw;
+				}
 			}
 
 		}
@@ -786,7 +811,7 @@ overflow: hidden;
 						padding-left:1.33vw; 
 						height: 5.33vw;
 						font-size: 3.2vw;
-						border-left: 1vw solid #00d1b2;
+						border-left: 4px solid #00d1b2;
 					}
 
 				}
@@ -880,7 +905,7 @@ overflow: hidden;
 					>span{
 						display: inline-block;
 						height: 5.33vw;
-						border-left: 1vw solid #00d1b2;
+						border-left: 4px solid #00d1b2;
 						color: #999999;
 						line-height: 5.33vw;
 						padding-left: 2.13vw;

@@ -1,7 +1,12 @@
 <template>
 	<header>
 		<!-- @click='toSearch' -->
-			<span @click='toIndex' v-if='left' :style="{color: color ? color : '' }"  class="back"><</span><input v-model='text' @click='toseac'  @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称" />
+			<span @click='toIndex' v-if='left == 1' :style="{color: color ? color : '' }"  class="back"><img class="backk" src="/static/img/return_black.png"></span>
+			<span @click='toIndex' v-if='left == 2' :style="{color: color ? color : '' }"  class="back"><img class="backk" style="transform: rotateZ(90deg) translateX(-1vw) translateY(-1vw);
+				width: 5vw;
+				height: 2.26vw;" src="/static/img/trader_icon_jdown_green.png"></span>
+
+			<input v-model='text' @click='toseac'  @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称" />
 			<span class="posi" v-show='0'>dsdddsdsds</span>
 	</header>
 
@@ -84,6 +89,11 @@
 				font-size: 8vw;
 				margin-right: 5vw;
 			}
+			.backk{
+				width: 2.26vw;
+				height: 4.8vw;
+
+			}
 			>input{
 				width: 100%;
 				border: none;
@@ -92,6 +102,9 @@
 				text-align: center;
 				outline: none;
 				font-size: 3.2vw;
+				background-image: url(/static/img/home_icon_search.png);
+				background-repeat: no-repeat;
+				background-position: 28.06%;
 
 			}
 			.posi{

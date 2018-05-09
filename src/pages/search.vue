@@ -2,7 +2,9 @@
 	<div class="warp">
 		<div v-show='showw' class="float">
 			<div class="header">
-				<span @click='otherShow'>></span><span>选择类别</span>
+				<span @click='otherShow'><img style="transform: rotateZ(90deg) translateX(5vw) translateY(-4vw);
+				width: 5vw;
+				height: 2.26vw;" src="/static/img/trader_icon_jdown_green.png"></span><span>选择类别</span>
 			</div>
 			<ul>
 				<li @click='getPart' :data-id='index' :key='index'  v-for='(item,index) in parts'>
@@ -12,7 +14,7 @@
 				
 			</ul>
 		</div>
-		<Header left='1' color='#00d1b2'  @show='show' :part='part'></Header>
+		<Header left='2' color='#00d1b2'  @show='show' :part='part'></Header>
 
 		<main>
 			 <dl v-for='(item,index) in productList' :key='index'>

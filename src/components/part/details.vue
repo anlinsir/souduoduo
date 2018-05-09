@@ -1,7 +1,7 @@
 <template>
 	<div class="warp">
 		<header>
-			<span @click='toIndex'><</span>
+			<span @click='toIndex'><img src="/static/img/trader_icon_jdown_green.png"></span>
 			<span>详情</span>
 			<p>
 				<img src="/static/img/businessservice_icon_phone_m.png">
@@ -19,14 +19,14 @@
 						<dd>
 							<p class="over">{{item.nickname}}</p>
 							<p class="dlP">
-								<p class="san" style="display: inline-block; color: #666666;font-size: 2.6vw;width: 40vw;overflow: hidden;
+								<p class="san" style="display: inline-block; color: #666666;font-size:3vw;width: 58vw;overflow: hidden;
 								text-overflow:ellipsis;
 								white-space: nowrap;">
-									<span style="margin-right: 5vw;color: #666666;font-size: 2.6vw">{{item.create_time}}</span>
-									<span style="color: #666666;font-size: 2.6vw;">{{item.city}} </span>
-									<span style="color: #666666;font-size: 2.6vw">{{item.address}}</span>
+									<span style="margin-right: 5vw;color: #666666;font-size: 3vw">{{item.create_time}}</span>
+									<span style="color: #666666;font-size: 3vw;">{{item.city}} </span>
+									<span style="color: #666666;font-size: 3vw">{{item.address}}</span>
 								</p>
-								<span style="float: right;color: #f15a4a">${{item.price}}</span>
+								<span style="float: right;color: #f15a4a;font-size: 4vw;"><span style="font-size: 2.5vw;">$</span>{{item.price}}</span>
 
 							</p>
 						</dd>
@@ -50,8 +50,8 @@
 			<!-- 基本信息  end -->
 
 			<div v-if='work != 3' class="want">
-				<div class="heImg">
-					<img v-if='thumbs && thumbs.length > 0' src="#" v-for='(item,index) in thumbs' :key='index'>
+				<div class="heImg"><!-- 
+					<img v-if='thumbs && thumbs.length > 0' src="#" v-for='(item,index) in thumbs' :key='index'> -->
 					
 					<span class="wantProson">想要{{thumbs && thumbs.length > 0 ?thumbs.length:0}}</span>
 
@@ -64,7 +64,7 @@
 				<div class="workTop">
 					<p>{{item.title}}</p>
 					<p>${{item.price}}/每月</p>
-					<p><span>更新：{{item.create_time}}</span><span>{{item.browse}}</span></p>
+					<p><span>更新：{{item.create_time}}</span><span><img src="/static/img/recruitment_icon_read.png">{{item.browse}}人</span></p>
 				</div>
 				<div class="workBot">
 					职位：<span>{{item.category_name}}</span>地点：<span>{{item.city}}{{item.area}}</span>
@@ -95,17 +95,18 @@
 				<div class="proson" v-if='role == 1' v-for='(item,index) in details' :key='index'>
 					<dl>
 						<dt><img :src="item.header_img"></dt>
-						<dd><span>{{item.nickname}}</span><span>查看更多信息></span></dd>
+								
+						<dd><span>{{item.nickname}}</span><span>查看更多信息 <img  src="/static/img/home_icon_hkjt.png"></span></dd>
 					</dl>
 				</div>
 				<div class="merchant" v-else='role'>
-					<p class="headerShow"><span>{{ role == 2 ? '商家': '经纪人'}}信息</span><span>查看详细信息></span></p>
+					<p class="headerShow"><span>{{ role == 2 ? '商家': '经纪人'}}信息</span><span>查看详细信息 <img src="/static/img/home_icon_hkjt.png">	</span></p>
 					<dl v-for='(item,index) in details' :key='index'>
 						<dt>
 							<img :src="item.merchant.header ? item.merchant.header : item.merchant.header_img ">
 						</dt>
 						<dd>
-							<span>{{item.merchant.zh_name ? item.merchant.zh_name : ' '}} <img style="width: 3.46vw;height: 3.46vw;" src="/static/img/businessservice_icon_vip.png"></span>
+							<span>{{item.merchant.zh_name ? item.merchant.zh_name : ' '}} <img style="width: 3.46vw;height: 3.46vw;vertical-align: middle; " src="/static/img/businessservice_icon_vip.png"></span>
 							<span>{{item.merchant.en_name}}</span>
 						</dd>						
 					</dl>
@@ -124,7 +125,11 @@
 							</li>
 							<li>
 								<span>{{item.score || '0.0'}}</span>
-								<p :style="{width:item.score? item.score : 100  + '%'}"><img  src="/static/img/vehicle_icon_star.png"></p>
+								<span class="starWarp">
+									<span class="starWidth" :style="{width:item.score? item.score : 0  + '%'}">
+										<img  src="/static/img/vehicle_icon_star.png">
+									</span>
+								</span>
 							</li>
 
 						</ul>
@@ -282,6 +287,13 @@
 				display: inline-block;
 				font-size: 8vw;
 				color: #00d1b2;
+				>img{
+				transform: rotateZ(90deg) translateX(5vw);
+
+				width: 5vw;
+				height: 2.26vw;
+
+				}
 			}
 			:nth-child(3){
 				float: right;
@@ -316,12 +328,13 @@
 					width: 100%;
 					height: 26.26vw;
 					border: 1px solid #eee;
-					padding: 4.66vw 4vw 3.5vw;
+					padding: 4.66vw 4vw 3vw;
 					box-sizing: border-box;
 					display: flex;
 					flex-direction: column;
 					justify-content: space-between;
 					>:nth-child(1){
+
 						font-size: 4.5vw;
 					}
 					>:nth-child(2){
@@ -329,10 +342,16 @@
 						color: #fb6b5c;
 					}
 					>:nth-child(3){
-						font-size: 2.93vw;
+						font-size: 3.2vw;
 						color: #999999;
 						:nth-child(2){
 							float: right;
+							>img{
+								width: 3.73vw;
+							    height: 2.66vw;
+							    transform: translateX(-0.7vw) translateY(0.2vw);
+							    vertical-align: baseline;
+							}
 						}
 					}
 				}
@@ -400,6 +419,7 @@
 							margin-left: 3.2vw;
 
 							>.over{
+								font-size: 4vw;
 								overflow: hidden;
 								text-overflow:ellipsis;
 								white-space: nowrap;	
@@ -445,14 +465,17 @@
 				background-color: #fff;
 				width: 100%;
 				padding: 0 4vw;
+				font-size: 3vw;
 				box-sizing: border-box;
 				height: 10.93vw;
+					line-height: 5.8vw;
+
 				margin-bottom: 2.66vw;
 				>.heImg{
 					width: 23vw;
 					height: 5.33vw;
 					position: relative;
-					line-height: 5.33vw;
+					line-height: 5.8vw;
 					display: inline-block;
 					margin-top: 2.93vw;
 					>img{
@@ -469,15 +492,17 @@
 						z-index: 3;
 					}
 					>.wantProson{
-						color: #31aefe;
-						font-size: 2.93vw;
+							color: #31aefe;
+				font-size: 3.5vw;
+				transform: translateY(0.3vw);
+						
 						float: right;
 					}
 				}
 				>p{
 					float: right;
 					margin-top: 2.93vw;
-					font-size: 2.66vw;
+					
 					color:#999999;
 				}
 				
@@ -533,7 +558,7 @@
 							>img{
 								width: 100%;
 								height: 100%;
-								border-radius: 50%;
+								border-radius: 50%; 
 
 							}	
 						}
@@ -543,11 +568,18 @@
 							font-weight: 600;
 							margin-top: 3.6vw;
 							>:nth-child(2){
-								font-size: 3.33vw;
+								font-size: 4vw;
 								color: #00d1b2;
 								font-style: italic;
 								font-weight: normal;
 								float: right;
+								>img{
+								width: 1.86vw;
+								margin-left: 0.5vw;
+
+								height: 3.46vw;
+								transform: translateY(0.3vw);
+								}
 							}
 						}
 
@@ -558,13 +590,21 @@
 					min-height: 20vw;
 					background-color: #fff;
 					>.headerShow{
-						font-size: 3.46vw;
+						font-size: 4vw;
 						color: #666666;
 						margin-bottom: 4vw;
+						padding-top: 4vw; 
 						>:nth-child(2){
 							float: right;
 							font-style: italic;
 							color: #00d1b2;
+							>img{
+								width: 1.86vw;
+								margin-left: 0.5vw;
+
+								height: 3.46vw;
+								transform: translateY(0.3vw);
+							}
 						}
 					}
 					>dl{
@@ -599,35 +639,54 @@
 					>.detail{
 						width: 100%;
 						height: 22vw;
+						padding:  0 0 2vw 0;
 						>ul{
 							display: flex;
-						height: 22vw;
-
+							height: 22vw;
+							margin-bottom: 0;
 							>li:not(:nth-child(3)){
 								width: 33.3%;
-								height: 22vw;
-
+								height: 20vw;
 								border-right: 1px solid #eee;
 							}
 							>:nth-child(2){
 								>p{
+
 									padding-left: 7.5vw;
 									box-sizing: border-box; 
+									>:nth-child(1){
+										margin-right: 1vw;
+									}
 								}
 							}
 							>:nth-child(3){
 									float: right;
 								    padding-left: 6vw;
-								    padding-top: 4vw;
+								    padding-top: 3vw;
 									width: 20.8vw;
+									height: 20vw;
 									text-align: center;
-								>p{
-
+								>.starWarp{
+									text-align: left;
+									width: 20.8vw;
+									height: 3.73vw;
+									background-image: url(/static/img/unstar.png);
+									background-repeat: no-repeat;
+									background-size: 20.8vw 3.73vw;
 									overflow: hidden;
+									display: inline-block;
+									transform: translateY(-1.5vw);
 
-									>img{
+									>.starWidth{
 										width: 20.8vw;
 										height: 3.73vw;
+										display: inline-block;
+										overflow: hidden;
+										>img{
+										width: 20.8vw;
+										height: 3.73vw;
+										vertical-align: baseline;
+										}
 									}
 								}
 								>span{
@@ -644,7 +703,7 @@
 									height: 4.26vw;
 									line-height: 4.26vw;
 									margin-bottom: 2.66vw;
-									font-size: 2.66vw;
+									font-size: 3vw;
 									>img{
 										width: 4.26vw;
 										height: 4.26vw;
@@ -659,7 +718,7 @@
 								padding-top: 1vw;
 								box-sizing: border-box;
 								>p{
-									font-size: 2.66vw;
+									font-size: 3vw;
 									color: #353535;
 									margin-bottom: 3vw;
 

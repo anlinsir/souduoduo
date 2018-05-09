@@ -164,13 +164,17 @@
 					font-size: 3.33vw;
 					padding:  0 3.73vw;
 					box-sizing: border-box;
-					color: #fff;					
+					color: #fff;		
 					>span{
 						width: 3.33vw;
 						display: inline-block;
 						margin: 0 auto;
 						letter-spacing:0.3em;
+					line-height: 0.3em;	
+
 						position: relative;
+					writing-mode:lr-tb;		
+
 
 
 					} 
@@ -196,11 +200,15 @@
 					box-sizing: border-box;
 					color: #fff;					
 					>span{
-						width: 3.33vw;
-						display: inline-block;
-						margin: 0 auto;
-						letter-spacing:0.3em;
-						position: relative;
+					    width: 3.33vw;
+					    display: inline-block;
+					    letter-spacing: 0.1em;
+					    position: relative;
+					    -webkit-writing-mode: lr-tb;
+					    -ms-writing-mode: lr-tb;
+					    writing-mode: tb-rl;	
+					    transform: translateY(1.5vw) translateX(0.5vw);
+
 
 
 					} 

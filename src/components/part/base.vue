@@ -5,8 +5,8 @@
 				<dl :data-id='item.id'>
 					<dt><img :data-id='item.id' :src="item.image + '200_200.jpg'"></dt>
 					<dd :data-id='item.id'>
-						<p :data-id='item.id'><span :data-id='item.id' v-if='item.isStick' class="issss">置顶</span> <span :data-id='item.id'>{{item.title}}</span></p>
-						<p :data-id='item.id'><span :data-id='item.id'>${{item.price}}</span>
+						<p :data-id='item.id'><span :data-id='item.id' v-if='!item.isStick' class="issss">置顶</span> <span :data-id='item.id'>{{item.title}}</span></p>
+						<p :data-id='item.id'><span :data-id='item.id' style="font-size: 3.63vw;"><span style='font-size: 2.4vw;'>$</span>{{item.price}}</span>
 
 
 
@@ -38,7 +38,7 @@
 		<div v-show='sets' id='next' @click='getnext'>
 			<div v-show='show' class="fff"></div>
 
-			<span id='xia' data-iid='id'>></span>
+			<span id='xia' data-iid='id'>点击加载更多...</span>
 
 		</div>
 	</div>
@@ -132,10 +132,8 @@
 	line-height: 20vw;
 	#xia{
 		display: inline-block;
-		font-size: 10vw;
-		transform: rotateZ(90deg);
+		font-size: 5vw;
 		color: #01d2b3;
-		animation: xia 1s infinite;
 	}
 	.fff{
 			position: absolute;
@@ -238,37 +236,42 @@
 				>dd{
 					width: 60vw;
 					margin-left: 4vw;
-
 					height: 20.53vw;
 					
 					>p{
 						width: 68vw;
-						margin-bottom: 3vw;
 						overflow: hidden;
 						text-overflow:ellipsis;
 						white-space: nowrap;
 						font-size: 4vw;
 					}
-					:nth-child(1){
+					>:nth-child(1){
+						width: 55vw;
 						>.issss{
 							display: inline-block;
 							width: 7.2VW;
 							height: 4vw;
-							font-size: 2.53vw;
+							font-size: 2.5vw;
+							transform: translateY(-0.7vw);
 							background-color: #ffef07;
 							color: #6f3f15;
+							border-radius: 1vw;
+
 							text-align: center;
-							line-height: 4vw;
+							line-height: 4.5vw;
 
 						}
 						:nth-child(2){
 							color: #353535;
+
 						}
 
 
 
 					}
-					:nth-child(2){
+					>:nth-child(2){
+					    margin-top: 0.56vw;
+  						margin-bottom: 6.5vw;
 						:nth-child(1){
 							color: #f15a4a;
 							font-size: 3.33vw;
@@ -283,7 +286,7 @@
 							border: 1px solid;
 							font-size: 2.66vw;
 							text-align: center;
-							line-height: 4vw;
+							line-height: 4.8vw;
 							border-radius: 1vw;
 						}
 						>.listProson{color: #00d1b2;border-color: #00d1b2;}
@@ -291,9 +294,9 @@
 						>.merchant{color: #fb6b5c;border-color: #fb6b5c;}
 
 					}
-					:nth-child(3){
+					>:nth-child(3){
 						color: #999;
-						font-size: 2.66vw;
+						font-size: 3vw;
 						:nth-child(1){}
 						:nth-child(2){}
 						:nth-child(3){

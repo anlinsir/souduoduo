@@ -1,7 +1,9 @@
 <template>
 	<div class="warp">
 		<header>
-			<span @click='toIndex' class="back"><</span>
+			<span @click='toIndex' class="back"><img style="transform: rotateZ(90deg) translateX(5vw);
+				width: 5vw;
+				height: 2.26vw;" src="/static/img/trader_icon_jdown_green.png"></span>
 			<span class="title">优惠券详情</span>
 			<p @click='merDetail'>
 				查看店铺
