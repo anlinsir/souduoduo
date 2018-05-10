@@ -13,7 +13,7 @@
 							<img :src=" '/static/img/' + item.img "/>
 							<span>{{item.country}}</span>
 						</dt>
-						<dd><p>{{item.num}}</p><p>{{item.nuit}}</p></dd>
+						<dd><p><input @input='changeVValue' @focus='changeValue' @blur='changeValues(item.num,$event)' type="number" name="num" :placeholder="item.num"></p><p>{{item.nuit}}</p></dd>
 						
 					</dl>
 				</li>
@@ -31,9 +31,26 @@
 
 
 <script>
+	import axios from 'axios'
 	import Footer from '../../components/footer'
 
 	export default {
+		created(){
+			var id = '1'
+			axios.post(`http://rate.jglist.com/rate`,{id},{
+				 headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                      }
+			})
+				.then((res)=>{
+					console.log(res)
+			})
+			axios.get('http://106.14.56.22:9529/index.php?r=v2/exchangerate/rate&list&auth_name=id&grand_id=6&id=1&tx=3f556f66353c5945a3633ae209a3e0ff')
+				.then((res)=>{
+					console.log(res.data.data)
+				})
+		}
+		,
 		components:{
 			Footer			
 		},
@@ -41,6 +58,17 @@
 			toIndex(){
 				history.back()
 
+			},
+			changeValue(e){
+				e.target.placeholder = '100.00'
+				
+			},
+			changeValues(num,e){
+				e.target.placeholder = num
+
+			},
+			changeVValue(){
+				console.log('fcgjh')
 			}
 		},
 		data(){
@@ -81,8 +109,12 @@
 						nuit:'澳门元',
 
 					}
-				]
+				],
+				num:''
 			})
+		},
+		computed:{
+			
 		}
 	}
 </script>
@@ -153,11 +185,18 @@
 							margin-top: 2vw;
 							text-align: right;
 							float: right;
-							font-size: 2.93vw;
+							font-size: 3vw;
 							font-size: #333333;
 							>:nth-child(1){
+								>input{
+									border: none;
+									outline: none;
+									text-align: right;
+								font-size: 5vw;
 								color: #b2b2b2;
-								font-size: 3.46vw;
+
+
+								}
 							}
 						}
 					}

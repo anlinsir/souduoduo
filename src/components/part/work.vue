@@ -6,7 +6,7 @@
 				<div class="top">
 					<p class="topOne">
 						<span>{{item.title}}</span>
-						<span data-id='call' >立即联系</span>
+						<span @touchstart='openApp(item.id,$event)' @touchmove='openApp(item.id,$event)' @touchend='openApp(item.id,$event)'  data-id='call' >立即联系</span>
 					</p>
 
 					<p class="topTwo">
@@ -75,6 +75,46 @@
 			})
 		},
 		methods:{
+			openApp(id,e){
+			
+			 switch (e.type) {
+	                case 'touchstart':
+	                    this.flag = true;
+	                    break;
+	                case 'touchmove':
+	                    this.flag = false;
+	                    break;
+	                case 'touchend':
+	                    if(this.flag){
+	                     this.imgShow = false
+									if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
+											
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=3&id=${id}`
+											
+										setTimeout(()=>{
+											window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+										},1500)
+										
+									}else if(window.navigator.userAgent.indexOf('Android') != -1){
+										
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=3&id=${id}`
+										
+											setTimeout(()=>{
+												window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+											},1500)
+									}
+	                    }else{
+	                    // 滑动事件
+	                    
+
+	                    }
+	                        default:
+	                            break;
+	                    } 
+
+
+			}
+			,
 			next(){
 
 				this.sets  = false

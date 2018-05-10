@@ -60,7 +60,7 @@
 		<div v-show='sets' id='next' @touchstart='next'>
 					<div v-show='showff' class="fff"></div>
 
-					<span id='xia' data-iid='id'>></span>
+					<span id='xia' data-iid='id'>点击加载更多...</span>
 
 		</div>
 			
@@ -190,10 +190,8 @@
 	line-height: 20vw;
 	#xia{
 		display: inline-block;
-		font-size: 10vw;
-		transform: rotateZ(90deg);
+		font-size: 5vw;
 		color: #01d2b3;
-		animation: xia 1s infinite;
 	}
 	.fff{
 			position: absolute;

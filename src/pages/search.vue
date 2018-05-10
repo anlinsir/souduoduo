@@ -62,35 +62,35 @@
 
 				parts:[
 					{
-						img:'/static/img/search_icon_1.png',
+						img:'/static/img/search_icon_second@2x.png',
 						text:"闲置二手"
 					},
 					{
-						img:'/static/img/search_icon_2.png',
+						img:'/static/img/search_icon_car@2x.png',
 						text:"新旧车辆"
 					},
 					{
-						img:'/static/img/search_icon_3.png',
+						img:'/static/img/search_icon_jobs@2x.png',
 						text:"工作招聘"
 					},
 					{
-						img:'/static/img/search_icon_4.png',
+						img:'/static/img/search_icon_houes@2x.png',
 						text:"房屋租赁"
 					},
 					{
-						img:'/static/img/search_icon_5.png',
+						img:'/static/img/search_icon_service@2x.png',
 						text:"商家服务"
 					},
 					{
-						img:'/static/img/search_icon_6.png',
+						img:'/static/img/search_icon_food@2x.png',
 						text:"附近美食"
 					},
 					{
-						img:'/static/img/search_icon_7.png',
+						img:'/static/img/search_icon_offer@2x.png',
 						text:"附近优惠"
 					},
 					{
-						img:'/static/img/search_icon_8.png',
+						img:'/static/img/search_icon_tourism@2x.png',
 						text:"周边游"
 					}
 
@@ -113,6 +113,8 @@
 			},
 				getPart(e){
 				this.showw = false
+				this.sets = true
+				
 
 				this.part = Number(e.target.dataset.id) + 1
 				localStorage.Part = this.part 
@@ -133,7 +135,7 @@
 					this.productList =  res.data.data
 					this.sets = false
 					if(! this.productList.length ){
-						document.getElementsByTagName('main')[0].innerHTML='没有摘掉'
+						document.getElementsByTagName('main')[0].innerHTML='没有信息'
 					}
 				})
 

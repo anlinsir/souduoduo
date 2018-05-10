@@ -208,7 +208,7 @@
 						img:'/static/img/home_icon_trlt.png',
 						text:'在线翻译',
 						new:true,
-						to:'/part'
+						to:''
 
 					}
 				],
@@ -280,15 +280,13 @@
 			,
 			downAPP(){
 				if( window.navigator.userAgent.indexOf('iPhone' || 'iPad') != -1){
-						 window.location.href =`jglist://deeplinks/openWith?grand_id=1&id=140241`
+						 window.location.href =`jglist://deeplinks/openWith`
 					setTimeout(()=>{
 						window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
 					},1500)
-					setTimeout(()=>{
-						window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
-					},1500)
+					
 				}else if(window.navigator.userAgent.indexOf('Android') != -1){
-							 window.location.href =`jglist://deeplinks/openWith?grand_id=1&id=140241`
+							 window.location.href =`jglist://deeplinks/openWith`
 						setTimeout(()=>{
 							window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
 						},1500)
@@ -334,7 +332,12 @@
 	                    break;
 	                case 'touchend':
 	                    if(this.flag){
+	                    	if(!e.target.dataset.to){
+	                    		alert('该功能为简购生活APP内置功能，请打开简购生活APP使用')
+	                    		return
+	                    	};
 								this.$router.push(e.target.dataset.to)
+	                    	
 	                     	 
 	                    }else{
 	                    // 滑动事件
@@ -557,7 +560,6 @@
 						>dd{
 							float: left;
 							padding-left: 4.8vw;
-							font-weight: 600;
 							box-sizing: border-box;
 						
 							>p{

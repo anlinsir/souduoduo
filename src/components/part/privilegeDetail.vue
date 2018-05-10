@@ -77,7 +77,7 @@
 		</main>
 
 
-		<footer v-if='verify == 1'>
+		<footer v-if='verify == 1' @click='openApp'>
 			添加到卡包
 		</footer>
 		<footer v-if='verify != 1'  class="footer">
@@ -121,6 +121,13 @@
 		}
 		,
 		methods:{
+			openApp(){
+				window.location.href =`jglist://deeplinks/openWith?grand_id=7&id=${this.$route.params.id}`
+				setTimeout(()=>{
+					window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+				},1500)				
+			}
+			,
 			toIndex(){
 				//this.$router.push('/index')
 				//退后

@@ -28,7 +28,7 @@
 				</ul>
 			</div>
 			<div class="mainFooter">
-				查看更多图片，请	<span>下载简购生活APP</span>	
+				查看更多图片，请	<span @touchstart='down'  @touchend='down'>下载简购生活APP</span>	
 			</div>
 		</main> 
 
@@ -55,9 +55,9 @@
 				</p>
 				<!-- .. -->
 				<p class="star">
-					<span class="starIMG"><span :style="{width: Number(item.score)*10 + '%'}"><img src="/static/img/vehicle_icon_star.png"></span></span>
-					<span>{{item.mc_count || item.comments}}评价</span>
-					<span>{{item.cate_title}}</span>
+					<span class="starIMG"><span :style="{width: Number(item.score)*10 + '%'}"><img src="/static/img/vehicle_icon_star.png"></span></span> 
+					<span style="display: inline-block;transform: translateY(-0.5vw) translateX(-1vw);font-size: 3vw"> {{item.star? item.star :item.score}} &nbsp;&nbsp;&nbsp;{{item.mc_count || item.comments}}评价</span>
+					<span style="font-size: 3vw;">{{item.cate_title}}</span>
 				</p>
 					<!-- ... -->
 				<p class="score" v-if="query != jour">
@@ -74,25 +74,28 @@
 
 			</div>
 			<div  class="discounts">
-				<p @touchstart='down' :data-id='item.privilege_id'  v-for='(item,index) in item.activity' :key='index'>
+				<p  @touchstart='down' @touchend='down' @touchmove='down' :data-id='item.privilege_id'  v-for='(item,index) in item.activity' :key='index'>
 					<span v-if='item.verify || item.has_game '>{{item.verify ? item.verify == 1 ? '券' :'惠' : item.has_game ? '玩' : ''}}</span>
 					<span>{{item.title}}</span>
-					<span class="spanBtn" v-if='item.has_game'>游戏</span>
+					<span class="spanBtn" v-if='item.has_game' style="float: right;display: inline-block;transform: translateY(2vw);">游戏</span>
 					<span class="rows" v-if='!item.has_game' style="float: right;">></span>
 				</p>
 
-				<p @toushstart='down'>下载简购生活APP，享受更多优惠</p>
+				<p @touchstart='down' @touchend='down' @touchmove='down'>下载简购生活APP，享受更多优惠</p>
 
 			</div>
 
 			<div class="mapWarp">
-				<div class="map">
-					<img src="#">
+				<div class="map" >
+					<div style="width: 100%;height: 50vw;"  id='maps'>
+  						  <baidu-map :center="center" :zoom="zoom" @ready="handler" style="width: 100%;height: 45vw;"></baidu-map>
+						
+					</div>
 				</div>
 				<div class="other">
 					<p class="infomation">{{item.info ? item.info : '还没有介绍哦'}}</p>
 					<p class="poenMore" v-if='item.info'>展开全文</p>
-					<p class="phone">电话  <span class="text">{{item.tel}}</span><span class="call">拨号</span></p>
+					<p class="phone">电话  <span class="text">{{item.tel}}</span><span @touchstart='down' @touchend='down' @touchmove='down' class="call">拨号</span></p>
 					<p class="add"><span class="adddd">地址</span> <span class="text">{{item.address}}</span></p>
 				</div>
 
@@ -103,9 +106,9 @@
 
 			<div class="comment" >
 				
-					<dl @touchstart='down'  class="down">
+					<dl  class="down">
 						<dt><img src="/static/img/phone.png"></dt>
-						<dd>
+						<dd @touchstart='down' @touchend='down' @touchmove='down'>
 							<p>想参加{{item.zh_name ? item.zh_name : item.title}}的评论？</p>
 							<p>下载简购生活APP立即参与</p>
 						</dd>
@@ -124,7 +127,18 @@
 					<dt><img :src="items.user_header" ></dt>
 						<dd>
 							<p><span class="naem">{{items.user_nickname}}</span><span class="tiime">{{items.create_time}}</span></p>
-							<p>scope</p>
+							<p class="starrr" style="margin-top: 2vw;">
+								<span>
+									<span :style="{width: items.score ? Number(items.score) * 10 + '%' : Number(items.star) * 10 + '%'}">
+										<img style="width: 20.8vw;height: 3.73vw" src="/static/img/vehicle_icon_star.png">
+									</span>
+								</span>
+
+								<span style="    float: none;
+    transform: translateY(-0.25vw) translateX(1vw);
+    display: inline-block;
+">{{item.score ?item.score :item.star}}</span>
+							</p>
 							<p class="diration">{{items.comments}}</p>
 							<div class="imgComent" style="width: 100%;
 							display: flex;
@@ -138,7 +152,7 @@
 						</dd>
 						
 					</dl> 
-				<p class="moreComment">更多评论，请用简购生活APP查看</p>
+				<p class="moreComment" @touchstart='down' @touchend='down' @touchmove='down'>更多评论，请用简购生活APP查看</p>
 
 			</div>
 
@@ -151,7 +165,7 @@
 
 
 
-					<div @touchstart='moreDetail(it.id)'  @touchend='moreDetail(it.id)'  @touchmove='moreDetail(it.id)' :data-id='it.id' class="commends" v-for='(it,index) in recommend'>
+					<div @touchstart='moreDetail(it.id,$event)'  @touchend='moreDetail(it.id,$event)'  @touchmove='moreDetail(it.id,$event)' :data-id='it.id' class="commends" v-for='(it,index) in recommend'>
 						<img :src="it.image + '200_200.jpg'">
 						<p class="commendsTitle">{{it.zh_name ? it.zh_name : it.title}}</p>
 						<p class="commendsStar">
@@ -174,8 +188,8 @@
 
 			</div>
 
-			<div @click='down' class="bottomTip">
-				<div class="Warptext">
+			<div @touchstart='down' @touchend='down' @touchmove='down' class="bottomTip">
+				<div  class="Warptext">
 					<p >
 					更多华人资讯，安装简购生活APP即可获得
 					</p>
@@ -196,47 +210,89 @@
 	</div>
 </template>
 
-
+ 
 <script>
 	import axios from 'axios'
 	import Footer from '../../components/footer'
+
+
+ 
 	export default {
 		components:{
 			Footer
 		},
+		mounted(){
+			 // function initMap() {
+		  //       var uluru = {lat: -73.543676600, lng: 40.7112025};
+		  //       var map = new google.maps.Map(document.getElementById('app'), {
+		  //         zoom: 4,
+		  //         center: uluru
+
+		  //       });
+		  //       var marker = new google.maps.Marker({
+		  //         position: uluru,
+		  //         map: map
+		  //       });
+		  //     }
+		  //     initMap()
+		      
+		},
 		methods:{
-			down(){
-				this.imgShow = false
-				if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
-						if(this.$route.query.tyep == 'mer'){
-						 	window.location.href =`jglist://deeplinks/openWith?grand_id=12&id=${this.$route.params.id}`
-						}else if(this.$route.query.tyep == 'cate'){
-						 	window.location.href =`jglist://deeplinks/openWith?grand_id=6&id=${this.$route.params.id}`
-						}else if(this.$route.query.tyep == 'jour'){
-						 	window.location.href =`jglist://deeplinks/openWith?grand_id=8&id=${this.$route.params.id}`
-						}
-					setTimeout(()=>{
-						window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
-					},1500)
-					
-				}else if(window.navigator.userAgent.indexOf('Android') != -1){
-						if(this.$route.query.tyep == 'mer'){
-						 	window.location.href =`jglist://deeplinks/openWith?grand_id=12&id=${this.$route.params.id}`
-						}else if(this.$route.query.tyep == 'cate'){
-						 	window.location.href =`jglist://deeplinks/openWith?grand_id=6&id=${this.$route.params.id}`
-						}else if(this.$route.query.tyep == 'jour'){
-						 	window.location.href =`jglist://deeplinks/openWith?grand_id=8&id=${this.$route.params.id}`
-						}
-						setTimeout(()=>{
-							window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
-						},1500)
-				}
+			down(e){
+				console.log(e.type)
+			 switch (e.type) {
+	                case 'touchstart':
+	                    this.flag = true;
+	                    break;
+
+	                case 'touchmove':
+	                    this.flag = false;
+	                    break;
+	                case 'touchend':
+	                    if(this.flag){
+	                     this.imgShow = false
+									if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
+											if(this.$route.query.tyep == 'mer'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=12&id=${this.$route.params.id}`
+											}else if(this.$route.query.tyep == 'cate'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=6&id=${this.$route.params.id}`
+											}else if(this.$route.query.tyep == 'jour'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=8&id=${this.$route.params.id}`
+											}
+										setTimeout(()=>{
+											window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+										},1500)
+										
+									}else if(window.navigator.userAgent.indexOf('Android') != -1){
+											if(this.$route.query.tyep == 'mer'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=12&id=${this.$route.params.id}`
+											}else if(this.$route.query.tyep == 'cate'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=6&id=${this.$route.params.id}`
+											}else if(this.$route.query.tyep == 'jour'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=8&id=${this.$route.params.id}`
+											}
+											setTimeout(()=>{
+												window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+											},1500)
+									}
+	                    }else{
+	                    // 滑动事件
+	                    
+
+	                    }
+	                        default:
+	                            break;
+	                    } 
+
+
+				
 			},
 			jour(){
 
 			},	
-			moreDetail(id){
-
+			moreDetail(id,e){
+				console.log(e.type)
+				console.log(id)
 				 switch (e.type) {
 	                case 'touchstart':
 	                    this.flag = true;
@@ -245,17 +301,24 @@
 	                    this.flag = false;
 	                    break;
 	                case 'touchend':
-	                    if(this.flag){
+	                	console.log(this.flag)
+	                    if(this.flag == true){
 	                       if(this.$route.query.tyep == 'jour'){
 								this.$router.push({path:`/detailT/${id}`,query:{tyep:"jour"}})
 								location.reload()
 								return
-							}
+							}else if(this.$route.query.tyep == 'mer'){
 
 								this.$router.push({path:`/detailT/${id}`,query:{tyep:"mer"}})
 									location.reload()
+								}else{
+									this.$router.push({path:`/detailT/${id}`,query:{tyep:"cate"}})
+									location.reload()
+								}
+
 	                    }else{
 	                    // 滑动事件
+	                    return
 	                    
 
 	                    }
@@ -283,6 +346,30 @@
 			},
 			showImg(e){
 				if(e.target.className == 'viewM'){
+					if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
+											if(this.$route.query.tyep == 'mer'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=12&id=${this.$route.params.id}`
+											}else if(this.$route.query.tyep == 'cate'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=6&id=${this.$route.params.id}`
+											}else if(this.$route.query.tyep == 'jour'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=8&id=${this.$route.params.id}`
+											}
+										setTimeout(()=>{
+											window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+										},1500)
+										
+									}else if(window.navigator.userAgent.indexOf('Android') != -1){
+											if(this.$route.query.tyep == 'mer'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=12&id=${this.$route.params.id}`
+											}else if(this.$route.query.tyep == 'cate'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=6&id=${this.$route.params.id}`
+											}else if(this.$route.query.tyep == 'jour'){
+											 	window.location.href =`jglist://deeplinks/openWith?grand_id=8&id=${this.$route.params.id}`
+											}
+											setTimeout(()=>{
+												window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+											},1500)
+									}
 					return
 				}
 
@@ -316,7 +403,13 @@
 			},
 			goToIndex(){
 				this.$router.push('/index')
-			}
+			},
+			  handler ({BMap, map}) {
+      console.log(BMap, map)
+      this.center.lng = 116.404
+      this.center.lat = 39.915
+      this.zoom = 15
+    }
 		},
 		data(){
 			return({
@@ -327,7 +420,10 @@
 				title:null,
 				query:null,
 				imgShow:false,
-				flag:true
+				flag:true,
+				 center: {lng: 0, lat: 0},
+  			    zoom: 3
+					
 			})
 		},
 		created(){
@@ -600,6 +696,9 @@ overflow: hidden;
 						display: inline-block;
 						height: 3.73vw;
 						width: 20.8vw;
+						background-image: url(/static/img/unstar.png);
+						background-size: 20.8vw 3.73vw;
+						background-repeat: no-repeat;
 						>span{
 							display: inline-block;
 							width: 10.8vw;
@@ -856,8 +955,27 @@ overflow: hidden;
 								float: right;
 							}	
 						}
+						.starrr{
+							>:nth-child(1){
+								display: inline-block;
+								width: 20.8vw;
+								height: 3.73vw;
+								overflow: hidden;
+								background-image: url(/static/img/unstar.png);
+								background-repeat: no-repeat;
+								background-size: 20.8vw 3.73vw;
+								>span{
+										display: inline-block;
+										width: 20.8vw;
+										height: 3.73vw;
+										overflow: hidden;
+
+								}
+							}
+
+						}
 						.diration{
-							margin-top: 3vw;
+							margin-top: 1vw;
 							width: 100%;
 							min-height: 5vw; 
 							/*height: 5vw;*//* 点击展开待实现*/ 
@@ -946,6 +1064,9 @@ overflow: hidden;
 								width: 20.8vw;
 								display: inline-block;
 								height: 3.73vw;
+								background-image: url(/static/img/unstar.png);
+								background-repeat: no-repeat;
+								background-size: 20.8vw 3.73vw;
 								>span{
 									display: inline-block;
 									height: 3.73vw;
@@ -962,7 +1083,7 @@ overflow: hidden;
 							}
 						}
 						>.commendsWhere{
-							font-size: 2.26vw;
+							font-size: 3vw;
 							color: #999999;
 							>:nth-child(2){
 								float: right;

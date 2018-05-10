@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 const Index = r =>require.ensure([],() => r(require('@/pages/index')),'index')//首页
 const Search = r =>require.ensure([],() => r(require('@/pages/search')),'search')//搜索
 const Part = r =>require.ensure([],() => r(require('@/pages/part')),'part')//选项的页面

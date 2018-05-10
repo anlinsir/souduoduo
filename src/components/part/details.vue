@@ -1,10 +1,10 @@
 <template>
 	<div class="warp">
 		<header>
-			<span @click='toIndex'><img src="/static/img/trader_icon_jdown_green.png"></span>
+			<span @click='toIndex' ><img src="/static/img/trader_icon_jdown_green.png"></span>
 			<span>详情</span>
 			<p>
-				<img src="/static/img/businessservice_icon_phone_m.png">
+				<img @touchstart='openApp' @touchend='openApp' @touchmove='openApp'  src="/static/img/businessservice_icon_phone_m.png">
 				<img class="aa" src="/static/img/home_icon_home_gray.png">
 			</p>
 			
@@ -85,7 +85,7 @@
 			<div class="downLoad">
 				<dl>
 					<dt><img src="/static/img/phone.png"></dt>
-					<dd>安装简购生活APP，查看 <span>{{nickname}}</span> 的详细信息</dd>
+					<dd @touchstart='openApp' @touchend='openApp' @touchmove='openApp' >安装简购生活APP，查看 <span>{{nickname}}</span> 的详细信息</dd>
 
 				</dl>
 			</div>
@@ -96,11 +96,11 @@
 					<dl>
 						<dt><img :src="item.header_img"></dt>
 								
-						<dd><span>{{item.nickname}}</span><span>查看更多信息 <img  src="/static/img/home_icon_hkjt.png"></span></dd>
+						<dd @touchstart='openApp' @touchend='openApp' @touchmove='openApp' ><span>{{item.nickname}}</span><span>查看更多信息 <img  src="/static/img/home_icon_hkjt.png"></span></dd>
 					</dl>
 				</div>
 				<div class="merchant" v-else='role'>
-					<p class="headerShow"><span>{{ role == 2 ? '商家': '经纪人'}}信息</span><span>查看详细信息 <img src="/static/img/home_icon_hkjt.png">	</span></p>
+					<p class="headerShow"   @click='openApp'><span>{{ role == 2 ? '商家': '经纪人'}}信息</span><span>查看详细信息 <img src="/static/img/home_icon_hkjt.png">	</span></p>
 					<dl v-for='(item,index) in details' :key='index'>
 						<dt>
 							<img :src="item.merchant.header ? item.merchant.header : item.merchant.header_img ">
@@ -157,7 +157,7 @@
 					</div>
 					
 				</div>
-				<div v-if='comment' class="comment">
+				<div  @click='openApp'   v-if='comment' class="comment">
 						{{comment}}
 				</div>	
 				<div class="comments" v-if='comments.length != 0' v-for='(item,index) in comments'>
@@ -182,7 +182,7 @@
 			
 		</main>
 
-		<Footer isShow='ture'></Footer>
+		<Footer isShow='ture' :app='app' :idd='idd'></Footer>
 
 	</div>
 
@@ -204,7 +204,9 @@
 				comments:[],
 				thumbs:false,
 				work:0,
-				want:0
+				want:0,
+				app:'1',
+				idd:'0'
 			})
 		}
 		,
@@ -220,16 +222,84 @@
 				//退后
 				history.back(1)
 
+			},
+			openApp(e){
+				console.log(e.type)
+				 switch (e.type) {
+	                case 'touchstart':
+	                    this.flag = true;
+	                    break;
+	                case 'click':
+	                		if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
+								
+								 	window.location.href =`jglist://deeplinks/openWith?grand_id=${this.app}&id=${this.idd}`
+								
+							setTimeout(()=>{
+								window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+							},1500)
+							
+						}else if(window.navigator.userAgent.indexOf('Android') != -1){
+								
+								 	window.location.href =`jglist://deeplinks/openWith?grand_id=${this.app}&id=${this.idd}`
+								
+								setTimeout(()=>{
+									window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+								},1500)
+						}
+	                	break
+	                case 'touchmove':
+	                    this.flag = false;
+	                    break;
+	                case 'touchend':
+	                    if(this.flag == true){
+	                     		if(this.app && this.idd){
+						console.log(this.idd)
+					}
+
+							if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
+								
+								 	window.location.href =`jglist://deeplinks/openWith?grand_id=${this.app}&id=${this.idd}`
+								
+							setTimeout(()=>{
+								window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+							},1500)
+							
+						}else if(window.navigator.userAgent.indexOf('Android') != -1){
+								
+								 	window.location.href =`jglist://deeplinks/openWith?grand_id=${this.app}&id=${this.idd}`
+								
+								setTimeout(()=>{
+									window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+								},1500)
+						}
+	                    }else{
+	                    // 滑动事件
+	                    return
+	                    
+
+	                    }
+	                        default:
+	                            break;
+	                    } 
+				
+
+
+			
+				
 			}
 		},
 		created(){
+			this.app = String(this.$route.query.g)
+
+
+
 			 this.work = this.$route.query.g
 			 console.log(this.work)
 				axios.get(`https://time2.jglist.com/index.php?r=magor/five/details&auth_name=name&grand_id=${this.$route.query.g}&id=${this.$route.params.id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff&user_id=1402`)
 						.then(res => {						
 							this.details = [res.data.data]
 							console.log(this.details)
-
+							this.idd = this.details[0].id
 							this.status = this.details[0].role
 							this.nickname = this.details[0].nickname
 							this.role = this.details[0].role

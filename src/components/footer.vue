@@ -10,10 +10,12 @@
 			</dl>
 			<button @touchstart='showDown'>立即下载APP</button>
 
-			<div class="show" v-if='show'>
+			<div class="showWarp" v-if='show'>
+			<div class="show" >
 				<p>在APP store 中打开？</p>
 				<span class="qu" @touchend='nowDown'>取消</span>
 				<span @touchend='nowDown' class="co">立即下载</span>
+			</div>
 			</div>
 		</footer>
 
@@ -26,6 +28,12 @@
 		props:{
 			isShow:{
 				type:String
+			},
+			app:{
+				type:String
+			},
+			idd:{
+				type: String
 			}
 		}
 		,
@@ -39,12 +47,29 @@
 				this.show = true
 			},
 			nowDown(e){
-				console.log(e.target.className)
+				if(this.app && this.idd){
+					console.log(this.idd)
+				}
+
 				if(e.target.className =='qu'){
 					this.show = false
 				}else if(e.target.className =='co'){
-					window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
-					this.show = false
+							if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
+								
+								 	window.location.href =`jglist://deeplinks/openWith?grand_id=${this.app}&id=${this.idd}`
+								
+							setTimeout(()=>{
+								window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+							},1500)
+							
+						}else if(window.navigator.userAgent.indexOf('Android') != -1){
+								
+								 	window.location.href =`jglist://deeplinks/openWith?grand_id=${this.app}&id=${this.idd}`
+								
+								setTimeout(()=>{
+									window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
+								},1500)
+						}
 
 
 				}
@@ -72,7 +97,15 @@
 			background-color: #fff;
 			padding: 3.2vw 3.2vw 0 ;
 			box-sizing: border-box;
-			>.show{
+			>.showWarp{
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				box-sizing: border-box;
+				z-index: 2;
+				top:0;
+				left: 0;
+				>.show{
 				width: 70vw;
 				height: 25vw;
 				font-size: 4vw;
@@ -102,6 +135,7 @@
 				>.co{
 					color: #00d1b2;
 				}
+			}
 			}
 			>dl{
 				display: flex;
