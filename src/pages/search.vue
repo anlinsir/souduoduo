@@ -2,9 +2,7 @@
 	<div class="warp">
 		<div v-show='showw' class="float">
 			<div class="header">
-				<span @click='otherShow'><img style="transform: rotateZ(90deg) translateX(5vw) translateY(-4vw);
-				width: 5vw;
-				height: 2.26vw;" src="/static/img/trader_icon_jdown_green.png"></span><span>选择类别</span>
+				<span @click='otherShow'><img style="width: 2.66vw;height: 4.8vw;transform: translateY(4vw);" src="/static/img/businessservice_icon_return_whitess.png"></span><span>选择类别</span>
 			</div>
 			<ul>
 				<li @click='getPart' :data-id='index' :key='index'  v-for='(item,index) in parts'>
@@ -17,11 +15,11 @@
 		<Header left='2' color='#00d1b2'  @show='show' :part='part'></Header>
 
 		<main>
-			 <dl v-for='(item,index) in productList' :key='index'>
+			 <dl @click='down' v-for='(item,index) in productList' :key='index'>
 				<dt><img :src="item.image+'200_200.jpg'"></dt>
 				<dd>
 					<p>{{item.title}}</p>
-					<p><span>${{item.price}}</span><span>1</span></p>
+					<p style="marginBottom: 5vw;marginTop:1vw; "><span>${{item.price}}</span><span>{{item.role ? item.role == 1 ? '个人' : item.role == 2 ? '商家' :  '经纪人' : '' }}</span></p>
 					<p><span>{{item.city}}</span><span>{{item.area}}</span><span>{{item.create_time}}</span></p>
 				</dd>
 			</dl> 
@@ -102,6 +100,10 @@
 			'Footer':Footer
 		},
 		methods:{
+			down(){
+				alert('打开简购生活APP查看更多搜索内容')
+			}
+			,
 			show(foo){
 				this.showw = foo
 
@@ -109,7 +111,6 @@
 
 			otherShow(){
 				this.showw = false
-				this.sets = true
 			},
 				getPart(e){
 				this.showw = false
@@ -131,7 +132,7 @@
 			console.log(localStorage.text)
 			axios.get(`https://time2.jglist.com/index.php?r=homepage/home/search&search=${localStorage.text}&page=1&auth_name=id&id=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
 				.then((res)=>{
-					var a = res.data.data.splice(20)					
+					var a = res.data.data.splice(50)					
 					this.productList =  res.data.data
 					this.sets = false
 					if(! this.productList.length ){
@@ -208,6 +209,7 @@
 						display: inline-block;
 						width: 10vw;
 						height: 10vw;
+						margin-bottom: 1.8vw;
 					}
 				}
 			}

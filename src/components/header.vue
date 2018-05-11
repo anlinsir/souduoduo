@@ -1,12 +1,10 @@
 <template>
 	<header>
 		<!-- @click='toSearch' -->
-			<span @click='toIndex' v-if='left == 1' :style="{color: color ? color : '' }"  class="back"><img class="backk" src="/static/img/return_black.png"></span>
-			<span @click='toIndex' v-if='left == 2' :style="{color: color ? color : '' }"  class="back"><img class="backk" style="transform: rotateZ(90deg) translateX(-1vw) translateY(-1vw);
-				width: 5vw;
-				height: 2.26vw;" src="/static/img/trader_icon_jdown_green.png"></span>
+			<span @click='toIndex' v-if='left == 1' :style="{color: color ? color : '' }"  class="back"><img class="backk" src="/static/img/businessservice_icon_return_white.png"></span>
+			<span @click='toIndex' v-if='left == 2' :style="{color: color ? color : '' }"  class="back"><img style="width: 2.66vw;height: 4.8vw;" src="/static/img/businessservice_icon_return_whitess.png"></span>
 
-			<input v-model='text' @click='toseac'  @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称" />
+			<input  :style="{backgroundColor: wi ? '#fff' :''}" v-model='text' @click='toseac'  @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称" />
 			<span class="posi" v-show='0'>dsdddsdsds</span>
 	</header>
 
@@ -24,6 +22,9 @@
 				type:Number|| String  || Object
 			},
 			color:{
+				type:String
+			},
+			wi:{
 				type:String
 			}
 		},
@@ -90,9 +91,8 @@
 				margin-right: 5vw;
 			}
 			.backk{
-				width: 2.26vw;
-				height: 4.8vw;
-
+			
+width: 2.66vw;height: 4.8vw;
 			}
 			>input{
 				width: 100%;
@@ -101,10 +101,10 @@
 				height: 9vw;
 				text-align: center;
 				outline: none;
-				font-size: 3.2vw;
+				font-size: 3.5vw;
 				background-image: url(/static/img/home_icon_search.png);
 				background-repeat: no-repeat;
-				background-position: 28.06%;
+				background-position: 28%;
 
 			}
 			.posi{

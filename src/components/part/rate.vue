@@ -1,7 +1,7 @@
-<template>	
++<template>	
 	<div class="warp">
 		<header>
-			<span @click='toIndex'><</span>
+			<span @click='toIndex'><img style="width: 2.66vw;height: 4.8vw;" src="/static/img/businessservice_icon_return_whitess.png"></span>
 			<span>汇率转换</span>
 		</header>
 
@@ -36,8 +36,8 @@
 
 	export default {
 		created(){
-			var id = '1'
-			axios.post(`http://rate.jglist.com/rate`,{id},{
+			var device_id = '1'
+			axios.post(`http://rate.jglist.com/rate`,{device_id},{
 				 headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                       }

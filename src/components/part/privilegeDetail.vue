@@ -1,9 +1,7 @@
 <template>
 	<div class="warp">
 		<header>
-			<span @click='toIndex' class="back"><img style="transform: rotateZ(90deg) translateX(5vw);
-				width: 5vw;
-				height: 2.26vw;" src="/static/img/trader_icon_jdown_green.png"></span>
+			<span @click='toIndex' class="back"><img style="width: 2.66vw;height: 4.8vw;transform: translateY(4vw);" src="/static/img/businessservice_icon_return_whitess.png"></span>
 			<span class="title">优惠券详情</span>
 			<p @click='merDetail'>
 				查看店铺
@@ -122,10 +120,12 @@
 		,
 		methods:{
 			openApp(){
-				window.location.href =`jglist://deeplinks/openWith?grand_id=7&id=${this.$route.params.id}`
+
+				 window.location.href =`jglist://deeplinks/openWith?grand_id=7&id=${this.$route.params.id}`
+
 				setTimeout(()=>{
 					window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
-				},1500)				
+				},2000)				
 			}
 			,
 			toIndex(){

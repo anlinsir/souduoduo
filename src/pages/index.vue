@@ -1,7 +1,7 @@
 <template>
 	<div class="warp">
 	
-		<Header></Header>
+		<Header wi='#fff'></Header>
 
 		<main>
 			<!-- 下载的部分 -->
@@ -438,7 +438,7 @@
 						>dd{
 							:nth-child(1){
 								font-size: 4vw;
-								font-weight: 600;
+								font-weight: bold;
 							}
 							:nth-child(2){
 								font-size: 3.2vw;
@@ -513,9 +513,9 @@
 							height: 3.2vw;
 							position: absolute;
 							text-align: center;
-							line-height: 2.5vw;
+							line-height: 3.2vw;
 							right: 0;
-							font-size: 3.2vw;
+							font-size: 3vw;
 							color: #fff;
 							top: -1vw;
 							background-color: #f85241;
@@ -530,7 +530,7 @@
 				width: 100%;
 				height: 16vw;
 				background-color: #fff;
-				padding: 3.2vw 4vw 3.2vw;
+				padding: 3vw 4vw 3.2vw;
 				box-sizing: border-box;
 				display: flex;
 				justify-content: space-between;
@@ -563,12 +563,12 @@
 							box-sizing: border-box;
 						
 							>p{
-								font-size: 3.5vw;
+								font-size: 3.8vw;
 								color: #333333;
 							}
 							>.oncep{
 
-								margin-bottom: 1vw;
+								margin-bottom: 0.5vw;
 							}
 						}
 					}

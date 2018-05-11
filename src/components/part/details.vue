@@ -1,7 +1,7 @@
 <template>
 	<div class="warp">
 		<header>
-			<span @click='toIndex' ><img src="/static/img/trader_icon_jdown_green.png"></span>
+			<span @click='toIndex' ><img style="width: 2.66vw;height: 4.8vw;transform: translateY(4vw);" src="/static/img/businessservice_icon_return_whitess.png"></span>
 			<span>详情</span>
 			<p>
 				<img @touchstart='openApp' @touchend='openApp' @touchmove='openApp'  src="/static/img/businessservice_icon_phone_m.png">
@@ -357,13 +357,7 @@
 				display: inline-block;
 				font-size: 8vw;
 				color: #00d1b2;
-				>img{
-				transform: rotateZ(90deg) translateX(5vw);
-
-				width: 5vw;
-				height: 2.26vw;
-
-				}
+				
 			}
 			:nth-child(3){
 				float: right;
@@ -755,7 +749,7 @@
 										>img{
 										width: 20.8vw;
 										height: 3.73vw;
-										vertical-align: baseline;
+										vertical-align: middle;
 										}
 									}
 								}

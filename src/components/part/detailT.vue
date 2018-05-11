@@ -7,7 +7,7 @@
 
 
 		<header>
-			<span @click='toIndex' class="back"><img src="/static/img/trader_icon_jdown_green.png"></span>
+			<span @click='toIndex' class="back"><img style="width: 2.66vw;height: 4.8vw;transform: translateY(4vw);" src="/static/img/businessservice_icon_return_whitess.png"></span>
 			<span>{{title}}</span>
 			<p @click='goToIndex'>
 				<img class="aa" src="/static/img/home_icon_home_gray.png">
@@ -88,8 +88,8 @@
 			<div class="mapWarp">
 				<div class="map" >
 					<div style="width: 100%;height: 50vw;"  id='maps'>
-  						  <baidu-map :center="center" :zoom="zoom" @ready="handler" style="width: 100%;height: 45vw;"></baidu-map>
-						
+  						  <!-- <baidu-map :center="center" :zoom="zoom" @ready="handler" style="width: 100%;height: 45vw;"></baidu-map> -->
+						 <div id="mapsss" :data-id='lat' style="width:100%;height:40vw"></div>
 					</div>
 				</div>
 				<div class="other">
@@ -216,26 +216,28 @@
 	import Footer from '../../components/footer'
 
 
+
  
 	export default {
 		components:{
 			Footer
 		},
-		mounted(){
-			 // function initMap() {
-		  //       var uluru = {lat: -73.543676600, lng: 40.7112025};
-		  //       var map = new google.maps.Map(document.getElementById('app'), {
-		  //         zoom: 4,
-		  //         center: uluru
-
-		  //       });
-		  //       var marker = new google.maps.Marker({
-		  //         position: uluru,
-		  //         map: map
-		  //       });
-		  //     }
-		  //     initMap()
-		      
+		updated(){
+			if(document.getElementById('mapsss')){
+				var mapType = google.maps.MapTypeId.ROADMAP;
+					var lat = this.lat, lng = this.lng, zoom = 15;
+					var mapOptions = {
+					    center: new google.maps.LatLng(lat, lng),  //地图的中心点
+					    zoom: zoom,               　　　　　　　　　　//地图缩放比例
+					    mapTypeId: mapType,       　　　　　　　　　　//指定地图展示类型：卫星图像、普通道路
+					    scrollwheel: true          　　　　　　　　　 //是否允许滚轮滑动进行缩放
+					};
+					var map = new google.maps.Map(document.getElementById("mapsss"), mapOptions); //创建谷歌地图
+					var marker = new google.maps.Marker({
+					    map: map,
+					    position: new google.maps.LatLng(lat, lng)
+					});
+			}
 		},
 		methods:{
 			down(e){
@@ -404,12 +406,7 @@
 			goToIndex(){
 				this.$router.push('/index')
 			},
-			  handler ({BMap, map}) {
-      console.log(BMap, map)
-      this.center.lng = 116.404
-      this.center.lat = 39.915
-      this.zoom = 15
-    }
+			 
 		},
 		data(){
 			return({
@@ -421,8 +418,9 @@
 				query:null,
 				imgShow:false,
 				flag:true,
-				 center: {lng: 0, lat: 0},
-  			    zoom: 3
+				lat: 39.915168, 
+				lng:116.403875
+				
 					
 			})
 		},
@@ -432,8 +430,12 @@
 			if(this.$route.query.tyep == 'mer'){
 				axios.get(`https://time2.jglist.com/index.php?r=merchant/shop/shopinfo&auth_name=name&name=1&shop_id=${this.$route.params.id}&tx=3f556f66353c5945a3633ae209a3e0ff&user_id=1402`)
 					.then(res=>{
+
 						this.data = [res.data.data]
 						this.title =res.data.data.zh_name
+						console.table(this.data)
+						this.lat = this.data[0].lat
+						this.lng =  this.data[0].lng
 					})
 				axios.get(`https://time2.jglist.com/index.php?r=merchant/shop/commentlist&auth_name=name&merchant_id=0&name=1&shop_id=${this.$route.params.id}&tx=3f556f66353c5945a3633ae209a3e0ff`)//评论列表
 					.then(res=>{
@@ -456,6 +458,8 @@
 							console.table(res.data.data)
 							this.data = [res.data.data]
 							this.title = res.data.data.title
+							this.lat = this.data[0].lat
+						this.lng =  this.data[0].lng
 					})
 				axios.get(`https://time2.jglist.com/index.php?r=delicacy/food/comments&auth_name=name&food_id=${this.$route.params.id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
 					.then(res=>{
@@ -479,6 +483,8 @@
 						.then(res=>{
 							this.data = [res.data.data]
 							this.title = res.data.data.title
+							this.lat = this.data[0].lat
+						this.lng =  this.data[0].lng
 
 				})
 				axios.get(`https://time2.jglist.com/index.php?r=newtravel/travel/comments&auth_name=name&name=1&travel_id=${this.$route.params.id}&tx=3f556f66353c5945a3633ae209a3e0ff`)
@@ -552,11 +558,7 @@
 				width: 5vw;
 				font-size: 8vw;
 				color: #00d1b2;
-				>img{
-				transform: rotateZ(90deg) translateX(5vw);
-				width: 5vw;
-				height: 2.26vw;
-				}
+				
 			}
 
 		}
@@ -793,7 +795,7 @@ overflow: hidden;
 				background-color: #fff;
 				margin: 2.66vw 0;
 				width: 100%;
-				min-height: 90vw;
+				min-height: 77vw;
 				box-sizing: border-box;
 				>.map{
 					height: 44.4vw;
@@ -805,7 +807,7 @@ overflow: hidden;
 					}
 				}
 				>.other{
-					height: 45.6vw;
+					min-height: 30.6vw;
 					padding: 4vw 4vw;
 					box-sizing: border-box;
 					>p{

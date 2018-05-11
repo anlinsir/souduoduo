@@ -1,6 +1,6 @@
 <template>
 	<div class="warp">
-		<Header left='1'></Header>	
+		<Header wi='#fff' left='1'></Header>	
 
 		<main >
 			<!-- 选择 参数 -->
@@ -11,7 +11,7 @@
 						<span  v-if='item.sel'></span>
 						<ul style="overflow: auto;height: 80vw;box-sizing: border-box;overflow-x:hidden;" v-if='item.sel' v-show='showPart == index' :key='index' id='chooseItem'>
 							<li  @touchstart='chooseItem(indexs,$event,items.child)' @touchend='chooseItem(indexs,$event,items.child)' data-iss='inn'   @touchmove='chooseItem(indexs,$event,items.child)' @mouseenter="chooseItem(indexs,$event)" :key='indexs' :data-id='items.id' :data-role="item.role ? item.role: '' " v-for="(items,indexs) in useClassify  ? useClassify[0].child?  useClassify[0].child.length ?   useClassify[0].child: useClassify : useClassify : '' ">
-									<span v-if='items.child && items.child.length'>></span>{{items.title}}
+									<span :class="active == index ? 'active' : '' " v-if='items.child && items.child.length'>></span>{{items.title}}
 								<ul v-if='items.child && showPartItem == indexs'>
 									<li @touchstart='hide' v-for='(props,indexs) in items.child' :key='indexs' :data-id='props.id '>
 										{{props.title}}
@@ -347,7 +347,9 @@
 					font-size: 3.6vw;
 					color: #666666;
 					>.active{
-						color: #111;
+						color: #333333;
+						border-color:red;
+
 					}
 					>li{
 						width: 20vw;
@@ -357,13 +359,13 @@
 						position: relative;
 						>span{
 						    border: 2vw solid;
-						    border-top: 0.8vw solid #666;
+						    border-top: 0.8vw solid #333;
 						    border-right: 0.8vw solid transparent;
 						    border-left: 0.8vw solid transparent;
 						    border-bottom: 0.8vw solid transparent;
 						    position: absolute;
 					        top: 4.5vw;
-							left: 14vw;
+							left: 15.5vw;
 						}
 						/*item*/
 						>#chooseItem{

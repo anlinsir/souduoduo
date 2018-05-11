@@ -30,20 +30,21 @@
 
 
 
-			<div v-show='!sets' id="set">
-						<div class="in">
-							<span class="o"></span>
-							<span class="t"></span>
-							<span class="e"></span>
-							<i id="texxxt">简购中 ...</i>
-						</div>
-					</div>
+
+<div v-show='sets' id="set">
+
+			<div class="in">
+				<span class="o"></span>
+				<span class="t"></span>
+				<span class="e"></span>
+				<i id="texxxt">简购中 ...</i>
+			</div>
+		</div>
 
 
-
-
-					<div @touchstart='next' id='next'>
-						<span id='xia' v-show='sets' >点击加载更多...</span>
+					<div v-show='!sets' @touchstart='next' id='next'>
+						<div v-show='show' class="fff"></div>
+						<span id='xia' >点击加载更多...</span>
 					</div>
 				</div>
 
@@ -67,9 +68,10 @@
 			return({
 				list:[],
 				flag:1,
-				sets:false,
+				sets:true,
 				flags:false,
-				showfff:false
+				showfff:false,
+				show:false
 
 
 			})
@@ -117,7 +119,10 @@
 			,
 			next(){
 
-				this.sets  = false
+				this.show  = true
+				setTimeout(()=>{
+					this.show = false
+				},2500)
 				localStorage.Workpages = Number(localStorage.Workpages) + 1
 				console.log(localStorage.Workpages)
 				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=3&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.Workpages}`)
@@ -125,11 +130,7 @@
 					for(let i in res.data.data){
 						this.list.push(res.data.data[i])
 					}
-				this.sets  = true
-				
-
-
-
+						this.sets = false
 				})
 			},
 			aaa(e,id){
@@ -170,12 +171,12 @@
 			if(!this.list.length){
 				var timer =  setInterval(()=>{
 
-			 		if(this.list.length){ clearInterval(timer) ;this.sets = 1}
+			 		if(this.list.length){ clearInterval(timer) ;this.sets = 0}
 			 		
 			 		
 		 		},100)		
 			 }
-			 if(this.list.length){this.sets = 1}
+			 if(this.list.length){this.sets = 0}
 		},
 		created(){
 			localStorage.Workpages = 1
@@ -210,8 +211,17 @@
 		display: inline-block;
 		font-size: 5vw;
 		color: #01d2b3;
+	
 	}
-
+.fff{
+			position: absolute;
+			top: 0;
+			width: 100%;
+			height: 20vw;
+			background-color: #00d1b2;
+			opacity: .7;
+			animation: change 5s infinite;
+		}
 }
 
 	
@@ -275,7 +285,10 @@
 .bx{
 	box-sizing: border-box;
 }
+	.workBaseWarp:not(:nth-last-child(1)){
+		border-bottom: 2.66vw solid #eee;
 
+	}
 	.workBaseWarp{
 		width: 100%;
 		height: 28vw;

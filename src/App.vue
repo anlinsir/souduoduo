@@ -76,7 +76,7 @@ body{
       }
 
     }
-    @keyframes change{
+  @keyframes change{
   0%{
     opacity: .7;
   }
