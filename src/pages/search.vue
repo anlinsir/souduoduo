@@ -2,7 +2,7 @@
 	<div class="warp">
 		<div v-show='showw' class="float">
 			<div class="header">
-				<span @click='otherShow'><img style="width: 2.66vw;height: 4.8vw;transform: translateY(4vw);" src="/static/img/businessservice_icon_return_whitess.png"></span><span>选择类别</span>
+				<span @click='otherShow'><img style="width: 2.66vw;height: 4.8vw;transform: translateY(4vw) translateX(4vw);" src="/static/img/businessservice_icon_return_whitess.png"></span><span>选择类别</span>
 			</div>
 			<ul>
 				<li @click='getPart' :data-id='index' :key='index'  v-for='(item,index) in parts'>
