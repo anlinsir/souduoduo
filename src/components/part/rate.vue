@@ -13,7 +13,7 @@
 							<img :src=" '/static/img/' + item.img "/>
 							<span>{{item.country}}</span>
 						</dt>
-						<dd><p><input @input='changeVValue' @focus='changeValue' @blur='changeValues(item.num,$event)' type="number" name="num" :placeholder="item.num"></p><p>{{item.nuit}}</p></dd>
+						<dd><p><input @input='changeVValue' v-model='item.num' @focus='changeValue' @blur='changeValues(item.num,$event)' type="number" :name="item.country" :placeholder="item.num"></p><p>{{item.nuit}}</p></dd>
 						
 					</dl>
 				</li>
@@ -67,25 +67,131 @@
 		components:{
 			Footer			
 		},
+		mounted(){
+			this.list[0].num = this.CNY
+			this.USD = (Number(this.CNY)/6.44205).toFixed(3)
+			this.CAD = ((Number(this.CNY)/6.44205)*1.240855).toFixed(3)
+			this.HKD = ((Number(this.CNY)/6.44205)*7.82255).toFixed(3)
+			this.MOP = ((Number(this.CNY)/6.44205)*8.05192).toFixed(3)
+
+			this.list[1].num = this.USD
+			this.list[2].num = this.CAD
+			this.list[3].num = this.HKD
+			this.list[4].num = this.MOP
+
+
+// {CNY: "6.44205", USD: "1", CAD: "1.240855", HKD: "7.82255", MOP: "8.05192"}
+		},
 		methods:{
 			toIndex(){
 				history.back()
 
 			},
 			changeValue(e){
-				e.target.placeholder = '100.00'
+				e.target.value = '100.00'
+				var v =  Number(e.target.value)
+					 console.log(e.target.name)
+
+				switch(e.target.name){
+					 case 'CNY':
+					 	this.list[0].num = '100.00'
+						this.list[1].num = (Number(this.CNY)/6.44205).toFixed(3)
+						this.list[2].num = ((Number(this.CNY)/6.44205)*1.240855).toFixed(3)
+						this.list[3].num = ((Number(this.CNY)/6.44205)*7.82255).toFixed(3)
+						this.list[4].num = ((Number(this.CNY)/6.44205)*8.05192).toFixed(3)
+						break;
+					case 'USD':
+						this.list[1].num = '100.00' 
+
+						this.list[0].num = v*6.44205 
+						this.list[2].num =v*1.240855
+						this.list[3].num =v*7.82255
+						this.list[4].num =v*8.05192
+						break;
+					case 'CAD':
+						this.list[2].num ='100.00' 
+
+						this.list[0].num = (v/1.240855)*6.44205 
+						this.list[1].num = v/1.240855
+						this.list[3].num =(v/1.240855)*7.82255
+						this.list[4].num =(v/1.240855)*8.05192
+						break;
+					case 'HKD':
+						this.list[3].num = '100.00'
+						this.list[1].num = v/7.82255
+						this.list[0].num = (v/7.82255)*6.44205
+						this.list[2].num = (v/7.82255)*1.240855
+						this.list[4].num = (v/7.82255)*8.05192
+						break;
+					case 'MOP':
+						this.list[4].num = '100.00'
+						this.list[1].num = v/8.05192
+						this.list[0].num = (v/8.05192)*6.44205
+						this.list[2].num = (v/8.05192)*1.240855
+						this.list[3].num = (v/8.05192)*7.82255
+						break;
+
+				 }
 				
 			},
 			changeValues(num,e){
-				e.target.placeholder = num
+				e.target.value = num
+				
 
 			},
-			changeVValue(){
-				console.log('fcgjh')
+			changeVValue(e){
+				console.log(e.target.value)
+				var v =  Number(e.target.value)
+
+					switch(e.target.name){
+					 case 'CNY':
+					 	this.list[0].num = v
+						this.list[1].num = (Number(this.CNY)/6.44205).toFixed(3)
+						this.list[2].num = ((Number(this.CNY)/6.44205)*1.240855).toFixed(3)
+						this.list[3].num = ((Number(this.CNY)/6.44205)*7.82255).toFixed(3)
+						this.list[4].num = ((Number(this.CNY)/6.44205)*8.05192).toFixed(3)
+						break;
+					case 'USD':
+						this.list[1].num = v 
+
+						this.list[0].num = v*6.44205 
+						this.list[2].num =v*1.240855
+						this.list[3].num =v*7.82255
+						this.list[4].num =v*8.05192
+						break;
+					case 'CAD':
+						this.list[2].num =v
+
+						this.list[0].num = (v/1.240855)*6.44205 
+						this.list[1].num = v/1.240855
+						this.list[3].num =(v/1.240855)*7.82255
+						this.list[4].num =(v/1.240855)*8.05192
+						break;
+					case 'HKD':
+						this.list[3].num = v
+						this.list[1].num = v/7.82255
+						this.list[0].num = (v/7.82255)*6.44205
+						this.list[2].num = (v/7.82255)*1.240855
+						this.list[4].num = (v/7.82255)*8.05192
+						break;
+					case 'MOP':
+						this.list[4].num = v
+						this.list[1].num = v/8.05192
+						this.list[0].num = (v/8.05192)*6.44205
+						this.list[2].num = (v/8.05192)*1.240855
+						this.list[3].num = (v/8.05192)*7.82255
+						break;
+
+				 }
 			}
 		},
 		data(){
 			return({
+				CNY:'100.00',
+				USD:'',
+				CAD:"652",
+				HKD:"963",
+				MOP:"996",
 				list:[
 					{
 						img:'ecrate_icon_cny.png',
