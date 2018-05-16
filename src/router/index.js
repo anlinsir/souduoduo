@@ -1,26 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-const Index = r =>require.ensure([],() => r(require('@/pages/index')),'index')//首页
-const Search = r =>require.ensure([],() => r(require('@/pages/search')),'search')//搜索
-const Part = r =>require.ensure([],() => r(require('@/pages/part')),'part')//选项的页面
-const Regard = r =>require.ensure([],() => r(require('@/pages/regard')),'regard')//关于
+const Index = r =>require.ensure([],() => r(require('@/pages/index')),'index')
+const Search = r =>require.ensure([],() => r(require('@/pages/search')),'search')
+const Part = r =>require.ensure([],() => r(require('@/pages/part')),'part')
+const Regard = r =>require.ensure([],() => r(require('@/pages/regard')),'regard')
 
 //component in Part
 const Used = r =>require.ensure([],() => r(require('@/components/part/used')),'used')
 const Car = r =>require.ensure([],() => r(require('@/components/part/car')),'car')
 const Rent = r =>require.ensure([],() => r(require('@/components/part/houserent')),'rent')
-const Merchant = r =>require.ensure([],() => r(require('@/components/part/merchant')),'merchant')
+const Merchant = r=>require.ensure([],() => r(require('@/components/part/merchant')),'merchant')
 const Cate = r =>require.ensure([],() => r(require('@/components/part/cate')),'cate')
 const Jour = r =>require.ensure([],() => r(require('@/components/part/jour')),'jour')
-const Work = r =>require.ensure([],() => r(require('@/components/part/work')),'work')
-const Privilege = r =>require.ensure([],() => r(require('@/components/part/privilege')),'privilege')
+const Work = r=>require.ensure([],() => r(require('@/components/part/work')),'work')
+const Privilege = r=>require.ensure([],() => r(require('@/components/part/privilege')),'privilege')
 const Rate = r =>require.ensure([],() => r(require('@/components/part/rate')),'rate')
-
-
-
-
-
-
 //component in Part end 
 
 

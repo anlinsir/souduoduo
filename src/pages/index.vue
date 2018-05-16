@@ -349,6 +349,24 @@
 			}
 		},
 		beforeCreate(){
+
+			if(!localStorage.old){
+				var a = new Date()
+				localStorage.old = a.getTime()
+				console.log(localStorage.old)
+			}
+			if(localStorage.old){
+				var b = new Date()
+				localStorage.time = b.getTime()
+				if(Number(localStorage.time) - Number(localStorage.old) >= 1*60*60*1000){
+					// localStorage.removeItem('old')
+					localStorage.clear()
+
+				}
+			}
+
+
+
 			axios.get('https://time2.jglist.com/index.php?r=homepage/home/basedata&auth_name=id&id=1&tx=3f556f66353c5945a3633ae209a3e0ff')
 				.then(res=>{
 					localStorage.basedata = JSON.stringify(res.data.data)
