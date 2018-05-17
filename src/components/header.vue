@@ -41,27 +41,66 @@
 			// 	}
 			// }
 			toseac(){
-				this.$router.push('/search')
-			},
-			sendSearch(){//enter发请求  通过 子传夫  把拿到的数据  传到 searcb里面
-					//吧类别 存到longstage里
-					this.$router.push({ path:'/search'})
-					console.log(this.part)
-					this.$emit('show',true)
-					localStorage.text = this.text
-					if(!localStorage.text && localStorage.text != this.text){
-						return
-					}
-						return
-				if(this.text && this.part){
-					this.$router.push({ path:'/search', query: { val:this.text , id:this.part} })
-				}else{
-					console.log('滑动搜索框，选择类别')
+				var name = this.$route.name
+				if(name != 'index' || name != 'search'){
+					 switch (name) {
+	              		case 'used':
+	              			this.$router.push({path:'/search',query:{part:1}})
+	              			break;
+	              		case 'car':
+	              			this.$router.push({path:'/search',query:{part:2}})
+	              			break;
+	              		case 'work':
+	              			this.$router.push({path:'/search',query:{part:3}})
+	              			break;
+              			case 'rent':
+              				this.$router.push({path:'/search',query:{part:4}})
+              				break;
+              			case 'merchant':
+              				this.$router.push({path:'/search',query:{part:12}})
+              				break;
+          				case 'cate':
+          					this.$router.push({path:'/search',query:{part:6}})
+          					break;
+          				case 'privilege':
+          					this.$router.push({path:'/search',query:{part:7}})
+          					break;
+          				case 'jour':
+          					this.$router.push({path:'/search',query:{part:8}})
+          					break;
+
+	              		default:
+	              			break;
+	                 }  
+					
 				}
+				this.$emit('show',true)
+			},
+			sendSearch(){
+
+				this.$emit('getVal',this.text)
+			//enter发请求  通过 子传夫  把拿到的数据  传到 searcb里面
+					//吧类别 存到longstage里
+				// 	this.$router.push({ path:'/search'})
+				// 	console.log(this.part)
+				// 	localStorage.text = this.text
+				// 	if(!localStorage.text && localStorage.text != this.text){
+				// 		return
+				// 	}
+				// 		return
+				// if(this.text && this.part){
+				// 	this.$router.push({ path:'/search', query: { val:this.text , id:this.part} })
+				// }else{
+				// 	console.log('滑动搜索框，选择类别')
+				// }
 			
 			},
 			toIndex(){
-				if(this.$router.name != 'index'){
+				// if(this.$route.name == 'search'){
+				// 	this.$router.push({path:'/search',query:{part:localStorage.indexPart}})
+				// 	this.$emit('backk',[])
+				// } else
+				 if(this.$route.name != 'index'){
 					this.$router.push('/index')
 				}
 			}

@@ -1,25 +1,19 @@
 <template>
 	<div class="warp">
-		<div v-show='showw' class="float">
-			<div class="header">
-				<span @click='otherShow'><img style="width: 2.66vw;height: 4.8vw;transform: translateY(4vw) translateX(4vw);" src="/static/img/businessservice_icon_return_whitess.png"></span><span>选择类别</span>
-			</div>
-			<ul>
-				<li @click='getPart' :data-id='index' :key='index'  v-for='(item,index) in parts'>
-					<p :data-id='index'><img :data-id='index' :src="item.img"></p>
-					<p :data-id='index'>{{item.text}}</p>
-				</li>
-				
-			</ul>
-		</div>
-		<Header left='2' color='#00d1b2'  @show='show' :part='part'></Header>
+		
+		<Header left='2' color='#00d1b2' @backk='backk'  @getVal='getVal'></Header>
 
 		<main>
-			 <dl @click='down' v-for='(item,index) in productList' :key='index'>
+			 <dl @click='down(item.id)' v-for='(item,index) in productList' :key='index'>
 				<dt><img :src="item.image+'200_200.jpg'"></dt>
 				<dd>
 					<p>{{item.title}}</p>
-					<p style="marginBottom: 5vw;marginTop:1vw; "><span>${{item.price}}</span><span>{{item.role ? item.role == 1 ? '个人' : item.role == 2 ? '商家' :  '经纪人' : '' }}</span></p>
+					<p style="marginBottom: 5vw;marginTop:1vw; "><span>${{item.price}}</span><span id='role'
+
+					 :style="{color: item.role == 1 ? '#00d1b2' : item.role == 2 ? '#fb6b5c' :'#ffa84b'}">
+
+
+					{{item.role ? item.role == 1 ? '个人' : item.role == 2 ? '商家' :  '经纪人' : '' }}</span></p>
 					<p><span>{{item.city}}</span><span>{{item.area}}</span><span>{{item.create_time}}</span></p>
 				</dd>
 			</dl> 
@@ -29,7 +23,7 @@
 					<span class="o"></span>
 					<span class="t"></span>
 					<span class="e"></span>
-					<i id="texxxt">简购中 ...</i>
+					<i id="texxxt">加载中 ...</i>
 				</div>
 	</div>
 
@@ -54,45 +48,10 @@
 		data(){
 			return({
 				productList:[],
-				showw:false,
 				sets:false,
 				part:null,
+				val:null
 
-				parts:[
-					{
-						img:'/static/img/search_icon_second@2x.png',
-						text:"闲置二手"
-					},
-					{
-						img:'/static/img/search_icon_car@2x.png',
-						text:"新旧车辆"
-					},
-					{
-						img:'/static/img/search_icon_jobs@2x.png',
-						text:"工作招聘"
-					},
-					{
-						img:'/static/img/search_icon_houes@2x.png',
-						text:"房屋租赁"
-					},
-					{
-						img:'/static/img/search_icon_service@2x.png',
-						text:"商家服务"
-					},
-					{
-						img:'/static/img/search_icon_food@2x.png',
-						text:"附近美食"
-					},
-					{
-						img:'/static/img/search_icon_offer@2x.png',
-						text:"附近优惠"
-					},
-					{
-						img:'/static/img/search_icon_tourism@2x.png',
-						text:"周边游"
-					}
-
-				]//选择类别
 			})
 		},
 		components:{
@@ -100,49 +59,78 @@
 			'Footer':Footer
 		},
 		methods:{
-			down(){
-				alert('打开简购生活APP查看更多搜索内容')
-			}
-			,
-			show(foo){
-				this.showw = foo
+			backk(val){
+
 
 			},
+			getVal(val){
+				this.val =  val
+				console.log(this.val,this.$route.query.part)
+				console.log(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=${this.$route.query.part}&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&search=${this.val}&page=1`)
+				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=${this.$route.query.part}&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&search=${this.val}&page=1`)
+
+					.then((res)=>{
+						console.log(res.data.data)
+						this.productList = res.data.data
+					})
+			},
+			down(id){
+				var part = this.$route.query.part
+				console.log(part)
+				
+					if(part == 1){
+						this.$router.push({path:`/details/${id}`,query:{g:1}})
+					}else if(part == 2){
+						this.$router.push({path:`/details/${id}`,query:{g:2}})						
+					}else if(part == 3){
+						this.$router.push({path:`/details/${id}`,query:{g:3}})
+					}
+					
+						
+						
+				
+			}
+			,
+			
 
 			otherShow(){
 				this.showw = false
 			},
-				getPart(e){
-				this.showw = false
-				this.sets = true
+			getPart(e){
+
+
+
+			// 	this.showw = false
+			// 	this.sets = true
 				
 
-				this.part = Number(e.target.dataset.id) + 1
-				localStorage.Part = this.part 
-				if(!localStorage.text && localStorage.text != this.text){
-						alert('请输入关键词')
-						return
-					}
-				let  val =  this.$route.query.val
-			let part = this.$route.query.part
-			if(!localStorage.text){
-				alert('输入关键词')
-				this.$router.replace('/index')
-			}
-			console.log(localStorage.text)
-			axios.get(`https://time2.jglist.com/index.php?r=homepage/home/search&search=${localStorage.text}&page=1&auth_name=id&id=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
-				.then((res)=>{
-					var a = res.data.data.splice(50)					
-					this.productList =  res.data.data
-					this.sets = false
-					if(! this.productList.length ){
-						document.getElementsByTagName('main')[0].innerHTML='没有信息'
-					}
-				})
+			// 	this.part = Number(e.target.dataset.id) + 1
+			// 	localStorage.Part = this.part 
+			// 	if(!localStorage.text && localStorage.text != this.text){
+			// 			alert('请输入关键词')
+			// 			return
+			// 		}
+			// 	let  val =  this.$route.query.val
+			// let part = this.$route.query.part
+			// if(!localStorage.text){
+			// 	alert('输入关键词')
+			// 	this.$router.replace('/index')
+			// }
+			// console.log(localStorage.text)
+			// axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&grand_id=${this.$route.query.part}&id=1&search=${this.$route.query.val}&tx=3f556f66353c5945a3633ae209a3e0ff`)
+			// 	.then((res)=>{
+			// 		var a = res.data.data.splice(50)					
+			// 		this.productList =  res.data.data
+			// 		this.sets = false
+			// 		if(! this.productList.length ){
+			// 			document.getElementsByTagName('main')[0].innerHTML='没有信息'
+			// 		}
+			// 	})
 
 
 				
 			},
+					
 		},
 		mounted(){
 	
@@ -154,7 +142,16 @@
 
 <style lang='scss' scoped>
 
-
+#role{
+	width: 9.2vw;
+    display: inline-block;
+    height: 4vw;
+    border: 1px solid;
+    font-size: 2.66vw;
+    text-align: center;
+    line-height: 4.8vw;
+    border-radius: 1vw;
+}
 
 	.warp{
 		width: 100%;
@@ -163,57 +160,6 @@
 		flex-direction: column;
 		background-color: #f3f3f3;
 
-		>.float{
-			padding: 0 4vw;
-			box-sizing: border-box;
-			position: fixed;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #fff;
-			z-index: 2;
-			font-size: 4vw;
-
-			>.header{
-				width: 100%;
-				height: 11.6vw;
-				background-color: #fff;
-				border-bottom: 1px solid #eeeeee;
-				text-align: center;
-				line-height: 11vw;
-				overflow: hidden;
-				:nth-child(1){
-					position: absolute;
-					top: 0;
-					left: -1vw;
-					width: 20vw;
-					float: left;
-				}
-			}
-			>ul{
-				width: 100%;
-				margin-top: 5vw;
-				display: flex;
-				
-				flex-wrap: wrap;
-				padding:  0  0  0 5.73vw  ;
-				box-sizing: border-box;
-
-				>li{
-					margin-right: 8vw;
-					width: 20vw;
-					height: 20vw;
-					margin-bottom:5vw; 
-					text-align: center;
-					:nth-child(1){
-						display: inline-block;
-						width: 10vw;
-						height: 10vw;
-						margin-bottom: 1.8vw;
-					}
-				}
-			}
-		}
 		>header{
 			background-color: #fff;
 
@@ -312,7 +258,7 @@
 
 					}
 					:nth-child(3){
-						font-size: 2.13vw;
+						font-size: 3.5vw;
 						color: #999999;
 						:nth-child(1){
 							margin-right: 1vw;

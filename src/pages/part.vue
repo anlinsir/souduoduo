@@ -6,16 +6,12 @@
 			<!-- 选择 参数 -->
 			<section class="choose">
 				<ul>
-					<li :class="active == index ? 'active' : '' " @touchstart='choose(index,$event)' data-iss='warp'  @touchend='choose(index,$event)' @touchmove='choose(index,$event)' v-for='(item,index) in nav ' :key="index">
-						{{item.name}}
-						<span  v-if='item.sel'></span>
-						<ul style="overflow: auto;height: 80vw;box-sizing: border-box;overflow-x:hidden;" v-if='item.sel' v-show='showPart == index' :key='index' id='chooseItem'>
-							<li  @touchstart='chooseItem(indexs,$event,items.child)' @touchend='chooseItem(indexs,$event,items.child)' data-iss='inn'   @touchmove='chooseItem(indexs,$event,items.child)' @mouseenter="chooseItem(indexs,$event)" :key='indexs' :data-id='items.id' :data-role="item.role ? item.role: '' " v-for="(items,indexs) in useClassify  ? useClassify[0].child?  useClassify[0].child.length ?   useClassify[0].child: useClassify : useClassify : '' ">
+					<li :class="active == index ? 'active' : '' " @touchstart='choose(index,$event,9)' data-iss='warp'  @touchend='choose(index,$event,9)' @touchmove='choose(index,$event,9)' v-for='(item,index) in nav ' :key="index">{{item.name}}<span  v-if='item.sel'></span>
+						<ul :style="{left: index*-100 + '%'}"  v-if='item.sel' v-show='showPart == index' :key='index' id='chooseItem'>
+							<li  @touchstart.stop='chooseItem(indexs,$event,items.child)' @touchend.stop='chooseItem(indexs,$event,items.child)' data-iss='inn'   @touchmove.stop='chooseItem(indexs,$event,items.child)' @mouseenter="chooseItem(indexs,$event)" :key='indexs' :data-id='items.id' :data-role="item.role ? item.role: '' " v-for="(items,indexs) in useClassify  ? useClassify[0].child?  useClassify[0].child.length ?   useClassify[0].child: useClassify : useClassify : '' ">
 									<span :class="active == index ? 'active' : '' " v-if='items.child && items.child.length'>></span>{{items.title}}
 								<ul v-if='items.child && showPartItem == indexs'>
-									<li @touchstart='hide' v-for='(props,indexs) in items.child' :key='indexs' :data-id='props.id '>
-										{{props.title}}
-									</li>
+									<li @touchstart.stop='hide(indexss,$event,props.id,props.title)' v-for='(props,indexss) in items.child' :key='indexss' :data-id='props.id '>{{props.title}}</li>
 								</ul>
 							</li>
 						</ul>
@@ -23,7 +19,7 @@
 				</ul>
 			</section>
 			<!-- 选择  end -->
-			<router-view class='main'></router-view>
+			<router-view  class='main'></router-view>
 		</main>
 
 		<Footer></Footer>
@@ -70,7 +66,8 @@
 				useClassify:null,
 				filtercity :null,
 				show:-1,
-				flag:true
+				flag:true,
+				cityId:null
 			})
 		},
 		components:{
@@ -79,11 +76,17 @@
 		},
 		methods:{
 
-			hide(){
+			hide(idx,e,id,tit){
+				console.log(id)
+	           	this.nav[this.showPart].name =  tit.substring(0,2) + '...'
+
+				this.showPart = -1	
+
+	         
 
 
 			},
-			choose(index,e){
+			choose(index,e,num){
 				 switch (e.type) {
 	                case 'touchstart':
 	                    this.flag = true;
@@ -94,16 +97,16 @@
 	                case 'touchend':
 	                    if(this.flag){
 	                        	this.active = index
-									
-									if(this.showPart == -1 || this.showPart != index ){
-										this.showPart = index
-									}else{
-									this.showPart = -1
+	                        	if(num == 9){
+									 if(this.showPart == -1 || this.showPart != index ){
+									 	this.showPart = index
+									 }else{
+									 this.showPart = -1
 									 }
+								}
 
 
 									var parts = this.$route.path.substring(6)
-									// 漫长的判断
 										if(parts == 'used' || parts == 'car' || parts == 'rent' || parts == 'work' ){
 											if(index == 0){
 												this.useClassify  = JSON.parse(localStorage.basedata).filtercity
@@ -208,7 +211,7 @@
 				
 
 			},
-			chooseItem(id,e,name){
+			chooseItem(id,e,child){
 	           
 
 				 switch (e.type) {
@@ -221,18 +224,37 @@
 	                    break;
 	                case 'touchend':
 	                    if(this.flag){
-	                    	console.log(e.target.dataset.id)
-	                    	if(!name || !name.length){
-							this.showPart = false
-	                    	}
-	                        if(this.showPartItem == id){
-	                    		this.showPartItem = -1
-	                    		this.showPart = true
+	                    	e.target.dataset.id 
+	                    	var a  = this.showPart
+	                    	if(!child || !child.length){
+	                    		console.log((e.target.innerText).substring(0,2))
+	                    		this.nav[this.showPart].name = (e.target.innerText).substring(0,2) + '...'
+	                    		this.showPart = -1
 
-	                    		return
+	                    		
 	                    	}
-	                    	this.showPartItem = id
-							this.showPart = true
+
+	                    	if(child.length){
+	                    		if(this.showPartItem == -1 || this.showPartItem != id){
+	                    			this.showPartItem = id		
+
+	                    		}else if(this.showPartItem == id){
+	                    			this.showPartItem = -1
+	                    		}
+	                    	}
+	                    	
+
+	      //               	if(!name || !name.length){
+							// this.showPart = false
+	      //               	}
+	      //                   if(this.showPartItem == id){
+	      //               		this.showPartItem = -1
+	      //               		this.showPart = true
+
+	      //               		return
+	      //               	}
+	      //               	this.showPartItem = id
+							// this.showPart = true
 
 	                    	
 	                    	
@@ -320,6 +342,7 @@
 
 
 <style lang="scss" scoped>
+
 	.warp{
 		width: 100%;
 		height: 100%;
@@ -352,11 +375,13 @@
 
 					}
 					>li{
-						width: 20vw;
+						width:20vw;
 						text-align: center;
 						height: 10.66vw;
 						line-height: 10.66vw;
 						position: relative;
+
+						
 						>span{
 						    border: 2vw solid;
 						    border-top: 0.8vw solid #333;
@@ -371,12 +396,17 @@
 						>#chooseItem{
 							position: absolute;
 							z-index: 10;
-							width: 40vw;
+							width: 100vw;
+							top: 10.66vw;
+							left:0;
 							text-align: left;
+							height: 70vw;
+							overflow: auto;
+							padding: 0 5vw;
 							    box-shadow: 2vw 2vw 3vw -1vw #bbb;
 							background-color: #fff;
 							>li{
-								
+								color: #999;
 								>ul{
 									transform: translateX(5vw);
 									>li{
@@ -397,4 +427,11 @@
 			}
 		}
 	}
+/*	#chooseItem{
+	width: 100vw;
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: auto;height: 80vw;box-sizing: border-box;overflow-x:hidden;
+}*/
 </style>

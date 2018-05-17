@@ -5,7 +5,7 @@
 			<span>详情</span>
 			<p>
 				<img @touchstart='openApp' @touchend='openApp' @touchmove='openApp'  src="/static/img/businessservice_icon_phone_m.png">
-				<img class="aa" src="/static/img/home_icon_home_gray.png">
+				<img @click='index' class="aa" src="/static/img/home_icon_home_gray.png">
 			</p>
 			
 		</header>
@@ -63,7 +63,7 @@
 			<div v-if='work == 3' class="workWarp" v-for='(item,index) in details' :key='index'>
 				<div class="workTop">
 					<p>{{item.title}}</p>
-					<p>${{item.price}}/每月</p>
+					<p>${{item.price}}/月</p>
 					<p><span>更新：{{item.create_time}}</span><span><img src="/static/img/recruitment_icon_read.png">{{item.browse}}人</span></p>
 				</div>
 				<div class="workBot">
@@ -124,7 +124,7 @@
 								<p><span>服务水平</span><span>0.0</span></p>
 							</li>
 							<li>
-								<span>{{item.score || '0.0'}}</span>
+								<span>{{item.score || '0.0'}} 分</span>
 								<span class="starWarp">
 									<span class="starWidth" :style="{width:item.score? item.score : 0  + '%'}">
 										<img  src="/static/img/vehicle_icon_star.png">
@@ -157,7 +157,7 @@
 					</div>
 					
 				</div>
-				<div  @click='openApp'   v-if='comment' class="comment">
+				<div  @touchstart='openApp' @touchend='openApp' @touchmove='openApp'   v-if='comment' class="comment">
 						{{comment}}
 				</div>	
 				<div class="comments" v-if='comments.length != 0' v-for='(item,index) in comments'>
@@ -222,6 +222,9 @@
 				//退后
 				history.back(1)
 
+			},
+			index(){
+				this.$router.push('/index')
 			},
 			openApp(e){
 				console.log(e.type)

@@ -90,6 +90,7 @@
 				height: 17.06vw;
 				background-color: #fff;
 				display: flex;
+				margin-bottom:2vw;
 
 				>.img{
 					width: 22.4vw;

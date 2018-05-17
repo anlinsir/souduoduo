@@ -45,35 +45,46 @@ export default new Router({
         children:[
                 {
                     path:'/part/used',
+                    name:'used',
                     component:Used
                 },
                 {
                     path:'/part/car',
+                    name:'car',
+
                     component:Car
                 },
                 {
                     path:'/part/rent',
+                    name:"rent",
                     component:Rent
                 },
                 {
                     path:'/part/merchant',
+                    name:"merchant",
                     component:Merchant
                 },
                 {
                     path:'/part/cate',
+                    name:"cate",
                     component:Cate
                 },
                 {
                     path:'/part/jour',
+                    name:"jour",
                     component:Jour
                 },
                 {
                     path:'/part/work',
+                    name:'work',
+
                     component:Work
                 }
                 ,
                 {
                     path:'/part/privilege',
+                    name:'privilege',
+
                     component:Privilege
                 }
             ]

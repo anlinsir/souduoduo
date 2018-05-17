@@ -10,7 +10,7 @@
 					</p>
 
 					<p class="topTwo">
-						<span><span>$</span>{{item.price}}/月</span>
+						<span><span v-if='Number(item.price) != 0'>$</span>{{Number(item.price)  == '0' ? '面议' : Number(item.price)  + '/月'}}</span>
 						<span><img src="/static/img/work_icon_position.png"> &nbsp;<span>{{item.position}}</span></span>
 					</p>
 					
@@ -37,7 +37,7 @@
 				<span class="o"></span>
 				<span class="t"></span>
 				<span class="e"></span>
-				<i id="texxxt">简购中 ...</i>
+				<i id="texxxt">加载中 ...</i>
 			</div>
 		</div>
 

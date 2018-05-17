@@ -18,7 +18,12 @@
 
 			<div class="peiInfo">
 				<img src="/static/img/release_icon_location.png" class="point">
-				<span>{{item.address}}</span>
+				<span style="    width: 86%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 10vw;
+    white-space: nowrap;">{{item.address}}</span>
 				<div class="phonrW">
 					<img src="/static/img/businessservice_icon_phone_m.png" class="phonr">
 					

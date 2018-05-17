@@ -1,7 +1,18 @@
 <template>
 	<div class="warp">
-	
-		<Header wi='#fff'></Header>
+	<div v-show='showw' class="float">
+			<div class="header">
+				<span @click='otherShow'><img style="width: 2.66vw;height: 4.8vw;transform: translateY(4vw) translateX(4vw);" src="/static/img/businessservice_icon_return_whitess.png"></span><span>选择类别</span>
+			</div>
+			<ul>
+				<li @click='getPart' :data-id='index' :key='index'  v-for='(item,index) in parts'>
+					<p :data-id='index'><img :data-id='index' :src="item.img"></p>
+					<p :data-id='index'>{{item.text}}</p>
+				</li>
+				
+			</ul>
+		</div>
+		<Header  @show='show' wi='#fff'></Header>
 
 		<main>
 			<!-- 下载的部分 -->
@@ -15,7 +26,7 @@
 						</dd>
 					</dl>
 					<button  class="openApp"  @touchstart = 'downAPP'>打开简购生活</button>
-					<button class="downApp" @touchstart = 'downAPP'>下载APP想优惠</button>
+					<button class="downApp" @touchstart = 'downAPP'>下载APP享优惠</button>
 				</div>
 			</section>
 			<!-- 选项部分  -->
@@ -93,7 +104,7 @@
 											<img src="/static/img/vehicle_icon_star.png">
 										</span>
 									</span>
-									<span v-if='item.price' class="pSpan">$</span>{{ item.price ? item.price : item.score }}
+									<span v-if="item.price && item.price != '0.00' " class="pSpan" >$</span>{{ item.price ? item.price == '0.00' ? '面议' : item.price : item.score }}
 									<span v-if='item.comments'>评论{{item.comments}}条</span>
 									<span v-if='item.open && item.open.length' class="open">营业中</span>
 									<span v-if='item.open && !item.open.length' class="openn">歇业中</span>
@@ -225,7 +236,45 @@
 				tem2:[],
 				newest:[],//最新发布 和 附近商家,
 				hows:false,
-				flag:true
+				flag:true,
+				showw:false,
+				part:null,
+
+				parts:[
+					{
+						img:'/static/img/search_icon_second@2x.png',
+						text:"闲置二手"
+					},
+					{
+						img:'/static/img/search_icon_car@2x.png',
+						text:"新旧车辆"
+					},
+					{
+						img:'/static/img/search_icon_jobs@2x.png',
+						text:"工作招聘"
+					},
+					{
+						img:'/static/img/search_icon_houes@2x.png',
+						text:"房屋租赁"
+					},
+					{
+						img:'/static/img/search_icon_service@2x.png',
+						text:"商家服务"
+					},
+					{
+						img:'/static/img/search_icon_food@2x.png',
+						text:"附近美食"
+					},
+					{
+						img:'/static/img/search_icon_offer@2x.png',
+						text:"附近优惠"
+					},
+					{
+						img:'/static/img/search_icon_tourism@2x.png',
+						text:"周边游"
+					}
+
+				]//选择类别
 
 			
 			})
@@ -235,6 +284,13 @@
 			'Footer':Footer
 		},
 		methods:{
+			show(foo){
+				this.showw = foo
+
+			},
+			otherShow(){
+				this.showw = false
+			},
 			toUsedDetail(id,ind){
 				if(ind == 0){
 				this.$router.push({path:`/details/${id}`,query:{g:1}})		
@@ -321,7 +377,14 @@
 				//判断点击的是哪一个  加载数据
 			},
 		
-		
+			getPart(e){
+				this.part = Number(e.target.dataset.id) + 1 
+				localStorage.indexPart = this.part
+				this.showw = false
+				this.$router.push({path:'/search',query:{part:this.part}})
+
+
+			},
 			topart(e){//跳转到相应的部分
 				 switch (e.type) {
 	                case 'touchstart':
@@ -421,6 +484,57 @@
 		flex-direction: column;
 		background-color: #f3f3f3;
 
+		>.float{
+			padding: 0 4vw;
+			box-sizing: border-box;
+			position: fixed;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #fff;
+			z-index: 2;
+			font-size: 4vw;
+
+			>.header{
+				width: 100%;
+				height: 11.6vw;
+				background-color: #fff;
+				border-bottom: 1px solid #eeeeee;
+				text-align: center;
+				line-height: 11vw;
+				overflow: hidden;
+				:nth-child(1){
+					position: absolute;
+					top: 0;
+					left: -1vw;
+					width: 20vw;
+					float: left;
+				}
+			}
+			>ul{
+				width: 100%;
+				margin-top: 5vw;
+				display: flex;
+				
+				flex-wrap: wrap;
+				padding:  0  0  0 5.73vw  ;
+				box-sizing: border-box;
+
+				>li{
+					margin-right: 8vw;
+					width: 20vw;
+					height: 20vw;
+					margin-bottom:5vw; 
+					text-align: center;
+					:nth-child(1){
+						display: inline-block;
+						width: 10vw;
+						height: 10vw;
+						margin-bottom: 1.8vw;
+					}
+				}
+			}
+		}
 		main{
 			flex: 1;
 			overflow: auto;
