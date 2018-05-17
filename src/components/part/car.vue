@@ -21,7 +21,7 @@
 				
 				localStorage.pages2 = Number(localStorage.pages2) + 1
 				console.log(localStorage.pages2)
-				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=2&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.pages2}`)
+				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=2&id=1&source=${localStorage.UsedRole ? localStorage.UsedRole : 0}&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.pages2}`)
 				.then(res=>{
 					for(let i in res.data.data){
 						this.data.push(res.data.data[i])
@@ -43,12 +43,12 @@
 		created(){
 			localStorage.pages2 = 1
 
-				if(localStorage.dataG2){
+				if(localStorage.dataG2 && localStorage.UsedRole == 0){
 					this.data = JSON.parse(localStorage.dataG2)
 					return
 				}
 
-			axios.get('https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=2&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&page=1')
+			axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=2&id=1&source=${localStorage.UsedRole ? localStorage.UsedRole : 0}&tx=3f556f66353c5945a3633ae209a3e0ff&page=1`)
 					.then( res => {
 						this.data = res.data.data
 						localStorage.dataG2 = JSON.stringify(res.data.data)

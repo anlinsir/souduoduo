@@ -111,7 +111,7 @@
 											if(index == 0){
 												this.useClassify  = JSON.parse(localStorage.basedata).filtercity
 											}else if(index == 4){
-												this.useClassify = [{title:'不限',role:0},{title:'个人',role:1},{title:'商家',role:2},{title:'经纪人',role:3}]
+												this.useClassify = [{title:'不限',role:0,id:0},{title:'个人',role:1,id:1},{title:'商家',role:2,id:2},{title:'经纪人',role:3,id:3}]
 											}
 										}
 
@@ -224,12 +224,19 @@
 	                    break;
 	                case 'touchend':
 	                    if(this.flag){
-	                    	e.target.dataset.id 
+	                    	 
 	                    	var a  = this.showPart
 	                    	if(!child || !child.length){
 	                    		console.log((e.target.innerText).substring(0,2))
 	                    		this.nav[this.showPart].name = (e.target.innerText).substring(0,2) + '...'
+
+	                    		if(this.showPart == 4){
+	                    			localStorage.UsedRole = e.target.dataset.id
+	                    			
+	                    			location.reload()
+	                    		}
 	                    		this.showPart = -1
+
 
 	                    		
 	                    	}

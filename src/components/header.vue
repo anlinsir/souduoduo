@@ -100,9 +100,11 @@
 				// 	this.$router.push({path:'/search',query:{part:localStorage.indexPart}})
 				// 	this.$emit('backk',[])
 				// } else
-				 if(this.$route.name != 'index'){
-					this.$router.push('/index')
-				}
+				//  if(this.$route.name != 'index'){
+				// 	this.$router.push('/index')
+				// }
+				history.back()
+				localStorage.removeItem('UsedRole')
 			}
 		}
 	}
