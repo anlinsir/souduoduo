@@ -128,6 +128,8 @@
 
 				
 				localStorage.removeItem('OPenCate')
+				localStorage.removeItem('JourType')
+				
 
 
 

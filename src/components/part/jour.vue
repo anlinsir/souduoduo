@@ -51,7 +51,7 @@
 				// 	this.data = JSON.parse(localStorage.dataJour)
 				// 	return
 				// }
-			axios.get(`https://time2.jglist.com/index.php?r=newtravel/travel/list&auth_name=id&category_child=${localStorage.childMer ? localStorage.childMer : 0}&category_parent=${localStorage.parentMer? localStorage.parentMer : 0}&grand_id=8&id=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
+			axios.get(`https://time2.jglist.com/index.php?r=newtravel/travel/list&auth_name=id&category_child=${localStorage.childMer ? localStorage.childMer : 0}&category_parent=${localStorage.parentMer? localStorage.parentMer : 0}&grand_id=8&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&type=${localStorage.JourType == 1 ? 1 : localStorage.JourType == 2 ? 2 : 0}`)
 				.then(res=>{
 					console.log(res.data.data)
 					this.data = res.data.data

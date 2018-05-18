@@ -191,21 +191,24 @@
 
 	                    	if(name == 'cate'){
 	                    		if(index == 1){
-	                    			if(localStorage.CateType3 == 0){
-	                    				localStorage.CateType3 = 3
-	                    				location.reload() 
+	                    			if(localStorage.CateType3 == '3'){
+	                    				localStorage.removeItem('CateType3')
+	                    				location.reload()
 	                    				return
 	                    			}
-	                    			localStorage.CateType3 = 3
-	                    				location.reload()	                    			
+
+	                    			localStorage.CateType3 = 3   
+	                    			location.reload()         			
 	                    		}
+
 	                    		if(index == 2){
-	                    			if(localStorage.CateType4 == 0){
-	                    				localStorage.CateType4 = 4
+	                    			if(localStorage.CateType3 == '4'){
+	                    				localStorage.removeItem('CateType3')
+	                    				
 	                    				location.reload() 
 	                    				return
 	                    			}
-	                    			localStorage.CateType4 = 4
+	                    			localStorage.CateType3 = 4
 	                    				location.reload()                     			
 	                    		}
 	                    		if(index == 3){
@@ -217,6 +220,56 @@
 	                    			localStorage.OPenCate = 1
 	                    				location.reload()
 	                    		}
+	                    	}
+	                    	if(name == 'jour'){
+	                    		if(index == 1){
+	                    			if(localStorage.JourType == '1'){
+	                    				localStorage.removeItem('JourType')
+	                    				location.reload()
+	                    				return
+	                    			}
+	                    			localStorage.JourType = 1
+	                    			location.reload()
+	                    			return
+	                    		}
+	                    		if(index == 2){
+	                    			if(localStorage.JourType == '2'){
+	                    				localStorage.removeItem('JourType')
+	                    				location.reload()
+	                    				return
+	                    			}
+	                    			localStorage.JourType = 2
+	                    			location.reload()
+	                    			return
+	                    		}
+	                    	}
+
+
+
+
+	                    	
+	                    	if(name == 'privilege'){
+	                    		if(index == 1){
+	                    			// &sort=2
+	                    			if(localStorage.SortPri == '1'){
+	                    				localStorage.removeItem('SortPri')
+	                    				location.reload()
+	                    				return
+	                    			}
+	                    			localStorage.SortPri = 1
+	                    			location.reload()
+	                    		}
+	                    		if(index == 2){
+	                    			// &sort=2
+	                    			if(localStorage.SortPri == '2'){
+	                    				localStorage.removeItem('SortPri')
+	                    				location.reload()
+	                    				return
+	                    			}
+	                    			localStorage.SortPri = 2
+	                    			location.reload()
+	                    		}
+
 	                    	}
 
 
