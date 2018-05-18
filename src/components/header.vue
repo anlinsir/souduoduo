@@ -103,8 +103,40 @@
 				//  if(this.$route.name != 'index'){
 				// 	this.$router.push('/index')
 				// }
-				history.back()
+				
 				localStorage.removeItem('UsedRole')
+				localStorage.removeItem('UsedCity')
+				localStorage.removeItem('UsedCate')
+				localStorage.removeItem('WorkCity')
+
+				localStorage.removeItem('WorkCate')
+				localStorage.removeItem('Pricess')
+				localStorage.removeItem('WorkRole')
+				localStorage.removeItem('CateNum')
+				localStorage.removeItem('UsedAdd')
+				localStorage.removeItem('parentMer')
+				localStorage.removeItem('childMer')
+				
+				localStorage.removeItem('UsedTime')
+				localStorage.removeItem('DisMer')
+				localStorage.removeItem('OPenMer')
+
+				
+				localStorage.removeItem('CateType')
+				localStorage.removeItem('CateType3')
+				localStorage.removeItem('CateType4')
+
+				
+				localStorage.removeItem('OPenCate')
+
+
+
+				history.back()
+
+
+
+				
+
 			}
 		}
 	}

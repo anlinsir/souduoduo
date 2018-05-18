@@ -7,11 +7,11 @@
 			<section class="choose">
 				<ul>
 					<li :class="active == index ? 'active' : '' " @touchstart='choose(index,$event,9)' data-iss='warp'  @touchend='choose(index,$event,9)' @touchmove='choose(index,$event,9)' v-for='(item,index) in nav ' :key="index">{{item.name}}<span  v-if='item.sel'></span>
-						<ul :style="{left: index*-100 + '%'}"  v-if='item.sel' v-show='showPart == index' :key='index' id='chooseItem'>
-							<li  @touchstart.stop='chooseItem(indexs,$event,items.child)' @touchend.stop='chooseItem(indexs,$event,items.child)' data-iss='inn'   @touchmove.stop='chooseItem(indexs,$event,items.child)' @mouseenter="chooseItem(indexs,$event)" :key='indexs' :data-id='items.id' :data-role="item.role ? item.role: '' " v-for="(items,indexs) in useClassify  ? useClassify[0].child?  useClassify[0].child.length ?   useClassify[0].child: useClassify : useClassify : '' ">
+						<ul :style="{left: nav[3].sel && !nav[4] ? index == 0 ? 1 * -20 + '%' : index * -130 + '%' :index == 0 ? 1*-20 + '%' : index*-100 + '%'}"  v-if='item.sel' v-show='showPart == index' :key='index' id='chooseItem'>
+							<li  @touchstart.stop='chooseItem(indexs,$event,items.child)' @touchend.stop='chooseItem(indexs,$event,items.child)' :data-pricess='items.pricess'  :data-add='items.level'   @touchmove.stop='chooseItem(indexs,$event,items.child)' @mouseenter="chooseItem(indexs,$event)" :key='indexs'  :data-id='items.id' :data-role="item.role ? item.role: '' " v-for="(items,indexs) in useClassify  ? useClassify[0].child?  useClassify[0].child.length ?   useClassify[0].child: useClassify : useClassify : '' ">
 									<span :class="active == index ? 'active' : '' " v-if='items.child && items.child.length'>></span>{{items.title}}
 								<ul v-if='items.child && showPartItem == indexs'>
-									<li @touchstart.stop='hide(indexss,$event,props.id,props.title)' v-for='(props,indexss) in items.child' :key='indexss' :data-id='props.id '>{{props.title}}</li>
+									<li @touchstart.stop='hide(indexss,$event,props.id,props.title)' v-for='(props,indexss) in items.child' :data-id='items.id'  :key='indexss' :data-pid='props.id'>{{props.title}}</li>
 								</ul>
 							</li>
 						</ul>
@@ -78,8 +78,37 @@
 
 			hide(idx,e,id,tit){
 				console.log(id)
+				var name = this.$route.name
 	           	this.nav[this.showPart].name =  tit.substring(0,2) + '...'
+					if(name == 'work'){
+	        			
+	        			if(this.showPart == 1 ){
+	        				localStorage.WorkCate = id        					  
+	        				location.reload()
+	        			}
+	                    			
+	                }
+            	if(name == 'merchant' || name == 'privilege' || name == 'jour'){
+                	if(this.showPart == 0){
+                		localStorage.parentMer =  e.target.dataset.id
+                		localStorage.childMer = e.target.dataset.pid
+                	
+                		location.reload()
 
+                	}
+
+                }
+
+
+                	// if(name == 'privilege'){
+	                //     			if(this.showPart == 0){
+	                //     				console.log(e.target.dataset)
+	                //     				return
+	                //     				location.reload()                    				
+
+	                //     			}
+
+	                //     		}
 				this.showPart = -1	
 
 	         
@@ -96,6 +125,101 @@
 	                    break;
 	                case 'touchend':
 	                    if(this.flag){
+	                    	var name = this.$route.name
+
+	                    	if( name == 'used' ||  name == 'car' || name == 'rent'){
+	                    		if(index == 2){
+	                    			if(localStorage.UsedTime == 2){
+	                    				localStorage.removeItem('UsedTime')
+		                    			location.reload()
+
+	                    				return 
+	                    			}
+	                    			localStorage.UsedTime = 2
+		                    	
+		                    		location.reload()
+	                    		}
+
+	                    	}
+	                    	if(name == 'work'){
+	                    		if(index == 2){
+
+	                    			if(localStorage.UsedTime == 0){
+	                    				localStorage.UsedTime = 3
+		                    			location.reload()
+
+	                    				return 
+	                    			}
+	                    			localStorage.UsedTime = 0
+		                    		location.reload()
+
+
+	                    		}
+	                    	}
+	                    	if(name == 'merchant'){
+	                    		if(index == 1){
+	                    			if(localStorage.DisMer == 0){
+	                    				localStorage.DisMer = 1
+	                    				location.reload() 
+	                    				return
+	                    			}
+	                    			localStorage.DisMer = 0
+	                    				location.reload() 
+
+	                    		}
+
+	                    		if(index == 2){
+	                    			if(localStorage.DisMer == 2){
+	                    				localStorage.DisMer = 0
+	                    				location.reload() 
+	                    				return
+	                    			}
+	                    			localStorage.DisMer = 2
+	                    				location.reload()    
+	                    		}
+	                    		if(index == 3){
+	                    			if(localStorage.OPenMer == 1){
+	                    				localStorage.OPenMer = 0
+	                    				location.reload() 
+	                    				return
+	                    			}
+	                    			localStorage.OPenMer = 1
+	                    				location.reload()
+	                    		}
+
+	                    	}
+
+	                    	if(name == 'cate'){
+	                    		if(index == 1){
+	                    			if(localStorage.CateType3 == 0){
+	                    				localStorage.CateType3 = 3
+	                    				location.reload() 
+	                    				return
+	                    			}
+	                    			localStorage.CateType3 = 3
+	                    				location.reload()	                    			
+	                    		}
+	                    		if(index == 2){
+	                    			if(localStorage.CateType4 == 0){
+	                    				localStorage.CateType4 = 4
+	                    				location.reload() 
+	                    				return
+	                    			}
+	                    			localStorage.CateType4 = 4
+	                    				location.reload()                     			
+	                    		}
+	                    		if(index == 3){
+	                    			if(localStorage.OPenCate == 1){
+	                    				localStorage.OPenCate = 0
+	                    				location.reload() 
+	                    				return
+	                    			}
+	                    			localStorage.OPenCate = 1
+	                    				location.reload()
+	                    		}
+	                    	}
+
+
 	                        	this.active = index
 	                        	if(num == 9){
 									 if(this.showPart == -1 || this.showPart != index ){
@@ -167,13 +291,13 @@
 										})
 									}
 									if(index == 3){
-										this.useClassify = [{title:"不限",id:"0"}]
+										this.useClassify = [{title:"不限",pricess:"0,1000000"},{title:'1000元以下',pricess:'0,1000'},{title:'1000-2000',pricess:'1000,2000'},{title:'2000-3000',pricess:'2000,3000'},{title:'3000-4000',pricess:'3000,4000'},{title:'4000-5000',pricess:'4000,5000'},{title:'5000-6000',pricess:'5000,6000'},{title:'6000-7000',pricess:'6000-7000'},{title:'10000以上',pricess:'10000,100000'}]
 									}
 								}
 
 								if(parts == 'privilege'){
 									if(index == 3){
-										this.useClassify = [{title:'不限',role:0},{title:'个人',role:1},{title:'商家',role:2},{title:'经纪人',role:3}]
+										this.useClassify = [{title:'不限',id:0},{title:'商家',id:2},{title:'经纪人',id:3}]
 									}
 									if(index == 0){
 										this.useClassify = JSON.parse(localStorage.basedata).merchant
@@ -224,17 +348,78 @@
 	                    break;
 	                case 'touchend':
 	                    if(this.flag){
-	                    	 
+	                    	var name = this.$route.name
 	                    	var a  = this.showPart
 	                    	if(!child || !child.length){
-	                    		console.log((e.target.innerText).substring(0,2))
+	                    		// console.log((e.target.innerText).substring(0,2))
 	                    		this.nav[this.showPart].name = (e.target.innerText).substring(0,2) + '...'
+	                    		if(name == 'rent' || name == 'used' || name == 'car'){
+	                    			if(this.showPart == 4){
+		                    			localStorage.UsedRole = e.target.dataset.id	                    			
+		                    			location.reload()
+		                    		}
+		                    		if(this.showPart == 0){
+		                    			localStorage.UsedCity = e.target.dataset.id	     
+		                    			localStorage.UsedAdd = e.target.dataset.add 
+		                    			location.reload()
+		                    		}
+		                    		if(this.showPart == 1){
+		                    			localStorage.UsedCate = e.target.dataset.id	   
 
-	                    		if(this.showPart == 4){
-	                    			localStorage.UsedRole = e.target.dataset.id
-	                    			
-	                    			location.reload()
+		                    		
+		                    			location.reload()
+
+		                    		}
+		                    	
+
 	                    		}
+
+	                    		if(name == 'used' || name == 'car'){
+		                    		
+		                    		
+		                    		
+	                    		}else if(name == 'work'){
+	                    			if(this.showPart == 0){
+	                    				localStorage.WorkCity = e.target.dataset.id        					  
+	                    				location.reload()
+	                    			}
+	                    			if(this.showPart == 1 ){
+	                    				localStorage.WorkCate = e.target.dataset.id        					  
+	                    				location.reload()
+	                    			}
+	                    			if(this.showPart == 3){
+	                    				localStorage.Pricess = e.target.dataset.pricess 
+	                    				location.reload()                    				
+	                    			}
+	                    			if(this.showPart == 4){
+	                    				localStorage.WorkRole =  e.target.dataset.id
+	                    				location.reload()                    				
+	                    				            				
+	                    			}
+	                    			
+	                    		}
+	                    		
+	                    		if(name == 'cate'){
+	                    			if(this.showPart == 0){
+	                    				localStorage.CateNum = e.target.dataset.id 
+	                    				location.reload()                    				
+
+	                    			}
+
+	                    		}
+	                    		if(name == 'privilege'){
+	                    			if(this.showPart == 3){
+	                    				localStorage.PriRole = e.target.dataset.id
+	                    				
+	                    				location.reload()                    				
+
+	                    			}
+
+	                    		}
+
+
+
+
 	                    		this.showPart = -1
 
 

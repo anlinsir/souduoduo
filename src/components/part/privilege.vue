@@ -57,13 +57,18 @@
 		}
 		,
 		created(){
-			if(localStorage.dataPri){
-				this.list = JSON.parse(localStorage.dataPri)
-				return
-			}
-			axios.get('https://time2.jglist.com/index.php?r=merchant/shop/privilegelist&auth_name=id&id=1&lat=30.55102013717875&lng=104.06901177707833&tx=3f556f66353c5945a3633ae209a3e0ff')
+			// if(localStorage.dataPri){
+			// 	this.list = JSON.parse(localStorage.dataPri)
+			// 	return
+			// }
+			axios.get(`https://time2.jglist.com/index.php?r=merchant/shop/privilegelist&auth_name=id&cate=${localStorage.childMer ? localStorage.childMer : 0}&grand_id=${localStorage.parentMer ? localStorage.parentMer : 0 }&role=${localStorage.PriRole ? localStorage.PriRole : 0}&id=1&lat=30.55102013717875&lng=104.06901177707833&tx=3f556f66353c5945a3633ae209a3e0ff`)
 				.then(res=>{
 					console.log(res.data.data)
+					if(!res.data.data.length){
+						alert('none')
+						this.list = [{title:'none'}]
+						return
+					}
 					this.list = res.data.data
 					localStorage.dataPri = JSON.stringify(res.data.data)
 

@@ -25,7 +25,7 @@
 			next(){
 				localStorage.Catepages = Number(localStorage.Catepages) + 1
 				console.log(localStorage.Catepages)
-				axios.get(`https://time2.jglist.com/index.php?r=delicacy/food/list&auth_name=id&grand_id=6&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.Catepages}`)
+				axios.get(`https://time2.jglist.com/index.php?r=delicacy/food/list&auth_name=id&category_parent=${localStorage.CateNum ? localStorage.CateNum : 0 }&grand_id=6&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.Catepages}`)
 				.then(res=>{
 					for(let i in res.data.data){
 						this.data.push(res.data.data[i])
@@ -51,12 +51,12 @@
 		},
 		created(){
 			localStorage.Catepages = 1
-			if(localStorage.dataCate){
-				this.data = JSON.parse(localStorage.dataCate)
-				return
-			}
+			// if(localStorage.dataCate){
+			// 	this.data = JSON.parse(localStorage.dataCate)
+			// 	return
+			// }
 			
-			axios.get('https://time2.jglist.com/index.php?r=delicacy/food/list&auth_name=id&grand_id=6&id=1&tx=3f556f66353c5945a3633ae209a3e0ff')
+			axios.get(`https://time2.jglist.com/index.php?r=delicacy/food/list&auth_name=id&category_parent=${localStorage.CateNum ? localStorage.CateNum : 0 }&grand_id=6&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&type=3&isOpen=${localStorage.OPenCate ?  localStorage.OPenCate : 0}`)
 				.then(res=>{
 					console.log(res.data.data)
 					this.data = res.data.data

@@ -125,7 +125,7 @@
 				},2500)
 				localStorage.Workpages = Number(localStorage.Workpages) + 1
 				console.log(localStorage.Workpages)
-				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=3&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.Workpages}`)
+				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=3&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.Workpages}&type=${localStorage.UsedTime == 0  ? 0 : 3 }`)
 				.then(res=>{
 					for(let i in res.data.data){
 						this.list.push(res.data.data[i])
@@ -180,12 +180,17 @@
 		},
 		created(){
 			localStorage.Workpages = 1
-			if(localStorage.dataWork){
-				this.list = JSON.parse(localStorage.dataWork)
-				return
-			}
-			axios.get('https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=3&id=1&tx=3f556f66353c5945a3633ae209a3e0ff')
+			// if(!localStorage.dataWork){
+			// 	this.list = JSON.parse(localStorage.dataWork)
+			// 	return
+			// }
+			axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=${localStorage.WorkCate ? localStorage.WorkCate : 0}&city_id=${localStorage.WorkCity ? localStorage.WorkCity : 0}&level=${localStorage.WorkCity ? localStorage.WorkCity == 0 ? 0 : 2  : 0 }&price=${localStorage.Pricess ? localStorage.Pricess : '0,1000000' }&source=${localStorage.WorkRole ? localStorage.WorkRole : 0 }&grand_id=3&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&type=${localStorage.UsedTime == 0  ? 0 : 3 }`)
 				.then(res=>{
+					if(!res.data.data.length){
+						alert('none')
+						this.list = [{title:"none"}]
+						return
+					}
 					console.log(res.data.data)
 					this.list = res.data.data
 					localStorage.dataWork = JSON.stringify(res.data.data)

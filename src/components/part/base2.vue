@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<ul v-show='sets'>
-			<li @touchend='getDetails(index,$event)' @touchstart='getDetails(index,$event)' @touchmove='getDetails(index,$event)' :data-id='item.shop_id && item.shop_id !=0 ? item.shop_id : item.id' v-for='(item,index) in data' :key='index' :style="{minHeight: change ? '24.9vw' : '25vw' }" class='dataid'>
+			<li @touchend="getDetails(index,$event,item.id,item.shop_id)" @touchstart='getDetails(index,$event)' @touchmove='getDetails(index,$event)' :data-id='item.shop_id && item.shop_id !=0 ? item.shop_id : item.id' v-for='(item,index) in data' :key='index' :style="{minHeight: change ? '24.9vw' : '25vw' }" class='dataid'>
 				<dl :data-id='item.shop_id'>
 					<dt><img  :data-id='item.shop_id' :src="item.image + '200_200.jpg'"></dt>
 					<dd>
@@ -35,7 +35,7 @@
 							<p v-for='(item,index) in item.activity'>
 								<span v-if='item.verify == 1' class="juan">劵</span>
 								<span v-if='item.verify == 0' class="hui">惠</span>
-								<span class="activityCon" :data-id='item.id'>{{item.info}}</span>
+								<span class="activityCon" :data-id='item.id'>{{item.info || item.title}}</span>
 								<span @click='showMore(index)' id='more' >8个活动▼</span>
 							</p>
 							 <!-- <p :data-id='item.shop_id' v-if='item.activity.length == 0' style="text-align: center;">此商家还没有活动和优惠哟</p> -->
@@ -109,7 +109,7 @@
 				this.show = index
 			},
 
-			getDetails(index,e){
+			getDetails(index,e,id,sid){
 				 switch (e.type) {
 	                case 'touchstart':
 	                    this.flag = true;
@@ -120,7 +120,10 @@
 	                case 'touchend':
 	                    if(this.flag){
 	                     	  this.id = document.getElementsByClassName('dataid')[index].dataset.id
-								this.$emit('toDetails',this.id)
+	                     	  var qid = this.$route.name == 'cate' ? id : sid ; 
+	                     	 
+	                    	
+								this.$emit('toDetails',qid)
 	                    }else{
 	                    // 滑动事件
 	                    console.log('move')

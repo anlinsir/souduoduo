@@ -41,7 +41,7 @@
 				localStorage.pages1 = Number(localStorage.pages1) + 1
 				console.log(localStorage.pages1)
 
-				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=1&id=1&source=${localStorage.UsedRole ? localStorage.UsedRole : 0 }&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.pages1}`)
+				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=${localStorage.UsedCate ? localStorage.UsedCate : 0 }&grand_id=1&id=1&source=${localStorage.UsedRole ? localStorage.UsedRole : 0 }&city_id=${localStorage.UsedCity ? localStorage.UsedCity  : 0}&level=${localStorage.UsedCity ? localStorage.UsedAdd : ''}&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.pages1}&type=${localStorage.UsedTime ? localStorage.UsedTime : 3 }`)
 				.then(res=>{
 					if(!res.data.data[0]){alert('没有了')}
 					for(let i in res.data.data){
@@ -65,8 +65,18 @@
 				}
 
 				//https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&grand_id=1&id=1&source=2&tx=3f556f66353c5945a3633ae209a3e0ff
-				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=1&id=1&source=${localStorage.UsedRole ? localStorage.UsedRole : 0 }&tx=3f556f66353c5945a3633ae209a3e0ff&page=1`)
+				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=${localStorage.UsedCate ? localStorage.UsedCate : 0 }&grand_id=1&id=1&source=${localStorage.UsedRole ? localStorage.UsedRole : 0 }&city_id=${localStorage.UsedCity ? localStorage.UsedCity  : 0}&level=${localStorage.UsedCity ? localStorage.UsedAdd : ''}&tx=3f556f66353c5945a3633ae209a3e0ff&page=1&type=${localStorage.UsedTime ? localStorage.UsedTime : 3 }`)
 				.then(res=>{
+					if(res.data.data.length == 0){
+						alert('none')
+						localStorage.UsedCity = 0
+						localStorage.UsedRole = 0
+						localStorage.UsedAdd = 0
+						localStorage.UsedCate  = 0
+	                    location.reload()
+						
+						return
+					}
 					this.data = res.data.data
 					localStorage.dataG1 = JSON.stringify(res.data.data)
 
