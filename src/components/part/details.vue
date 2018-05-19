@@ -50,8 +50,8 @@
 			<!-- 基本信息  end -->
 
 			<div v-if='work != 3' class="want">
-				<div class="heImg"><!-- 
-					<img v-if='thumbs && thumbs.length > 0' src="#" v-for='(item,index) in thumbs' :key='index'> -->
+				<div class="heImg">
+					<img v-if='thumbs && thumbs.length > 0' src="#" v-for='(item,index) in thumbs' :key='index'>
 					
 					<span class="wantProson">想要{{thumbs && thumbs.length > 0 ?thumbs.length:0}}</span>
 
@@ -106,7 +106,7 @@
 							<img :src="item.merchant.header ? item.merchant.header : item.merchant.header_img ">
 						</dt>
 						<dd>
-							<span>{{item.merchant.zh_name ? item.merchant.zh_name : ' '}} <img style="width: 3.46vw;height: 3.46vw;vertical-align: middle; " src="/static/img/businessservice_icon_vip.png"></span>
+							<span>{{item.merchant.zh_name ? item.merchant.zh_name : ' '}} <img v-if='item.license == 2' style="width: 3.46vw;height: 3.46vw;vertical-align: middle; " src="/static/img/businessservice_icon_vip.png"></span>
 							<span>{{item.merchant.en_name}}</span>
 						</dd>						
 					</dl>
@@ -306,7 +306,7 @@
 							this.status = this.details[0].role
 							this.nickname = this.details[0].nickname
 							this.role = this.details[0].role
-							this.thumbs = this.details[0].thumbs
+							this.thumbs = this.details[0].user_header
 							this.introduce = this.details[0].introduce ?  this.details[0].introduce : ''
 							this.want = this.details[0].browse
 				

@@ -4,17 +4,17 @@
 		<Header left='2' color='#00d1b2' @backk='backk'  @getVal='getVal'></Header>
 
 		<main>
-			 <dl @click='down(item.id)' v-for='(item,index) in productList' :key='index'>
+			 <dl @click='down(item.id,item.privilege_id,item.shop_id)' v-for='(item,index) in productList' :key='index' >
 				<dt><img :src="item.image+'200_200.jpg'"></dt>
 				<dd>
-					<p>{{item.title}}</p>
-					<p style="marginBottom: 5vw;marginTop:1vw; "><span>${{item.price}}</span><span id='role'
+					<p>{{item.title || item.zh_name}}</p>
+					<p  style="marginBottom: 5vw;marginTop:1vw; "><span >{{ item.price && item.price !='$' ? '$' + item.price : (item.score? item.score + '分' :  item.star? item.star + '分' : '')   +' &nbsp; 评论' + (item.comments || item.recommend)  + '条' }}</span><span v-if='item.role || item.open'  id='role'
 
-					 :style="{color: item.role == 1 ? '#00d1b2' : item.role == 2 ? '#fb6b5c' :'#ffa84b'}">
+					 :style="{color: item.role ?  item.role == 1 ? '#00d1b2' : item.role == 2 ? '#fb6b5c' :'#ffa84b' : item.open  ?  item.open.length ?'#fff' :'#fff' :'',background:item.open? item.open.length ? 'linear-gradient(to right, #41e9d0, #01d1b2)':'linear-gradient(to right, #ff8777, #fb6b5c)' : '' }">
 
 
-					{{item.role ? item.role == 1 ? '个人' : item.role == 2 ? '商家' :  '经纪人' : '' }}</span></p>
-					<p><span>{{item.city}}</span><span>{{item.area}}</span><span>{{item.create_time}}</span></p>
+					{{item.role ? item.role == 1 ? '个人' : item.role == 2 ? '商家' :  '经纪人' : item.open  ? item.open.length ? '营业中' :'歇业中' :'' }}</span></p>
+					<p><span>{{item.city ||item.cate_title || item.category_title}}</span><span>{{item.area}}</span><span>{{item.create_time  ? item.create_time : item.distance +'公里'}}</span></p>
 				</dd>
 			</dl> 
 
@@ -66,17 +66,48 @@
 			getVal(val){
 				this.val =  val
 				console.log(this.val,this.$route.query.part)
-				console.log(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=${this.$route.query.part}&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&search=${this.val}&page=1`)
+				https://time2.jglist.com/index.php?r=merchant/shop/list&auth_name=id&category_child=0&grand_id=5&id=1&lat=32&lng=123&name=%E7%94%B5&tx=3f556f66353c5945a3633ae209a3e0ffx
+				console.log(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=${this.$route.query.part}&id=1&tx=3f556f66353c5945a3633ae209a3e0ff${this.val}&page=1`)
+				if(this.$route.query.part == 1 || this.$route.query.part == 2 || this.$route.query.part == 3 ||this.$route.query.part == 4){
 				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=0&grand_id=${this.$route.query.part}&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&search=${this.val}&page=1`)
 
 					.then((res)=>{
 						console.log(res.data.data)
 						this.productList = res.data.data
 					})
+				}else if(this.$route.query.part == 5){
+					axios.get(`https://time2.jglist.com/index.php?r=merchant/shop/list&auth_name=id&grand_id=5&id=1&name=${this.val}&tx=3f556f66353c5945a3633ae209a3e0ff`)
+						.then((res)=>{
+							console.log(res.data.data)
+							this.productList = res.data.data
+						})
+				}else if(this.$route.query.part == 6){
+					https://time2.jglist.com/index.php?r=delicacy/food/list&auth_name=id&grand_id=6&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&search=%E5%8A%B3
+					axios.get(`https://time2.jglist.com/index.php?r=delicacy/food/list&auth_name=id&grand_id=6&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&search=${this.val}`)
+						.then((res)=>{
+							console.log(res.data.data)
+							this.productList = res.data.data
+						})
+				}else if(this.$route.query.part == 7){
+					axios.get(`https://time2.jglist.com/index.php?r=merchant/shop/privilegelist&auth_name=id&id=1&lat=30.55102013717875&lng=104.06901177707833&tx=3f556f66353c5945a3633ae209a3e0ff&search=${this.val}`)
+						.then((res)=>{
+							console.log(res.data.data)
+							this.productList = res.data.data
+						})
+				}else if(this.$route.query.part == 8){
+					axios.get(`https://time2.jglist.com/index.php?r=newtravel/travel/list&auth_name=id&grand_id=8&id=1&search=${this.val}&tx=3f556f66353c5945a3633ae209a3e0ff`)
+						.then((res)=>{
+							console.log(res.data.data)
+							this.productList = res.data.data
+						})
+					
+				}
 			},
-			down(id){
+			down(aid,pid,sid){
 				var part = this.$route.query.part
-				console.log(part)
+				var id =  aid ? aid : pid ?pid :sid 
+				console.log(id)
+				
 				
 					if(part == 1){
 						this.$router.push({path:`/details/${id}`,query:{g:1}})
@@ -84,6 +115,20 @@
 						this.$router.push({path:`/details/${id}`,query:{g:2}})						
 					}else if(part == 3){
 						this.$router.push({path:`/details/${id}`,query:{g:3}})
+					}else if(part == 4){
+						this.$router.push({path:`/details/${id}`,query:{g:4}})
+
+					}else if(part == 5){
+						this.$router.push({path:`/detailT/${id}`,query:{tyep:"mer"}})
+
+					}else if(part == 6){
+						this.$router.push({path:`/detailT/${id}`,query:{tyep:"cate"}})
+
+					}else if(part == 7){
+						this.$router.push({path:`/pridetail/${id}`})
+					}else if(part == 8){
+						this.$router.push({path:`/detailT/${id}`,query:{tyep:"jour"}})
+
 					}
 					
 						
