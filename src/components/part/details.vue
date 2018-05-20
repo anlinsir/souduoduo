@@ -51,7 +51,7 @@
 
 			<div v-if='work != 3' class="want">
 				<div class="heImg">
-					<img v-if='thumbs && thumbs.length > 0' src="#" v-for='(item,index) in thumbs' :key='index'>
+					<img :style="{marginLeft:(index + 1) * 1 +'vw'}" v-if='thumbs && thumbs.length > 0' :src="item.user_header" v-for='(item,index) in thumbs' :key='index'>
 					
 					<span class="wantProson">想要{{thumbs && thumbs.length > 0 ?thumbs.length:0}}</span>
 
@@ -162,7 +162,7 @@
 				</div>	
 				<div class="comments" v-if='comments.length != 0' v-for='(item,index) in comments'>
 					<dl>
-						<dt><img :src="item.senter_header"></dt>
+						<dt><img :src="item.senter_header" alt='加载失败'></dt>
 						<dd>
 							<p>{{item.senter_nickname}}</p>
 							<p><span>来自</span><span>{{item.create_time}}</span></p>
@@ -182,7 +182,7 @@
 			
 		</main>
 
-		<Footer isShow='ture' :app='app' :idd='idd'></Footer>
+		<Footer :isShow='isShows' :app='app' :idd='idd'></Footer>
 
 	</div>
 
@@ -206,7 +206,8 @@
 				work:0,
 				want:0,
 				app:'1',
-				idd:'0'
+				idd:'0',
+				isShows:false
 			})
 		}
 		,
@@ -220,6 +221,7 @@
 			toIndex(){
 				//this.$router.push('/index')
 				//退后
+			
 				history.back(1)
 
 			},
@@ -306,13 +308,14 @@
 							this.status = this.details[0].role
 							this.nickname = this.details[0].nickname
 							this.role = this.details[0].role
-							this.thumbs = this.details[0].user_header
+							this.thumbs = this.details[0].thumbs
 							this.introduce = this.details[0].introduce ?  this.details[0].introduce : ''
 							this.want = this.details[0].browse
 				
 
-							axios.get(`https://time2.jglist.com/index.php?r=magor/five/comments&auth_name=name&grand_id=${this.details[0].grand_id}&id=${this.details[0].user_id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
+							axios.get(`https://time2.jglist.com/index.php?r=magor/five/comments&auth_name=name&grand_id=${this.details[0].grand_id}&id=${this.details[0].id}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff`)
 								.then(res=>{
+									console.log(res)
 									if(res.data.data.length == 0){
 										this.comment = '快来发布第一条评论吧'
 									}else{
@@ -323,6 +326,8 @@
 
 				})
 
+
+
 				
 					
 		},
@@ -330,6 +335,16 @@
 			// window.addEventLitenser('scroll',function(){
 			// 	console.log('S')
 			// })
+
+			if(!localStorage.isShows){
+				localStorage.isShows = 0
+			}
+			localStorage.isShows = Number(localStorage.isShows) + 1
+			if(Number(localStorage.isShows) == 5){
+				this.isShows = true
+				localStorage.isShows = 0
+			}
+			console.log(this.isShows)
 
 		}
 	}
@@ -545,10 +560,13 @@
 					line-height: 5.8vw;
 					display: inline-block;
 					margin-top: 2.93vw;
+
 					>img{
 						position: absolute;
 						width: 5.33vw;
 						height: 5.33vw;
+						    margin-top: 0.5vw;
+						border-radius: 50%;
 					}
 					>:nth-child(2){
 						left: 2vw;
@@ -854,11 +872,10 @@
 					}
 				>.comments{
 					width: 100%;
-					min-height: 34.66vw;
+					/*min-height: 34.66vw;*/
 					border-top: 1px solid #e8e8e8;
 					padding: 4vw;
 					box-sizing: border-box;
-					text-align: center;
 					
 					>dl{
 						width: 100%;
@@ -871,10 +888,9 @@
 							height: 9.33vw;
 							border-radius: 50%;
 							margin-right: 2.66vw;
-							background-color: red;
 							>img{
 								width: 9.33vw;
-							height: 9.33vw;
+								height: 9.33vw;
 								border-radius: 50%;
 							}
 						}
@@ -899,6 +915,7 @@
 						font-size: 3.2vw;
 						word-break : break-all ;
 						color: #333;
+						text-indent: 4em;
 						 text-align:justify;display:inline-block;
 
 					}

@@ -19,16 +19,21 @@
 		},
 		created(){
 			localStorage.pages4 = 1
-			/*	if(!localStorage.dataG4){
+				if(localStorage.dataG4){
 					this.data = JSON.parse(localStorage.dataG4)
 					return
-				}*/
+				}
 
-			axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&city_id=${localStorage.UsedCity ? localStorage.UsedCity : 0 }&level=${localStorage.UsedAdd ? localStorage.UsedAdd : 0}&cate_id=${localStorage.UsedCate ? localStorage.UsedCate : 0}&grand_id=4&source=${localStorage.UsedRole ? localStorage.UsedRole : 0}&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&type=${localStorage.UsedTime ? localStorage.UsedTime : 3 }`)
+			axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&city_id=${localStorage.RentCity ? localStorage.RentCity : 0 }&level=${localStorage.RentAdd ? localStorage.RentAdd : 0}&cate_id=${localStorage.RentCate ? localStorage.RentCate : 0}&grand_id=4&source=${localStorage.RentRole ? localStorage.RentRole : 0}&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&type=${localStorage.RentTime ? localStorage.RentTime : 3 }`)
 			.then(res=>{
+				if(!res.data.data.length){
+					alert('on')
+					this.data  = JSON.parse(localStorage.dataG42)
+					return
+				}
 				this.data = res.data.data
 				localStorage.dataG4 = JSON.stringify(res.data.data)
-
+				localStorage.dataG42 = localStorage.dataG4
 
 			})
 		},
@@ -43,11 +48,11 @@
 				next(pages){
 				
 				localStorage.pages4 = Number(localStorage.pages4) + 1
-				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&city_id=${localStorage.UsedCity ? localStorage.UsedCity : 0 }&level=${localStorage.UsedAdd ? localStorage.UsedAdd : 0}&cate_id=${localStorage.UsedCate ? localStorage.UsedCate : 0}&grand_id=4&source=${localStorage.UsedRole ? localStorage.UsedRole : 0}&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&type=${localStorage.UsedTime ? localStorage.UsedTime : 3 }&page=${localStorage.pages4}`)
+				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&city_id=${localStorage.RentCity ? localStorage.RentCity : 0 }&level=${localStorage.RentAdd ? localStorage.RentAdd : 0}&cate_id=${localStorage.RentCate ? localStorage.RentCate : 0}&grand_id=4&source=${localStorage.RentRole ? localStorage.RentRole : 0}&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&type=${localStorage.RentTime ? localStorage.RentTime : 3 }&page=${localStorage.pages4}`)
 				.then(res=>{
 					if(!res.data.data.length){
 						alert('none')
-						return
+						
 					}
 					console.log(res.data.data)
 					for(let i in res.data.data){

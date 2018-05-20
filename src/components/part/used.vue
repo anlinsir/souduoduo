@@ -43,7 +43,12 @@
 
 				axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=${localStorage.UsedCate ? localStorage.UsedCate : 0 }&grand_id=1&id=1&source=${localStorage.UsedRole ? localStorage.UsedRole : 0 }&city_id=${localStorage.UsedCity ? localStorage.UsedCity  : 0}&level=${localStorage.UsedCity ? localStorage.UsedAdd : ''}&tx=3f556f66353c5945a3633ae209a3e0ff&page=${localStorage.pages1}&type=${localStorage.UsedTime ? localStorage.UsedTime : 3 }`)
 				.then(res=>{
-					if(!res.data.data[0]){alert('没有了')}
+					if(!res.data.data.length){alert('没有了')
+						
+						
+
+
+					}
 					for(let i in res.data.data){
 						this.data.push(res.data.data[i])
 					}
@@ -59,7 +64,7 @@
 		//通过路由判断 加载什么数据
 			localStorage.pages1 = 1
 		// https://time2.jglist.com/index.php?r=magor/five/details&auth_name=name&grand_id=1&id=${}&name=1&tx=3f556f66353c5945a3633ae209a3e0ff&user_id=1402
-				if(localStorage.dataG1 && localStorage.UsedRole == 0){
+				if(localStorage.dataG1){
 					this.data = JSON.parse(localStorage.dataG1)
 					return
 				}
@@ -68,17 +73,17 @@
 				.then(res=>{
 					if(res.data.data.length == 0){
 						alert('none')
-						localStorage.UsedCity = 0
-						localStorage.UsedRole = 0
-						localStorage.UsedAdd = 0
-						localStorage.UsedCate  = 0
-	                    location.reload()
+						this.data = JSON.parse(localStorage.dataG12)
+						// localStorage.NavChoose0 = '区域'
+						// localStorage.NavChoose1 = '分类'
+						// localStorage.NavChoose4 = '来源'
+	                    // location.reload()
 						
 						return
 					}
 					this.data = res.data.data
 					localStorage.dataG1 = JSON.stringify(res.data.data)
-
+					localStorage.dataG12 = localStorage.dataG1
 
 				})
 			

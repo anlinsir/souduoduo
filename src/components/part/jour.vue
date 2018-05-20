@@ -47,16 +47,21 @@
 		},
 		created(){
 			localStorage.Jourpages  = 1 
-				// if(localStorage.dataJour){
-				// 	this.data = JSON.parse(localStorage.dataJour)
-				// 	return
-				// }
-			axios.get(`https://time2.jglist.com/index.php?r=newtravel/travel/list&auth_name=id&category_child=${localStorage.childMer ? localStorage.childMer : 0}&category_parent=${localStorage.parentMer? localStorage.parentMer : 0}&grand_id=8&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&type=${localStorage.JourType == 1 ? 1 : localStorage.JourType == 2 ? 2 : 0}`)
+				if(localStorage.dataJour){
+					this.data = JSON.parse(localStorage.dataJour)
+					return
+				}
+			axios.get(`https://time2.jglist.com/index.php?r=newtravel/travel/list&auth_name=id&category_child=${localStorage.childJour ? localStorage.childJour : 0}&category_parent=${localStorage.parentJour? localStorage.parentJour : 0}&grand_id=8&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&type=${localStorage.JourType == 1 ? 1 : localStorage.JourType == 2 ? 2 : 0}`)
 				.then(res=>{
+					if(!res.data.data.length){
+						alert('none')
+						this.data = JSON.parse(localStorage.dataJour2)
+						return
+					}
 					console.log(res.data.data)
 					this.data = res.data.data
 					localStorage.dataJour = JSON.stringify(res.data.data)
-
+					localStorage.dataJour2 = localStorage.dataJour
 				})
 		}
 	}

@@ -40,22 +40,22 @@
 			return({
 				nav:[
 					{
-						name:'区域',
+						name:'区域',//
 						sel:true
 					},
 					{
-						name:'分类',
+						name: '分类' ,//
 						sel:true
 
 					},
 					{
-						name:'时间'
+						name:'时间'//时间
 					},
 					{
-						name:'距离'
+						name:'距离'//距离
 					},
 					{
-						name:'来源',
+						name: '来源',//
 						sel:true
 
 					}
@@ -88,8 +88,12 @@
 	        			}
 	                    			
 	                }
-            	if(name == 'merchant' || name == 'privilege' || name == 'jour'){
+            	if(name == 'merchant'){ // || name == 'privilege' || name == 'jour'
+            		
                 	if(this.showPart == 0){
+                		localStorage.NavChooseMer0 =  e.target.innerText
+                		this.nav[this.showPart].name =localStorage.NavChooseMer0 
+
                 		localStorage.parentMer =  e.target.dataset.id
                 		localStorage.childMer = e.target.dataset.pid
                 	
@@ -100,15 +104,32 @@
                 }
 
 
-                	// if(name == 'privilege'){
-	                //     			if(this.showPart == 0){
-	                //     				console.log(e.target.dataset)
-	                //     				return
-	                //     				location.reload()                    				
 
-	                //     			}
+                if(name == 'jour'){
+                	localStorage.removeItem('dataJour')
+                	if(this.showPart == 0){
+                	localStorage.NavChooseJour0 = e.target.innerText
+                	this.nav[this.showPart].name =localStorage.NavChooseJour0 
+                		localStorage.parentJour =  e.target.dataset.id
+                		localStorage.childJour = e.target.dataset.pid
+                		location.reload()
+                	}
+                }
 
-	                //     		}
+
+                	if(name == 'privilege'){
+            			if(this.showPart == 0){
+            				console.log(e.target.innerText)
+
+            				localStorage.NavChoosePri0 = e.target.innerText
+                			this.nav[this.showPart].name =localStorage.NavChoosePri0 
+            				localStorage.parentPri =  e.target.dataset.id
+                			localStorage.childPri = e.target.dataset.pid
+            				location.reload()                    				
+
+            			}
+
+            		}
 				this.showPart = -1	
 
 	         
@@ -127,7 +148,7 @@
 	                    if(this.flag){
 	                    	var name = this.$route.name
 
-	                    	if( name == 'used' ||  name == 'car' || name == 'rent'){
+	                    	if( name == 'used' || name == 'rent'){
 	                    		if(index == 2){
 	                    			if(localStorage.UsedTime == 2){
 	                    				localStorage.removeItem('UsedTime')
@@ -141,6 +162,37 @@
 	                    		}
 
 	                    	}
+	                    	if( name == 'car' ){
+	                    		if(index == 2){
+	                    			if(localStorage.CarTime == 2){
+	                    				localStorage.removeItem('CarTime')
+		                    			location.reload()
+
+	                    				return 
+	                    			}
+	                    			localStorage.CarTime = 2
+		                    	
+		                    		location.reload()
+	                    		}
+	                    	}
+
+	                    	if( name == 'rent' ){
+	                    		if(index == 2){
+	                    			if(localStorage.RentTime == 2){
+	                    				localStorage.removeItem('RentTime')
+		                    			location.reload()
+
+	                    				return 
+	                    			}
+	                    			localStorage.RentTime = 2
+		                    	
+		                    		location.reload()
+	                    		}
+	                    	}
+
+
+
+
 	                    	if(name == 'work'){
 	                    		if(index == 2){
 
@@ -157,6 +209,7 @@
 	                    		}
 	                    	}
 	                    	if(name == 'merchant'){
+	                    		localStorage.removeItem('dataMer')
 	                    		if(index == 1){
 	                    			if(localStorage.DisMer == 0){
 	                    				localStorage.DisMer = 1
@@ -190,6 +243,7 @@
 	                    	}
 
 	                    	if(name == 'cate'){
+	                    		localStorage.removeItem('dataCate')
 	                    		if(index == 1){
 	                    			if(localStorage.CateType3 == '3'){
 	                    				localStorage.removeItem('CateType3')
@@ -406,17 +460,35 @@
 	                    	if(!child || !child.length){
 	                    		// console.log((e.target.innerText).substring(0,2))
 	                    		this.nav[this.showPart].name = (e.target.innerText).substring(0,2) + '...'
-	                    		if(name == 'rent' || name == 'used' || name == 'car'){
+	                    		if(name == 'used'){//name == 'rent' ||  || name == 'car'
+	                    		
+	                    		if(name == 'used'){localStorage.removeItem('dataG1')}
+	                    		// if(name == 'car'){localStorage.removeItem('dataG2')}
+	                    		// if(name == 'rent'){localStorage.removeItem('dataG4')}
+
 	                    			if(this.showPart == 4){
+	                    			
+	                    				localStorage.NavChooseUsed4  = e.target.innerText 
+	                    				this.nav[this.showPart] = localStorage.NavChooseUsed4
+		                    		
+
 		                    			localStorage.UsedRole = e.target.dataset.id	                    			
 		                    			location.reload()
 		                    		}
 		                    		if(this.showPart == 0){
+		                    			localStorage.NavChooseUsed0 = e.target.innerText 
+	                    				this.nav[this.showPart] = localStorage.NavChooseUsed0
+		                    			
+
 		                    			localStorage.UsedCity = e.target.dataset.id	     
 		                    			localStorage.UsedAdd = e.target.dataset.add 
 		                    			location.reload()
+
 		                    		}
 		                    		if(this.showPart == 1){
+		                    			localStorage.NavChooseUsed0  = e.target.innerText 
+	                    				this.nav[this.showPart] = localStorage.NavChooseUsed0
+		                    		
 		                    			localStorage.UsedCate = e.target.dataset.id	   
 
 		                    		
@@ -427,24 +499,105 @@
 
 	                    		}
 
+	                    		if(name == 'car'){
+	                    			if(name == 'car'){localStorage.removeItem('dataG2')}
+
+	                    				if(this.showPart == 4){
+	                    			
+	                    				localStorage.NavChooseCar4  = e.target.innerText 
+	                    				this.nav[this.showPart] = localStorage.NavChooseCar4
+		                    		
+
+		                    			localStorage.CarRole = e.target.dataset.id	
+		                    			console.log(localStorage.CarRole)                    			
+
+		                    			location.reload()
+		                    		}
+		                    		if(this.showPart == 0){
+		                    			localStorage.NavChooseCar0 = e.target.innerText 
+	                    				this.nav[this.showPart] = localStorage.NavChooseCar0
+		                    			
+
+		                    			localStorage.CarCity = e.target.dataset.id	     
+		                    			localStorage.CardAdd = e.target.dataset.add 
+		                    			location.reload()
+
+		                    		}
+		                    		if(this.showPart == 1){
+		                    			localStorage.NavChooseCar1  = e.target.innerText 
+	                    				this.nav[this.showPart] = localStorage.NavChooseCar1
+		                    		
+		                    			localStorage.CarCate = e.target.dataset.id	   
+
+		                    		
+		                    			location.reload()
+
+		                    		}
+
+
+	                    		}
+
+	                    		if(name == 'rent'){
+	                    			if(name == 'rent'){localStorage.removeItem('dataG4')}
+	                    				if(this.showPart == 4){
+	                    			
+	                    				localStorage.NavChooseRent4  = e.target.innerText 
+	                    				this.nav[this.showPart] = localStorage.NavChooseRent4
+		                    		
+
+		                    			localStorage.RentRole = e.target.dataset.id	
+		                    			                 			
+
+		                    			location.reload()
+		                    		}
+		                    		if(this.showPart == 0){
+		                    			localStorage.NavChooseRent0 = e.target.innerText 
+	                    				this.nav[this.showPart] = localStorage.NavChooseRent0
+		                    			
+
+		                    			localStorage.RentCity = e.target.dataset.id	     
+		                    			localStorage.RentAdd = e.target.dataset.add 
+		                    			location.reload()
+
+		                    		}
+		                    		if(this.showPart == 1){
+		                    			localStorage.NavChooseRent1  = e.target.innerText 
+	                    				this.nav[this.showPart] = localStorage.NavChooseRent1
+		                    		
+		                    			localStorage.RentCate = e.target.dataset.id	   
+
+		                    		
+		                    			location.reload()
+
+		                    		}
+	                    		}
+
+
+
 	                    		if(name == 'used' || name == 'car'){
 		                    		
 		                    		
 		                    		
 	                    		}else if(name == 'work'){
+
+	                    			localStorage.removeItem('dataWork')
 	                    			if(this.showPart == 0){
+	                    				localStorage.NavChooseWork0 = e.target.innerText
 	                    				localStorage.WorkCity = e.target.dataset.id        					  
 	                    				location.reload()
 	                    			}
 	                    			if(this.showPart == 1 ){
+	                    				localStorage.NavChooseWork1 = e.target.innerText
 	                    				localStorage.WorkCate = e.target.dataset.id        					  
 	                    				location.reload()
 	                    			}
 	                    			if(this.showPart == 3){
+	                    				localStorage.NavChooseWork3 = e.target.innerText
 	                    				localStorage.Pricess = e.target.dataset.pricess 
 	                    				location.reload()                    				
 	                    			}
 	                    			if(this.showPart == 4){
+	                    				localStorage.NavChooseWork4 = e.target.innerText
 	                    				localStorage.WorkRole =  e.target.dataset.id
 	                    				location.reload()                    				
 	                    				            				
@@ -453,7 +606,10 @@
 	                    		}
 	                    		
 	                    		if(name == 'cate'){
+	                    			localStorage.removeItem('dataCate') 
 	                    			if(this.showPart == 0){
+	                    				localStorage.NavChooseCatee0 = e.target.innerText
+	                    				this.nav[this.showPart] = localStorage.NavChooseCatee0
 	                    				localStorage.CateNum = e.target.dataset.id 
 	                    				location.reload()                    				
 
@@ -461,7 +617,10 @@
 
 	                    		}
 	                    		if(name == 'privilege'){
+	                    			localStorage.removeItem('dataPri')
 	                    			if(this.showPart == 3){
+	                    				localStorage.PriChoose3 = e.target.innerText
+	                    				this.nav[this.showPart].name =  localStorage.PriChoose3
 	                    				localStorage.PriRole = e.target.dataset.id
 	                    				
 	                    				location.reload()                    				
@@ -469,7 +628,19 @@
 	                    			}
 
 	                    		}
-
+	                    		if(name == 'jour'){
+					                	localStorage.removeItem('dataJour')
+					                	if(this.showPart == 0){
+					                	localStorage.NavChooseJour0 = e.target.innerText
+					                	this.nav[this.showPart].name =localStorage.NavChooseJour0 
+					                		if(id == 0){
+					                			
+					                			localStorage.parentJour = 0
+						                		localStorage.childJour = 0
+						                		location.reload()
+					                		}
+					                	}
+					                }
 
 
 
@@ -513,13 +684,101 @@
 			}
 		},
 		created(){
-			
+			if(this.$route.path.substring(6) == 'used'){
+				this.nav =[
+						{
+							name:localStorage.NavChooseUsed0 ? (localStorage.NavChooseUsed0).substring(0,2) + '...' : '区域',//
+							sel:true
+						},
+						{
+							name:localStorage.NavChooseUsed1 ? (localStorage.NavChooseUsed1).substring(0,2) + '...' : '分类' ,//
+							sel:true
+
+						},
+						{
+							name:'时间'//时间
+						},
+						{
+							name:'距离'//距离
+						},
+						{
+							name: localStorage.NavChooseUsed4 ? (localStorage.NavChooseUsed4).substring(0,2) + '...' : '来源',//
+							sel:true
+
+						}
+					]
+				}
+
+			if(this.$route.path.substring(6) == 'car'){
+				this.nav =[
+						{
+							name:localStorage.NavChooseCar0 ? (localStorage.NavChooseCar0).substring(0,2) + '...' : '区域',//
+							sel:true
+						},
+						{
+							name:localStorage.NavChooseCar1 ? (localStorage.NavChooseCar1).substring(0,2) + '...' : '分类' ,//
+							sel:true
+
+						},
+						{
+							name:'时间'//时间
+						},
+						{
+							name:'距离'//距离
+						},
+						{
+							name: localStorage.NavChooseCar4 ? (localStorage.NavChooseCar4).substring(0,2) + '...' : '来源',//
+							sel:true
+
+						}
+					]
 
 
-			if(this.$route.path.substring(6) == 'merchant' || this.$route.path.substring(6) =='cate' || this.$route.path.substring(6) =='jour'){
+			}
+
+
+			if(this.$route.path.substring(6) == 'rent'){
+				this.nav =[
+						{
+							name:localStorage.NavChooseRent0 ? (localStorage.NavChooseRent0).substring(0,2) + '...' : '区域',//
+							sel:true
+						},
+						{
+							name:localStorage.NavChooseRent1 ? (localStorage.NavChooseRent1).substring(0,2) + '...' : '分类' ,//
+							sel:true
+
+						},
+						{
+							name:'时间'//时间
+						},
+						{
+							name:'距离'//距离
+						},
+						{
+							name: localStorage.NavChooseRent4 ? (localStorage.NavChooseRent4).substring(0,2) + '...' : '来源',//
+							sel:true
+
+						}
+					]
+
+
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+			if(this.$route.path.substring(6) == 'merchant'){// || this.$route.path.substring(6) =='cate' || this.$route.path.substring(6) =='jour'
 				this.nav = [
 						{
-							name:'分类',
+							name:localStorage.NavChooseMer0 ? localStorage.NavChooseMer0.substring(0,2) + '...' : '分类',
 							sel:true
 						},
 						{
@@ -533,27 +792,62 @@
 						}
 					]
 			}
-			if(this.$route.path.substring(6) == 'work'){
+			if(this.$route.path.substring(6) =='cate'){
 				this.nav = [
 						{
-							name:'区域',
+							name:localStorage.NavChooseCatee0 ? localStorage.NavChooseCatee0.substring(0,2) + '...' : '分类',
 							sel:true
 						},
 						{
-							name:"职位",
+							name:"距离"
+						},
+						{
+							name:'评分'
+						},
+						{
+							name:'营业'
+						}
+					]
+			}
+			if(this.$route.path.substring(6) =='jour'){
+				this.nav = [
+						{
+							name:localStorage.NavChooseJour0 ? localStorage.NavChooseJour0.substring(0,2) + '...' : '分类',
+							sel:true
+						},
+						{
+							name:"距离"
+						},
+						{
+							name:'评分'
+						},
+						{
+							name:'营业'
+						}
+					]
+			}
+
+			if(this.$route.path.substring(6) == 'work'){
+				this.nav = [
+						{
+							name:localStorage.NavChooseWork0 ? localStorage.NavChooseWork0.substring(0,2) + '...' : '区域',
+							sel:true
+						},
+						{
+							name:localStorage.NavChooseWork1 ? localStorage.NavChooseWork1.substring(0,2) + '...' : "职位",
 							sel:true
 						},
 						{
 							name:'时间'
 						},
 						{
-							name:'薪资',
+							name:localStorage.NavChooseWork3 ?localStorage.NavChooseWork3.substring(0,2) + '...' :'薪资',
 							sel:true
 
 						}
 						,
 						{
-							name:'来源',
+							name:localStorage.NavChooseWork4 ? localStorage.NavChooseWork4.substring(0,2) + '...' : '来源',
 							sel:true
 							
 						}
@@ -562,7 +856,7 @@
 			if(this.$route.path.substring(6) == 'privilege'){
 				this.nav = [
 						{
-							name:'分类',
+							name:localStorage.NavChoosePri0 ? localStorage.NavChoosePri0.substring(0,2) + '...' :'分类',
 							sel:true
 						},
 						{
@@ -572,7 +866,7 @@
 							name:'评分'
 						},
 						{
-							name:'筛选',
+							name:localStorage.PriChoose3 ? localStorage.PriChoose3.substring(0,2) + '...' : '筛选',
 							sel:true
 
 						}

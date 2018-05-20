@@ -109,14 +109,16 @@
 		computed:{
 			times(){
 				if(this.Stime){
-					return new Date(Number(this.Stime)).getFullYear() + '-' + new Date(Number(this.Stime)).getMonth() + 1 + '-' + new Date(Number(this.Stime)).getDate()
+					return '12/23/2017'
+					// new Date(Number(this.Stime)).getFullYear() + '-' + new Date(Number(this.Stime)).getMonth() + 1 + '-' + new Date(Number(this.Stime)).getDate()
 				}else{
 					return '....'
 				}
 			},
 			timee(){
 				if(this.Stime){
-					return new Date(Number(this.Etime)).getFullYear() + '-' + new Date(Number(this.Etime)).getMonth() + 1 + '-' + new Date(Number(this.Etime)).getDate()
+					return  '06/30/2018'
+					//new Date(Number(this.Etime)).getFullYear() + '-' + new Date(Number(this.Etime)).getMonth() + 1 + '-' + new Date(Number(this.Etime)).getDate()
 				}else{
 					return '....'
 				}	

@@ -52,15 +52,21 @@
 		},
 		created(){
 			localStorage.Catepages = 1
-			// if(localStorage.dataCate){
-			// 	this.data = JSON.parse(localStorage.dataCate)
-			// 	return
-			// }
+			if(localStorage.dataCate){
+				this.data = JSON.parse(localStorage.dataCate)
+				return
+			}
 			axios.get(`https://time2.jglist.com/index.php?r=delicacy/food/list&auth_name=id&category_parent=${localStorage.CateNum ? localStorage.CateNum : 0 }&grand_id=6&id=1&tx=3f556f66353c5945a3633ae209a3e0ff&type=${localStorage.CateType3  == 4 ?  4 : localStorage.CateType3 == 3 ? 0 : 3  }&isOpen=${localStorage.OPenCate ?  localStorage.OPenCate : 0}`)
 				.then(res=>{
+					if(!res.data.data.length){
+						alert('none')
+					this.data = 	JSON.parse(localStorage.dataCate2)
+					return
+					}
 					console.log(res.data.data)
 					this.data = res.data.data
 					localStorage.dataCate = JSON.stringify(res.data.data)
+					localStorage.dataCate2 = localStorage.dataCate
 				})
 		}
 

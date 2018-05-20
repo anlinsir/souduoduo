@@ -27,7 +27,7 @@
 	export default {
 		props:{
 			isShow:{
-				type:String
+				type:Boolean
 			},
 			app:{
 				type:String
