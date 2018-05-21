@@ -486,8 +486,8 @@
 
 		                    		}
 		                    		if(this.showPart == 1){
-		                    			localStorage.NavChooseUsed0  = e.target.innerText 
-	                    				this.nav[this.showPart] = localStorage.NavChooseUsed0
+		                    			localStorage.NavChooseUsed1  = e.target.innerText 
+	                    				this.nav[this.showPart] = localStorage.NavChooseUsed1
 		                    		
 		                    			localStorage.UsedCate = e.target.dataset.id	   
 

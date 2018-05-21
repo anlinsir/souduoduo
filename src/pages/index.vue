@@ -336,16 +336,17 @@
 			,
 			downAPP(){
 				if( window.navigator.userAgent.indexOf('iPhone' || 'iPad') != -1){
-						 window.location.href =`jglist://deeplinks/openWith`
+						 // window.location.href =`jglist://deeplinks/openWith`
+						 window.location.href =`com.ziqi.easylife://`;
 					setTimeout(()=>{
-						window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
-					},1500)
+						window.location.href = 'https://itunes.apple.com/cn/app/id1192657874?mt=8'
+					},2000)
 					
 				}else if(window.navigator.userAgent.indexOf('Android') != -1){
 							 window.location.href =`jglist://deeplinks/openWith`
 						setTimeout(()=>{
 							window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
-						},1500)
+						},2000)
 				}
 			
 			},
@@ -412,6 +413,13 @@
 			}
 		},
 		beforeCreate(){
+			if(!localStorage.clears){
+					localStorage.clears = 0
+			}
+			localStorage.clears = Number(localStorage.clears) + 1
+			if(localStorage.clears == 5){
+				localStorage.clear()	
+			}
 			
 			if(!localStorage.old){
 				var a = new Date()
