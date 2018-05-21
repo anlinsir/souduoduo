@@ -248,7 +248,7 @@
 
 	                    	if(name == 'work'){
 	                    		if(index == 2){
-
+	                    			localStorage.removeItem('dataWork')
 	                    			if(localStorage.UsedTime == 0){
 	                    				localStorage.UsedTime = 3
 		                    			location.reload()
@@ -457,7 +457,7 @@
 
 								if(parts == 'privilege'){
 									if(index == 3){
-										this.useClassify = [{title:'不限',id:0},{title:'商家',id:2},{title:'经纪人',id:3}]
+										this.useClassify = [{title:'不限',id:0},{title:'商家',id:1},{title:'经纪人',id:2}]
 									}
 									if(index == 0){
 										this.useClassify = JSON.parse(localStorage.basedata).merchant
@@ -689,6 +689,7 @@
 
 	                    		}
 	                    		if(name == 'privilege'){
+	                    	
 	                    			localStorage.removeItem('dataPri')
 	                    			if(this.showPart == 3){
 	                    				localStorage.PriChoose3 = e.target.innerText

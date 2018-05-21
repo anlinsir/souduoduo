@@ -204,6 +204,9 @@
 				.then(res=>{
 					if(!res.data.data.length){
 						alert('none')
+						localStorage.clear()
+						location.reload()
+						return
 					this.list = JSON.parse(localStorage.dataWork2)
 						return
 					}

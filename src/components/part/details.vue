@@ -26,7 +26,7 @@
 									<span style="color: #666666;font-size: 3vw;">{{item.city}} </span>
 									<span style="color: #666666;font-size: 3vw">{{item.address}}</span>
 								</p>
-								<span style="float: right;color: #f15a4a;font-size: 4vw;"><span style="font-size: 2.5vw;">$</span>{{item.price}}</span>
+								<span style="float: right;color: #f15a4a;font-size: 4vw;"><span style="font-size: 2.5vw;"></span>{{item.price == '0.00' ? '面议' : '$' + item.price}}</span>
 
 							</p>
 						</dd>
@@ -63,11 +63,11 @@
 			<div v-if='work == 3' class="workWarp" v-for='(item,index) in details' :key='index'>
 				<div class="workTop">
 					<p>{{item.title}}</p>
-					<p>${{item.price}}/月</p>
+					<p>${{item.price == '0.00' ? '面议' : Number(item.price) }}/月</p>
 					<p><span>更新：{{item.create_time}}</span><span><img src="/static/img/recruitment_icon_read.png">{{item.browse}}人</span></p>
 				</div>
 				<div class="workBot">
-					职位：<span>{{item.category_name}}</span>地点：<span>{{item.city}}{{item.area}}</span>
+					职位：<span>{{item.category_name}}</span>地点：<span>{{item.address}}</span>
 				</div>
 
 			</div>

@@ -20,7 +20,7 @@
 
 
 						</p>
-						<p :data-id='item.id'><span :data-id='item.id'>{{item.city}}</span> <span :data-id='item.id'>{{item.area}}</span> <span :data-id='item.id'>{{item.create_time}}</span></p>
+						<p :data-id='item.id'><span :data-id='item.id'>{{item.address ? item.address  : item.city}}</span> <span :data-id='item.id'></span> <span :data-id='item.id'>{{item.create_time}}</span></p>
 					</dd>
 				</dl>
 			</li>

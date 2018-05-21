@@ -57,7 +57,7 @@
               				this.$router.push({path:'/search',query:{part:4}})
               				break;
               			case 'merchant':
-              				this.$router.push({path:'/search',query:{part:12}})
+              				this.$router.push({path:'/search',query:{part:5}})
               				break;
           				case 'cate':
           					this.$router.push({path:'/search',query:{part:6}})

@@ -61,10 +61,10 @@
 				</p>
 					<!-- ... -->
 				<p class="score" v-if="query != jour">
-					<span>经验 {{item.in_score}}</span>
-					<span>水平 {{item.se_score}}</span>
-					<span>质量 {{item.se_score}}</span>
-					<i>{{item.distance}} 英里</i>
+					<span>{{item.in_score ? '经验' + item.in_score : '游玩时间' + item.playtime}} </span>
+					<span>{{item.se_score ? '水平'item.se_score  :'' }}</span>
+					<span> {{item.se_score ? '质量' + item.se_score : ''}}</span> 
+					<span>{{item.distance ? item.distance + '英里' : '$' + item.price + '/人 |'  +  item.distance + '英里'}} </span>
 				</p>
 				<p class="palyTime" v-if="query == jour">
 					<span>游玩时长：{{item.playtime  || '1-2小时'}}</span>

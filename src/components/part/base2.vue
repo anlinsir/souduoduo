@@ -25,7 +25,7 @@
 								<span class="cate_title" v-if='item.cate_title || item.category_title'>{{item.cate_title  || item.category_title | re}}</span>
 								<span v-if='item.playtime'>游玩时长：{{item.playtime}}</span>
 								<span class="right">
-									<span class="mon" v-if='item.price'>{{item.price}}/人 |</span>
+									<span class="mon" v-if='item.price'>{{'$' + item.price}}/人 |</span>
 									<span class="distance">{{item.distance}}英里</span>
 								</span>
 							</p>

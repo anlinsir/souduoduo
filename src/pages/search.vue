@@ -8,13 +8,24 @@
 				<dt><img v-if='item.image' :src="item.image+'200_200.jpg'"></dt>
 				<dd>
 					<p>{{item.title || item.zh_name}}</p>
-					<p  style="marginBottom: 5vw;marginTop:1vw; "><span >{{ item.price && item.price !='$' ? '$' + item.price : (item.score? item.score + '分' :  item.star? item.star + '分' : '')   +' &nbsp; 评论' + (item.comments || item.recommend)  + '条' }}</span><span v-if='item.role || item.open'  id='role'
+					<p  style="marginBottom: 5vw;marginTop:1vw; ">
 
-					 :style="{color: item.role ?  item.role == 1 ? '#00d1b2' : item.role == 2 ? '#fb6b5c' :'#ffa84b' : item.open  ?  item.open.length ?'#fff' :'#fff' :'',background:item.open? item.open.length ? 'linear-gradient(to right, #41e9d0, #01d1b2)':'linear-gradient(to right, #ff8777, #fb6b5c)' : '' }">
+						<span class="starB" v-if='(item.score || item.star)' :style="{color: (item.score || item.star) ? '#999' :''}">
+							<span class="starW" :style="{width:(Number(item.score) || Number(item.star)) * 10 + '%'}">
+								<img src="/static/img/vehicle_icon_star.png">
+							</span>
+						</span>
+
+
+
+
+						<span :style="{color: (item.score || item.star) ? '#999' :'',float:'none'}" class="star">{{ item.price && item.price !='$' && item.price.indexOf('.') != -1 ? item.price =='0.00' ? '面议' : '$' + item.price : (item.score? item.score + '分' :  item.star? item.star + '分' : '')   +' &nbsp; 评论' + (item.comments || item.recommend)  + '条' }}</span><span v-if='item.role || item.open'  id='role'
+
+					 :style="{color: item.role ?  item.role == 1 ? '#00d1b2' : item.role == 2 ? '#fb6b5c' :'#ffa84b' : item.open  ?  item.open.length ?'#fff' :'#fff' :'',background:item.open? item.open.length ? 'linear-gradient(to right, #41e9d0, #01d1b2)':'linear-gradient(to right, #ff8777, #fb6b5c)' : '' ,float:'right'}">
 
 
 					{{item.role ? item.role == 1 ? '个人' : item.role == 2 ? '商家' :  '经纪人' : item.open  ? item.open.length ? '营业中' :'歇业中' :'' }}</span></p>
-					<p><span>{{item.city ||item.cate_title || item.category_title}}</span><span>{{item.area}}</span><span>{{item.create_time  ? item.create_time : item.distance +'公里'}}</span></p>
+					<p><span>{{item.city ||item.cate_title || item.category_title || '游玩时长 ' + item.playtime}}</span><span>{{item.area}}</span><span>{{item.price && item.price.indexOf('.') == -1 ? item.price + '/人 | ' : ''}}{{item.create_time  ? item.create_time : item.distance +'公里'}}</span></p>
 				</dd>
 			</dl> 
 
@@ -426,6 +437,30 @@
 					white-space:nowrap
 					:nth-child(1){}
 					:nth-child(2){
+						.star{
+							display: inline-block;
+						}
+						.starB{
+							display: inline-block;
+						    width: 15.46vw;
+   							 height: 2.66vw;
+							background-image: url('/static/img/unstar.png');
+							background-repeat: no-repeat;
+							margin-right: 1vw;
+							background-size: 15.46vw 2.66vw;
+							.starW{
+								  width: 15.46vw;
+   								 height: 3vw;
+   								 display: inline-block;
+   								 overflow: hidden;
+								>img{
+									   width: 15.46vw;
+   										 height: 2.66vw;
+   										 transform: translateY(-0.6vw);
+   										 
+								}
+							}					
+						}
 						:nth-child(1){
 							color: #f15a4a;
 							font-size: 3.46vw;

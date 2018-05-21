@@ -24,6 +24,7 @@
 
 
 <script>
+	import axios from 'axios'
 	export default {
 		props:{
 			isShow:{
@@ -54,13 +55,21 @@
 				if(e.target.className =='qu'){
 					this.show = false
 				}else if(e.target.className =='co'){
+
+						console.log('ygvjklk')
+						axios.get(`https://jglist.onelink.me/1789171185?pid=mobileWebPage`)
+							.then(res=>{
+								console.log(res)
+							})
+						return
 							if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
 								
-								 	window.location.href =`jglist://deeplinks/openWith?grand_id=${this.app}&id=${this.idd}`
-								
-							setTimeout(()=>{
-								window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
-							},1500)
+								 window.location.href =`com.ziqi.easylife://${this.app}&${this.idd}`;
+								setTimeout(()=>{
+									window.location.href = 'https://itunes.apple.com/cn/app/id1192657874?mt=8'
+								},2000)
+
+
 							
 						}else if(window.navigator.userAgent.indexOf('Android') != -1){
 								
