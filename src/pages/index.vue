@@ -417,7 +417,7 @@
 					localStorage.clears = 0
 			}
 			localStorage.clears = Number(localStorage.clears) + 1
-			if(localStorage.clears == 5){
+			if(localStorage.clears == 3){
 				localStorage.clear()	
 			}
 			

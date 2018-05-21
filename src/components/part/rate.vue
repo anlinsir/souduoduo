@@ -94,6 +94,7 @@
 
 				switch(e.target.name){
 					 case 'CNY':
+
 					 	this.list[0].num = '100.00'
 						this.list[1].num = (Number(this.CNY)/6.44205).toFixed(3)
 						this.list[2].num = ((Number(this.CNY)/6.44205)*1.240855).toFixed(3)
@@ -145,11 +146,12 @@
 
 					switch(e.target.name){
 					 case 'CNY':
+
 					 	this.list[0].num = v
-						this.list[1].num = (Number(this.CNY)/6.44205).toFixed(3)
-						this.list[2].num = ((Number(this.CNY)/6.44205)*1.240855).toFixed(3)
-						this.list[3].num = ((Number(this.CNY)/6.44205)*7.82255).toFixed(3)
-						this.list[4].num = ((Number(this.CNY)/6.44205)*8.05192).toFixed(3)
+						this.list[1].num = (v/6.44205).toFixed(3)
+						this.list[2].num = ((v/6.44205)*1.240855).toFixed(3)
+						this.list[3].num = ((v/6.44205)*7.82255).toFixed(3)
+						this.list[4].num = ((v/6.44205)*8.05192).toFixed(3)
 						break;
 					case 'USD':
 						this.list[1].num = v 
