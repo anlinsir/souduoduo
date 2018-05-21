@@ -150,8 +150,9 @@
 
 	                    	if( name == 'used' || name == 'rent'){
 	                    		if(index == 2){
+	                    			if(name == 'used'){localStorage.removeItem('dataG1')}
 	                    			if(localStorage.UsedTime == 2){
-	                    				if(name == 'used'){localStorage.removeItem('dataG2')}
+	                    				
 	                    				localStorage.removeItem('UsedTime')
 		                    			location.reload()
 
@@ -162,10 +163,12 @@
 		                    		location.reload()
 	                    		}
 	                    		if(index == 3){
+
 	                    			if(name == 'used'){localStorage.removeItem('dataG1')}
-										if(localStorage.LAT || localStorage.LAT){
+										if(localStorage.LAT || localStorage.LNG){
 											localStorage.removeItem('LAT')
 											localStorage.removeItem('LNG')
+											location.reload()
 											return
 										}		               		
 		                    			localStorage.LAT = localStorage.lat ? localStorage.lat : 0
@@ -179,7 +182,7 @@
 	                    	}
 	                    	if( name == 'car' ){
 	                    		if(index == 2){
-	                    			if(name == 'used'){localStorage.removeItem('dataG2')}
+	                    			if(name == 'car'){localStorage.removeItem('dataG2')}
 	                    			if(localStorage.CarTime == 2){
 	                    				localStorage.removeItem('CarTime')
 		                    			location.reload()
@@ -191,11 +194,13 @@
 		                    		location.reload()
 	                    		}
 	                    		if(index == 3){
-	                    			if(name == 'used'){localStorage.removeItem('dataG2')}
 
-										if(localStorage.LAT || localStorage.LAT){
+	                    			if(name == 'car'){localStorage.removeItem('dataG2')}
+
+										if(localStorage.LAT || localStorage.LNG){
 											localStorage.removeItem('LAT')
 											localStorage.removeItem('LNG')
+											location.reload()
 											return
 										}		               		
 		                    			localStorage.LAT = localStorage.lat ? localStorage.lat : 0
@@ -209,7 +214,7 @@
 
 	                    	if( name == 'rent' ){
 	                    		if(index == 2){
-	                    			if(name == 'used'){localStorage.removeItem('dataG2')}
+	                    			if(name == 'rent'){localStorage.removeItem('dataG4')}
 	                    			if(localStorage.RentTime == 2){
 	                    				localStorage.removeItem('RentTime')
 		                    			location.reload()
@@ -221,11 +226,12 @@
 		                    		location.reload()
 	                    		}
 	                    		if(index == 3){
-	                    			if(name == 'used'){localStorage.removeItem('dataG4')}
+	                    			if(name == 'rent'){localStorage.removeItem('dataG4')}
 
-										if(localStorage.LAT || localStorage.LAT){
+										if(localStorage.LAT || localStorage.LNG){
 											localStorage.removeItem('LAT')
 											localStorage.removeItem('LNG')
+											location.reload()
 											return
 										}		               		
 		                    			localStorage.LAT = localStorage.lat ? localStorage.lat : 0

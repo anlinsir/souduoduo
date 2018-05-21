@@ -47,7 +47,7 @@
 					this.data = JSON.parse(localStorage.dataG2)
 					return
 				}
-			axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=${localStorage.CarCate ? localStorage.CarCate : 0 }&grand_id=2&id=1&source=${localStorage.CarRole ? localStorage.CarRole : 0}&city_id=${localStorage.CarCity  ? localStorage.CarCity   : 0}&level=${localStorage.CarCity?  localStorage.CardAdd  : ''}&tx=3f556f66353c5945a3633ae209a3e0ff&page=1&type=${localStorage.CarTime ? localStorage.CarTime : 3 }&lat=${localStorage.LAT ? localStorage.LAT : 0}&lng=${localStorage.LNG ? localStorage.LNG : 0}`)
+			axios.get(`https://time2.jglist.com/index.php?r=v2/magor/lists&auth_name=id&cate_id=${localStorage.CarCate ? localStorage.CarCate : 0 }&grand_id=2&id=1&source=${localStorage.CarRole ? localStorage.CarRole : 0}&city_id=${localStorage.CarCity  ? localStorage.CarCity   : 0}&level=${localStorage.CarCity?  localStorage.CardAdd  : ''}&tx=3f556f66353c5945a3633ae209a3e0ff&page=1&type=${localStorage.CarTime ? 0 : 3 }&lat=${localStorage.LAT ? localStorage.LAT : 0}&lng=${localStorage.LNG ? localStorage.LNG : 0}`)
 					.then( res => {
 						if(!res.data.data.length){
 							alert('没有了')

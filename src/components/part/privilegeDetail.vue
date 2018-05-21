@@ -86,7 +86,7 @@
 		<footer v-if='verify != 1'  class="footer">
 			下载简购生活APP， <span>享更多优惠</span>
 		</footer>
-
+		
 	</div>
 
 </template>
@@ -102,8 +102,8 @@
 				Stime:null,
 				Etime:null,
 				id:null,
-				verify:null
-
+				verify:null,
+				cancelShow:false
 			})
 		},
 		computed:{
@@ -126,8 +126,10 @@
 		}
 		,
 		methods:{
+			
 			openApp(){
-
+			
+				
 					if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
 												
 											 	// window.location.href =`jglist://deeplinks/openWith?grand_id=3&id=${id}`
@@ -197,6 +199,22 @@
 
 
 <style scoped lang="scss">
+.cancel{
+	position: absolute;
+	width: 80vw;
+	height: 30vw;
+	top: 0;
+	right:0;
+	bottom:0;
+	margin: auto;
+	left: 0;
+	z-index: 500;
+	background-color: #f5f5f5;
+
+}
+
+
+
 	.warp{
 		width: 100%;
 		height: 100%;

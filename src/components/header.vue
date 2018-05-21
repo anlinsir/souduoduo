@@ -130,7 +130,8 @@
 				// localStorage.removeItem('OPenCate')
 				// localStorage.removeItem('JourType')
 
-
+localStorage.removeItem('LAT')
+localStorage.removeItem('LNG')
 
 				history.back()
 				

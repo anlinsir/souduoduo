@@ -335,6 +335,8 @@
 			}
 			,
 			downAPP(){
+
+				
 				if( window.navigator.userAgent.indexOf('iPhone' || 'iPad') != -1){
 						 // window.location.href =`jglist://deeplinks/openWith`
 						 window.location.href =`com.ziqi.easylife://`;
@@ -459,8 +461,8 @@
 				{
 					localStorage.lat = position.coords.latitude
 					localStorage.lng = position.coords.longitude;	
-					alert(localStorage.lng )
-					alert(localStorage.lat)
+					// alert(localStorage.lng )
+					// alert(localStorage.lat)
 
 
 				}
@@ -470,19 +472,19 @@
 					{
 						case error.PERMISSION_DENIED:
 							localStorage.error="用户拒绝对获取地理位置的请求。"
-							alert(localStorage.error)
+							// alert(localStorage.error)
 							break;
 						case error.POSITION_UNAVAILABLE:
 							localStorage.error="位置信息是不可用的。"
-							alert(localStorage.error)
+							// alert(localStorage.error)
 							break;
 						case error.TIMEOUT:
 							localStorage.error="请求用户地理位置超时。"
-							alert(localStorage.error)
+							// alert(localStorage.error)
 							break;
 						case error.UNKNOWN_ERROR:
 							localStorage.error="未知错误。"
-							alert(localStorage.error)
+							// alert(localStorage.error)
 							break;
 					}
 				}
