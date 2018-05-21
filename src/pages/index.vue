@@ -444,6 +444,76 @@
 				})
 		},
 		mounted(){
+			function getLocation()
+				{
+					if (navigator.geolocation)
+					{
+						navigator.geolocation.getCurrentPosition(showPosition,showError);
+					}
+					else
+					{
+						x.innerHTML="该浏览器不支持定位。";
+					}
+				}
+				function showPosition(position)
+				{
+					localStorage.lat = position.coords.latitude
+					localStorage.lng = position.coords.longitude;	
+					alert(localStorage.lng )
+					alert(localStorage.lat)
+
+
+				}
+				function showError(error)
+				{
+					switch(error.code) 
+					{
+						case error.PERMISSION_DENIED:
+							localStorage.error="用户拒绝对获取地理位置的请求。"
+							alert(localStorage.error)
+							break;
+						case error.POSITION_UNAVAILABLE:
+							localStorage.error="位置信息是不可用的。"
+							alert(localStorage.error)
+							break;
+						case error.TIMEOUT:
+							localStorage.error="请求用户地理位置超时。"
+							alert(localStorage.error)
+							break;
+						case error.UNKNOWN_ERROR:
+							localStorage.error="未知错误。"
+							alert(localStorage.error)
+							break;
+					}
+				}
+				getLocation()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			if(this.yes <=0){
 				let timer =  setInterval(()=>{
 					this.yes++					

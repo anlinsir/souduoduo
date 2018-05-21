@@ -151,6 +151,7 @@
 	                    	if( name == 'used' || name == 'rent'){
 	                    		if(index == 2){
 	                    			if(localStorage.UsedTime == 2){
+	                    				if(name == 'used'){localStorage.removeItem('dataG2')}
 	                    				localStorage.removeItem('UsedTime')
 		                    			location.reload()
 
@@ -160,10 +161,25 @@
 		                    	
 		                    		location.reload()
 	                    		}
+	                    		if(index == 3){
+	                    			if(name == 'used'){localStorage.removeItem('dataG1')}
+										if(localStorage.LAT || localStorage.LAT){
+											localStorage.removeItem('LAT')
+											localStorage.removeItem('LNG')
+											return
+										}		               		
+		                    			localStorage.LAT = localStorage.lat ? localStorage.lat : 0
+		                    			localStorage.LNG = localStorage.lng ? localStorage.lng : 0
+
+		                    		
+		                    			location.reload()
+
+		                    	}
 
 	                    	}
 	                    	if( name == 'car' ){
 	                    		if(index == 2){
+	                    			if(name == 'used'){localStorage.removeItem('dataG2')}
 	                    			if(localStorage.CarTime == 2){
 	                    				localStorage.removeItem('CarTime')
 		                    			location.reload()
@@ -174,10 +190,26 @@
 		                    	
 		                    		location.reload()
 	                    		}
+	                    		if(index == 3){
+	                    			if(name == 'used'){localStorage.removeItem('dataG2')}
+
+										if(localStorage.LAT || localStorage.LAT){
+											localStorage.removeItem('LAT')
+											localStorage.removeItem('LNG')
+											return
+										}		               		
+		                    			localStorage.LAT = localStorage.lat ? localStorage.lat : 0
+		                    			localStorage.LNG = localStorage.lng ? localStorage.lng : 0
+
+		                    		
+		                    			location.reload()
+
+		                    	}
 	                    	}
 
 	                    	if( name == 'rent' ){
 	                    		if(index == 2){
+	                    			if(name == 'used'){localStorage.removeItem('dataG2')}
 	                    			if(localStorage.RentTime == 2){
 	                    				localStorage.removeItem('RentTime')
 		                    			location.reload()
@@ -188,6 +220,21 @@
 		                    	
 		                    		location.reload()
 	                    		}
+	                    		if(index == 3){
+	                    			if(name == 'used'){localStorage.removeItem('dataG4')}
+
+										if(localStorage.LAT || localStorage.LAT){
+											localStorage.removeItem('LAT')
+											localStorage.removeItem('LNG')
+											return
+										}		               		
+		                    			localStorage.LAT = localStorage.lat ? localStorage.lat : 0
+		                    			localStorage.LNG = localStorage.lng ? localStorage.lng : 0
+
+		                    		
+		                    			location.reload()
+
+		                    	}
 	                    	}
 
 
@@ -495,6 +542,7 @@
 		                    			location.reload()
 
 		                    		}
+
 		                    	
 
 	                    		}
@@ -533,6 +581,15 @@
 		                    			location.reload()
 
 		                    		}
+		                    		if(this.showPart == 3){
+												                    		
+		                    			localStorage.LAT = localStorage.lat ? localStorage.lat : 0
+		                    			localStorage.LNG = localStorage.lng ? localStorage.lng : 0
+
+		                    		
+		                    			location.reload()
+
+		                    		}
 
 
 	                    		}
@@ -565,6 +622,15 @@
 	                    				this.nav[this.showPart] = localStorage.NavChooseRent1
 		                    		
 		                    			localStorage.RentCate = e.target.dataset.id	   
+
+		                    		
+		                    			location.reload()
+
+		                    		}
+		                    		if(this.showPart == 3){
+											console.log('yjhbhb')												                    		
+		                    			localStorage.LAT = localStorage.lat ? localStorage.lat : 0
+		                    			localStorage.LNG = localStorage.lng ? localStorage.lng : 0
 
 		                    		
 		                    			location.reload()

@@ -5,7 +5,18 @@
 			<div class="workBase bx">
 				<div class="top">
 					<p class="topOne">
-						<span>{{item.title}}</span>
+						<span><span v-if='item.isStick' style="display: inline-block;display: inline-block;
+							width: 7.2VW;
+							height: 4vw;
+							font-size: 2.5vw;
+							transform: translateY(-0.5vw);
+							margin-right: 1vw;
+							background-color: #ffef07;
+							color: #6f3f15;
+							border-radius: 1vw;
+
+							text-align: center;
+							line-height: 4.5vw;">置顶</span>{{item.title}}</span>
 						<span @touchstart='openApp(item.id,$event)' @touchmove='openApp(item.id,$event)' @touchend='openApp(item.id,$event)'  data-id='call' >立即联系</span>
 					</p>
 
