@@ -5,11 +5,11 @@ import App from './App'
 import router from './router'
 import BaiduMap from 'vue-baidu-map'
 
-Vue.use(BaiduMap, {
-  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
-  ak: 'scTgXwVDuPVMmrtHLeg2rCv1hwjfYjzC'
-})
-Vue.config.productionTip = false
+// Vue.use(BaiduMap, {
+//   // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+//   ak: 'scTgXwVDuPVMmrtHLeg2rCv1hwjfYjzC'
+// })
+// Vue.config.productionTip = false
 
 
 /* eslint-disable no-new */

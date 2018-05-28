@@ -1,187 +1,176 @@
 <template>
-	<footer>
-			<dl>
-				<dt><img src="/static/img/icon.png"></dt>
-				<dd>
-					<p>华人的生活百宝箱</p>
-					<p>下载简购生活APP华人生活...</p>
-				</dd>
-								
-			</dl>
-			<button @touchstart='showDown'>立即下载APP</button>
+	<div>
+		<div class="footerWarp">
 
-			<div class="showWarp" v-if='show'>
-			<div class="show" >
-				<p>在APP store 中打开？</p>
-				<span class="qu" @touchend='nowDown'>取消</span>
-				<span @touchend='nowDown' class="co">立即下载</span>
-			</div>
-			</div>
-		</footer>
+				<div class="footerTopWarp">
+						<div class="footerTop">
+							<p>友情链接：</p>
+							<ul>
+								<li v-for='(item,index) in linkList'>
+									{{item}}
+								</li>
+							</ul>
+						</div>
 
+				</div>
+				<div class="footerBomWarp">
 
+				<div class="footerBom">
+					<div class="Bom1">
+						<img src="/static/img/indexlogo.png"> 
+						<dl>
+							<dt>SODUODUO</dt>
+							<dd>查币就去搜多多</dd>
+						</dl>
+
+							<ul class="ul1">
+								<li>关于我们 <span>|</span> </li>
+								<li>联系我们 <span>|</span> </li>
+								<li>常见问题 <span>|</span> </li>
+								<li>下载APP   </li>
+							</ul>
+
+						<div class="ul2W">
+							<ul class="ul2">
+								<li><img src="/static/img/footerWein.png"></li>
+								<li><img src="/static/img/footerWeibo.png"></li>
+								<li><img src="/static/img/footerQQ.png"></li>
+								<li><img src="/static/img/footerPlant.png"></li>
+
+							</ul>
+						</div>
+						<p>Copyright ©2018 Souduoduo Ltd. All Rights Reserved.</p>
+					</div>
+
+					
+						
+				
+
+				</div>
+			</div>	
+		</div>
+	</div>
 </template>
 
 
 <script>
-	import axios from 'axios'
-	export default {
-		props:{
-			isShow:{
-				type:Boolean
-			},
-			app:{
-				type:String
-			},
-			idd:{
-				type: String
-			}
-		}
-		,
+	export default{
 		data(){
 			return({
-				show:false
+				linkList:['火星财经','比特头条','币源社区','链向财经','区块网','COBO钱包','鱼池','链闻','币易','未来财经','易派支付','金色财经','芭比财经']
 			})
-		},
-		methods:{
-			showDown(){
-				this.show = true
-			},
-			nowDown(e){
-				if(this.app && this.idd){
-					console.log(this.idd)
-				}
-
-				if(e.target.className =='qu'){
-					this.show = false
-				}else if(e.target.className =='co'){
-
-						console.log('ygvjklk')
-						axios.get(`https://jglist.onelink.me/1789171185?pid=mobileWebPage`)
-							.then(res=>{
-								console.log(res)
-							})
-						return
-							if( window.navigator.userAgent.indexOf('iPhone' || 'iPad' || 'iPod') != -1){
-								
-								 window.location.href =`com.ziqi.easylife://${this.app}&${this.idd}`;
-								setTimeout(()=>{
-									window.location.href = 'https://itunes.apple.com/cn/app/id1192657874?mt=8'
-								},2000)
-
-
-							
-						}else if(window.navigator.userAgent.indexOf('Android') != -1){
-								
-								 	window.location.href =`jglist://deeplinks/openWith?grand_id=${this.app}&id=${this.idd}`
-								
-								setTimeout(()=>{
-									window.location.href = 'https://jglist.onelink.me/1789171185?pid=mobileWebPage'
-								},1500)
-						}
-
-
-				}
-				
-			}
-		},
-		mounted(){
-			setTimeout(()=>{
-				this.show = this.isShow
-			},1000)
 		}
 	}
-
-
 </script>
 
 
-
 <style lang="scss" scoped>
-		footer{
-			box-shadow:0px 13px 38px #000;
+	.footerWarp{
+		width: 100%;
+		margin-top: 47px;
+		height: 100%;
+		
 
-			width: 100%;
-			height: 18vw;
-			background-color: #fff;
-			padding: 3.2vw 3.2vw 0 ;
-			box-sizing: border-box;
-			>.showWarp{
+		
+			>.footerTopWarp{
 				width: 100%;
-				height: 100%;
-				position: absolute;
-				box-sizing: border-box;
-				z-index: 2;
-				top:0;
-				left: 0;
-				>.show{
-				width: 70vw;
-				height: 25vw;
-				font-size: 4vw;
-				background-color: #fff;
-				border: 1px solid #eee;
-				border-radius: 2vw;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				text-align: center;
-				transform: translateX(-50%) translateY(-50%);
-				>p{
-					height: 12.5vw;
-					border-bottom: 1px solid #eee;
-					line-height: 12.5vw;
-
-				}
-				>span{
-					display: inline-block;
-					width: 34vw;
-					height: 12.5vw;
-					line-height: 12.5vw;
-				}
-				>.qu{
-					border-right: 1px solid #eee;
-				}	
-				>.co{
-					color: #00d1b2;
-				}
-			}
-			}
-			>dl{
-				display: flex;
-				float: left;
-				>dt{
-					width: 11.73vw;
-					height: 11.73vw;
-					>img{
-						width: 100%;
-						height:100%;
-
+				height: 128px;
+				background-color: #11161e;
+				>.footerTop{
+					width: 1200px;
+					height: 128px;
+					margin: auto;
+					padding: 26px 0 0 0;
+					
+					>p{
+						color: #fff;
+						margin-left: 2px;
+						margin-bottom: 15px;
+						font-size: 12px;
 					}
-				}
-				>dd{
-					margin-left: 3vw;
-					:nth-child(1){
-						font-size: 4vw;
-						color: #333333;
-					}
-					:nth-child(2){
-						font-size: 3.33vw;
-						color: #00d1b2;
+					>ul{
+						display: flex;
+						flex-wrap: wrap;
+						margin-left: 2px;
+						justify-content: flex-start;
+
+						font-size: 12px;
+						>li{
+							width: 10%;
+							margin-bottom:12px; 
+							color: #aebbcf;
+							cursor: pointer;
+						}
 					}
 				}
 			}
-			>button{
-				float: right;
-				width: 24.8vw;
-				height: 8.53vw;
-				margin-top: 1.2vw;
-				background-color: #00d1b2;
-				border-radius: 1vw;
-				border: none;
-				font-size: 2.93vw;
-				color: #fff;
-				margin-right: 4vw;
+			>.footerBomWarp{
+				width: 100%;
+				height: 300px;
+				background-color: #08090e;
+					>.footerBom{
+					width: 1200px;
+					margin: auto;
+					color: #fff;
+					height: 300px;
+					background-color: #08090e;
+					text-align: center;
+					padding:55px 0 0 0;
+					>.Bom1{
+						text-align: center;
+						display: inline-block;
+						>img{
+							 margin-right: 0px;
+						}
+						>dl{
+							float: right;
+							transform: translateY(10px) translateX(-95px);
+							>dt{
+								font-size: 17px;
+								font-weight: bold;
+								color: #fff;
+							}
+							>dd{
+								font-size: 14px;
+								color: #5a778b;
+								letter-spacing: 1.2px;
+							}
+						}
+						>.ul1{
+							display: flex;
+							margin-top: 70px;
+							transform: translateX(20px);
+							font-size: 12px;
+							color: #aebbcf;
+							>li{
+								>span{
+									margin: 0 29px;
+									color: #252833;
+								}
+							}
+						}	
+						
+						>.ul2W{
+							display: inline-block;
+							>.ul2{
+								width: 138px;
+								display: flex;
+								justify-content: space-between;
+								margin-top: 29px;
+								margin-bottom:10px;
+							}	
+						}
+						>p{
+							font-size: 12px;
+							color: #3f4753;
+						}
+						
+					}
+				
+				}
 			}
-		}
+			
+			
 
+	}
 </style>

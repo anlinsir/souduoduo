@@ -1,197 +1,325 @@
 <template>
-	<header>
-		<!-- @click='toSearch' -->
-			<span @click='toIndex' v-if='left == 1' :style="{color: color ? color : '' }"  class="back"><img class="backk" src="/static/img/businessservice_icon_return_white.png"></span>
-			<span @click='toIndex' v-if='left == 2' :style="{color: color ? color : '' }"  class="back"><img style="width: 2.66vw;height: 4.8vw;" src="/static/img/businessservice_icon_return_whitess.png"></span>
+	<div class="headerWarp">
+		<div class="headerwarp">
+			<header>
+				<dl class="headerlogo">
+					<dt>
+						<img src="/static/img/indexlogo.png">
+					</dt>
+					<dd>
+						<span><b>SO</b>DUODUO</span>
+						<span>查币就去搜多多</span>
+					</dd>
+				</dl>
 
-			<input  :style="{backgroundColor: wi ? '#fff' :''}" v-model='text' @click='toseac'  @keydown.enter='sendSearch'  type="text" placeholder="输入商家、商品名称" />
-			<span class="posi" v-show='0'>dsdddsdsds</span>
-	</header>
+				<div  class="headerPicWarp">
+					<div class="headerPic">
+						<dl v-for='(item,index) in headerData'>
+							<dt>{{item.name}}</dt>
+							<dd>
+								<span>{{'￥' + item.price}}</span>
+								 <svg class="peity" height="30" width="70" >	
+									 <polyline :points="item.pic" style="fill:none;stroke:#5a8bf9;stroke-width:1" />
+								</svg>
+							</dd>
+							
+						</dl>
 
+					
+					</div>
+				</div>
+
+				<div class="headerChoose">
+					<ul>
+						<li>
+							<img src="/static/img/headerlist1.png">
+							<span>智能情报机器</span>
+						</li>
+						<li>
+							<img src="/static/img/headerlist2.png">
+							<span>APP下载</span>
+						</li>
+						<li>
+							<img src="/static/img/headerlist3.png">
+							<span>登录注册</span>
+						</li>
+					</ul>
+				</div>
+
+				<div class="headerCounty">
+					<img src="/static/img/countyImg.png">
+					<span>简体中文</span>
+				</div>
+
+			</header>	
+		</div>
+		<div class="stein" style="width: 100%;height: 120px;"></div>
+
+		<div class="headerBtmWarp">
+			<div class="haderBom">
+				<div class="inputGup">
+					<input type="text" placeholder="请输入需要查询的区块地址">
+					<input type="text" placeholder="输入需要搜索代币号">
+					<span>ETH</span>
+					<button class="Hbtn1">
+						<img src="/static/img/headersearch.png">
+					</button>
+					<button class="Hbtn2">
+						<img src="/static/img/headersearch.png">
+					</button>
+				</div>
+
+				<div class="buttonGup">
+					<ul>
+						<li style="background-image: url('/static/img/headerbtn1.png')">
+							<img class="imgo1" src="/static/img/headerbtn1bg1.png">
+							<img style="transform: translateY(-35px) translateX(-81px);" class="imgt1" src="/static/img/headerbtn1bg2.png">
+							<span style="color: #fff;transform: translateY(-52px) translateX(40px);display: inline-block;letter-spacing: 2px;">排行榜</span>
+						</li>
+						<li style="background-image: url('/static/img/headerbtn2.png')">
+							<img  class="imgo2" src="/static/img/headerbtn2bg1.png">
+							<img style="transform: translateY(-50px) translateX(-107px);" class="imgt2" src="/static/img/headerbtn2bg2.png">
+							<span style="color: #fff;transform: translateY(-57px) translateX(0px);letter-spacing: 2px;display: inline-block;">交易平台</span>
+						</li>
+
+						<li style="background-image: url('/static/img/headerbtn3.png')">
+							<img  class="imgo2" src="/static/img/headerbtn3bg1.png">
+							<img style="transform: translateY(-31px) translateX(-70px);" class="imgt2" src="/static/img/headerbtn3bg2.png">
+							<span style="color: #fff;    transform: translateY(-38px) translateX(30px);letter-spacing: 2px;display: inline-block;">币圈百科</span>
+						</li>
+
+						<li style="background-image: url('/static/img/headerG.png')">
+							<img  class="imgo2" src="/static/img/headerbtn4bg1.png">
+							<img style="transform: translateY(-40px) translateX(-70px);" class="imgt2" src="/static/img/headerbtn4bg2.png">
+							<span style="color: #fff;    transform:translateY(-47px) translateX(-6px);letter-spacing: 2px;display: inline-block;">ICO项目汇总</span>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+
+	</div>
 </template>
 
-
-
 <script>
-	export default {
-		props:{			
-			left:{
-				type:String || Number
-			},
-			part:{
-				type:Number|| String  || Object
-			},
-			color:{
-				type:String
-			},
-			wi:{
-				type:String
-			}
-		},
+	export default{
 		data(){
 			return({
-				text:''
+				headerData:[
+					{
+						name:'BTC/Bitfinex',
+						price:'48321.98',
+						pic:'0 3.1511627906976756 2.962962962962963 6.244186046511624 5.925925925925926 6.02325581395349 8.88888888888889 5.802325581395355 11.851851851851851 4.697674418604642 14.814814814814813 0.5 17.77777777777778 1.1627906976744242 20.74074074074074 4.034883720930237 23.703703703703702 5.360465116279066 26.666666666666664 8.674418604651157 29.629629629629626 14.197674418604645 32.59259259259259 15.081395348837205 35.55555555555556 11.325581395348832 38.51851851851852 19.5 41.48148148148148 16.62790697674419 44.44444444444444 14.639534883720925 47.407407407407405 15.523255813953485 50.37037037037037 17.953488372093027 53.33333333333333 13.534883720930232 56.29629629629629 14.41860465116279 59.25925925925925 13.534883720930232 62.22222222222222 10.220930232558139 65.18518518518518 10.220930232558139 68.14814814814814 12.430232558139537 71.11111111111111 14.639534883720925 74.07407407407408 12.430232558139537 77.03703703703704 13.313953488372086 80 15.523255813953485 80 19.5'
+					}
+					,
+					{
+						name:'ETH/Binance',
+						price:'3761.48',
+						pic:'0 3.1511627906976756 2.962962962962963 6.244186046511624 5.925925925925926 6.02325581395349 8.88888888888889 5.802325581395355 11.851851851851851 4.697674418604642 14.814814814814813 0.5 17.77777777777778 1.1627906976744242 20.74074074074074 4.034883720930237 23.703703703703702 5.360465116279066 26.666666666666664 8.674418604651157 29.629629629629626 14.197674418604645 32.59259259259259 15.081395348837205 35.55555555555556 11.325581395348832 38.51851851851852 19.5 41.48148148148148 16.62790697674419 44.44444444444444 14.639534883720925 47.407407407407405 15.523255813953485 50.37037037037037 17.953488372093027 53.33333333333333 13.534883720930232 56.29629629629629 14.41860465116279 59.25925925925925 13.534883720930232 62.22222222222222 10.220930232558139 65.18518518518518 10.220930232558139 68.14814814814814 12.430232558139537 71.11111111111111 14.639534883720925 74.07407407407408 12.430232558139537 77.03703703703704 13.313953488372086 80 15.523255813953485 80 19.5'
+					},
+					{
+						name:'EOS/Bitfinex',
+						price:'69.83',
+						pic:'0 3.1511627906976756 2.962962962962963 6.244186046511624 5.925925925925926 6.02325581395349 8.88888888888889 5.802325581395355 11.851851851851851 4.697674418604642 14.814814814814813 0.5 17.77777777777778 1.1627906976744242 20.74074074074074 4.034883720930237 23.703703703703702 5.360465116279066 26.666666666666664 8.674418604651157 29.629629629629626 14.197674418604645 32.59259259259259 15.081395348837205 35.55555555555556 11.325581395348832 38.51851851851852 19.5 41.48148148148148 16.62790697674419 44.44444444444444 14.639534883720925 47.407407407407405 15.523255813953485 50.37037037037037 17.953488372093027 53.33333333333333 13.534883720930232 56.29629629629629 14.41860465116279 59.25925925925925 13.534883720930232 62.22222222222222 10.220930232558139 65.18518518518518 10.220930232558139 68.14814814814814 12.430232558139537 71.11111111111111 14.639534883720925 74.07407407407408 12.430232558139537 77.03703703703704 13.313953488372086 80 15.523255813953485 80 19.5'
+					}
+				]
 			})
-		},
-		methods:{
-			// toSearch(){
-			// 	if(this.$route.name != 'search'){
-			// 		this.$router.push('/search')
-
-			// 	}
-			// }
-			toseac(){
-				var name = this.$route.name
-				if(name != 'index' || name != 'search'){
-					 switch (name) {
-	              		case 'used':
-	              			this.$router.push({path:'/search',query:{part:1}})
-	              			break;
-	              		case 'car':
-	              			this.$router.push({path:'/search',query:{part:2}})
-	              			break;
-	              		case 'work':
-	              			this.$router.push({path:'/search',query:{part:3}})
-	              			break;
-              			case 'rent':
-              				this.$router.push({path:'/search',query:{part:4}})
-              				break;
-              			case 'merchant':
-              				this.$router.push({path:'/search',query:{part:5}})
-              				break;
-          				case 'cate':
-          					this.$router.push({path:'/search',query:{part:6}})
-          					break;
-          				case 'privilege':
-          					this.$router.push({path:'/search',query:{part:7}})
-          					break;
-          				case 'jour':
-          					this.$router.push({path:'/search',query:{part:8}})
-          					break;
-
-	              		default:
-	              			break;
-	                 }  
-					
-				}
-				this.$emit('show',true)
-			},
-			sendSearch(){
-
-				this.$emit('getVal',this.text)
-			//enter发请求  通过 子传夫  把拿到的数据  传到 searcb里面
-					//吧类别 存到longstage里
-				// 	this.$router.push({ path:'/search'})
-				// 	console.log(this.part)
-				// 	localStorage.text = this.text
-				// 	if(!localStorage.text && localStorage.text != this.text){
-				// 		return
-				// 	}
-				// 		return
-				// if(this.text && this.part){
-				// 	this.$router.push({ path:'/search', query: { val:this.text , id:this.part} })
-				// }else{
-				// 	console.log('滑动搜索框，选择类别')
-				// }
-			
-			},
-			toIndex(){
-				// if(this.$route.name == 'search'){
-				// 	this.$router.push({path:'/search',query:{part:localStorage.indexPart}})
-				// 	this.$emit('backk',[])
-				// } else
-				//  if(this.$route.name != 'index'){
-				// 	this.$router.push('/index')
-				// }
-				
-				// localStorage.removeItem('UsedRole')
-				// localStorage.removeItem('UsedCity')
-				// localStorage.removeItem('UsedCate')
-				// localStorage.removeItem('WorkCity')
-
-				// localStorage.removeItem('WorkCate')
-				// localStorage.removeItem('Pricess')
-				// localStorage.removeItem('WorkRole')
-				// localStorage.removeItem('CateNum')
-				// localStorage.removeItem('UsedAdd')
-				// localStorage.removeItem('parentMer')
-				// localStorage.removeItem('childMer')
-				
-				// localStorage.removeItem('UsedTime')
-				// localStorage.removeItem('DisMer')
-				// localStorage.removeItem('OPenMer')
-
-				
-				// localStorage.removeItem('CateType')
-				// localStorage.removeItem('CateType3')
-				// localStorage.removeItem('CateType4')
-
-				
-				// localStorage.removeItem('OPenCate')
-				// localStorage.removeItem('JourType')
-
-localStorage.removeItem('LAT')
-localStorage.removeItem('LNG')
-
-				history.back()
-				
-
-
-
-				
-
-			}
 		}
 	}
-
 
 </script>
 
 
 <style lang="scss" scoped>
-	header{
-		display: flex;
+	.headerWarp{
 		width: 100%;
-		height: 13.33vw;
-		padding: 1.8vw 3.2vw;
-		box-sizing: border-box;
-		text-align: center;
-		background-color: #04d6b6;
-			>.back{
-				display: inline-block;
-				width: 5vw;
-				color: #fff;
-				height: 100%;
-				line-height:10.33vw; 
-				font-size: 8vw;
-				margin-right: 5vw;
-			}
-			.backk{
-			
-width: 2.66vw;height: 4.8vw;
-			}
-			>input{
-				width: 100%;
-				border: none;
-				background-color: #f3f3f3;
-				height: 9vw;
-				text-align: center;
-				outline: none;
-				font-size: 3.5vw;
-				background-image: url(/static/img/home_icon_search.png);
-				background-repeat: no-repeat;
-				background-position: 28%;
+		>.headerwarp{
+			width: 100%;
+			height: 120px;
+			box-shadow: 0px 0 5px -5px #ccc, /*左边阴影*/
+             			0 -5px 5px -5px #ccc, /*顶部阴影*/
+             			0 5px 5px -5px #ccc, /*底部阴影*/
+            			0px 0 5px 1px #ccc; /*右边阴影*/
+			border-top: 3px solid #4277ff;
+			position: fixed;
+			top: 0;
+			z-index: 1;
+			background-color: #fff;
+				>header{
+					width: 1200px;
+					padding-top:30px; 
+					margin: auto;
+					height: 120px;
+					display: flex;
+					>.headerlogo{
+					display: flex;
+					font-size: 16px;
+					margin-right: 80px;
+					>dt{
+						margin-right: 11px;
+					}
+					>dd{
+						display: flex;
+						flex-direction: column;
+						transform: translateY(10%);
+						>:nth-child(1){
+							font-weight: bold;
+							margin-bottom: 5px;
+							>b{
+								color: #4073c3;
+							}
+						}
+						>:nth-child(2){
+							color: #939497;
+							font-size: 14px;
+						letter-spacing:1px;
 
-			}
-			.posi{
-				position: absolute;
-				top: 3.86vw;
-				font-size: 4vw;
-				left: 7.66vw;
-			}
-		
-		
+						}
+					}
+					}
+					>.headerPicWarp{
+					display: inline-block;
+					>.headerPic{
+						margin-top: 9px;
+						display: flex;
+						font-size: 12px;
+						>dl{
+							width: 156px;
+							margin-right: 10px;
+							>dt{
+								color: #4277ff;
+								margin-bottom: 10px;
 
+							}
+							>dd{
+								>svg{
+									display: inline-block;
+									vertical-align: middle;
+									margin-left: 10px;
+								}
+							}
+						}
+					}
+					}
+					>.headerChoose{
+					color: #333;
+					margin-top: 21px;
+					>ul{
+						width: 315px;
+
+						font-size: 14px;
+						display:flex;
+						justify-content: space-between;
+						>li{
+							>img{
+								vertical-align: bottom;
+								margin-right: 4px;
+							}
+						}
+					}
+					}
+					>.headerCounty{
+					color: #333;
+					font-size: 14px;
+					margin-left: 27px;
+					overflow: hidden;
+					margin-top:15px;
+					>img{
+						width: 30px;
+						vertical-align: middle;
+						height: 30px;
+						border-radius:50%;
+						margin-right: 5px;
+					}
+					}
+				}
+
+		}
+
+		>.headerBtmWarp{
+			width: 100%;
+			height: 200px;
+			>.haderBom{
+				width: 1200px;
+				height: 200px;
+				margin: auto;
+				padding-top:21px; 
+				>.inputGup{
+					display: flex;
+					justify-content: space-between;
+					padding: 0 5px;
+					position: relative;
+					>:nth-child(1){
+						padding: 0 0 0 100px;
+					}
+					>input{
+						width: 587px;
+						height: 49px;
+						padding:  0 0 0 30px;
+						border:1px solid #dcdcdc;
+						border-radius: 50px;
+					}					
+					>span,button{
+						position: absolute;
+						top: 0;
+					}
+					>span{
+					    top: 16px;
+						left: 30px;
+						font-size: 12px;
+					}
+					>span::after{
+						content:'';
+						border:4px solid;
+						border-top:4px solid  ;
+						border-right:4px solid transparent;
+						border-bottom:4px solid transparent;
+						border-left:4px solid transparent;
+						position: absolute;
+						top: 6px;
+						right: -15px;
+
+					}
+					>button{
+						width: 37px;
+					    height: 37px;
+					    border-radius: 50%;
+					    border: none;
+					    text-align: center;
+					    outline: none;
+					    background-color: #556fb5;
+					    line-height: 46px;
+					}
+					>.Hbtn1{
+					    top: 6px;
+						left: 545px;
+					}
+					>.Hbtn2{
+						top: 6px;
+   						right: 14px;
+					}
+				}
+				>.buttonGup{
+					width: 100%;
+					margin-top: 19px;
+					>ul{
+						display: flex;
+
+						justify-content: space-between;
+						>li{
+							overflow: hidden;
+							font-size: 20px;
+							width: 284px;
+							height: 90px;
+							>.imgt{
+								
+							}
+						}
+					}
+				}
+			}
+		}
+		
 	}
-
 </style>
