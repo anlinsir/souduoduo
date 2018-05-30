@@ -1,6 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 const Index = r =>require.ensure([],() => r(require('@/pages/index')),'index')
+
+const Login = r =>require.ensure([],() => r(require('@/pages/login')),'login')
+
+
+
+
+
+
+
+
+
 const PartIndex = r =>require.ensure([],() => r(require('@/components/index/index')),'Pindex')
 
 
@@ -27,9 +38,14 @@ export default new Router({
      		name:'pindex',
      		component:PartIndex
      	},
-
+     
      	{path: '/index', redirect: "/index/index"}
      ]
+    },
+    {
+        path:'/login',
+        name:'login',
+        component:Login,
     },
    
     { path: '*', redirect: "/index"}

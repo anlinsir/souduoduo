@@ -39,7 +39,7 @@
 							<img src="/static/img/headerlist2.png">
 							<span>APP下载</span>
 						</li>
-						<li>
+						<li @click='toLogin'>
 							<img src="/static/img/headerlist3.png">
 							<span>登录注册</span>
 						</li>
@@ -125,6 +125,11 @@
 					}
 				]
 			})
+		},
+		methods:{
+			toLogin(){
+				this.$router.push('/login')
+			}
 		}
 	}
 
@@ -212,6 +217,7 @@
 						display:flex;
 						justify-content: space-between;
 						>li{
+							cursor: pointer;
 							>img{
 								vertical-align: bottom;
 								margin-right: 4px;
@@ -283,6 +289,7 @@
 					}
 					>button{
 						width: 37px;
+						cursor: pointer;
 					    height: 37px;
 					    border-radius: 50%;
 					    border: none;
