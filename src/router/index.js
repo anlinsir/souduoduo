@@ -13,6 +13,8 @@ const Login = r =>require.ensure([],() => r(require('@/pages/login')),'login')
 
 
 const PartIndex = r =>require.ensure([],() => r(require('@/components/index/index')),'Pindex')
+const PartRanking = r =>require.ensure([],() => r(require('@/components/index/ranking')),'Pindex')
+
 
 
 
@@ -38,6 +40,11 @@ export default new Router({
      		name:'pindex',
      		component:PartIndex
      	},
+        {
+            path:'/index/ranking',
+            name:'ranking',
+            component:PartRanking
+        },
      
      	{path: '/index', redirect: "/index/index"}
      ]

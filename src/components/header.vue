@@ -4,12 +4,9 @@
 			<header>
 				<dl class="headerlogo">
 					<dt>
-						<img src="/static/img/indexlogo.png">
+						<img src="/static/img/headerlogo.png">
 					</dt>
-					<dd>
-						<span><b>SO</b>DUODUO</span>
-						<span>查币就去搜多多</span>
-					</dd>
+					
 				</dl>
 
 				<div  class="headerPicWarp">
@@ -71,24 +68,25 @@
 
 				<div class="buttonGup">
 					<ul>
-						<li style="background-image: url('/static/img/headerbtn1.png')">
+						<!-- background-image: url('/static/img/headerbtn1.png') -->
+						<li @click='activeBtn(0,$event)' style=" background: linear-gradient(#4e66a7, #403f72);border-radius: 10px;">
 							<img class="imgo1" src="/static/img/headerbtn1bg1.png">
 							<img style="transform: translateY(-35px) translateX(-81px);" class="imgt1" src="/static/img/headerbtn1bg2.png">
 							<span style="color: #fff;transform: translateY(-52px) translateX(40px);display: inline-block;letter-spacing: 2px;">排行榜</span>
 						</li>
-						<li style="background-image: url('/static/img/headerbtn2.png')">
+						<li @click='activeBtn(1,$event)'  style="background-image: url('/static/img/headerbtn2.png')">
 							<img  class="imgo2" src="/static/img/headerbtn2bg1.png">
 							<img style="transform: translateY(-50px) translateX(-107px);" class="imgt2" src="/static/img/headerbtn2bg2.png">
 							<span style="color: #fff;transform: translateY(-57px) translateX(0px);letter-spacing: 2px;display: inline-block;">交易平台</span>
 						</li>
 
-						<li style="background-image: url('/static/img/headerbtn3.png')">
+						<li @click='activeBtn(2,$event)'  style="background-image: url('/static/img/headerbtn3.png')">
 							<img  class="imgo2" src="/static/img/headerbtn3bg1.png">
 							<img style="transform: translateY(-31px) translateX(-70px);" class="imgt2" src="/static/img/headerbtn3bg2.png">
 							<span style="color: #fff;    transform: translateY(-38px) translateX(30px);letter-spacing: 2px;display: inline-block;">币圈百科</span>
 						</li>
 
-						<li style="background-image: url('/static/img/headerG.png')">
+						<li @click='activeBtn(3,$event)'  style="background-image: url('/static/img/headerG.png')">
 							<img  class="imgo2" src="/static/img/headerbtn4bg1.png">
 							<img style="transform: translateY(-40px) translateX(-70px);" class="imgt2" src="/static/img/headerbtn4bg2.png">
 							<span style="color: #fff;    transform:translateY(-47px) translateX(-6px);letter-spacing: 2px;display: inline-block;">ICO项目汇总</span>
@@ -129,6 +127,17 @@
 		methods:{
 			toLogin(){
 				this.$router.push('/login')
+			},
+			activeBtn(id,e){
+				switch (id){
+					case 1:
+						e.target.className += ' active1'
+						break;
+				}
+				console.log(id)
+
+
+				
 			}
 		}
 	}
@@ -162,7 +171,12 @@
 					font-size: 16px;
 					margin-right: 80px;
 					>dt{
-						margin-right: 11px;
+						width: 210px;
+						height: 60px;
+						>img{
+							width: 100%;
+							height: 100%;
+						}
 					}
 					>dd{
 						display: flex;
@@ -308,6 +322,7 @@
 					}
 				}
 				>.buttonGup{
+					cursor: pointer;
 					width: 100%;
 					margin-top: 19px;
 					>ul{

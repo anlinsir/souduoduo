@@ -105,7 +105,7 @@
 				}
 			}
 			>.footerBomWarp{
-				width: 1200px;
+				width: 100%;
 				height: 300px;
 				background-color: #08090e;
 					>.footerBom{
