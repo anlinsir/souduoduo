@@ -258,7 +258,7 @@
 	export default{
 		data(){
 			return({
-				nav:['所有货币','我的关注'],
+				nav:['所有货币','关注'],
 				active:0,
 				actives:0,
 				rankingActives:0,
