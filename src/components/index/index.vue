@@ -121,7 +121,7 @@
 					<table>
 						<thead>
 							<tr>
-								<td>排名</td>
+								<td>排名 </td>
 								<td>名称</td>
 								<td>成交额</td>
 
