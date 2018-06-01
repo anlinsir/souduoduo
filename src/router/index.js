@@ -13,7 +13,9 @@ const Login = r =>require.ensure([],() => r(require('@/pages/login')),'login')
 
 
 const PartIndex = r =>require.ensure([],() => r(require('@/components/index/index')),'Pindex')
-const PartRanking = r =>require.ensure([],() => r(require('@/components/index/ranking')),'Pindex')
+const PartRanking = r =>require.ensure([],() => r(require('@/components/index/ranking')),'ranking')
+const PartCion= r =>require.ensure([],() => r(require('@/components/index/coin')),'cion')
+
 
 
 
@@ -44,6 +46,11 @@ export default new Router({
             path:'/index/ranking',
             name:'ranking',
             component:PartRanking
+        },
+        {
+            path:'/index/cion/:id',
+            name:'cion',
+            component:PartCion
         },
      
      	{path: '/index', redirect: "/index/index"}

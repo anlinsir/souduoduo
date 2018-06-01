@@ -130,8 +130,8 @@
 			},
 			activeBtn(id,e){
 				switch (id){
-					case 1:
-						e.target.className += ' active1'
+					case 0:
+						this.$router.push('/index/ranking')
 						break;
 				}
 				console.log(id)
