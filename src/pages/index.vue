@@ -32,8 +32,8 @@
 		min-height: 100%;
 		.warp{
 			width: 1200px;
-			min-height: 800px;
-			border:1px solid red;
+			min-height: 100px;
+
 			margin:auto;
 
 			

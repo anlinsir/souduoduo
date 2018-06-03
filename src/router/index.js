@@ -15,6 +15,10 @@ const Login = r =>require.ensure([],() => r(require('@/pages/login')),'login')
 const PartIndex = r =>require.ensure([],() => r(require('@/components/index/index')),'Pindex')
 const PartRanking = r =>require.ensure([],() => r(require('@/components/index/ranking')),'ranking')
 const PartCion= r =>require.ensure([],() => r(require('@/components/index/coin')),'cion')
+const PartTrading= r =>require.ensure([],() => r(require('@/components/index/trading')),'trading')
+const PartTradDetali= r =>require.ensure([],() => r(require('@/components/index/tradDetali')),'tradDetali')
+
+
 
 
 
@@ -51,6 +55,16 @@ export default new Router({
             path:'/index/cion/:id',
             name:'cion',
             component:PartCion
+        },
+        {
+            path:'/index/trading',
+            name:'trading',
+            component:PartTrading
+        },
+        {
+            path:'/index/tradDetali/:id',
+            name:'tradDetali',
+            component:PartTradDetali
         },
      
      	{path: '/index', redirect: "/index/index"}

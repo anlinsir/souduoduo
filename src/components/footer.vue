@@ -67,7 +67,7 @@
 <style lang="scss" scoped>
 	.footerWarp{
 		width: 100%;
-		margin-top: 47px;
+		margin-top: 80px;
 		height: 100%;
 		
 

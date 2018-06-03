@@ -45,7 +45,7 @@
 
 				<div class="headerCounty">
 					<img src="/static/img/countyImg.png">
-					<span>简体中文</span>
+					<span @click='changeLaugage'>简体中文</span>
 				</div>
 
 			</header>	
@@ -133,11 +133,17 @@
 					case 0:
 						this.$router.push('/index/ranking')
 						break;
+					case 1:
+						this.$router.push('/index/trading')
+						break;
 				}
 				console.log(id)
 
 
 				
+			},
+			changeLaugage(){
+				alert('暂不支持其他语言')
 			}
 		}
 	}
@@ -169,7 +175,7 @@
 					>.headerlogo{
 					display: flex;
 					font-size: 16px;
-					margin-right: 80px;
+					margin-right: 54px;
 					>dt{
 						width: 210px;
 						height: 60px;
@@ -243,15 +249,31 @@
 					color: #333;
 					font-size: 14px;
 					margin-left: 27px;
-					overflow: hidden;
 					margin-top:15px;
-					>img{
-						width: 30px;
-						vertical-align: middle;
-						height: 30px;
-						border-radius:50%;
-						margin-right: 5px;
-					}
+						>img{
+							width: 30px;
+							vertical-align: middle;
+							height: 30px;
+							border-radius:50%;
+							margin-right: 5px;
+						}
+						>span{
+							position: relative;
+						}
+						>span::after{
+							display: inline-block;
+							content: '';
+							position: absolute;
+							top: 7px;
+							right: -13px;
+							z-index: 10;
+							border:4px solid #000;
+							border-top:4px solid #000;
+							border-right:4px solid transparent;
+							border-bottom:4px solid transparent;
+							border-left:4px solid transparent;
+
+						}
 					}
 				}
 
