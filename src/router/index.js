@@ -17,6 +17,24 @@ const PartRanking = r =>require.ensure([],() => r(require('@/components/index/ra
 const PartCion= r =>require.ensure([],() => r(require('@/components/index/coin')),'cion')
 const PartTrading= r =>require.ensure([],() => r(require('@/components/index/trading')),'trading')
 const PartTradDetali= r =>require.ensure([],() => r(require('@/components/index/tradDetali')),'tradDetali')
+const PartEncy= r =>require.ensure([],() => r(require('@/components/index/ency')),'ency')
+const PartEncyDetali= r =>require.ensure([],() => r(require('@/components/index/encyDetali')),'encyDetali')
+const PartTwitter= r =>require.ensure([],() => r(require('@/components/index/twitter')),'twitter')
+const PartAnnouncement= r =>require.ensure([],() => r(require('@/components/index/announcement')),'announcement')
+
+const PartFaq= r =>require.ensure([],() => r(require('@/components/index/faq')),'faq')
+
+
+const Faqfaq= r =>require.ensure([],() => r(require('@/components/faq/Faq')),'Faq')
+const FaqAbout= r =>require.ensure([],() => r(require('@/components/faq/about')),'about')
+const FaqCall= r =>require.ensure([],() => r(require('@/components/faq/call')),'call')
+
+
+
+
+
+
+
 
 
 
@@ -65,6 +83,51 @@ export default new Router({
             path:'/index/tradDetali/:id',
             name:'tradDetali',
             component:PartTradDetali
+        },
+         {
+            path:'/index/ency',
+            name:'ency',
+            component:PartEncy
+        },
+        
+         {
+            path:'/index/encyDetali/:id',
+            name:'encyDetali',
+            component:PartEncyDetali
+        },
+        {
+            path:'/index/twitter',
+            name:'twitter',
+            component:PartTwitter
+        },
+         {
+            path:'/index/announcement',
+            name:'announcement',
+            component:PartAnnouncement
+        },
+        {
+            path:'/index/faq',
+            name:'faq',
+            component:PartFaq,
+            children:[
+                {
+                    path:'/index/faq/faq',
+                    name:'faqfaq',
+                    component:Faqfaq,  
+                },
+                 {
+                    path:'/index/faq/about',
+                    name:'about',
+                    component:FaqAbout,  
+                },
+                {
+                    path:'/index/faq/call',
+                    name:'call',
+                    component:FaqCall,  
+                },
+
+                {   path:'/index/faq', redirect:'/index/faq/about'}
+            ]
         },
      
      	{path: '/index', redirect: "/index/index"}

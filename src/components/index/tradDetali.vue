@@ -453,7 +453,7 @@
 				>tbody{
 					>tr{
 						>td{
-							height: 40px;
+							height: 53px;
 						}
 					}
 				}

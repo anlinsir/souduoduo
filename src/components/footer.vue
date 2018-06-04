@@ -24,9 +24,9 @@
 						</dl>
 
 							<ul class="ul1">
-								<li>关于我们 <span>|</span> </li>
-								<li>联系我们 <span>|</span> </li>
-								<li>常见问题 <span>|</span> </li>
+								<li @click='toFaq(0)'>关于我们 <span>|</span> </li>
+								<li @click='toFaq(1)'>联系我们 <span>|</span> </li>
+								<li @click='toFaq(2)'>常见问题 <span>|</span> </li>
 								<li>下载APP   </li>
 							</ul>
 
@@ -59,6 +59,23 @@
 			return({
 				linkList:['火星财经','比特头条','币源社区','链向财经','区块网','COBO钱包','鱼池','链闻','币易','未来财经','易派支付','金色财经','芭比财经']
 			})
+		},
+		methods:{
+			toFaq(id){
+				
+				switch (id){
+					case 0:
+					this.$router.push('/index/faq/about')						
+						break;
+					case 1:
+						this.$router.push('/index/faq/call')
+						break;
+					case 2:
+						this.$router.push('/index/faq/faq')
+						
+						break;
+				}
+			}
 		}
 	}
 </script>
@@ -143,6 +160,7 @@
 							font-size: 12px;
 							color: #aebbcf;
 							>li{
+								cursor: pointer;
 								>span{
 									margin: 0 29px;
 									color: #252833;

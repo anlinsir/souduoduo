@@ -3,7 +3,7 @@
 		<div class="headerwarp">
 			<header>
 				<dl class="headerlogo">
-					<dt>
+					<dt @click='toIdex'>
 						<img src="/static/img/headerlogo.png">
 					</dt>
 					
@@ -86,10 +86,15 @@
 							<span style="color: #fff;    transform: translateY(-38px) translateX(30px);letter-spacing: 2px;display: inline-block;">币圈百科</span>
 						</li>
 
-						<li @click='activeBtn(3,$event)'  style="background-image: url('/static/img/headerG.png')">
+						<li @click='activeBtn(3,$event)'  style="background-image: url('/static/img/headerG.png');position: relative;">
 							<img  class="imgo2" src="/static/img/headerbtn4bg1.png">
 							<img style="transform: translateY(-40px) translateX(-70px);" class="imgt2" src="/static/img/headerbtn4bg2.png">
 							<span style="color: #fff;    transform:translateY(-47px) translateX(-6px);letter-spacing: 2px;display: inline-block;">ICO项目汇总</span>
+							<span style="    float: right;
+    display: inline-block;
+    transform: translateY(-47px) translateX(-35px);
+    font-size: 12px;
+    color: rgb(144, 144, 144);">即将上线</span>
 						</li>
 
 					</ul>
@@ -136,6 +141,14 @@
 					case 1:
 						this.$router.push('/index/trading')
 						break;
+					case 2:
+						this.$router.push('/index/ency')
+						break;
+					case 3:
+						alert('即将上线')
+						return
+						this.$router.push('/index/ency')
+						break;
 				}
 				console.log(id)
 
@@ -144,6 +157,9 @@
 			},
 			changeLaugage(){
 				alert('暂不支持其他语言')
+			},
+			toIdex(){
+				this.$router.push('/index/index')
 			}
 		}
 	}
@@ -179,6 +195,7 @@
 					>dt{
 						width: 210px;
 						height: 60px;
+						cursor: pointer;
 						>img{
 							width: 100%;
 							height: 100%;

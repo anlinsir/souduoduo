@@ -380,7 +380,7 @@
 	.tradingWarp{
 		width: 100%;
 		min-height: 100px;
-		border-bottom: 1px solid #e5e5e5;
+		border: 1px solid #e5e5e5;
 		>.tradingTitle{
 			width: 100%;
 			height: 58px;

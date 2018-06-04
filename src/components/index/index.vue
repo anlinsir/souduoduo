@@ -52,10 +52,10 @@
 
 
 
-			<div class="indexRight">
+			<div  class="indexRight">
 				<div class="newDeal">
 					<div class="newDealTitle">
-						<p>
+						<p @click='ann'>
 							<span>交易所最新公告</span>
 							<img src="/static/img/right_arrow.png">
 						</p>
@@ -182,7 +182,7 @@
 
 				<div class="twitterMessages">
 					<div class="twitterMessagesTitle">
-						<p>
+						<p @click='toTwiter'>
 							<span>推特消息</span>
 							<img src="/static/img/right_arrow.png">
 						</p>
@@ -438,6 +438,12 @@
 			},
 			minidatachange(index){
 				this.minidataAvtive = index
+			},
+			toTwiter(){
+				this.$router.push('/index/twitter')
+			},
+			ann(){
+				this.$router.push('/index/announcement')
 			}
 
 		}
@@ -647,6 +653,7 @@
 					line-height: 50px;
 					border-bottom:1px solid #eeeeee;
 					>p{
+						cursor: pointer;
 						font-size: 12px;
 						color: #333333;
 						padding: 0 7px 0 10px;
@@ -957,6 +964,7 @@
 					height: 50px;
 					line-height: 50px;
 					>p{
+						cursor: pointer;
 						font-size: 12px;
 						color: #333333;
 						padding: 0 7px 0 10px;
