@@ -21,6 +21,10 @@ const PartEncy= r =>require.ensure([],() => r(require('@/components/index/ency')
 const PartEncyDetali= r =>require.ensure([],() => r(require('@/components/index/encyDetali')),'encyDetali')
 const PartTwitter= r =>require.ensure([],() => r(require('@/components/index/twitter')),'twitter')
 const PartAnnouncement= r =>require.ensure([],() => r(require('@/components/index/announcement')),'announcement')
+const PartAnnDetali= r =>require.ensure([],() => r(require('@/components/index/annDetali')),'annDetali')
+const PartEvent= r =>require.ensure([],() => r(require('@/components/index/event')),'event')
+
+
 
 const PartFaq= r =>require.ensure([],() => r(require('@/components/index/faq')),'faq')
 
@@ -104,6 +108,16 @@ export default new Router({
             path:'/index/announcement',
             name:'announcement',
             component:PartAnnouncement
+        },
+         {
+            path:'/index/annDetali',
+            name:'annDetali',
+            component:PartAnnDetali
+        },
+         {
+            path:'/index/event',
+            name:'event',
+            component:PartEvent
         },
         {
             path:'/index/faq',

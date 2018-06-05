@@ -12,8 +12,11 @@
 					text-overflow: ellipsis;
 					white-space: nowrap;
 					margin-right: 18px;
-					">			<span class="heng"></span>
-					BigOne</span>
+					" title="比特儿海外"
+					@click='other'
+					data-id='-1'
+					>			<span class="heng"></span>
+					比特儿海外</span>
 
 				<span class="hover" >
 					<img style="
@@ -48,8 +51,18 @@
 			})
 		},
 		methods:{
-			toAnnDetali(){
-				alert('还没写呢')
+			toAnnDetali(e){
+				if(e.target.dataset.id == -1){
+					return
+				}
+				this.$router.push('/index/annDetali')
+			},
+			other(e){
+				this.navList = [e.target.innerText + '公告列表']
+				
+				console.log('重载数据')
+
+				return
 			}
 		}
 

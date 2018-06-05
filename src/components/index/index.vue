@@ -72,7 +72,7 @@
 
 
 
-				<div class="event">
+				<div @click='Event' class="event">
 					<p><img src="/static/img/calendar.png">币圈事件</p>
 					<span class="point pointLeft"></span>
 					<span class="point pointRitgh"></span>
@@ -444,6 +444,9 @@
 			},
 			ann(){
 				this.$router.push('/index/announcement')
+			},
+			Event(){
+				this.$router.push('/index/event')
 			}
 
 		}
@@ -698,6 +701,7 @@
 				padding: 0 12px 0 13px;
 				text-align: center;
 				line-height: 81px;
+				cursor: pointer;
 				position: relative;
 				margin-bottom: 11px;
 				>p{
