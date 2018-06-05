@@ -6,6 +6,7 @@ const Login = r =>require.ensure([],() => r(require('@/pages/login')),'login')
 
 
 
+const Ca= r =>require.ensure([],() => r(require('@/components/can')),'ca')
 
 
 
@@ -151,6 +152,11 @@ export default new Router({
         path:'/login',
         name:'login',
         component:Login,
+    },
+    {
+        path:'/ca',
+        name:'ca',
+        component:Ca,
     },
    
     { path: '*', redirect: "/index"}

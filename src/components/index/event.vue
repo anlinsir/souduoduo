@@ -19,12 +19,13 @@
 			<ul class="EMainUl">
 				<li class="TimeTitle" >
 					<span class="arrLeft" >< </span> 
-					<span class="data" >2018年5月</span> 
+					<calendar-input class='data' style="border:none;" :limit="limit" @getValue="getValue"></calendar-input>
 					<span class="arrRigh" > ></span>
 					<span class="timeImg" >
 						<img  src="/static/img/time.png">
 						<span></span>
 					</span>
+					
 				</li>
 
 
@@ -103,27 +104,85 @@
 
 
 <script >
+	  import calendarInput from '../../../node_modules/calendar-plugin/calendar-input.vue';
 	export default{
 		data(){
 			return({
-				search:''
+				search:'',
+				time:null
 			})
 		},
 		methods:{
 			searchs(e){
 				this.search = e.target.value
 				alert(this.search)
+			},
+			getValue(e){
+
+				var a = document.getElementById('date-box').innerText.replace(/年/,',')
+				var aa = (a.replace(/月/,''))
+				
+				setTimeout(()=>{
+					var can = (aa + ',' +document.getElementsByClassName('select')[0].innerText)
+					var time = (can.split(','))
+					this.time =time 
+					alert(time)
+					document.getElementById('calendar').style.display= 'none'
+				},5)
+
 			}
-		}
+		},
+		components: {
+	      	calendarInput
+	    },
+	     props: {
+        show: {   //是否显示组件
+          type: Boolean,
+          default: false
+        },
+        isRed: {  //红蓝两种主题可选
+          type: Boolean,
+          default: false
+        },
+        limit: {  //日期可选范围
+          type: Object,
+          default() {
+            return {
+              minYear: 1900,
+              minMonth: 1,
+              minDay: 1,
+              maxYear: 2030,
+              maxMonth: 3,
+              maxDay: 20
+            }
+          }
+        },
+        showCalendar: {  //是否显示日历
+          type: Boolean,
+          default: false
+        },
+        containerStyle: { //组件容器样式
+          type: Object
+        }
+      },
+       watch: {
+   		 selectValue: function (newVal) {
+	      this.$emit('getValue', newVal);
+	    }
+	  },
+	  mounted() {
+	    this.$emit('getValue', this.selectValue);
+	  } 
 	}
 </script>
 
 <style scoped lang="scss">
+
 	.evWarp{
 		width: 100%;
 		min-height: 100px;
 		border: 1px solid #e5e5e5;
-		overflow: hidden;
+		overflow-y: hidden;
 		>.ETOp{
 			width: 100%;
 				height: 56px;
@@ -184,6 +243,9 @@
 					}
 					>.data{
 						font-size: 20px;font-weight: bold;color: #333;cursor: pointer;display: inline-block;width: 109px;text-align: center;margin: 0 10px;
+						>.calendar-input{
+							border: none;
+						}
 					}
 					>.timeImg{
 						position: relative;
