@@ -81,7 +81,7 @@
 
 
 				<div class="scrollExpress">
-					<div class="scrollExpressTitle">
+					<div @click='toFalsh' class="scrollExpressTitle">
 						<p>
 							<span>滚动快讯</span>
 							<img src="/static/img/right_arrow.png">
@@ -234,7 +234,7 @@
 
 
 				<div class="market">
-					<div class="marketTitle">
+					<div @click='toConcept' class="marketTitle">
 						<p>
 							<span>概念行情</span>
 							<img src="/static/img/right_arrow.png">
@@ -448,6 +448,15 @@
 			Event(){
 				this.$router.push('/index/event')
 			}
+			,
+			toConcept(){
+				this.$router.push('/index/concept')
+
+			},
+			toFalsh(){
+				this.$router.push('/index/flash')
+			}
+			
 
 		}
 	}
@@ -739,6 +748,7 @@
 				>.scrollExpressTitle{
 					width: 100%;
 					height: 50px;
+					cursor: pointer;
 					line-height: 50px;
 					border-bottom:1px solid #eeeeee;
 					>p{
@@ -781,6 +791,7 @@
 						>dd{
 							>p{
 								line-height: 23px;
+								cursor: pointer;
 							}
 						}
 					}
@@ -1082,6 +1093,7 @@
 				>.marketTitle{
 					width: 100%;
 					height: 50px;
+					cursor: pointer;
 					line-height: 50px;
 					>p{
 						font-size: 12px;
@@ -1097,7 +1109,6 @@
 					width: 320px;
 					min-height: 50px;
 					padding: 12px 7px 0 11px;
-					border:1px solid red;
 					>span{
 						font-size: 12px;
 						color: #666666;

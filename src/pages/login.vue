@@ -216,16 +216,38 @@
 					}
 			},
 			login(){
+				var logininfo = []
 				console.log(this.active) //通过active判断提交类型
 				for(var i in this.input){
 					if(this.input[i].model == ''){
 						alert('non')
 						return
 					}
-					if(this.input[i].name == 'doupass'){
-						alert(this.input[i].model)
-					}
-					console.log(this.input[i].model)
+					// if(this.input[i].name == 'doupass'){ 不知道干啥的
+						
+					// }
+					logininfo.push(this.input[i].model)
+				}
+
+				switch (this.active){
+					case 0:
+						console.log('登录')
+						console.log(logininfo)
+						localStorage.login =  logininfo[0]
+						this.$router.push('/index/index')
+						break;
+					case 1:
+						console.log('注册')
+						console.log(logininfo)
+						break;
+					case 3:
+						console.log('改密')
+						console.log(logininfo)
+						break;
+						default:
+						console.log('错误')
+						break
+					
 				}
 				
 			}

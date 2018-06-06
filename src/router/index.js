@@ -24,6 +24,18 @@ const PartTwitter= r =>require.ensure([],() => r(require('@/components/index/twi
 const PartAnnouncement= r =>require.ensure([],() => r(require('@/components/index/announcement')),'announcement')
 const PartAnnDetali= r =>require.ensure([],() => r(require('@/components/index/annDetali')),'annDetali')
 const PartEvent= r =>require.ensure([],() => r(require('@/components/index/event')),'event')
+const PartSearchIcon= r =>require.ensure([],() => r(require('@/components/index/searchIcontypes')),'searchIcontypes')
+const PartConcept= r =>require.ensure([],() => r(require('@/components/index/concept')),'concept')
+
+const PartMy= r =>require.ensure([],() => r(require('@/components/index/my')),'my')
+const PartFlash= r =>require.ensure([],() => r(require('@/components/index/newFlash')),'flash')
+
+const PartFlashDetali= r =>require.ensure([],() => r(require('@/components/index/flashDetali')),'flashDetali')
+
+
+
+
+
 
 
 
@@ -120,6 +132,32 @@ export default new Router({
             name:'event',
             component:PartEvent
         },
+         {
+            path:'/index/searchIcontypes',
+            name:'searchIcontypes',
+            component:PartSearchIcon
+        },
+          {
+            path:'/index/concept',
+            name:'concept',
+            component:PartConcept
+        },
+         {
+            path:'/index/my',
+            name:'my',
+            component:PartMy
+        },
+         {
+            path:'/index/flash',
+            name:'flash',
+            component:PartFlash
+        },
+          {
+            path:'/index/flashDetali/:id',
+            name:'flashDetali',
+            component:PartFlashDetali
+        },
+
         {
             path:'/index/faq',
             name:'faq',

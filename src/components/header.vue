@@ -38,7 +38,18 @@
 						</li>
 						<li @click='toLogin'>
 							<img src="/static/img/headerlist3.png">
-							<span>登录注册</span>
+							<span :title="loginInfo ? loginInfo : '' " style="transform: translateY(2px);display: inline-block;    width: 67px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    ">{{loginInfo ? loginInfo : '登录注册'}}</span>
+							<span v-if='loginInfo && loginInfoActive' style="position: absolute;top: 20px;left: -10px;">
+								<img src="/static/img/logindui.png">
+								<span class="userInfo" style="">
+									<span @click='toUser(0)' style="width: 100%;display: inline-block;margin-bottom: 10px;">个人中心</span>
+									<span @click='toUser(1)' style="width: 100%;display: inline-block;">退出登录</span>
+								</span>
+							</span>
 						</li>
 					</ul>
 				</div>
@@ -55,13 +66,13 @@
 		<div class="headerBtmWarp">
 			<div class="haderBom">
 				<div class="inputGup">
-					<input type="text" placeholder="请输入需要查询的区块地址">
-					<input type="text" placeholder="输入需要搜索代币号">
+					<input  v-model='quAddress' type="text" placeholder="请输入需要查询的区块地址">
+					<input @keydown.enter='seIconYype' v-model='iconTypeModel' type="text" placeholder="输入关键词搜索币种、平台">
 					<span>ETH</span>
 					<button class="Hbtn1">
 						<img src="/static/img/headersearch.png">
 					</button>
-					<button class="Hbtn2">
+					<button @click='seIconYype' class="Hbtn2">
 						<img src="/static/img/headersearch.png">
 					</button>
 				</div>
@@ -91,10 +102,10 @@
 							<img style="transform: translateY(-40px) translateX(-70px);" class="imgt2" src="/static/img/headerbtn4bg2.png">
 							<span style="color: #fff;    transform:translateY(-47px) translateX(-6px);letter-spacing: 2px;display: inline-block;">ICO项目汇总</span>
 							<span style="    float: right;
-    display: inline-block;
-    transform: translateY(-47px) translateX(-35px);
-    font-size: 12px;
-    color: rgb(144, 144, 144);">即将上线</span>
+						    display: inline-block;
+						    transform: translateY(-47px) translateX(-35px);
+						    font-size: 12px;
+						    color: rgb(144, 144, 144);">即将上线</span>
 						</li>
 
 					</ul>
@@ -126,11 +137,31 @@
 						price:'69.83',
 						pic:'0 3.1511627906976756 2.962962962962963 6.244186046511624 5.925925925925926 6.02325581395349 8.88888888888889 5.802325581395355 11.851851851851851 4.697674418604642 14.814814814814813 0.5 17.77777777777778 1.1627906976744242 20.74074074074074 4.034883720930237 23.703703703703702 5.360465116279066 26.666666666666664 8.674418604651157 29.629629629629626 14.197674418604645 32.59259259259259 15.081395348837205 35.55555555555556 11.325581395348832 38.51851851851852 19.5 41.48148148148148 16.62790697674419 44.44444444444444 14.639534883720925 47.407407407407405 15.523255813953485 50.37037037037037 17.953488372093027 53.33333333333333 13.534883720930232 56.29629629629629 14.41860465116279 59.25925925925925 13.534883720930232 62.22222222222222 10.220930232558139 65.18518518518518 10.220930232558139 68.14814814814814 12.430232558139537 71.11111111111111 14.639534883720925 74.07407407407408 12.430232558139537 77.03703703703704 13.313953488372086 80 15.523255813953485 80 19.5'
 					}
-				]
+				],
+				quAddress:'',
+				iconTypeModel:'',
+				loginInfo:'',
+				loginInfoActive:false
 			})
 		},
 		methods:{
-			toLogin(){
+			toLogin(e){
+				if(e.target.innerText == '退出登录'){
+					this.loginInfo = ''
+					localStorage.removeItem('login')
+					location.reload()
+					return
+				}
+				if(this.loginInfo){
+					if(this.loginInfoActive){
+						this.loginInfoActive = false	
+					}else{
+						this.loginInfoActive = true	
+
+					}
+					
+					return
+				}
 				this.$router.push('/login')
 			},
 			activeBtn(id,e){
@@ -160,7 +191,30 @@
 			},
 			toIdex(){
 				this.$router.push('/index/index')
+			},
+			seIconYype(){
+				this.$router.push({path:'/index/searchIcontypes',query:{searchText:this.iconTypeModel}})
+				console.log(this.iconTypeModel)
+			},
+			toUser(id){
+				switch (id){
+					case 0:
+						console.log('去个人中心')
+						this.$router.push('/index/my')
+						break;
+					case 1:
+						console.log('去退出登录')
+						this.loginInfo = ''
+						localStorage.removeItem('login')
+						this.$router.push('/index/index')
+						break;
+				}
+
 			}
+		},
+		mounted(){
+			this.loginInfo = localStorage.login
+			console.log(localStorage.login)
 		}
 	}
 
@@ -254,7 +308,14 @@
 						display:flex;
 						justify-content: space-between;
 						>li{
+							position: relative;
 							cursor: pointer;
+							.userInfo{
+								position: absolute;width: 100%;height: 100%;text-align: center;top:13px;
+								>span:hover{
+									color:#4277ff;
+								}
+							}
 							>img{
 								vertical-align: bottom;
 								margin-right: 4px;

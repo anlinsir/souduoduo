@@ -18,9 +18,9 @@
 		<div class="EMain">
 			<ul class="EMainUl">
 				<li class="TimeTitle" >
-					<span class="arrLeft" >< </span> 
+					<!-- <span class="arrLeft" >< </span>  -->
 					<calendar-input class='data' style="border:none;" :limit="limit" @getValue="getValue"></calendar-input>
-					<span class="arrRigh" > ></span>
+					<!-- <span class="arrRigh" > ></span> -->
 					<span class="timeImg" >
 						<img  src="/static/img/time.png">
 						<span></span>
@@ -31,7 +31,7 @@
 
 				<li >
 					<span class="itemTime" >05-29</span>
-					<span class="ItemPoint"></span>
+					<span class="ItemPoint" ></span>
 					<span class="itemHeng" :style="{height:100*1.2 + '%'}"></span>
 					<span class="itemBox">
 						<span class="p1" >
@@ -126,8 +126,9 @@
 					var can = (aa + ',' +document.getElementsByClassName('select')[0].innerText)
 					var time = (can.split(','))
 					this.time =time 
-					alert(time)
-					document.getElementById('calendar').style.display= 'none'
+					console.log(time)
+
+					// document.getElementById('calendar').style.display= 'none'
 				},5)
 
 			}
@@ -136,14 +137,11 @@
 	      	calendarInput
 	    },
 	     props: {
-        show: {   //是否显示组件
-          type: Boolean,
-          default: false
-        },
-        isRed: {  //红蓝两种主题可选
-          type: Boolean,
-          default: false
-        },
+	        show: {   //是否显示组件
+	          type: Boolean,
+	          default: false
+	        },
+       
         limit: {  //日期可选范围
           type: Object,
           default() {
@@ -166,12 +164,12 @@
         }
       },
        watch: {
-   		 selectValue: function (newVal) {
-	      this.$emit('getValue', newVal);
-	    }
+   		//  selectValue: function (newVal) {
+	    //   this.$emit('getValue', newVal);
+	    // }
 	  },
 	  mounted() {
-	    this.$emit('getValue', this.selectValue);
+	    // this.$emit('getValue', this.selectValue);
 	  } 
 	}
 </script>

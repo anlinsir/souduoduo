@@ -35,7 +35,9 @@
 		},
 		methods:{
 			changeActive(index){
+				this.$emit('choose',index)
 				this.active1 = index
+				
 			}
 		}
 	}
