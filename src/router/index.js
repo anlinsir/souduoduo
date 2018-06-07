@@ -9,6 +9,10 @@ const Login = r =>require.ensure([],() => r(require('@/pages/login')),'login')
 const Ca= r =>require.ensure([],() => r(require('@/components/can')),'ca')
 
 
+const Robot= r =>require.ensure([],() => r(require('@/pages/robot')),'robot')
+
+
+
 
 
 
@@ -195,6 +199,11 @@ export default new Router({
         path:'/ca',
         name:'ca',
         component:Ca,
+    },
+    {
+        path:'/robot',
+        name:'robot',
+        component:Robot,
     },
    
     { path: '*', redirect: "/index"}

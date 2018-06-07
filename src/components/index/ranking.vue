@@ -35,7 +35,7 @@
 					</tr>
 				</thead>
 
-				<tbody >
+				<tbody cellspacing="0">
 					<tr @click='Bdetalis(index)' v-for="(item,index) in tbody">
 						<td>{{item.id}}</td>
 						<td>
@@ -585,7 +585,7 @@
 	.rankingWarp{
 		width: 100%;
 		min-height:500px;
-		border:1px solid red;
+		border:1px solid #e5e5e5;
 		>.rankHeadChoose{
 			>.rankUl1{
 				width: 100%;
@@ -657,17 +657,17 @@
 		>.listDataWarp{
 			width: 100%;
 			min-height:200px;
-			border:1px solid red;
 			>.listData{
 				padding: 0 21px 0 17px;
 				width: 100%;
-				border:1px solid;
+				border-collapse:collapse;
 				>thead{
 					>tr{
 						>td{
 							height: 46px;
 							line-height: 46px;
 							color: #666666;
+							border-bottom:1px solid #e5e5e5;
 						}
 					}
 				}

@@ -46,7 +46,36 @@
 		</div>
 
 
-		<div class="detaliRight"></div>
+		<div class="detaliRight">
+			<div class="rOf">
+					<div class="rOfTitle">
+						<p>
+							<span @click='rofChoose(index)' v-for='(item,index) in rof' :key='index' :class="rofActive == index ? 'rofActive' : '' ">{{item}}</span>
+							
+						</p>
+					</div>	
+
+					<ul class="rofData">
+							<li @click='rofChooses(index)' v-for='(item,index) in rofData' :key='index' :class="rofActives == index ? 'rofActives' : '' ">{{item}}</li>
+						
+					</ul>
+
+					<ul class="rofDatadetails">
+						<li class="head"><span v-for='(item,index) in rofdetalislist' :key='index'>{{item}}</span></li>
+						<li class="body" v-for='(items,index) in tbody'>
+							<span style='width: 20px;height: 20px;transform: translateY(6px);display: inline-block;text-align: center;line-height: 20px;'><span v-if='items.id < 4' style='width: 20px;height: 20px;background-color: #fba73e;color: #FFF;display: inline-block;text-align: center;line-height: 20px;transform: translateY(0px);'>{{items.id}}</span>{{items.id >= 4 ? items.id : ''}}</span>
+							<span>{{items.name}}</span>
+							<span>{{items.price}}</span>
+							<span :style="{color: parseFloat(items.rises) < 0 ? '#33b862' : 'red' }">{{items.rises}}</span>
+
+							
+						</li>
+					</ul>
+
+				</div>
+
+
+		</div>
 
 	</div>
 </template>
@@ -57,7 +86,93 @@
 		data(){
 			return({
 				duos:0,
-				kongs:0
+				kongs:0,
+				rof:['涨幅','跌幅'],
+				rofdetalislist:['排名','名称','价格','涨幅'],
+				tbody:[
+					{
+						id:1,
+						img:'/static/img/btc.png',
+						name:'BTC-比特币',
+						circulationVale:'¥8,377亿',
+						price:'¥49,128',
+						sum:'1,705万',
+						transaction:'¥4,208,503万',
+						rises:'-2.75%',
+						tendency:'0 5 2 4 4 8 6 2 8 10 10 3'
+
+					},
+					{
+						id:2,
+						img:'/static/img/eth.png',
+						name:'BTC-比特币',
+						circulationVale:'¥8,377亿',
+						price:'¥49,128',
+						sum:'1,705万',
+						transaction:'¥4,208,503万',
+						rises:'-2.75%',
+						tendency:'0 5 2 4 4 8 6 2 8 10 10 3'
+					},
+					{
+						id:3,
+						img:'/static/img/xrp.png',
+						name:'BTC-比特币',
+						circulationVale:'¥8,377亿',
+						price:'¥49,128',
+						sum:'1,705万',
+						transaction:'¥4,208,503万',
+						rises:'-2.75%',
+						tendency:'0 5 2 4 4 8 6 2 8 10 10 3'
+					},
+					{
+						id:4,
+						img:'/static/img/btc.png',
+						name:'BTC-比特币',
+						circulationVale:'¥8,377亿',
+						price:'¥49,128',
+						sum:'1,705万',
+						transaction:'¥4,208,503万',
+						rises:'-2.75%',
+						tendency:'0 5 2 4 4 8 6 2 8 10 10 3'
+					},
+					{
+						id:5,
+						img:'/static/img/btc.png',
+						name:'BTC-比特币',
+						circulationVale:'¥8,377亿',
+						price:'¥49,128',
+						sum:'1,705万',
+						transaction:'¥4,208,503万',
+						rises:'-2.75%',
+						tendency:'0 5 2 4 4 8 6 2 8 10 10 3'
+					},
+					{
+						id:6,
+						img:'/static/img/btc.png',
+						name:'BTC-比特币',
+						circulationVale:'¥8,377亿',
+						price:'¥49,128',
+						sum:'1,705万',
+						transaction:'¥4,208,503万',
+						rises:'-2.75%',
+						tendency:'0 5 2 4 4 8 6 2 8 10 10 3'
+					},
+					{
+						id:7,
+						img:'/static/img/btc.png',
+						name:'BTC-比特币',
+						circulationVale:'¥8,377亿',
+						price:'¥49,128',
+						sum:'1,705万',
+						transaction:'¥4,208,503万',
+						rises:'-2.75%',
+						tendency:'0 5 2 4 4 8 6 2 8 10 10 3'
+					}
+					
+				],
+				rofActive:0,
+				rofActives:0,
+				rofData:['1小时','24小时','一周'],
 			})
 		}
 		,
@@ -77,7 +192,13 @@
 				}
 				this.kongs = 1
 				localStorage.kong = 1
-			}
+			},
+			rofChoose(index){
+				this.rofActive = index
+			},
+			rofChooses(index){
+				this.rofActives = index
+			},
 		},
 		created(){
 			if(localStorage.dou == 1 ){
@@ -162,6 +283,91 @@
 			width: 320px;
 			min-height: 100px;
 			border:1px solid #e5e5e5;
+			>.rOf{
+				width: 320px;
+				border:1px solid #e4e4e4;
+				min-height: 373px;
+				>.rOfTitle{
+					width: 100%;
+					height: 50px;
+					line-height: 50px;
+					cursor: pointer;
+					>p{
+						font-size: 12px;
+						color: #333333;
+						padding: 0 0px 0 0px;
+						>.rofActive{
+							border-top:3px solid #4277ff;
+							color: #4277ff;
+						}
+						>span{
+							display: inline-block;
+							text-align: center;
+							width: 50%;
+							>img{
+							    float: right;
+								transform: translateY(20px);
+							}
+						}
+						
+					}
+				}
+				>.rofData{
+					width: 100%;
+					font-size: 12px;
+					cursor: pointer;
+					color: #666;
+					display: flex;
+					justify-content: center;
+					height: 34px;
+					>li{
+						width: 63px;
+						height: 20px;
+						text-align: center;
+   			 			line-height: 20px;	
+   			 			margin-right: 11px;
+   			 			position: relative;
+					}
+					>.rofActives{background-color: #dae3fb;}
+					>.rofActives::after{
+						content: '';
+						width: 4px;	
+
+						height: 4px;
+						position: absolute;
+						top: 9px;
+						border-radius: 50%;
+						left: 5px;
+						background-color: #4277ff;
+
+					}
+
+				}
+				>.rofDatadetails{
+					width: 320px;
+					padding: 0 6px 0 7px;
+					min-height: 200px;
+					font-size: 12px;
+					color: #666;
+
+					>.head{
+						height: 32px;
+						width: 100%;
+						background-color: #f4f4f4;
+						display: flex;
+						justify-content: space-around;
+						line-height: 32px;
+					}
+					>.body{
+						cursor: pointer;
+						display: flex;
+						justify-content: space-around;
+						height: 32px;
+						line-height: 32px;
+
+					}
+				}
+			}
 		}
 	}
 

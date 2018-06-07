@@ -62,12 +62,14 @@
 						<div class="Left">
 						<p style="margin-bottom: 8px">流通市值</p>
 						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;">¥814,238,770,434</p>
-						<p style="width: 70px;height: 23px;background-color: #4277ff;color: #fff;border-radius: 10px;text-align: center;line-height: 23px;margin-bottom: 20px;">排名NO.1</p>
+						<p style="width: 70px;height: 23px;background-color: #4277ff;color: #fff;border-radius: 10px;text-align: center;line-height: 24px;margin-bottom: 20px;">排名NO.1</p>
 						<p style="margin-bottom: 8px;">≈$127,464,800,199 </p>
 						<p> ≈17,053,787BTC</p>
 						</div>
 						<div class="right">
-							dsds	
+							 <div id="EFAMC" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
+
+							 <div id="EFAMC1" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
 						</div>
 					</li>
 
@@ -80,7 +82,16 @@
 						<p style="color:#4277ff;font-weight: bold; ">210000 BTC</p>							
 						</div>
 						<div class="right">
-							dsds	
+							
+
+
+							 <div id="turnover" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
+
+							 <div id="turnover1" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
+
+
+							
+								
 						</div>
 					</li>
 
@@ -93,7 +104,9 @@
 						<p> ≈17,053,787BTC</p>
 						</div>
 						<div class="right">
-							dsds	
+							<div id="24pay" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
+
+							 <div id="24pay1" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>	
 						</div>
 					</li>
 
@@ -106,7 +119,12 @@
 						<p style="color:#4277ff;font-weight: bold; ">210000 BTC</p>	
 						</div>
 						<div class="right">
-							dsds	
+							<div id="cionin" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
+
+							 <div id="cionin1" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>	
+
+							 <div id="cionin2" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>	
+
 						</div>
 					</li>
 
@@ -271,8 +289,12 @@
 </template>
 
 <script>
+	var echarts = require('echarts')
+	
 	export default{
+
 		data(){
+			
 			return({
 				detalis:[
 						{
@@ -301,7 +323,12 @@
 					],
 				ChooseTitle:['1分钟','5分钟','15分钟','30分钟','1小时','4小时','12小时','1天',],
 				choosetitleactive:0,
-				dataShow:true
+				dataShow:true,
+				value1:18,
+				turnover:1.3,
+				pay1:4.34,
+				cionin:99
+
 			})
 		}
 		,
@@ -317,6 +344,805 @@
 		,
 		created(){
 			console.log(this.$route.params.id)
+		},
+		
+
+		mounted() {
+			// setInterval(()=>{
+				
+			// 	this.value1 = this.value1 + 1
+			// 	console.log(this.value1)
+			// },1000)
+			if(timer1 || timer2 || timer3){
+			clearinterval(timer1)
+			clearinterval(timer2)
+			clearinterval(timer3)
+
+			}
+			var EFAMC1 = echarts.init(document.getElementById('EFAMC1'));
+			// 绘制图表
+				EFAMC1.setOption({
+				    title: { },
+				    	series: [{
+				         type: 'pie',
+				         radius: ['60%', '80%'],
+				         hoverAnimation:false,
+				         legendHoverLink:false,
+				         data:[
+			                {value:this.value1,itemStyle:{ normal:{color:'#7696eb'} }},
+			                {value:100 - (this.value1),itemStyle:{ normal:{color:'transparent'} }},
+
+			              
+			            ],
+
+			            labelLine:{show:false},
+			            
+				    }]
+				});
+
+			var EFAMC = echarts.init(document.getElementById('EFAMC'));
+				EFAMC.setOption({
+				    title:{
+				    	text:this.value1 + '%',
+				    	subtext:'占全球总市值',
+				    	subtextStyle:{
+				    		color:'#333333',
+				    		fontWeight:'normal',
+				    		fontSize:14,
+				    		textAlign:'center',
+				    		
+				    	},
+				    	subtextStyle:{
+				    		color:"#8e8d8d",
+				    		fontWeight:'normal',
+				    		fontSize:12,
+				    		align:'center',
+				    		lineHeight:'200'
+				    	},
+				    	padding:[80, 0, 0, 63],
+				    	 left:'center'
+
+				    },
+
+				    	 series: [
+						        {
+						           
+						            type:'pie',
+						            radius: ['50%', '70%'],
+						           hoverAnimation:false,
+			        			 legendHoverLink:false,
+						            label: {
+						                normal: {
+						                    show: false,
+						                    position: 'center'
+						                },
+						              
+						            },
+						           
+						            data:[
+						                {value:335, },
+						             
+						            ],
+						            itemStyle: {
+						            	shadowBlur:20,
+						            	shadowOffsetX:-3,
+						            	shadowOffsetY:7,
+						            	shadowColor:'#556fb5',
+						                color: {
+						                    type: 'linear',
+						                    x: 0,
+						                    y: 0,
+						                    x2: 0,
+						                    y2: 1,
+						                    colorStops: [{
+						                        offset: 0, color: '#556fb5' // 0% 处的颜色
+						                    }, {
+						                        offset: 0.8, color: '#45447c' // 100% 处的颜色
+						                    }],
+						                    globalCoord: false // 缺省为 false
+						                }
+						            }
+						        }
+						    ]
+				});
+
+				var timer1 = setInterval(()=>{
+					this.value1 += 1 
+					if(this.value1 == 30){
+						this.value1 =1
+					}
+					var EFAMC1 = echarts.init(document.getElementById('EFAMC1'));
+					EFAMC1.setOption({
+				    title: { },
+				    	series: [{
+				         type: 'pie',
+				         radius: ['60%', '80%'],
+				         hoverAnimation:false,
+				         legendHoverLink:false,
+				         data:[
+			                {value:this.value1,itemStyle:{ normal:{color:'#7696eb'} }},
+			                {value:100 - (this.value1),itemStyle:{ normal:{color:'transparent'} }},
+
+			              
+			            ],
+
+				            labelLine:{show:false},
+				            
+					    }]
+					});
+
+					EFAMC.setOption({
+				    title:{
+				    	text:this.value1 + '%',
+				    	subtext:'占全球总市值',
+				    	subtextStyle:{
+				    		color:'#333333',
+				    		fontWeight:'normal',
+				    		fontSize:14,
+				    		textAlign:'center',
+				    		
+				    	},
+				    	subtextStyle:{
+				    		color:"#8e8d8d",
+				    		fontWeight:'normal',
+				    		fontSize:12,
+				    		align:'center',
+				    		lineHeight:'200'
+				    	},
+				    	padding:[80, 0, 0, 63],
+				    	 left:'center'
+
+				    },
+
+				    	 series: [
+						        {
+						           
+						            type:'pie',
+						            radius: ['50%', '70%'],
+						           hoverAnimation:false,
+			        			 legendHoverLink:false,
+						            label: {
+						                normal: {
+						                    show: false,
+						                    position: 'center'
+						                },
+						              
+						            },
+						           
+						            data:[
+						                {value:335, },
+						             
+						            ],
+						            itemStyle: {
+						            	shadowBlur:20,
+						            	shadowOffsetX:-3,
+						            	shadowOffsetY:7,
+						            	shadowColor:'#556fb5',
+						                color: {
+						                    type: 'linear',
+						                    x: 0,
+						                    y: 0,
+						                    x2: 0,
+						                    y2: 1,
+						                    colorStops: [{
+						                        offset: 0, color: '#556fb5' // 0% 处的颜色
+						                    }, {
+						                        offset: 0.8, color: '#45447c' // 100% 处的颜色
+						                    }],
+						                    globalCoord: false // 缺省为 false
+						                }
+						            }
+						        }
+						    ]
+					});
+				},1000)
+
+
+				//第一个图
+
+
+
+			var turnover1 = echarts.init(document.getElementById('turnover1'));
+
+				turnover1.setOption({
+			    title: { },
+			    			    series: [{
+			         type: 'pie',
+			         radius: ['60%', '80%'],
+			         hoverAnimation:false,
+			         legendHoverLink:false,
+			         data:[
+		                {value:this.turnover,itemStyle:{ normal:{color:'#84bbff'} }},
+		                {value:100 - (this.turnover),itemStyle:{ normal:{color:'transparent'} }},
+
+		              
+		            ],
+
+		            labelLine:{show:false},
+		            
+			    }]
+			});
+
+			var turnover = echarts.init(document.getElementById('turnover'));
+				turnover.setOption({
+				    title:{
+				    	text:this.turnover + '%',
+				    	subtext:'流通率',
+				    	subtextStyle:{
+				    		color:'#333333',
+				    		fontWeight:'normal',
+				    		fontSize:14,
+				    		textAlign:'center',
+				    		
+				    	},
+				    	subtextStyle:{
+				    		color:"#8e8d8d",
+				    		fontWeight:'normal',
+				    		fontSize:12,
+				    		textAlign:'center',
+				    		lineHeight:'200'
+				    	},
+				    	padding:[80, 0, 0, 63],
+				    	 left:'center'
+				    	
+
+				    },
+				    	 series: [
+						        {
+						           
+						            type:'pie',
+						            radius: ['50%', '70%'],
+						           hoverAnimation:false,
+			        			 legendHoverLink:false,
+						            label: {
+						                normal: {
+						                    show: false,
+						                    position: 'center'
+						                },
+						              
+						            },
+						           
+						            data:[
+						                {value:335, },
+						             
+						            ],
+						            itemStyle: {
+						            	shadowBlur:20,
+						            	shadowOffsetX:-3,
+						            	shadowOffsetY:7,
+						            	shadowColor:'#3d5286',
+						                color: {
+						                    type: 'linear',
+						                    x: 0,
+						                    y: 0,
+						                    x2: 0,
+						                    y2: 1,
+						                    colorStops: [{
+						                        offset: 0, color: '#32a6ff' // 0% 处的颜色
+						                    }, {
+						                        offset: 0.8, color: '#3d5286' // 100% 处的颜色
+						                    }],
+						                    globalCoord: false // 缺省为 false
+						                }
+						            }
+						        }
+						    ]
+			});
+
+
+				var timer2 = setInterval(()=>{
+					this.turnover += 1 
+					if(this.turnover >= 10){
+						this.turnover = 1
+					}
+					var turnover1 = echarts.init(document.getElementById('turnover1'));
+					turnover1.setOption({
+					    title: { },
+					    			    series: [{
+					         type: 'pie',
+					         radius: ['60%', '80%'],
+					         hoverAnimation:false,
+					         legendHoverLink:false,
+					         data:[
+				                {value:this.turnover,itemStyle:{ normal:{color:'#84bbff'} }},
+				                {value:100 - (this.turnover),itemStyle:{ normal:{color:'transparent'} }},
+
+				              
+				            ],
+
+				            labelLine:{show:false},
+				            
+					    }]
+					});
+
+						turnover.setOption({
+						    title:{
+						    	text:this.turnover + '%',
+						    	subtext:'流通率',
+						    	subtextStyle:{
+						    		color:'#333333',
+						    		fontWeight:'normal',
+						    		fontSize:14,
+						    		textAlign:'center',
+						    		
+						    	},
+						    	subtextStyle:{
+						    		color:"#8e8d8d",
+						    		fontWeight:'normal',
+						    		fontSize:12,
+						    		textAlign:'center',
+						    		lineHeight:'200'
+						    	},
+						    	padding:[80, 0, 0, 63],
+						    	 left:'center'
+						    	
+
+						    },
+						    	 series: [
+								        {
+								           
+								            type:'pie',
+								            radius: ['50%', '70%'],
+								           hoverAnimation:false,
+					        			 legendHoverLink:false,
+								            label: {
+								                normal: {
+								                    show: false,
+								                    position: 'center'
+								                },
+								              
+								            },
+								           
+								            data:[
+								                {value:335, },
+								             
+								            ],
+								            itemStyle: {
+								            	shadowBlur:20,
+								            	shadowOffsetX:-3,
+								            	shadowOffsetY:7,
+								            	shadowColor:'#3d5286',
+								                color: {
+								                    type: 'linear',
+								                    x: 0,
+								                    y: 0,
+								                    x2: 0,
+								                    y2: 1,
+								                    colorStops: [{
+								                        offset: 0, color: '#32a6ff' // 0% 处的颜色
+								                    }, {
+								                        offset: 0.8, color: '#3d5286' // 100% 处的颜色
+								                    }],
+								                    globalCoord: false // 缺省为 false
+								                }
+								            }
+								        }
+								    ]
+					});
+				},1000)
+
+
+				//第二个图
+
+
+			var pay241 = echarts.init(document.getElementById('24pay1'));
+
+				pay241.setOption({
+			    title: { },
+			    	series: [{
+			         type: 'pie',
+			         radius: ['60%', '80%'],
+			         hoverAnimation:false,
+			         legendHoverLink:false,
+			         data:[
+		                {value:this.pay1,itemStyle:{ normal:{color:'#87f8c2'} }},
+		                {value:100 - (this.pay1),itemStyle:{ normal:{color:'transparent'} }},
+
+		              
+		            ],
+
+		            labelLine:{show:false},
+		            
+			    }]
+			});
+
+			var pay = echarts.init(document.getElementById('24pay'));
+				pay.setOption({
+				    title:{
+				    	text:this.pay1 + '%',
+				    	subtext:'换手率',
+				    	subtextStyle:{
+				    		color:'#333333',
+				    		fontWeight:'normal',
+				    		fontSize:14,
+				    		align:'center',
+				    		
+				    	},
+				    	subtextStyle:{
+				    		color:"#8e8d8d",
+				    		fontWeight:'normal',
+				    		fontSize:12,
+				    		align:'center',
+				    		lineHeight:'200'
+				    	},
+				    	padding:[80, 0, 0, 63],
+				    	 left:'center'
+
+				    },
+				    	 series: [
+						        {
+						           
+						            type:'pie',
+						            radius: ['50%', '70%'],
+						           hoverAnimation:false,
+			        			 legendHoverLink:false,
+						            label: {
+						                normal: {
+						                    show: false,
+						                    position: 'center'
+						                },
+						              
+						            },
+						           
+						            data:[
+						                {value:335, },
+						             
+						            ],
+						            itemStyle: {
+						            	shadowBlur:20,
+						            	shadowOffsetX:-3,
+						            	shadowOffsetY:7,
+						            	shadowColor:'#287f66',
+						                color: {
+						                    type: 'linear',
+						                    x: 0,
+						                    y: 0,
+						                    x2: 0,
+						                    y2: 1,
+						                    colorStops: [{
+						                        offset: 0, color: '#5dd186' // 0% 处的颜色
+						                    }, {
+						                        offset: 0.8, color: '#287f66' // 100% 处的颜色
+						                    }],
+						                    globalCoord: false // 缺省为 false
+						                }
+						            }
+						        }
+						    ]
+			});
+
+				var timer3 = setInterval(()=>{
+					var pay241 = echarts.init(document.getElementById('24pay1'));
+						this.pay1 += 4.5
+						if(this.pay1 >= 88){
+							this.pay1 = 10 
+						}
+							pay241.setOption({
+						    title: { },
+						    	series: [{
+						         type: 'pie',
+						         radius: ['60%', '80%'],
+						         hoverAnimation:false,
+						         legendHoverLink:false,
+						         data:[
+					                {value:this.pay1,itemStyle:{ normal:{color:'#87f8c2'} }},
+					                {value:100 - (this.pay1),itemStyle:{ normal:{color:'transparent'} }},
+
+					              
+					            ],
+
+					            labelLine:{show:false},
+					            
+						    }]
+						});
+
+
+							pay.setOption({
+				    title:{
+				    	text:this.pay1 + '%',
+				    	subtext:'换手率',
+				    	subtextStyle:{
+				    		color:'#333333',
+				    		fontWeight:'normal',
+				    		fontSize:14,
+				    		align:'center',
+				    		
+				    	},
+				    	subtextStyle:{
+				    		color:"#8e8d8d",
+				    		fontWeight:'normal',
+				    		fontSize:12,
+				    		align:'center',
+				    		lineHeight:'200'
+				    	},
+				    	padding:[80, 0, 0, 63],
+				    	 left:'center'
+
+				    },
+				    	 series: [
+						        {
+						           
+						            type:'pie',
+						            radius: ['50%', '70%'],
+						           hoverAnimation:false,
+			        			 legendHoverLink:false,
+						            label: {
+						                normal: {
+						                    show: false,
+						                    position: 'center'
+						                },
+						              
+						            },
+						           
+						            data:[
+						                {value:335, },
+						             
+						            ],
+						            itemStyle: {
+						            	shadowBlur:20,
+						            	shadowOffsetX:-3,
+						            	shadowOffsetY:7,
+						            	shadowColor:'#287f66',
+						                color: {
+						                    type: 'linear',
+						                    x: 0,
+						                    y: 0,
+						                    x2: 0,
+						                    y2: 1,
+						                    colorStops: [{
+						                        offset: 0, color: '#5dd186' // 0% 处的颜色
+						                    }, {
+						                        offset: 0.8, color: '#287f66' // 100% 处的颜色
+						                    }],
+						                    globalCoord: false // 缺省为 false
+						                }
+						            }
+						        }
+						    ]
+					});
+				},500)
+
+				//第三个图
+
+
+
+
+
+
+
+
+			var cionin2 = echarts.init(document.getElementById('cionin2'));
+
+				cionin2.setOption({
+			    title: { },
+			    	series: [{
+			         type: 'pie',
+			         radius: ['60%', '80%'],
+			         hoverAnimation:false,
+			         legendHoverLink:false,
+			         data:[
+		                {value:this.cionin,itemStyle:{ normal:{color:'#f7cc69'} }},
+		                {value:100 - this.cionin,itemStyle:{ normal:{color:'transparent'} }},
+
+		              
+		            ],
+
+		            labelLine:{show:false},
+		            
+			    }]
+			});
+
+			var cionin1 = echarts.init(document.getElementById('cionin1'));
+
+				cionin1.setOption({
+			    title: { },
+			    	series: [{
+			         type: 'pie',
+			         radius: ['60%', '80%'],
+			         hoverAnimation:false,
+			         legendHoverLink:false,
+			         data:[
+		                {value:50,itemStyle:{ normal:{color:'#fee387'} }},
+		                {value:50,itemStyle:{ normal:{color:'transparent'} }},
+
+		              
+		            ],
+
+		            labelLine:{show:false},
+		            
+			    }]
+			});
+
+			var cionin = echarts.init(document.getElementById('cionin'));
+				cionin.setOption({
+				    title:{
+				    	text:this.cionin + '%',
+				    	subtext:'净流入',
+				    	subtextStyle:{
+				    		color:'#333333',
+				    		fontWeight:'normal',
+				    		fontSize:14,
+				    		align:'center',
+				    		
+				    	},
+				    	subtextStyle:{
+				    		color:"#8e8d8d",
+				    		fontWeight:'normal',
+				    		fontSize:12,
+				    		align:'center',
+				    		lineHeight:'200'
+				    	},
+				    	padding:[80, 0, 0, 63],
+				    	 left:'center'
+
+				    },
+				    	 series: [
+						        {
+						           
+						            type:'pie',
+						            radius: ['50%', '70%'],
+						           hoverAnimation:false,
+			        			 legendHoverLink:false,
+						            label: {
+						                normal: {
+						                    show: false,
+						                    position: 'center'
+						                },
+						              
+						            },
+						           
+						            data:[
+						                {value:335, },
+						             
+						            ],
+						            itemStyle: {
+						            	shadowBlur:20,
+						            	shadowOffsetX:-3,
+						            	shadowOffsetY:7,
+						            	shadowColor:'#f9b25c',
+						                color: {
+						                    type: 'linear',
+						                    x: 0,
+						                    y: 0,
+						                    x2: 0,
+						                    y2: 1,
+						                    colorStops: [{
+						                        offset: 0, color: '#f9b25c' // 0% 处的颜色
+						                    }, {
+						                        offset: 0.8, color: '#d68f37' // 100% 处的颜色
+						                    }],
+						                    globalCoord: false // 缺省为 false
+						                }
+						            }
+						        }
+						    ]
+			});
+
+
+
+				var timer4 = setInterval(()=>{
+					this.cionin -= 3
+					if(this.cionin <= 10){
+						this.cionin = 99
+					}
+					cionin1.setOption({
+						    title: { },
+						    	series: [{
+						         type: 'pie',
+						         radius: ['60%', '80%'],
+						         hoverAnimation:false,
+						         legendHoverLink:false,
+						         data:[
+					                {value:50,itemStyle:{ normal:{color:'#fee387'} }},
+					                {value:50,itemStyle:{ normal:{color:'transparent'} }},
+
+					              
+					            ],
+
+					            labelLine:{show:false},
+					            
+						    }]
+						});
+
+
+					cionin2.setOption({
+					    title: { },
+					    	series: [{
+					         type: 'pie',
+					         radius: ['60%', '80%'],
+					         hoverAnimation:false,
+					         legendHoverLink:false,
+					         data:[
+				                {value:this.cionin,itemStyle:{ normal:{color:'#f7cc69'} }},
+				                {value:100 - this.cionin,itemStyle:{ normal:{color:'transparent'} }},
+
+				              
+				            ],
+
+				            labelLine:{show:false},
+				            
+					    }]
+					});
+
+					cionin.setOption({
+					    title:{
+					    	text:this.cionin + '%',
+					    	subtext:'净流入',
+					    	subtextStyle:{
+					    		color:'#333333',
+					    		fontWeight:'normal',
+					    		fontSize:14,
+					    		align:'center',
+					    		
+					    	},
+					    	subtextStyle:{
+					    		color:"#8e8d8d",
+					    		fontWeight:'normal',
+					    		fontSize:12,
+					    		align:'center',
+					    		lineHeight:'200'
+					    	},
+					    	padding:[80, 0, 0, 63],
+					    	 left:'center'
+
+					    },
+					    	 series: [
+							        {
+							           
+							            type:'pie',
+							            radius: ['50%', '70%'],
+							           hoverAnimation:false,
+				        			 legendHoverLink:false,
+							            label: {
+							                normal: {
+							                    show: false,
+							                    position: 'center'
+							                },
+							              
+							            },
+							           
+							            data:[
+							                {value:335, },
+							             
+							            ],
+							            itemStyle: {
+							            	shadowBlur:20,
+							            	shadowOffsetX:-3,
+							            	shadowOffsetY:7,
+							            	shadowColor:'#f9b25c',
+							                color: {
+							                    type: 'linear',
+							                    x: 0,
+							                    y: 0,
+							                    x2: 0,
+							                    y2: 1,
+							                    colorStops: [{
+							                        offset: 0, color: '#f9b25c' // 0% 处的颜色
+							                    }, {
+							                        offset: 0.8, color: '#d68f37' // 100% 处的颜色
+							                    }],
+							                    globalCoord: false // 缺省为 false
+							                }
+							            }
+							        }
+							    ]
+				});
+
+
+
+				},2000)
+
+
+
+
+
+
+
+
+			//图4
+
+
+
 		}
 	}
 </script>
@@ -482,6 +1308,7 @@
 					display: flex;
 					>li{
 						width: 25%;
+						position: relative;
 						padding: 23px 0 0 18px;
 						font-size: 12px;
 						color: #666;
@@ -494,7 +1321,6 @@
 							width: 130px;
 							height: 130px;
 							border-radius: 50%;
-							border:1px solid red;
 							float: left;
 							text-align: center;
 							line-height: 130px;

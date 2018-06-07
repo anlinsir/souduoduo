@@ -28,7 +28,7 @@
 
 				<div class="headerChoose">
 					<ul>
-						<li>
+						<li @click='toRobot'>
 							<img src="/static/img/headerlist1.png">
 							<span>智能情报机器</span>
 						</li>
@@ -63,7 +63,7 @@
 		</div>
 		<div class="stein" style="width: 100%;height: 120px;"></div>
 
-		<div class="headerBtmWarp">
+		<div v-if='show' class="headerBtmWarp">
 			<div class="haderBom">
 				<div class="inputGup">
 					<input  v-model='quAddress' type="text" placeholder="请输入需要查询的区块地址">
@@ -141,7 +141,8 @@
 				quAddress:'',
 				iconTypeModel:'',
 				loginInfo:'',
-				loginInfoActive:false
+				loginInfoActive:false,
+				show:true
 			})
 		},
 		methods:{
@@ -210,11 +211,18 @@
 						break;
 				}
 
+			},
+			toRobot(){
+				this.$router.push('/robot')
 			}
 		},
 		mounted(){
 			this.loginInfo = localStorage.login
 			console.log(localStorage.login)
+			if(this.$route.name == 'robot'){
+
+				this.show =  false
+			}
 		}
 	}
 
