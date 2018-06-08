@@ -2,6 +2,7 @@
 	<div class="headerWarp">
 		<div class="headerwarp">
 			<header>
+
 				<dl class="headerlogo">
 					<dt @click='toIdex'>
 						<img src="/static/img/headerlogo.png">
@@ -37,6 +38,9 @@
 							<span>APP下载</span>
 						</li>
 						<li @click='toLogin'>
+
+							
+
 							<img src="/static/img/headerlist3.png">
 							<span :title="loginInfo ? loginInfo : '' " style="transform: translateY(2px);display: inline-block;    width: 67px;
     overflow-x: hidden;
@@ -66,8 +70,26 @@
 		<div v-if='show' class="headerBtmWarp">
 			<div class="haderBom">
 				<div class="inputGup">
+					<div v-if='tip' style="position: absolute;top:70px;width: 587px;top: 49px;left: 610px;min-height: 100px;background-color: #fff;padding: 0;z-index: 200;border-radius: 20px;">
+								<div class="hb" style="width: 587px;">
+									<div style="width: 100%;background-color: #eaecef;height: 30px;border-radius: 20px;padding-left: 20px;line-height: 30px;">货币</div>
+									<div style="min-height: 100px;padding: 5px;">
+										<img src="/static/img/ejoy.png" style="vertical-align: middle;">
+										<p class="activesssss" @click='unquery' style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width: 95%;line-height: 35px;">dsd</p>
+									</div>
+								</div>
+
+								<div class="pt">
+									<div style="width: 100%;background-color: #eaecef;height: 30px;border-radius: 20px;padding-left: 20px;line-height: 30px;">市场</div>
+									<div style="min-height: 100px;padding: 5px;">
+										<img src="/static/img/ejoy.png" style="vertical-align: middle;">
+										<p  class="activesssss" @click='unquery'style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width: 95%;line-height: 35px;">dsd</p>
+									</div>
+									
+								</div>
+				</div>
 					<input  v-model='quAddress' type="text" placeholder="请输入需要查询的区块地址">
-					<input @keydown.enter='seIconYype' v-model='iconTypeModel' type="text" placeholder="输入关键词搜索币种、平台">
+					<input @input='query'  @blur='unquery' @keydown.enter='seIconYype' v-model='iconTypeModel' type="text" placeholder="输入关键词搜索币种、平台">
 					<span>ETH</span>
 					<button class="Hbtn1">
 						<img src="/static/img/headersearch.png">
@@ -142,10 +164,20 @@
 				iconTypeModel:'',
 				loginInfo:'',
 				loginInfoActive:false,
-				show:true
+				show:true,
+				tip:false
 			})
 		},
 		methods:{
+
+			query(){
+				console.log(this.iconTypeModel)
+				this.tip = true
+			},
+			unquery(){
+				this.tip = false
+
+			},
 			toLogin(e){
 				if(e.target.innerText == '退出登录'){
 					this.loginInfo = ''
@@ -230,6 +262,12 @@
 
 
 <style lang="scss" scoped>
+.activesssss:hover{
+	color: #fff;
+	background-color: #3499da;
+	
+}
+
 	.headerWarp{
 		width: 100%;
 		>.headerwarp{
