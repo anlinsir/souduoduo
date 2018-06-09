@@ -9,11 +9,30 @@
 					</ul>
 
 					<div class="TopChooseRight">
-						<div class="yuan">人民币CNY</div>
+						<div  @click='ShowmoneyItem'  class="yuan">
+							<span :title='money' style="display: inline-block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{money}}</span>
+				<transition name="custom-classes-transition"
+
+					 enter-active-class="animated flipInX"
+    					leave-active-class="animated flipOutX">
+
+							<div  v-if='moneyShow' class="yuanItem">
+								<p @click='choosemoneyItem(id)' v-for='(ii,id) in moneyList'>{{ii}}</p>
+							</div>
+						</transition>
+
+						</div>
 						<div class="flesh"><img src="/static/img/refresh.png"></div>
-						<ul> 
+					<!-- 	<ul> 
 							<li @click='changeActives(index)' :class="actives == index ? 'actives' : '' "  v-for='(item,index) in 5'>{{item}}</li>
-						</ul>
+						</ul> -->
+
+						<div class="block" style="width: 100px; position: absolute;top: 4px;left: 51px;">
+						  <el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
+						    layout="prev, pager, next"
+						    :total="50" >
+						  </el-pagination>
+						</div>
 					</div>
 
 
@@ -27,7 +46,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for='(item,index) in tbody' :key='index'>
+							<tr  @click='toIconDetali' v-for='(item,index) in tbody' :key='index'>
 								<td class="td0">{{item.id}}</td>
 								<td class="name td1"><img :src="item.img" /><span>{{item.name}}</span></td>
 								<td class="td2">{{item.circulationVale}}</td>
@@ -47,6 +66,15 @@
 						</tbody>
 
 					</table>
+					<div class="pagesW" style="text-align: center;width:100%; ">
+						<div class="block" style="display: inline-block;width: 100px; top: 4px;left: 51px;">
+						  <el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
+						    layout="prev, pager, next"
+						    :total="50" >
+						  </el-pagination>
+						</div>
+					</div>
+
 				</div>
 			</div>
 
@@ -128,7 +156,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="tbr" v-for='(item,index) in tbody' :key='index'>
+							<tr  class="tbr" v-for='(item,index) in tbody' :key='index'>
 								<td :style="{paddingLeft: item < 4 ?  '20px' : '0' , marginLeft:item < 4 ?  '0' : '-6px'}"><span v-if='item.id<4' style="width: 20px;
 								height: 20px;
 								background-color: #fba73e;
@@ -217,12 +245,18 @@
 					</div>
 
 					<ul class="minidataChoose">
-						<li @click='minidatachange(index)' :class="minidataAvtive == index ? 'minidataAvtive' : '' " v-for='(item,index) in minidataChoose'>{{item}}</li>
+						<li @click='minidatachange(index)' :class="minidataAvtive == index ? 'minidataAvtive' : '' " v-for='(item,index) in minidataChoose'>
+							{{item}}
+						</li>
 					</ul>
 
 
 					<ul class="data">
-						<li v-for='(item,index) in data' :key='index'><span class="left">{{item.left}}</span><span class="right">{{item.right}}</span></li>
+						<li v-for='(item,index) in data' :key='index'>
+							<span class="left">{{item.left}}</span>
+							<span class="right" :style="{color:item.color ? item.color : ''}">{{item.right}}</span>
+							<span class="right" v-if='item.input'><input  type="number"  style="width: 100px;background-color: #e5e5e5;border:none;height: 30px;text-align: right;" />TH/s</span>	
+						</li>
 
 					</ul>
 
@@ -249,6 +283,7 @@
 
 
 			</div>
+
 		</div>
 	</div>
 </template>
@@ -412,21 +447,97 @@
 						right:'2020-05-26'
 					},
 					{
-
+						left:'产量减半倒计时',
+						right:'两年后'
 					}
+					,
+					{
+						left:'全网算力',
+						right:'30865PH/s'
+					},
+					{
+						left:'目前难度',
+						right:'30865PH/s'
+					},
+					{
+						left:'下次难度',
+						right:'30865PH/s'
+					},
+					{
+						left:'当前难度(1T*24h)',
+						right:'30865PH/s'
+					},
+					{
+						left:'下次难度(1T*24h)',
+						right:'30865PH/s'
+					},
+					{
+						left:'调整难度时间',
+						right:'30865PH/s'
+					},
+					{
+						left:'下次难度增幅',
+						right:'30865PH/s'
+					},
+					{
+						left:'已开采总数',
+						right:'30865PH/s'
+					},
+					{
+						left:'未开采总数',
+						right:'30865PH/s'
+					},
+					{
+						left:'您的算力',
+						input:20
+					},
+					{
+						left:'计算日收益',
+						right:'30865PH/s',
+						color:'#4277ff'
+					}
+					
 				],
-				datar:['数据存储','匿名货币','公正防伪','去中心化交易所','比特币山寨币','侧链概念','支付概念','平台币','资产交易','数据经济']
+				datar:['数据存储','匿名货币','公正防伪','去中心化交易所','比特币山寨币','侧链概念','支付概念','平台币','资产交易','数据经济'],
+				money:'人民币CNY',
+				moneyList:['人民币CNY','美元USD'],
+				moneyShow:false,
+				currentPage:5
 
 			})
 		}
 		,
 		methods:{
+			handleCurrentChange(val){
+				this.currentPage =val
+				console.log(val)
+			},
+			toIconDetali(){
+				this.$router.push('/index/cion/1')
+			},
+			choosemoneyItem(id){
+				this.money = this.moneyList[id]
+				if(this.moneyShow){
+					this.moneyShow =true
+					return
+				}
+				this.moneyShow = false
+
+			},
+			ShowmoneyItem(){
+				if(this.moneyShow){
+					this.moneyShow =false
+					return
+				}
+				this.moneyShow = true
+
+			},
 			choosed(index){
 				this.active = index			
 			},
-			changeActives(index){
-				this.actives = index
-			},
+			// changeActives(index){
+			// 	this.actives = index
+			// },
 			changeRanChoose(index){
 				this.rankingActives = index
 			},
@@ -464,6 +575,95 @@
 
 
 <style lang="scss" scoped>
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+@keyframes flipInX {
+  from {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  to {
+    -webkit-transform: perspective(400px);
+    transform: perspective(400px);
+  }
+}
+
+.flipInX {
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+  -webkit-animation-name: flipInX;
+  animation-name: flipInX;
+}
+
+@keyframes flipOutX {
+  from {
+    -webkit-transform: perspective(400px);
+    transform: perspective(400px);
+  }
+
+  30% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  to {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+.flipOutX {
+  -webkit-animation-duration: 0.75s;
+  animation-duration: 0.75s;
+  -webkit-animation-name: flipOutX;
+  animation-name: flipOutX;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+}
+
+
+
+
+
+
+
+
+
+
 	.warp{
 		overflow: hidden;
 		>.indexLeft{
@@ -496,11 +696,13 @@
 					position: relative;
 					height: 37px;
 					float: right;
+
 					margin-top: 9px;
 					margin-right: 15px;
 					>.yuan{
 						position: absolute;
 						top: 5px;
+						width: 90px;
 						border-radius: 5px;
 						background-color: #fff;
 						padding: 0 20px 0 10px;
@@ -510,7 +712,30 @@
 						left: -100px;
 						font-size: 12px;
 						color: #666;
+						cursor: pointer;
+						>.yuanItem{
+							position: absolute;
+							top:30px;
+							left:0px;
+							width: 90px;
+							min-height: 20px;
+							border:1px solid #e5e5e5;
+							background-color: #fff;
+							text-align: center;
+							>p{
+								height:20px;
+								line-height: 20px;
+								border-radius: 20px;
+								display: inline-block;
+								width: 90px;
+
+							}
+							>p:hover{
+								background-color: #e5e5e5;
+							}
+						}
 					}
+
 					>.yuan::after{
 						content: '';
 						border:3px solid;
@@ -526,6 +751,8 @@
 					>.flesh{
 						width: 45px;
 						height: 37px;
+						cursor: pointer;
+
 						text-align: center;line-height: 37px;
 						margin-right: 9px;
 						background-color: #fff;
@@ -565,6 +792,7 @@
 								height: 50px;
 								font-size: 12px;
 								color: #666666;
+
 								text-align: left;
 							}
 							>.th0{
@@ -596,11 +824,16 @@
 						}
 					}
 					>tbody{
+						>:nth-last-child(1){
+							border-bottom:1px solid #e5e5e5;
+						}
 						>tr{
 							display: flex;
 							font-size: 12px;
 							color: #666666;
 							justify-content:space-between;
+							cursor: pointer;
+
 							>td{
 								/*margin-right: 45px;*/
 								height: 55px;

@@ -17,6 +17,7 @@
     "axios": "^0.18.0",
     "calendar-plugin": "^1.0.1",
     "echarts": "^4.1.0",
+    "element-ui": "^2.4.1",
     "v-charts": "^1.16.20",
     "vue": "^2.5.2",
     "vue-baidu-map": "^0.21.10",

@@ -60,7 +60,17 @@
 
 				<div class="headerCounty">
 					<img src="/static/img/countyImg.png">
-					<span @click='changeLaugage'>简体中文</span>
+					<span @click='changeLaugage'>{{language}}</span>
+					<span class="afters"></span>
+					<transition name="custom-classes-transition" enter-active-class="animated slideInDown "
+    					leave-active-class="animated slideInUp ">
+						<div v-if="laugageShow" style="position: absolute;top:30px;width: 150%;left:-5px;min-height: 100%;border:1px solid #e5e5e5;border-radius: 20px;margin-top: 10px;background-color: #fff;padding: 10px 0px 10px 5px;">
+							<p  @click='chooseLugage(id)' v-for="(ii,id) in languageList" style="margin-bottom: 10px;">
+								<img style="vertical-align: middle;width: 30px;height: 30px;" src="/static/img/countyImg.png">
+								<span>{{ii}}</span>
+							</p>
+						</div>
+					</transition>
 				</div>
 
 			</header>	
@@ -70,31 +80,66 @@
 		<div v-if='show' class="headerBtmWarp">
 			<div class="haderBom">
 				<div class="inputGup">
-					<div v-if='tip' style="position: absolute;top:70px;width: 587px;top: 49px;left: 610px;min-height: 100px;background-color: #fff;padding: 0;z-index: 200;border-radius: 20px;">
-								<div class="hb" style="width: 587px;">
-									<div style="width: 100%;background-color: #eaecef;height: 30px;border-radius: 20px;padding-left: 20px;line-height: 30px;">货币</div>
-									<div style="min-height: 100px;padding: 5px;">
+					<transition name="custom-classes-transition"
+
+					 enter-active-class="animated flipInX"
+    					leave-active-class="animated flipOutX">
+						<div class="Tip" v-if='tip'>
+							<div  class="hb" style="width: 45%;float: left;overflow: hidden;margin-top: 40px;">
+									<div style="width: 100%;height: 30px;;padding-left: 20px;line-height: 20px;border-bottom: 1px solid #e5e5e5;">货币</div>
+									<div style="padding: 5px;" >
 										<img src="/static/img/ejoy.png" style="vertical-align: middle;">
-										<p class="activesssss" @click='unquery' style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width: 95%;line-height: 35px;">dsd</p>
+										<p  class="activesssss" @click='unquery' style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width: 87%;line-height: 35px;">dsd</p>
+
 									</div>
 								</div>
 
-								<div class="pt">
-									<div style="width: 100%;background-color: #eaecef;height: 30px;border-radius: 20px;padding-left: 20px;line-height: 30px;">市场</div>
+								<div class="pt" style="width: 45%;float: right;margin-top:40px;">
+									<div style="width: 100%;height: 30px;padding-left: 20px;line-height: 20px;border-bottom: 1px solid #e5e5e5;">市场</div>
 									<div style="min-height: 100px;padding: 5px;">
 										<img src="/static/img/ejoy.png" style="vertical-align: middle;">
-										<p  class="activesssss" @click='unquery'style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width: 95%;line-height: 35px;">dsd</p>
+										<p  class="activesssss" @click='unquery'style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width:87%;line-height: 35px;">dsd</p>
 									</div>
 									
-								</div>
-				</div>
-					<input  v-model='quAddress' type="text" placeholder="请输入需要查询的区块地址">
-					<input @input='query'  @blur='unquery' @keydown.enter='seIconYype' v-model='iconTypeModel' type="text" placeholder="输入关键词搜索币种、平台">
-					<span>ETH</span>
+								</div>	
+					</div>
+			</transition>
+
+					<input class="lefleflef"  v-model='quAddress' type="text" placeholder="请输入需要查询的区块地址">
+					<input style="position: relative;z-index: 2;" @input='query'  @blur='unquery' @keydown.enter='seIconYype' v-model='iconTypeModel' type="text" placeholder="输入关键词搜索币种、平台">
+					<span @click='iconTypeShow'  class="iconType" >
+						<span style="display: inline-block;width: 30px;overflow-x: hidden;text-overflow: ellipsis;white-space: nowrap;">{{icon}}</span>
+						<transition name="custom-classes-transition"
+
+					 enter-active-class="animated flipInX"
+    					leave-active-class="animated flipOutX">
+							<span v-if='iconTypeShows'  style="
+							position: absolute;
+							top:20px;
+							width: 50px;
+							left: -10px;
+							text-align: center;
+							font-size: 12px;
+							background-color: #fff;
+							min-height: 30px;
+							padding-bottom: 5px;
+							padding-top:10px;
+							display: inline-block;
+							border:1px solid #e5e5e5;
+							z-index: 2;
+							border-radius: 20px;"
+
+							
+							>
+								<span @click='iconTypeChoose(idd)' class="iconTypeSpan" v-for='(itm,idd) in iconList' style="width: 80%;margin-bottom: 10px;border-radius: 10px;display: inline-block;cursor:pointer;">{{itm}}</span>
+							</span>
+						</transition>
+
+					</span>
 					<button class="Hbtn1">
 						<img src="/static/img/headersearch.png">
 					</button>
-					<button @click='seIconYype' class="Hbtn2">
+					<button  @click='seIconYype' class="Hbtn2">
 						<img src="/static/img/headersearch.png">
 					</button>
 				</div>
@@ -165,11 +210,31 @@
 				loginInfo:'',
 				loginInfoActive:false,
 				show:true,
-				tip:false
+				tip:false,
+				laugageShow:false,
+				language:'简体中文',
+				languageList:['简体中文','繁体中文','Deutsch','English','Rosstsch'],
+				iconList:['BTN','RNG','IJF','PHX'],
+				iconTypeShows:false,
+				icon:'ETH'
 			})
 		},
 		methods:{
+			iconTypeChoose(id){
+				this.icon = this.iconList[id]
+			},
+			iconTypeShow(){
+				if(this.iconTypeShows){
+					this.iconTypeShows = false
+					return
+				}
+				this.iconTypeShows = true
+			},
+			chooseLugage(id){
+				this.language = this.languageList[id]
+				this.laugageShow = false
 
+			},
 			query(){
 				console.log(this.iconTypeModel)
 				this.tip = true
@@ -220,7 +285,12 @@
 				
 			},
 			changeLaugage(){
-				alert('暂不支持其他语言')
+				if(this.laugageShow == true){
+					this.laugageShow = false
+					return
+				}
+				this.laugageShow = true
+				console.log('语言')
 			},
 			toIdex(){
 				this.$router.push('/index/index')
@@ -267,6 +337,149 @@
 	background-color: #3499da;
 	
 }
+.Tip{
+	position: absolute;top:70px;width: 585px;top: 19px;left: 609px;min-height: 100px;background-color: #fff;padding: 0;z-index: 2;padding-left: 40px;padding-right: 60px;border:1px solid #e5e5e5;border-radius: 20px;
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+
+@keyframes flipInX {
+  from {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  to {
+    -webkit-transform: perspective(400px);
+    transform: perspective(400px);
+  }
+}
+
+.flipInX {
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+  -webkit-animation-name: flipInX;
+  animation-name: flipInX;
+}
+
+@keyframes flipOutX {
+  from {
+    -webkit-transform: perspective(400px);
+    transform: perspective(400px);
+  }
+
+  30% {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+
+  to {
+    -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+.flipOutX {
+  -webkit-animation-duration: 0.75s;
+  animation-duration: 0.75s;
+  -webkit-animation-name: flipOutX;
+  animation-name: flipOutX;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+}
+
+
+
+
+@keyframes slideInDown {
+  from {
+    -webkit-transform: translate3d(0, -30%, 0);
+    transform: translate3d(0, -30%, 0);
+    visibility: visible;
+    opacity: 0;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.slideInDown {
+  -webkit-animation-name: slideInDown;
+  animation-name: slideInDown;
+}
+
+
+@keyframes slideInUp {
+  from {
+    -webkit-transform: translate3d(0, 0%, 0);
+    transform: translate3d(0, 0%, 0);
+    visibility: visible;
+    opacity: 1;
+
+  }
+
+  to {
+    -webkit-transform: translate3d(0, -30%, 0);
+    transform: translate3d(0, -30%, 0);
+    opacity: 0;
+
+  }
+}
+
+.slideInUp {
+  -webkit-animation-name: slideInUp;
+  animation-name: slideInUp;
+}
+
+
+
+
+
+.iconTypeSpan:hover{
+	background-color: #e5e5e5;
+}
+
+
+
+
+
 
 	.headerWarp{
 		width: 100%;
@@ -280,7 +493,7 @@
 			border-top: 3px solid #4277ff;
 			position: fixed;
 			top: 0;
-			z-index: 1;
+			z-index: 3;
 			background-color: #fff;
 				>header{
 					width: 1200px;
@@ -372,8 +585,10 @@
 					>.headerCounty{
 					color: #333;
 					font-size: 14px;
-					margin-left: 27px;
+					margin-left: 20px;
 					margin-top:15px;
+					position: relative;
+					cursor: pointer;
 						>img{
 							width: 30px;
 							vertical-align: middle;
@@ -381,14 +596,21 @@
 							border-radius:50%;
 							margin-right: 5px;
 						}
-						>span{
-							position: relative;
+						>span:not(.afters){
+							    position: relative;
+							    display: inline-block;
+							    width: 57px;
+							    overflow-x: hidden;
+							    transform: translateY(4px);
+							    text-overflow: ellipsis;
+							    white-space: nowrap;
+
+
 						}
-						>span::after{
+						>.afters{
 							display: inline-block;
-							content: '';
 							position: absolute;
-							top: 7px;
+							top: 13px;
 							right: -13px;
 							z-index: 10;
 							border:4px solid #000;
@@ -416,9 +638,14 @@
 					justify-content: space-between;
 					padding: 0 5px;
 					position: relative;
-					>:nth-child(1){
+					>.lefleflef{
 						padding: 0 0 0 100px;
 					}
+					>.iconType{
+						cursor: pointer;
+
+					}
+					
 					>input{
 						width: 587px;
 						height: 49px;
@@ -431,20 +658,21 @@
 						top: 0;
 					}
 					>span{
+						
 					    top: 16px;
 						left: 30px;
 						font-size: 12px;
 					}
 					>span::after{
-						content:'';
 						border:4px solid;
+						content :'';
 						border-top:4px solid  ;
 						border-right:4px solid transparent;
 						border-bottom:4px solid transparent;
 						border-left:4px solid transparent;
 						position: absolute;
-						top: 6px;
-						right: -15px;
+						top: 5px;
+						right: -5px;
 
 					}
 					>button{
@@ -465,6 +693,7 @@
 					>.Hbtn2{
 						top: 6px;
    						right: 14px;
+   						z-index: 2;
 					}
 				}
 				>.buttonGup{
