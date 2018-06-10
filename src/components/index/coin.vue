@@ -516,7 +516,15 @@
 					 		type:'bar',
 					 		data:[-500,900,-500,800,600,-800,433],
 					 		xAxisIndex: 1,
-                			yAxisIndex: 1
+                			yAxisIndex: 1,
+                			  itemStyle: {
+            					normal: {
+            						color:function(d){
+            							console.log()
+            							return d.data <= 0 ? 'red' : "green"
+            						}
+            					}
+            				}
 
 
 						},
