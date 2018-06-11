@@ -15,7 +15,7 @@
 				</li>
 
 				<li @click='headeractivesChange(1,index,item.id)' :class="headeractives1 == index ? 'headeractives1' : '' "  :data-id='item.id' v-if='rankavtive == 1' v-for='(item,index) in headTchoose1' :key='index'>
-					{{item.pr}}
+					
 				</li>
 				
 				<li @click='headeractivesChange(2,index,item.id)' :class="headeractives2 == index ? 'headeractives2' : '' "  :data-id='item.id' v-if='rankavtive == 2' v-for='(item,index) in headTchoose2' :key='index'>
@@ -113,14 +113,7 @@
 					}
 				],
 				headTchoose1:[
-					{
-						pr:'涨幅',
-						id:0
-					},
-					{
-						pr:'跌幅',
-						id:1
-					}
+					
 				],
 				headTchoose2:[
 					{
@@ -656,6 +649,7 @@
 		}
 		>.listDataWarp{
 			width: 100%;
+			padding: 0 21px 0 17px;
 			min-height:200px;
 			>.listData{
 				padding: 0 21px 0 17px;
@@ -678,6 +672,7 @@
 							line-height: 56px;
 							font-size: 12px;
 							color: #666666;
+							cursor: pointer;
 						}
 						>.type{
 							>.xh,.qh,.fb{

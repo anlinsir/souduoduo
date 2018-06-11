@@ -248,10 +248,10 @@
 					>.timeImg{
 						position: relative;
 						>img{
-							vertical-align: middle;margin-left: 22px;
+							vertical-align: middle;margin-left: 44px;
 						}
 						>span{
-							position: absolute;top: 21px;height: 36px;border: 1px dashed rgb(229, 229, 229);left: 34px;z-index: -1;
+							position: absolute;top: 21px;height: 36px;border: 1px dashed rgb(229, 229, 229);left: 56px;z-index: -1;
 						}
 					}
 				}

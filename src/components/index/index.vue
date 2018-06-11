@@ -290,6 +290,7 @@
 
 
 <script>
+
 	export default{
 		data(){
 			return({
@@ -839,6 +840,7 @@
 								height: 55px;
 								line-height: 55px;
 								text-align: left;
+								cursor: pointer;
 							}
 							>.td0{
 								width: 40px;

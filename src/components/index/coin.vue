@@ -60,11 +60,11 @@
 				<ul>
 					<li>
 						<div class="Left">
-						<p style="margin-bottom: 8px">流通市值</p>
+						<p style="margin-bottom: 8px;font-size: 16px;">流通市值</p>
 						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;">¥814,238,770,434</p>
 						<p style="width: 70px;height: 23px;background-color: #4277ff;color: #fff;border-radius: 10px;text-align: center;line-height: 24px;margin-bottom: 20px;">排名NO.1</p>
-						<p style="margin-bottom: 8px;">≈$127,464,800,199 </p>
-						<p> ≈17,053,787BTC</p>
+						<p style="margin-bottom: 8px;font-weight: bold;font-size: 14px;">≈$127,464,800,199 </p>
+						<p style="font-size: 14px;font-weight: bold;"> ≈17,053,787BTC</p>
 						</div>
 						<div class="right">
 							 <div id="EFAMC" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
@@ -75,10 +75,10 @@
 
 					<li>
 						<div class="Left">
-						<p style="margin-bottom: 8px">流通量</p>
+						<p style="margin-bottom: 8px;font-size: 16px;">流通量</p>
 						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;">814,238,7BTC</p>
 							
-						<p style="margin-top: 45px;margin-bottom: 8px;">发行总量</p>
+						<p style="margin-top: 45px;margin-bottom: 8px;font-size: 16px;">发行总量</p>
 						<p style="color:#4277ff;font-weight: bold; ">210000 BTC</p>							
 						</div>
 						<div class="right">
@@ -97,11 +97,11 @@
 
 					<li>
 						<div class="Left">
-						<p style="margin-bottom: 8px">24H成交额</p>
+						<p style="margin-bottom: 8px;font-size: 16px;">24H成交额</p>
 						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;">¥814,238,770,434</p>
 						<p style="width: 70px;height: 23px;background-color: #33b862;color: #fff;border-radius: 10px;text-align: center;line-height: 23px;margin-bottom: 20px;">排名NO.1</p>
-						<p style="margin-bottom: 8px;">≈$127,464,800,199 </p>
-						<p> ≈17,053,787BTC</p>
+						<p style="margin-bottom: 8px;font-weight: bold;font-size: 14px;">≈$127,464,800,199 </p>
+						<p style="font-size: 14px;font-weight: bold;"> ≈17,053,787BTC</p>
 						</div>
 						<div class="right">
 							<div id="24pay" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
@@ -112,10 +112,10 @@
 
 					<li>
 						<div class="Left">
-						<p style="margin-bottom: 8px">24H资金流入</p>
+						<p style="margin-bottom: 8px;font-size: 16px;">24H资金流入</p>
 						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;">814,238,7BTC</p>
 							
-						<p style="margin-top: 45px;margin-bottom: 8px;">24H资金流入</p>
+						<p style="margin-top: 45px;margin-bottom: 8px;font-size: 16px;">24H资金流出</p>
 						<p style="color:#4277ff;font-weight: bold; ">210000 BTC</p>	
 						</div>
 						<div class="right">
@@ -140,8 +140,26 @@
 						<li >24H额(￥)</li>
 					</ul>
 
-					<ul class="Body" style="position: relative;overflow: hidden;height: 500px;">
-						<li @mouseenter='cancel' @mouseout='cann' v-for='(ii,id) in 50' style="position: absolute;width: 100%" :style="{top:(top)+(50*(id)) + 'px'}">
+					<ul @mouseenter='cancel' @mouseout='cann' class="Body" style="position: relative;overflow: hidden;height: 500px;">
+						<li v-for='(ii,id) in 10' style="position: absolute;width: 100%" :style="{top:(top)+(50*(id)) + 'px'}">
+							<p><span>{{id}}</span><br>
+								<span></span><br>
+								<span>USD</span>
+							</p>
+							<p><span>{{id}}</span><br>
+								<span></span><br>
+								<span>￥545231</span>
+							</p>
+							<p>
+								<span></span><br>
+								<span>{{id}}</span><br>
+								<span></span>
+							</p>
+
+						</li>
+
+
+						<li  v-for='(ii,id) in 10' style="position: absolute;width: 100%" :style="{top:500 + (top)+(50*(id)) + 'px'}">
 							<p><span>{{id}}</span><br>
 								<span></span><br>
 								<span>USD</span>
@@ -192,7 +210,7 @@
 
 <script>
 	var echarts = require('echarts');
-	var ccc;
+	var ccc ,timer1 ,timer2, timer3 , timer4;
 	export default{
 
 		data(){
@@ -237,11 +255,16 @@
 		,
 		methods:{
 			cancel(){
-				clearInterval(ccc)
-				console.log(this.top)
+				 // clearInterval(ccc)
+				 // console.log(this.top)
 			},
 			cann(){
-				
+				/*ccc = setInterval(()=>{
+					this.top -=1
+					if(this.top <= -500){
+						this.top = 0
+					}
+				},100)*/
 			}
 			,
 			cionMoreInfo(idx){
@@ -256,19 +279,25 @@
 		created(){
 			console.log(this.$route.params.id)
 		},
+		// beforeRouteLeave (to, from, next) {
+		// 	clearInterval(ccc)
 		
+		// 	next()
+		// },
 
 		mounted() {
 
-			ccc = setInterval(()=>{
-				this.top -=1
-				if(this.top <= -600){
-					this.top = 0
-				}
-			},100)
+			// ccc = setInterval(()=>{
+			// 	this.top -=1
+			// 	if(this.top <= -500){
+			// 		this.top = 0
+			// 	}
+			// },100)
 							
 			var K = echarts.init(document.getElementById('K'));
-
+				if(!K){
+					return
+				}
 				K.setOption({
 					 title:{
 					 	text:''
@@ -320,10 +349,10 @@
 					 ],
 					 yAxis:[
 						 	{
-						 		 scale: true,
-						 		 min:0,
+					 		 scale: true,
+					 		 min:0,
 						 	position:'right',
-						 	minInterval:50,
+						 	minInterval:1,
 						 	axisLine:{
 						 		show:false,
 
@@ -331,7 +360,7 @@
 						 	axisTick:{
 						 		inside:true,
 						 		alignWithLabel:true,
-						 		length:685,
+						 		length:300,
 						 		lineStyle:{
 						 			type:'dashed',
 						 			color:'#e6e6e6'
@@ -340,11 +369,13 @@
 
 						 },
 						  {
-						 	scale: true,
 			                gridIndex: 1,
+						 	minInterval:1,
+						 	start:0,
+					 		 min:0,
 
 			               	position:'right',
-			               	inverse:true,
+			               	// inverse:true,
 						 	axisLine:{
 						 		show:false,
 
@@ -362,9 +393,11 @@
       					  },
 
 						 {
+						 	minInterval:1,
+
 						 	 scale: true,
 			                gridIndex: 2,
-						 		
+						 		interval:500,
 
 			               position:'right',
 			               inverse:true,
@@ -441,13 +474,13 @@
 			            {
 			                left: '10%',
 			                right: '8%',
-			                top: '45%',
-			                height: '10%'
+			                top: '42%',
+			                height: '8%'
 			            },
 			             {
 			                left: '10%',
 			                right: '8%',
-			                top: '60%',
+			                top: '58%',
 			                height: '13%',
 			                bottom:'-12%'
 			            }
@@ -458,15 +491,15 @@
 				                type: 'inside',
 				                 xAxisIndex: [0, 1,2],
 				                start: 0,
-				                end: 10
+				                end: 40
 				            },
 				            {
 				                show: true,
 				                 xAxisIndex: [0, 1 ,2],
 				                type: 'slider',
 				                top: '80%',
-				                start: 98,
-				                end: 100
+				                start: 0,
+				                end: 40
 				            }
 				        ],
 					 series:[
@@ -505,23 +538,34 @@
 					 		name:"成交量",
 					 		 smooth: true,
 					 		type:'bar',
-					 		data:[500,900,500,800,600,800,433],
+					 		data:[0,900,500,800,600,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433,800,433,0,900,500,800,600,800,433],
+					 		barMinHeight:1,
+					 		 itemStyle: {
+            					normal: {
+            						color:function(d){
+            							console.log(d)
+            							return d.dataIndex == 0 ? '#d63f2a' : d.dataIndex % 3 == 0 ? '#d63f2a' : "#449e69"
 
+            						}
+            					}
+					 		
 
+            				}
 						},
 						{
 					 		
 					 		name:"MACD",
 					 		 smooth: true,
 					 		type:'bar',
-					 		data:[-500,900,-500,800,600,-800,433],
+					 		data:[0.22,-0.36,0.882,0.423,-0.681,0.336,0.159,0.22,-0.36,0.882,0.423,0.681,0.336,0.159,-0.423,0.681,0.336,-0.159,0.22,0.36,0.882,0.423,0.681,-0.336,0.159,0.423,0.681,-0.336,0.159,-0.22,0.36,0.882,0.423,0.681,0.336,0.159,-0.423,0.681,0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,0.159,0.22,0.36,-0.882,0.423,-0.681,0.336,-0.159,0.423,0.681,0.336,0.159,0.22,0.36,-0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,-0.159,0.22,0.36,0.882,-0.423,0.681,0.336,0.159,0.423,0.681,-0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,0.159,0.22,0.36,0.882,-0.423,0.681,0.336,0.159,0.423,0.681,-0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,-0.681,0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,-.423,0.681,0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,-0.159,0.22,0.36,0.882,0.423,0.681,-0.336,0.159,0.423,0.681,-0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,0.159,0.22,0.36,-0.882,0.423,0.681,0.336,0.159],
 					 		xAxisIndex: 1,
                 			yAxisIndex: 1,
+					 		barMinHeight:1,
+
                 			  itemStyle: {
             					normal: {
             						color:function(d){
-            							console.log()
-            							return d.data <= 0 ? 'red' : "green"
+            							return d.data <= 0 ? '#d63f2a' : "#449e69"
             						}
             					}
             				}
@@ -530,29 +574,55 @@
 						},
 						{
 							
-					        data: [0, -100, 50, -25, -30, 100, -50],
+					        data: [-0.36,0.882,0.423,-0.681,0.336,0.159,0.22,-0.36,0.882,0.423,0.681,0.336,0.159,-0.423,0.681,0.336,-0.159,0.22,0.36,0.882,0.423,0.681,-0.336,0.159,0.423,0.681,-0.336,0.159,-0.22,0.36,0.882,0.423,0.681,0.336,0.159,-0.423,0.681,0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,0.159,0.22,0.36,-0.882,0.423,-0.681,0.336,-0.159,0.423,0.681,0.336,0.159,0.22,0.36,-0.882,0.423,0.681,0.336],
 					        type: 'line',
 					        name:'MACD线',
 					         xAxisIndex: 1,
-                			yAxisIndex: 1
+                			yAxisIndex: 1,
+                			symbol:'none',
+                			smooth: true,
+                			clipOverflow:false,
+
+                			 itemStyle: {
+            					normal: {
+            						color:'#ffd572'
+            					}
+            				}
 					       
 					    },
 					    {
 
-					        data: [ 25, 30, 100, 500, 100, 50,],
+					        data: [0.681,0.336,-0.159,0.22,0.36,0.882,-0.423,0.681,0.336,0.159,0.423,0.681,-0.336,0.159,0.22,0.36,0.882,0.423,0.681,0.336,0.159,0.423,0.681,0.336,0.159,0.22,0.36,0.882,-0.423,0.681,0.336,0.159,0.423,0.681,-0.336],
 					        type: 'line',
 					        name:'信号线',
 					         xAxisIndex: 1,
-                			yAxisIndex: 1
+                			yAxisIndex: 1,
+                			symbol:'none',
+                			smooth: true,
+                			clipOverflow:false,
+                			itemStyle: {
+            					normal: {
+            						color:'#5bdbc2'
+            					}
+            				}
+
 					    },
 
 					     {
 
-					        data: [-250,803,-500,-20,-310,-900,-205,83,-500,-200,-310,-900,-250,830,-500,-200,-310,-900,-250,830,-500,-200,-301,-900,-250,803,-50,-20,-310,-900,-250,830,-500,-200,-301,-90],
+					        data: [-250,803,-500,-20,-310,-900,-205,83,-500,-200,-310,-900,-250,830,-500,-200,-310,-900,-250,830,-500,-200,-301,-900,-250,803,-50,-20,-310,-900,-250,830,-500,-200,-301,-90,-500,-200,-310,-900,-250,830,-500,-200,-301,-900,-250,803,-50,-20,-310,-900,-250,830,-500,-200,-301,-90,-500,-200,-310,-900,-250,830,-500,-200,-301,-900,-250,803,-50,-20,-310,-900,-250,830,-500,-200,-301,-90,-500,-200,-310,-900,-250,830,-500,-200,-301,-900,-250,803,-50,-20,-310,-900,-250,830,-500,-200,-301,-90,-500,-200,-310,-900,-250,830,-500,-200,-301,-900,-250,803,-50,-20,-310,-900,-250,830,-500,-200,-301,-90,-500,-200,-310,-900,-250,830,-500,-200,-301,-900,-250,803,-50,-20,-310,-900,-250,830,-500,-200,-301,-90,-500,-200,-310,-900,-250,830,-500,-200,-301,-900,-250,803,-50,-20,-310,-900,-250,830,-500,-200,-301,-90,-500,-200,-310,-900,-250,830,-500,-200,-301,-900,-250,803,-50,-20,-310,-900,-250,830,-500,-200,-301,-90,-500,-200,-310,-900,-250,830,-500,-200,-301,-900,-250,803,-50,-20,-310,-900,-250,830,-500,-200,-301,-90],
 					        type: 'line',
 					        name:'净流入',
 					     	 xAxisIndex: 2,
-                			yAxisIndex: 2
+                			yAxisIndex: 2,
+                			symbol:'none',
+                			clipOverflow:false,
+                			itemStyle: {
+            					normal: {
+            						color:'#7db5ec'
+            					}
+            				}
+
 					    }
 					 ]
 					});
@@ -560,17 +630,15 @@
 
 
 
-			// setInterval(()=>{
-				
-			// 	this.value1 = this.value1 + 1
-			// 	console.log(this.value1)
-			// },1000)
-			if(timer1 || timer2 || timer3){
-			clearinterval(timer1)
-			clearinterval(timer2)
-			clearinterval(timer3)
+		
+			// if(timer1 || timer2 || timer3){
+			// clearInterval(timer1)
+			// clearInterval(timer2)
+			// clearInterval(timer3)
+			// clearInterval(timer4)
 
-			}
+
+			// }
 			var EFAMC1 = echarts.init(document.getElementById('EFAMC1'));
 			// 绘制图表
 				EFAMC1.setOption({
@@ -658,96 +726,96 @@
 						    ]
 				});
 
-				var timer1 = setInterval(()=>{
-					// this.value1 += 1 
-					// if(this.value1 == 30){
-					// 	this.value1 =1
-					// }
-					var EFAMC1 = echarts.init(document.getElementById('EFAMC1'));
-					EFAMC1.setOption({
-				    title: { },
-				    	series: [{
-				         type: 'pie',
-				         radius: ['60%', '80%'],
-				         hoverAnimation:false,
-				         legendHoverLink:false,
-				         data:[
-			                {value:this.value1,itemStyle:{ normal:{color:'#7696eb'} }},
-			                {value:100 - (this.value1),itemStyle:{ normal:{color:'transparent'} }},
+				//  timer1 = setInterval(()=>{
+				// 	// this.value1 += 1 
+				// 	// if(this.value1 == 30){
+				// 	// 	this.value1 =1
+				// 	// }
+				// 	var EFAMC1 = echarts.init(document.getElementById('EFAMC1'));
+				// 	EFAMC1.setOption({
+				//     title: { },
+				//     	series: [{
+				//          type: 'pie',
+				//          radius: ['60%', '80%'],
+				//          hoverAnimation:false,
+				//          legendHoverLink:false,
+				//          data:[
+			 //                {value:this.value1,itemStyle:{ normal:{color:'#7696eb'} }},
+			 //                {value:100 - (this.value1),itemStyle:{ normal:{color:'transparent'} }},
 
 			              
-			            ],
+			 //            ],
 
-				            labelLine:{show:false},
+				//             labelLine:{show:false},
 				            
-					    }]
-					});
+				// 	    }]
+				// 	});
 
-					EFAMC.setOption({
-				    title:{
-				    	text:this.value1 + '%',
-				    	subtext:'占全球总市值',
-				    	subtextStyle:{
-				    		color:'#333333',
-				    		fontWeight:'normal',
-				    		fontSize:14,
-				    		textAlign:'center',
+				// 	EFAMC.setOption({
+				//     title:{
+				//     	text:this.value1 + '%',
+				//     	subtext:'占全球总市值',
+				//     	subtextStyle:{
+				//     		color:'#333333',
+				//     		fontWeight:'normal',
+				//     		fontSize:14,
+				//     		textAlign:'center',
 				    		
-				    	},
-				    	subtextStyle:{
-				    		color:"#8e8d8d",
-				    		fontWeight:'normal',
-				    		fontSize:12,
-				    		align:'center',
-				    		lineHeight:'200'
-				    	},
-				    	padding:[80, 0, 0, 63],
-				    	 left:'center'
+				//     	},
+				//     	subtextStyle:{
+				//     		color:"#8e8d8d",
+				//     		fontWeight:'normal',
+				//     		fontSize:12,
+				//     		align:'center',
+				//     		lineHeight:'200'
+				//     	},
+				//     	padding:[80, 0, 0, 63],
+				//     	 left:'center'
 
-				    },
+				//     },
 
-				    	 series: [
-						        {
+				//     	 series: [
+				// 		        {
 						           
-						            type:'pie',
-						            radius: ['50%', '70%'],
-						           hoverAnimation:false,
-			        			 legendHoverLink:false,
-						            label: {
-						                normal: {
-						                    show: false,
-						                    position: 'center'
-						                },
+				// 		            type:'pie',
+				// 		            radius: ['50%', '70%'],
+				// 		           hoverAnimation:false,
+			 //        			 legendHoverLink:false,
+				// 		            label: {
+				// 		                normal: {
+				// 		                    show: false,
+				// 		                    position: 'center'
+				// 		                },
 						              
-						            },
+				// 		            },
 						           
-						            data:[
-						                {value:335, },
+				// 		            data:[
+				// 		                {value:335, },
 						             
-						            ],
-						            itemStyle: {
-						            	shadowBlur:20,
-						            	shadowOffsetX:-3,
-						            	shadowOffsetY:7,
-						            	shadowColor:'#556fb5',
-						                color: {
-						                    type: 'linear',
-						                    x: 0,
-						                    y: 0,
-						                    x2: 0,
-						                    y2: 1,
-						                    colorStops: [{
-						                        offset: 0, color: '#556fb5' // 0% 处的颜色
-						                    }, {
-						                        offset: 0.8, color: '#45447c' // 100% 处的颜色
-						                    }],
-						                    globalCoord: false // 缺省为 false
-						                }
-						            }
-						        }
-						    ]
-					});
-				},1000)
+				// 		            ],
+				// 		            itemStyle: {
+				// 		            	shadowBlur:20,
+				// 		            	shadowOffsetX:-3,
+				// 		            	shadowOffsetY:7,
+				// 		            	shadowColor:'#556fb5',
+				// 		                color: {
+				// 		                    type: 'linear',
+				// 		                    x: 0,
+				// 		                    y: 0,
+				// 		                    x2: 0,
+				// 		                    y2: 1,
+				// 		                    colorStops: [{
+				// 		                        offset: 0, color: '#556fb5' // 0% 处的颜色
+				// 		                    }, {
+				// 		                        offset: 0.8, color: '#45447c' // 100% 处的颜色
+				// 		                    }],
+				// 		                    globalCoord: false // 缺省为 false
+				// 		                }
+				// 		            }
+				// 		        }
+				// 		    ]
+				// 	});
+				// },1000)
 
 
 				//第一个图
@@ -758,7 +826,7 @@
 
 				turnover1.setOption({
 			    title: { },
-			    			    series: [{
+			    	series: [{
 			         type: 'pie',
 			         radius: ['60%', '80%'],
 			         hoverAnimation:false,
@@ -842,96 +910,96 @@
 			});
 
 
-				var timer2 = setInterval(()=>{
-					// this.turnover += 1 
-					// if(this.turnover >= 10){
-					// 	this.turnover = 1
-					// }
-					var turnover1 = echarts.init(document.getElementById('turnover1'));
-					turnover1.setOption({
-					    title: { },
-					    			    series: [{
-					         type: 'pie',
-					         radius: ['60%', '80%'],
-					         hoverAnimation:false,
-					         legendHoverLink:false,
-					         data:[
-				                {value:this.turnover,itemStyle:{ normal:{color:'#84bbff'} }},
-				                {value:100 - (this.turnover),itemStyle:{ normal:{color:'transparent'} }},
+				// timer2 = setInterval(()=>{
+				// 	// this.turnover += 1 
+				// 	// if(this.turnover >= 10){
+				// 	// 	this.turnover = 1
+				// 	// }
+				// 	var turnover1 = echarts.init(document.getElementById('turnover1'));
+				// 	turnover1.setOption({
+				// 	    title: { },
+				// 	    			    series: [{
+				// 	         type: 'pie',
+				// 	         radius: ['60%', '80%'],
+				// 	         hoverAnimation:false,
+				// 	         legendHoverLink:false,
+				// 	         data:[
+				//                 {value:this.turnover,itemStyle:{ normal:{color:'#84bbff'} }},
+				//                 {value:100 - (this.turnover),itemStyle:{ normal:{color:'transparent'} }},
 
 				              
-				            ],
+				//             ],
 
-				            labelLine:{show:false},
+				//             labelLine:{show:false},
 				            
-					    }]
-					});
+				// 	    }]
+				// 	});
 
-						turnover.setOption({
-						    title:{
-						    	text:this.turnover + '%',
-						    	subtext:'流通率',
-						    	subtextStyle:{
-						    		color:'#333333',
-						    		fontWeight:'normal',
-						    		fontSize:14,
-						    		textAlign:'center',
+				// 		turnover.setOption({
+				// 		    title:{
+				// 		    	text:this.turnover + '%',
+				// 		    	subtext:'流通率',
+				// 		    	subtextStyle:{
+				// 		    		color:'#333333',
+				// 		    		fontWeight:'normal',
+				// 		    		fontSize:14,
+				// 		    		textAlign:'center',
 						    		
-						    	},
-						    	subtextStyle:{
-						    		color:"#8e8d8d",
-						    		fontWeight:'normal',
-						    		fontSize:12,
-						    		textAlign:'center',
-						    		lineHeight:'200'
-						    	},
-						    	padding:[80, 0, 0, 63],
-						    	 left:'center'
+				// 		    	},
+				// 		    	subtextStyle:{
+				// 		    		color:"#8e8d8d",
+				// 		    		fontWeight:'normal',
+				// 		    		fontSize:12,
+				// 		    		textAlign:'center',
+				// 		    		lineHeight:'200'
+				// 		    	},
+				// 		    	padding:[80, 0, 0, 63],
+				// 		    	 left:'center'
 						    	
 
-						    },
-						    	 series: [
-								        {
+				// 		    },
+				// 		    	 series: [
+				// 				        {
 								           
-								            type:'pie',
-								            radius: ['50%', '70%'],
-								           hoverAnimation:false,
-					        			 legendHoverLink:false,
-								            label: {
-								                normal: {
-								                    show: false,
-								                    position: 'center'
-								                },
+				// 				            type:'pie',
+				// 				            radius: ['50%', '70%'],
+				// 				           hoverAnimation:false,
+				// 	        			 legendHoverLink:false,
+				// 				            label: {
+				// 				                normal: {
+				// 				                    show: false,
+				// 				                    position: 'center'
+				// 				                },
 								              
-								            },
+				// 				            },
 								           
-								            data:[
-								                {value:335, },
+				// 				            data:[
+				// 				                {value:335, },
 								             
-								            ],
-								            itemStyle: {
-								            	shadowBlur:20,
-								            	shadowOffsetX:-3,
-								            	shadowOffsetY:7,
-								            	shadowColor:'#3d5286',
-								                color: {
-								                    type: 'linear',
-								                    x: 0,
-								                    y: 0,
-								                    x2: 0,
-								                    y2: 1,
-								                    colorStops: [{
-								                        offset: 0, color: '#32a6ff' // 0% 处的颜色
-								                    }, {
-								                        offset: 0.8, color: '#3d5286' // 100% 处的颜色
-								                    }],
-								                    globalCoord: false // 缺省为 false
-								                }
-								            }
-								        }
-								    ]
-					});
-				},1000)
+				// 				            ],
+				// 				            itemStyle: {
+				// 				            	shadowBlur:20,
+				// 				            	shadowOffsetX:-3,
+				// 				            	shadowOffsetY:7,
+				// 				            	shadowColor:'#3d5286',
+				// 				                color: {
+				// 				                    type: 'linear',
+				// 				                    x: 0,
+				// 				                    y: 0,
+				// 				                    x2: 0,
+				// 				                    y2: 1,
+				// 				                    colorStops: [{
+				// 				                        offset: 0, color: '#32a6ff' // 0% 处的颜色
+				// 				                    }, {
+				// 				                        offset: 0.8, color: '#3d5286' // 100% 处的颜色
+				// 				                    }],
+				// 				                    globalCoord: false // 缺省为 false
+				// 				                }
+				// 				            }
+				// 				        }
+				// 				    ]
+				// 	});
+				// },1000)
 
 
 				//第二个图
@@ -1023,96 +1091,96 @@
 						    ]
 			});
 
-				var timer3 = setInterval(()=>{
-					var pay241 = echarts.init(document.getElementById('24pay1'));
-						// this.pay1 += 4.5
-						// if(this.pay1 >= 88){
-						// 	this.pay1 = 10 
-						// }
-							pay241.setOption({
-						    title: { },
-						    	series: [{
-						         type: 'pie',
-						         radius: ['60%', '80%'],
-						         hoverAnimation:false,
-						         legendHoverLink:false,
-						         data:[
-					                {value:this.pay1,itemStyle:{ normal:{color:'#87f8c2'} }},
-					                {value:100 - (this.pay1),itemStyle:{ normal:{color:'transparent'} }},
+				// timer3 = setInterval(()=>{
+				// 	var pay241 = echarts.init(document.getElementById('24pay1'));
+				// 		// this.pay1 += 4.5
+				// 		// if(this.pay1 >= 88){
+				// 		// 	this.pay1 = 10 
+				// 		// }
+				// 			pay241.setOption({
+				// 		    title: { },
+				// 		    	series: [{
+				// 		         type: 'pie',
+				// 		         radius: ['60%', '80%'],
+				// 		         hoverAnimation:false,
+				// 		         legendHoverLink:false,
+				// 		         data:[
+				// 	                {value:this.pay1,itemStyle:{ normal:{color:'#87f8c2'} }},
+				// 	                {value:100 - (this.pay1),itemStyle:{ normal:{color:'transparent'} }},
 
 					              
-					            ],
+				// 	            ],
 
-					            labelLine:{show:false},
+				// 	            labelLine:{show:false},
 					            
-						    }]
-						});
+				// 		    }]
+				// 		});
 
 
-							pay.setOption({
-				    title:{
-				    	text:this.pay1 + '%',
-				    	subtext:'换手率',
-				    	subtextStyle:{
-				    		color:'#333333',
-				    		fontWeight:'normal',
-				    		fontSize:14,
-				    		align:'center',
+				// 			pay.setOption({
+				//     title:{
+				//     	text:this.pay1 + '%',
+				//     	subtext:'换手率',
+				//     	subtextStyle:{
+				//     		color:'#333333',
+				//     		fontWeight:'normal',
+				//     		fontSize:14,
+				//     		align:'center',
 				    		
-				    	},
-				    	subtextStyle:{
-				    		color:"#8e8d8d",
-				    		fontWeight:'normal',
-				    		fontSize:12,
-				    		align:'center',
-				    		lineHeight:'200'
-				    	},
-				    	padding:[80, 0, 0, 63],
-				    	 left:'center'
+				//     	},
+				//     	subtextStyle:{
+				//     		color:"#8e8d8d",
+				//     		fontWeight:'normal',
+				//     		fontSize:12,
+				//     		align:'center',
+				//     		lineHeight:'200'
+				//     	},
+				//     	padding:[80, 0, 0, 63],
+				//     	 left:'center'
 
-				    },
-				    	 series: [
-						        {
+				//     },
+				//     	 series: [
+				// 		        {
 						           
-						            type:'pie',
-						            radius: ['50%', '70%'],
-						           hoverAnimation:false,
-			        			 legendHoverLink:false,
-						            label: {
-						                normal: {
-						                    show: false,
-						                    position: 'center'
-						                },
+				// 		            type:'pie',
+				// 		            radius: ['50%', '70%'],
+				// 		           hoverAnimation:false,
+			 //        			 legendHoverLink:false,
+				// 		            label: {
+				// 		                normal: {
+				// 		                    show: false,
+				// 		                    position: 'center'
+				// 		                },
 						              
-						            },
+				// 		            },
 						           
-						            data:[
-						                {value:335, },
+				// 		            data:[
+				// 		                {value:335, },
 						             
-						            ],
-						            itemStyle: {
-						            	shadowBlur:20,
-						            	shadowOffsetX:-3,
-						            	shadowOffsetY:7,
-						            	shadowColor:'#287f66',
-						                color: {
-						                    type: 'linear',
-						                    x: 0,
-						                    y: 0,
-						                    x2: 0,
-						                    y2: 1,
-						                    colorStops: [{
-						                        offset: 0, color: '#5dd186' // 0% 处的颜色
-						                    }, {
-						                        offset: 0.8, color: '#287f66' // 100% 处的颜色
-						                    }],
-						                    globalCoord: false // 缺省为 false
-						                }
-						            }
-						        }
-						    ]
-					});
-				},500)
+				// 		            ],
+				// 		            itemStyle: {
+				// 		            	shadowBlur:20,
+				// 		            	shadowOffsetX:-3,
+				// 		            	shadowOffsetY:7,
+				// 		            	shadowColor:'#287f66',
+				// 		                color: {
+				// 		                    type: 'linear',
+				// 		                    x: 0,
+				// 		                    y: 0,
+				// 		                    x2: 0,
+				// 		                    y2: 1,
+				// 		                    colorStops: [{
+				// 		                        offset: 0, color: '#5dd186' // 0% 处的颜色
+				// 		                    }, {
+				// 		                        offset: 0.8, color: '#287f66' // 100% 处的颜色
+				// 		                    }],
+				// 		                    globalCoord: false // 缺省为 false
+				// 		                }
+				// 		            }
+				// 		        }
+				// 		    ]
+				// 	});
+				// },500)
 
 				//第三个图
 
@@ -1232,117 +1300,117 @@
 
 
 
-				var timer4 = setInterval(()=>{
-					// this.cionin -= 3
-					// if(this.cionin <= 10){
-					// 	this.cionin = 99
-					// }
-					cionin1.setOption({
-						    title: { },
-						    	series: [{
-						         type: 'pie',
-						         radius: ['60%', '80%'],
-						         hoverAnimation:false,
-						         legendHoverLink:false,
-						         data:[
-					                {value:50,itemStyle:{ normal:{color:'#fee387'} }},
-					                {value:50,itemStyle:{ normal:{color:'transparent'} }},
+				//  timer4 = setInterval(()=>{
+				// 	// this.cionin -= 3
+				// 	// if(this.cionin <= 10){
+				// 	// 	this.cionin = 99
+				// 	// }
+				// 	cionin1.setOption({
+				// 		    title: { },
+				// 		    	series: [{
+				// 		         type: 'pie',
+				// 		         radius: ['60%', '80%'],
+				// 		         hoverAnimation:false,
+				// 		         legendHoverLink:false,
+				// 		         data:[
+				// 	                {value:50,itemStyle:{ normal:{color:'#fee387'} }},
+				// 	                {value:50,itemStyle:{ normal:{color:'transparent'} }},
 
 					              
-					            ],
+				// 	            ],
 
-					            labelLine:{show:false},
+				// 	            labelLine:{show:false},
 					            
-						    }]
-						});
+				// 		    }]
+				// 		});
 
 
-					cionin2.setOption({
-					    title: { },
-					    	series: [{
-					         type: 'pie',
-					         radius: ['60%', '80%'],
-					         hoverAnimation:false,
-					         legendHoverLink:false,
-					         data:[
-				                {value:this.cionin,itemStyle:{ normal:{color:'#f7cc69'} }},
-				                {value:100 - this.cionin,itemStyle:{ normal:{color:'transparent'} }},
+				// 	cionin2.setOption({
+				// 	    title: { },
+				// 	    	series: [{
+				// 	         type: 'pie',
+				// 	         radius: ['60%', '80%'],
+				// 	         hoverAnimation:false,
+				// 	         legendHoverLink:false,
+				// 	         data:[
+				//                 {value:this.cionin,itemStyle:{ normal:{color:'#f7cc69'} }},
+				//                 {value:100 - this.cionin,itemStyle:{ normal:{color:'transparent'} }},
 
 				              
-				            ],
+				//             ],
 
-				            labelLine:{show:false},
+				//             labelLine:{show:false},
 				            
-					    }]
-					});
+				// 	    }]
+				// 	});
 
-					cionin.setOption({
-					    title:{
-					    	text:this.cionin + '%',
-					    	subtext:'净流入',
-					    	subtextStyle:{
-					    		color:'#333333',
-					    		fontWeight:'normal',
-					    		fontSize:14,
-					    		align:'center',
+				// 	cionin.setOption({
+				// 	    title:{
+				// 	    	text:this.cionin + '%',
+				// 	    	subtext:'净流入',
+				// 	    	subtextStyle:{
+				// 	    		color:'#333333',
+				// 	    		fontWeight:'normal',
+				// 	    		fontSize:14,
+				// 	    		align:'center',
 					    		
-					    	},
-					    	subtextStyle:{
-					    		color:"#8e8d8d",
-					    		fontWeight:'normal',
-					    		fontSize:12,
-					    		align:'center',
-					    		lineHeight:'200'
-					    	},
-					    	padding:[80, 0, 0, 63],
-					    	 left:'center'
+				// 	    	},
+				// 	    	subtextStyle:{
+				// 	    		color:"#8e8d8d",
+				// 	    		fontWeight:'normal',
+				// 	    		fontSize:12,
+				// 	    		align:'center',
+				// 	    		lineHeight:'200'
+				// 	    	},
+				// 	    	padding:[80, 0, 0, 63],
+				// 	    	 left:'center'
 
-					    },
-					    	 series: [
-							        {
+				// 	    },
+				// 	    	 series: [
+				// 			        {
 							           
-							            type:'pie',
-							            radius: ['50%', '70%'],
-							           hoverAnimation:false,
-				        			 legendHoverLink:false,
-							            label: {
-							                normal: {
-							                    show: false,
-							                    position: 'center'
-							                },
+				// 			            type:'pie',
+				// 			            radius: ['50%', '70%'],
+				// 			           hoverAnimation:false,
+				//         			 legendHoverLink:false,
+				// 			            label: {
+				// 			                normal: {
+				// 			                    show: false,
+				// 			                    position: 'center'
+				// 			                },
 							              
-							            },
+				// 			            },
 							           
-							            data:[
-							                {value:335, },
+				// 			            data:[
+				// 			                {value:335, },
 							             
-							            ],
-							            itemStyle: {
-							            	shadowBlur:20,
-							            	shadowOffsetX:-3,
-							            	shadowOffsetY:7,
-							            	shadowColor:'#f9b25c',
-							                color: {
-							                    type: 'linear',
-							                    x: 0,
-							                    y: 0,
-							                    x2: 0,
-							                    y2: 1,
-							                    colorStops: [{
-							                        offset: 0, color: '#f9b25c' // 0% 处的颜色
-							                    }, {
-							                        offset: 0.8, color: '#d68f37' // 100% 处的颜色
-							                    }],
-							                    globalCoord: false // 缺省为 false
-							                }
-							            }
-							        }
-							    ]
-				});
+				// 			            ],
+				// 			            itemStyle: {
+				// 			            	shadowBlur:20,
+				// 			            	shadowOffsetX:-3,
+				// 			            	shadowOffsetY:7,
+				// 			            	shadowColor:'#f9b25c',
+				// 			                color: {
+				// 			                    type: 'linear',
+				// 			                    x: 0,
+				// 			                    y: 0,
+				// 			                    x2: 0,
+				// 			                    y2: 1,
+				// 			                    colorStops: [{
+				// 			                        offset: 0, color: '#f9b25c' // 0% 处的颜色
+				// 			                    }, {
+				// 			                        offset: 0.8, color: '#d68f37' // 100% 处的颜色
+				// 			                    }],
+				// 			                    globalCoord: false // 缺省为 false
+				// 			                }
+				// 			            }
+				// 			        }
+				// 			    ]
+				// });
 
 
 
-				},2000)
+				//},2000)
 
 
 

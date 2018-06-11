@@ -166,6 +166,7 @@
 			float: right;		
 			>.hotSearch{
 				width: 320px;
+				margin-top: 35px;
 				min-height: 100px;
 				border:1px solid #e5e5e5;
 				border-top:none;

@@ -296,6 +296,10 @@
 				this.$router.push('/index/index')
 			},
 			seIconYype(){
+				if(!this.iconTypeModel){
+					alert('请输入关键词')
+					return
+				}
 				this.$router.push({path:'/index/searchIcontypes',query:{searchText:this.iconTypeModel}})
 				console.log(this.iconTypeModel)
 			},
