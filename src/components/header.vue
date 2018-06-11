@@ -95,7 +95,7 @@
 								</div>
 
 								<div class="pt" style="width: 45%;float: right;margin-top:40px;">
-									<div style="width: 100%;height: 30px;padding-left: 20px;line-height: 20px;border-bottom: 1px solid #e5e5e5;">市场</div>
+									<div style="width: 100%;height: 30px;padding-left: 20px;line-height: 20px;border-bottom: 1px solid #e5e5e5;">交易所</div>
 									<div style="min-height: 100px;padding: 5px;">
 										<img src="/static/img/ejoy.png" style="vertical-align: middle;">
 										<p  class="activesssss" @click='unquery'style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width:87%;line-height: 35px;">dsd</p>
