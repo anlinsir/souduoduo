@@ -36,6 +36,12 @@
 			
 
 		</ul>
+		<div class="block" style="width: 100px;margin-left: 450px;margin-top: 20px;">
+				<el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
+			    layout="prev, pager, next"
+			    :total="50" >
+			  </el-pagination>
+		</div>
 	</div>
 </template>
 
@@ -47,10 +53,15 @@
 		},
 		data(){
 			return({
-				navList:['交易所公告列表']
+				navList:['交易所公告列表'],
+				currentPage:5
 			})
 		},
 		methods:{
+			handleCurrentChange(val){
+				this.currentPage =val
+				console.log(val)
+			},
 			toAnnDetali(e){
 				if(e.target.dataset.id == -1){
 					return

@@ -37,6 +37,12 @@
 					</tr>
 				</tbody>
 			</table> 
+			<div class="block" style="width: 100px;margin-left:300px;margin-top: 20px;">
+							<el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
+						    layout="prev, pager, next"
+						    :total="50" >
+						  </el-pagination>
+						</div>
 		</div>
 
 		<div class="Right">
@@ -64,6 +70,7 @@
 							
 						</li>
 					</ul>
+						
 
 				</div>
 
@@ -111,7 +118,7 @@
 
 
 				</div>
-
+			
 
 		</div>
 
@@ -128,6 +135,7 @@
 		},
 		data(){
 			return({
+				currentPage:5,
 				navList:['概念行情']
 				,rof:['涨幅','跌幅'],
 				rofdetalislist:['排名','名称','价格','涨幅'],
@@ -220,6 +228,10 @@
 			})
 		},
 		methods:{
+			handleCurrentChange(val){
+				this.currentPage =val
+				console.log(val)
+			},
 			rofChoose(index){
 				this.rofActive = index
 			},

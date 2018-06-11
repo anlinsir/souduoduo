@@ -332,15 +332,12 @@
 
 		</ul>
 
-		<div class="pagesW">
-			<div class="pages">
-				<ul>
-					<li><</li>
-					<li @click='pages(index)' v-for='(item,index) in 6'>{{item}}</li>
-					<li>></li>
-
-				</ul>
-			</div>
+		
+		<div class="block" style="width: 100px;margin-left: 450px;">
+				<el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
+			    layout="prev, pager, next"
+			    :total="50" >
+			  </el-pagination>
 		</div>
 	</div>	
 </template>
@@ -349,11 +346,16 @@
 	export default{
 		data(){
 			return({
-				serach:''
+				serach:'',
+				currentPage:5
 			})
 		}
 		,
 		methods:{
+			handleCurrentChange(val){
+				this.currentPage =val
+				console.log(val)
+			},
 			changeCount(e){
 				if(e.target.selectedIndex == 0){
 					return

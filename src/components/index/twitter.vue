@@ -14,7 +14,7 @@
 			</thead>
 
 			<tbody>
-				<tr v-for='(it,id) in 5'>
+				<tr v-for='(it,id) in trans' :key='id'>
 					<td>05-25  21:02</td>
 
 					<td>
@@ -27,9 +27,9 @@
 						</dl>
 					</td>
 
-					<td>
-						<p style="margin-bottom: 33px;">”On the Origin of Waves.A look at how Waves could challenge tod</p>
-						<p style="
+					<td style="width: 70%;word-break: break-all;padding-bottom: 20px;">
+						<p id='enssss' style="margin-bottom: 33px;">{{it.en}}</p>
+						<p @click='tran(id)' style="
 							width: 64px;
 							height: 24px;
 							background-color: #5060a2;
@@ -40,21 +40,18 @@
 							font-size: 12px;
 							cursor: pointer;
 						">中文翻译</p>
-						<p style="margin-top: 19px;">“关于波浪的起源：看看波浪如何挑战今日的主导平台，以太坊”： #WacesPlanform  #Cryptocurrency </p>
+						<p id='ssss' style="margin-top: 19px;"></p>
 					</td>
 
 				</tr>
 			</tbody>
 		</table>
 
-		<div class="pagess">
-			<div class="pages">
-					<ul>
-						<li><</li>
-						<li :class="changePages == id ? 'changePage' : '' " @click='changePage(id)' v-for='(ii,id) in 8'>{{ii}}</li>
-						<li>></li>
-					</ul>
-			</div>
+		<div class="block" style="width: 100px;margin-left: 450px;">
+				<el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
+			    layout="prev, pager, next"
+			    :total="50" >
+			  </el-pagination>
 		</div>
 
 	</div>
@@ -63,7 +60,11 @@
 
 
 <script>
+	import { youdao, baidu, google } from 'translation.js'
 	import Nav from '../nav'
+	import axios from 'axios'
+	var appid= '20180611000174906',
+		pass = 'uWrBWcwLW6oAZ7Nf0KPW';
 	export default{
 		components:{
 			Nav
@@ -72,13 +73,55 @@
 			return({
 				navList:['推特详情'],
 				placeholder:'请输入关键词',
-				changePages:0
+				changePages:0,
+				currentPage:5,
+				trans:[
+					{
+						en:'Reading enriches the mind.'
+
+					},
+					{
+						en:'apple'
+					},
+					{
+						en:'information'
+					}
+				]
+				
 			})
 		},
 		methods:{
+			handleCurrentChange(val){
+				this.currentPage =val
+				console.log(val)
+			},
 			changePage(index){
 				this.changePages = index
+			},
+			tran(id){
+				//百度appis  +q + 随机数 + 秘钥 md5加密
+				//var enssss = en[id].innerHTML; 
+				var md5s =  md5(appid+enssss[id].innerHTML+5+'uWrBWcwLW6oAZ7Nf0KPW');
+				$.ajax({
+                          type:"get",
+                          url:`http://api.fanyi.baidu.com/api/trans/vip/translate?q=${enssss[id].innerHTML}&from=en&to=zh&appid=20180611000174906&salt=5&sign=${md5s}`,
+                          dataType:"jsonp",
+                          jsonp:"callback",
+                          jsonpCallback:"success_jsonpCallback",
+                          success:function(json){
+                            console.log(json.trans_result[0].dst)
+                          
+                            ssss[id].innerHTML =  json.trans_result[0].dst
+                          }
+           	 	})
+
+
 			}
+		},
+		mounted(){		
+
+				
+		
 		}
 	}
 </script>

@@ -262,6 +262,11 @@
 		height: 100%;
 		background-color: #e9e9e9;
 		position: relative;
+		background-image: url('/static/img/loginbg.png');
+		background-repeat: no-repeat;
+		background-position-x: 1200px;
+		background-position-y:180px;
+
 		>.loginBox{
 			width: 800px;
 			height: 520px;
