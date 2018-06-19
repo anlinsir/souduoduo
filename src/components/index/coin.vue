@@ -140,8 +140,9 @@
 						<li >24H额(￥)</li>
 					</ul>
 
-					<ul @mouseenter='cancel' @mouseout='cann' class="Body" style="position: relative;overflow: hidden;height: 500px;">
-						<li v-for='(ii,id) in 10' style="position: absolute;width: 100%" :style="{top:(top)+(50*(id)) + 'px'}">
+					<ul @mouseenter='cancel' @mouseout='cann' class="Body" style="position: relative;overflow: auto;height: 500px;">
+						<!-- style="position: absolute;width: 100%" :style="{top:(top)+(50*(id)) + 'px'}" -->
+						<li v-for='(ii,id) in 100' >
 							<p><span>{{id}}</span><br>
 								<span></span><br>
 								<span>USD</span>
@@ -159,7 +160,7 @@
 						</li>
 
 
-						<li  v-for='(ii,id) in 10' style="position: absolute;width: 100%" :style="{top:500 + (top)+(50*(id)) + 'px'}">
+						<!-- <li  v-for='(ii,id) in 10' style="position: absolute;width: 100%" :style="{top:500 + (top)+(50*(id)) + 'px'}">
 							<p><span>{{id}}</span><br>
 								<span></span><br>
 								<span>USD</span>
@@ -174,7 +175,7 @@
 								<span></span>
 							</p>
 
-						</li>
+						</li> -->
 
 						
 
@@ -779,7 +780,9 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 						type: 'macd',
 						yAxis: 2,
 						linkedTo: 'aapl',
-						color:'#000000'
+						color:'#000000',
+						negativeColor:'red',
+						color:'green'
 
 				},{
 						type: 'line',
