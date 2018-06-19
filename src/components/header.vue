@@ -30,7 +30,7 @@
 				<div class="headerChoose">
 					<ul>
 						<li @click='toRobot'>
-							<img src="/static/img/headerlist1.png">
+							<img src="/static/img/headerlist11.png">
 							<span>智能情报机器</span>
 						</li>
 						<li>
