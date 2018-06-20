@@ -219,6 +219,7 @@
 <script>
 	var echarts = require('echarts');
 	var ccc ,timer1 ,timer2, timer3 , timer4;
+	import $ from 'jquery'
 	export default{
 
 		data(){
