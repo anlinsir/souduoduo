@@ -143,6 +143,12 @@
 					<ul @mouseenter='cancel' @mouseout='cann' class="Body" style="position: relative;overflow: auto;height: 500px;">
 						<!-- style="position: absolute;width: 100%" :style="{top:(top)+(50*(id)) + 'px'}" -->
 						<li v-for='(ii,id) in 100' >
+							<p style="width: 30px">
+								<span></span><br>
+								<span><img style="transform: translateY(-3px);" src="/static/img/startNO.png"></span><br>
+								<span></span>								
+							</p>
+
 							<p><span>{{id}}</span><br>
 								<span></span><br>
 								<span>USD</span>
