@@ -140,7 +140,7 @@
 						<li >24H额(￥)</li>
 					</ul>
 
-					<ul @mouseenter='cancel' @mouseout='cann' class="Body" style="position: relative;overflow: auto;height: 500px;">
+					<ul @mouseenter='cancel' @mouseout='cann' class="Body" style="position: relative;overflow: auto;height: 647px;">
 						<!-- style="position: absolute;width: 100%" :style="{top:(top)+(50*(id)) + 'px'}" -->
 						<li v-for='(ii,id) in 100' >
 							<p style="width: 30px">
