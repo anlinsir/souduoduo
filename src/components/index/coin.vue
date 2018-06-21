@@ -60,11 +60,11 @@
 				<ul>
 					<li>
 						<div class="Left">
-						<p style="margin-bottom: 8px;font-size: 16px;">流通市值</p>
-						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;">¥814,238,770,434</p>
+						<p style="margin-bottom: 8px;font-size: 12px;">流通市值</p>
+						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">¥814,238,770,434</p>
 						<p style="width: 70px;height: 23px;background-color: #4277ff;color: #fff;border-radius: 10px;text-align: center;line-height: 24px;margin-bottom: 20px;">排名NO.1</p>
-						<p style="margin-bottom: 8px;font-weight: bold;font-size: 14px;">≈$127,464,800,199 </p>
-						<p style="font-size: 14px;font-weight: bold;"> ≈17,053,787BTC</p>
+						<p style="margin-bottom: 8px;font-size: 12px;">≈$127,464,800,199 </p>
+						<p style="font-size: 12px;"> ≈17,053,787BTC</p>
 						</div>
 						<div class="right">
 							 <div id="EFAMC" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
@@ -75,11 +75,11 @@
 
 					<li>
 						<div class="Left">
-						<p style="margin-bottom: 8px;font-size: 16px;">流通量</p>
-						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;">814,238,7BTC</p>
+						<p style="margin-bottom: 8px;font-size: 12px;">流通量</p>
+						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">814,238,7BTC</p>
 							
-						<p style="margin-top: 45px;margin-bottom: 8px;font-size: 16px;">发行总量</p>
-						<p style="color:#4277ff;font-weight: bold; ">210000 BTC</p>							
+						<p style="margin-top: 45px;margin-bottom: 8px;font-size: 12px;">发行总量</p>
+						<p style="color:#4277ff;font-weight: bold;font-size: 16px; ">2100000000 BTC</p>							
 						</div>
 						<div class="right">
 							
@@ -97,11 +97,11 @@
 
 					<li>
 						<div class="Left">
-						<p style="margin-bottom: 8px;font-size: 16px;">24H成交额</p>
-						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;">¥814,238,770,434</p>
+						<p style="margin-bottom: 8px;font-size: 12px;">24H成交额</p>
+						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">¥814,238,770,434</p>
 						<p style="width: 70px;height: 23px;background-color: #33b862;color: #fff;border-radius: 10px;text-align: center;line-height: 23px;margin-bottom: 20px;">排名NO.1</p>
-						<p style="margin-bottom: 8px;font-weight: bold;font-size: 14px;">≈$127,464,800,199 </p>
-						<p style="font-size: 14px;font-weight: bold;"> ≈17,053,787BTC</p>
+						<p style="margin-bottom: 8px;font-size: 12px;">≈$127,464,800,199 </p>
+						<p style="font-size: 12px;"> ≈17,053,787BTC</p>
 						</div>
 						<div class="right">
 							<div id="24pay" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
@@ -112,18 +112,18 @@
 
 					<li>
 						<div class="Left">
-						<p style="margin-bottom: 8px;font-size: 16px;">24H资金流入</p>
-						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;">814,238,7BTC</p>
+						<p style="margin-bottom: 8px;font-size: 12px;">24H资金流入</p>
+						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">814,238,7BTC</p>
 							
-						<p style="margin-top: 45px;margin-bottom: 8px;font-size: 16px;">24H资金流出</p>
-						<p style="color:#4277ff;font-weight: bold; ">210000 BTC</p>	
+						<p style="margin-top: 45px;margin-bottom: 8px;font-size: 12px;">24H资金流出</p>
+						<p style="color:#4277ff;font-weight: bold;font-size: 16px; ">210000000 BTC</p>	
 						</div>
 						<div class="right">
-							<div id="cionin" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
+							<div id="cionin" style="width:200px; height:200px;position: absolute;top: -13px;left: 110px;"></div>
 
-							 <div id="cionin1" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>	
+							 <div id="cionin1" style="width:200px; height:200px;position: absolute;top: -13px;left: 110px;"></div>	
 
-							 <div id="cionin2" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>	
+							 <div id="cionin2" style="width:200px; height:200px;position: absolute;top: -13px;left: 110px;"></div>	
 
 						</div>
 					</li>
@@ -254,9 +254,9 @@
 				choosetitleactive:0,
 				dataShow:true,
 				value1:18,
-				turnover:1.3,
-				pay1:4.34,
-				cionin:99,
+				turnover:10.3,
+				pay1:40.34,
+				cionin:5.5,
 				top:0
 
 			})
@@ -827,7 +827,7 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 				    title: { },
 				    	series: [{
 				         type: 'pie',
-				         radius: ['60%', '80%'],
+				         radius: ['55%', '75%'],
 				         hoverAnimation:false,
 				         legendHoverLink:false,
 				         data:[
@@ -870,7 +870,7 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 						        {
 						           
 						            type:'pie',
-						            radius: ['50%', '70%'],
+						            radius: ['48%', '68%'],
 						           hoverAnimation:false,
 			        			 legendHoverLink:false,
 						            label: {
@@ -886,9 +886,9 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 						             
 						            ],
 						            itemStyle: {
-						            	shadowBlur:20,
-						            	shadowOffsetX:-3,
-						            	shadowOffsetY:7,
+						            	shadowBlur:15,
+						            	shadowOffsetX:0,
+						            	shadowOffsetY:3,
 						            	shadowColor:'#556fb5',
 						                color: {
 						                    type: 'linear',
@@ -1010,7 +1010,7 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 			    title: { },
 			    	series: [{
 			         type: 'pie',
-			         radius: ['60%', '80%'],
+			         radius: ['55%', '75%'],
 			         hoverAnimation:false,
 			         legendHoverLink:false,
 			         data:[
@@ -1053,7 +1053,7 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 						        {
 						           
 						            type:'pie',
-						            radius: ['50%', '70%'],
+						           radius: ['48%', '68%'],
 						           hoverAnimation:false,
 			        			 legendHoverLink:false,
 						            label: {
@@ -1069,9 +1069,9 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 						             
 						            ],
 						            itemStyle: {
-						            	shadowBlur:20,
-						            	shadowOffsetX:-3,
-						            	shadowOffsetY:7,
+						            	shadowBlur:15,
+						            	shadowOffsetX:0,
+						            	shadowOffsetY:3,
 						            	shadowColor:'#3d5286',
 						                color: {
 						                    type: 'linear',
@@ -1193,7 +1193,7 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 			    title: { },
 			    	series: [{
 			         type: 'pie',
-			         radius: ['60%', '80%'],
+			         radius: ['55%', '75%'],
 			         hoverAnimation:false,
 			         legendHoverLink:false,
 			         data:[
@@ -1235,7 +1235,7 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 						        {
 						           
 						            type:'pie',
-						            radius: ['50%', '70%'],
+						            radius: ['48%', '68%'],
 						           hoverAnimation:false,
 			        			 legendHoverLink:false,
 						            label: {
@@ -1251,9 +1251,9 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 						             
 						            ],
 						            itemStyle: {
-						            	shadowBlur:20,
-						            	shadowOffsetX:-3,
-						            	shadowOffsetY:7,
+						            	shadowBlur:15,
+						            	shadowOffsetX:0,
+						            	shadowOffsetY:3,
 						            	shadowColor:'#287f66',
 						                color: {
 						                    type: 'linear',
@@ -1379,7 +1379,7 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 			    title: { },
 			    	series: [{
 			         type: 'pie',
-			         radius: ['60%', '80%'],
+			         radius: ['55%', '75%'],
 			         hoverAnimation:false,
 			         legendHoverLink:false,
 			         data:[
@@ -1400,7 +1400,7 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 			    title: { },
 			    	series: [{
 			         type: 'pie',
-			         radius: ['60%', '80%'],
+			         radius: ['55%', '75%'],
 			         hoverAnimation:false,
 			         legendHoverLink:false,
 			         data:[
@@ -1442,7 +1442,7 @@ $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/aapl-ohlc.json&callb
 						        {
 						           
 						            type:'pie',
-						            radius: ['50%', '70%'],
+						           radius: ['48%', '68%'],
 						           hoverAnimation:false,
 			        			 legendHoverLink:false,
 						            label: {
