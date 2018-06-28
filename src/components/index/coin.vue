@@ -138,6 +138,8 @@
 						<li >交易平台</li>
 						<li >最新价</li>
 						<li >24H额(￥)</li>
+						<li >占比</li>
+
 					</ul>
 
 					<ul @mouseenter='cancel' @mouseout='cann' class="Body" style="position: relative;overflow: auto;height: 647px;">
@@ -157,11 +159,17 @@
 								<span></span><br>
 								<span>￥545231</span>
 							</p>
-							<p>
+							<p style="padding-left: 33px;box-sizing: border-box;">
 								<span></span><br>
 								<span>{{id}}</span><br>
 								<span></span>
 							</p>
+							<p style="padding-left: 33px;box-sizing: border-box;">
+								<span></span><br>
+								<span>{{id + '%'}}</span><br>
+								<span></span>
+							</p>
+
 
 						</li>
 
