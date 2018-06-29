@@ -5,7 +5,7 @@
 		<main>
 			<div class="main">
 				<div class="Top" style="position: relative;">
-					<img src="/static/img/bluebg.png">
+					<img src="/static/img/bgbg.png">
 					<p style="width: 314px;height: 47px;border:12px;position: absolute;top:78px;left: 203px;background-color: #4277ff;border-radius: 25px;color: #fff;font-size: 24px;text-align: center;line-height: 47px;">免费的数字货币报价机器人</p>
 					<p style="font-size: 12px;color: #fff;position: absolute;top:167px;left: 203px;">最新的价格查询  &nbsp;&nbsp; | &nbsp;&nbsp; 免费邀请加入QQ群提供行情报价</p>
 					<p style="font-size: 12px;color: #fff;position: absolute;top:192px;left: 203px;">50多家虚拟币交易所最新公告实时提醒</p>
