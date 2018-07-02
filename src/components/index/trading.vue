@@ -7,9 +7,8 @@
 
 			<div class="titleRightChose">
 				<span style="font-size: 12px;color: #9c9c9c;">筛选：</span><select @change='changeCount' >
-					<option value="0">国家</option>
-					<option value="1">中国</option>
-					<option value="2">德国</option>
+					<option value="0" v-for='(key,val,id) in gjList'>{{key.cn_name}}</option>
+					
 
 
 				</select>
@@ -39,17 +38,17 @@
 		</div>
 
 		<ul class="tradingContent">
-			<li @click='toTradDetali(1)' class="tradingContentItem">
+			<li @click='toTradDetali(ii.slug)' class="tradingContentItem" v-for="(ii,id) in tadingList">
 				<dl class="itemImg">
-					<dt><img src="/static/img/pic_logobg.png"></dt>
+					<dt><img :src="ii.logo"></dt>
 					<dd>
-						<p class="itemName">BitMEX</p>
-						<p class="itempaim">排名No.1</p>
+						<p class="itemName">{{ii.name}}</p>
+						<p class="itempaim">排名No.{{ii.rank}}</p>
 
 						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
+							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;" v-if="JSON.stringify(ii.types).indexOf('0') != -1">现货</span>
+							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;" v-if="JSON.stringify(ii.types).indexOf('1') != -1">期货</span>
+							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;" v-if="JSON.stringify(ii.types).indexOf('2') != -1">法币</span>
 
 						</p>
 
@@ -59,275 +58,24 @@
 
 				</dl>
 				<div class="itemText">
-					<p class="textp1">#Binance是全球领先的区块链资产交易平台，为全球区块链爱好者提供多币种、多语言的币币兑换服务，目前…</p>
+					<p class="textp1" style="    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    height: 30px;
+    box-sizing: content-box;">{{ii.introduce}}</p>
 					<p class="textp2">
-						<span>交易对：<i>11</i>	 &nbsp; / &nbsp;</span>
-						<span>地区：<i>中国</i> &nbsp; / &nbsp;</span>
-						<span>成交额(24h)：<i>￥160.2亿</i></span>
+						<span>交易对：<i>{{ii.pairs_count}}</i>	 &nbsp; / &nbsp;</span>
+						<span>地区：<i>{{ii.country?ii.country.cn_name : '未知'}}</i> &nbsp; / &nbsp;</span>
+						<span>成交额(24h)：$<i>{{(Number(ii.volume_24h)/100000000).toFixed(2)}}亿</i></span>
 					</p>
 				</div>
 			</li>
 
-			<li @click='toTradDetali(1)' class="tradingContentItem">
-				<dl class="itemImg">
-					<dt><img src="/static/img/pic_logobg.png"></dt>
-					<dd>
-						<p class="itemName">BitMEX</p>
-						<p class="itempaim">排名No.1</p>
-
-						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
-
-						</p>
-
-					</dd>
-
-					
-
-				</dl>
-				<div class="itemText">
-					<p class="textp1">#Binance是全球领先的区块链资产交易平台，为全球区块链爱好者提供多币种、多语言的币币兑换服务，目前…</p>
-					<p class="textp2">
-						<span>交易对：<i>11</i>	 &nbsp; / &nbsp;</span>
-						<span>地区：<i>中国</i> &nbsp; / &nbsp;</span>
-						<span>成交额(24h)：<i>￥160.2亿</i></span>
-					</p>
-				</div>
-			</li>
-
-			<li @click='toTradDetali(1)' class="tradingContentItem" style="margin-right: 0;">
-				<dl class="itemImg">
-					<dt><img src="/static/img/pic_logobg.png"></dt>
-					<dd>
-						<p class="itemName">BitMEX</p>
-						<p class="itempaim">排名No.1</p>
-
-						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
-
-						</p>
-
-					</dd>
-
-					
-
-				</dl>
-				<div class="itemText">
-					<p class="textp1">#Binance是全球领先的区块链资产交易平台，为全球区块链爱好者提供多币种、多语言的币币兑换服务，目前…</p>
-					<p class="textp2">
-						<span>交易对：<i>11</i>	 &nbsp; / &nbsp;</span>
-						<span>地区：<i>中国</i> &nbsp; / &nbsp;</span>
-						<span>成交额(24h)：<i>￥160.2亿</i></span>
-					</p>
-				</div>
-			</li>
-
-			<li @click='toTradDetali(1)' class="tradingContentItem">
-				<dl class="itemImg">
-					<dt><img src="/static/img/pic_logobg.png"></dt>
-					<dd>
-						<p class="itemName">BitMEX</p>
-						<p class="itempaim">排名No.1</p>
-
-						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
-
-						</p>
-
-					</dd>
-
-					
-
-				</dl>
-				<div class="itemText">
-					<p class="textp1">#Binance是全球领先的区块链资产交易平台，为全球区块链爱好者提供多币种、多语言的币币兑换服务，目前…</p>
-					<p class="textp2">
-						<span>交易对：<i>11</i>	 &nbsp; / &nbsp;</span>
-						<span>地区：<i>中国</i> &nbsp; / &nbsp;</span>
-						<span>成交额(24h)：<i>￥160.2亿</i></span>
-					</p>
-				</div>
-			</li>
-
-			<li @click='toTradDetali(1)' class="tradingContentItem">
-				<dl class="itemImg">
-					<dt><img src="/static/img/pic_logobg.png"></dt>
-					<dd>
-						<p class="itemName">BitMEX</p>
-						<p class="itempaim">排名No.1</p>
-
-						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
-
-						</p>
-
-					</dd>
-
-					
-
-				</dl>
-				<div class="itemText">
-					<p class="textp1">#Binance是全球领先的区块链资产交易平台，为全球区块链爱好者提供多币种、多语言的币币兑换服务，目前…</p>
-					<p class="textp2">
-						<span>交易对：<i>11</i>	 &nbsp; / &nbsp;</span>
-						<span>地区：<i>中国</i> &nbsp; / &nbsp;</span>
-						<span>成交额(24h)：<i>￥160.2亿</i></span>
-					</p>
-				</div>
-			</li>
-
-			<li @click='toTradDetali(1)' class="tradingContentItem" style="margin-right: 0;">
-				<dl class="itemImg">
-					<dt><img src="/static/img/pic_logobg.png"></dt>
-					<dd>
-						<p class="itemName">BitMEX</p>
-						<p class="itempaim">排名No.1</p>
-
-						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
-
-						</p>
-
-					</dd>
-
-					
-
-				</dl>
-				<div class="itemText">
-					<p class="textp1">#Binance是全球领先的区块链资产交易平台，为全球区块链爱好者提供多币种、多语言的币币兑换服务，目前…</p>
-					<p class="textp2">
-						<span>交易对：<i>11</i>	 &nbsp; / &nbsp;</span>
-						<span>地区：<i>中国</i> &nbsp; / &nbsp;</span>
-						<span>成交额(24h)：<i>￥160.2亿</i></span>
-					</p>
-				</div>
-			</li>
 			
-			<li @click='toTradDetali(1)' class="tradingContentItem">
-				<dl class="itemImg">
-					<dt><img src="/static/img/pic_logobg.png"></dt>
-					<dd>
-						<p class="itemName">BitMEX</p>
-						<p class="itempaim">排名No.1</p>
 
-						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
+			
 
-						</p>
-
-					</dd>
-
-					
-
-				</dl>
-				<div class="itemText">
-					<p class="textp1">#Binance是全球领先的区块链资产交易平台，为全球区块链爱好者提供多币种、多语言的币币兑换服务，目前…</p>
-					<p class="textp2">
-						<span>交易对：<i>11</i>	 &nbsp; / &nbsp;</span>
-						<span>地区：<i>中国</i> &nbsp; / &nbsp;</span>
-						<span>成交额(24h)：<i>￥160.2亿</i></span>
-					</p>
-				</div>
-			</li>
-
-			<li @click='toTradDetali(1)' class="tradingContentItem">
-				<dl class="itemImg">
-					<dt><img src="/static/img/pic_logobg.png"></dt>
-					<dd>
-						<p class="itemName">BitMEX</p>
-						<p class="itempaim">排名No.1</p>
-
-						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
-
-						</p>
-
-					</dd>
-
-					
-
-				</dl>
-				<div class="itemText">
-					<p class="textp1">#Binance是全球领先的区块链资产交易平台，为全球区块链爱好者提供多币种、多语言的币币兑换服务，目前…</p>
-					<p class="textp2">
-						<span>交易对：<i>11</i>	 &nbsp; / &nbsp;</span>
-						<span>地区：<i>中国</i> &nbsp; / &nbsp;</span>
-						<span>成交额(24h)：<i>￥160.2亿</i></span>
-					</p>
-				</div>
-			</li>
-
-			<li @click='toTradDetali(1)' class="tradingContentItem" style="margin-right: 0;">
-				<dl class="itemImg">
-					<dt><img src="/static/img/pic_logobg.png"></dt>
-					<dd>
-						<p class="itemName">BitMEX</p>
-						<p class="itempaim">排名No.1</p>
-
-						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
-
-						</p>
-
-					</dd>
-
-					
-
-				</dl>
-				<div class="itemText">
-					<p class="textp1">#Binance是全球领先的区块链资产交易平台，为全球区块链爱好者提供多币种、多语言的币币兑换服务，目前…</p>
-					<p class="textp2">
-						<span>交易对：<i>11</i>	 &nbsp; / &nbsp;</span>
-						<span>地区：<i>中国</i> &nbsp; / &nbsp;</span>
-						<span>成交额(24h)：<i>￥160.2亿</i></span>
-					</p>
-				</div>
-			</li>
-
-			<li @click='toTradDetali(1)' class="tradingContentItem">
-				<dl class="itemImg">
-					<dt><img src="/static/img/pic_logobg.png"></dt>
-					<dd>
-						<p class="itemName">BitMEX</p>
-						<p class="itempaim">排名No.1</p>
-
-						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
-
-						</p>
-
-					</dd>
-
-					
-
-				</dl>
-				<div class="itemText">
-					<p class="textp1">#Binance是全球领先的区块链资产交易平台，为全球区块链爱好者提供多币种、多语言的币币兑换服务，目前…</p>
-					<p class="textp2">
-						<span>交易对：<i>11</i>	 &nbsp; / &nbsp;</span>
-						<span>地区：<i>中国</i> &nbsp; / &nbsp;</span>
-						<span>成交额(24h)：<i>￥160.2亿</i></span>
-					</p>
-				</div>
-			</li>
 			
 
 		</ul>
@@ -343,11 +91,14 @@
 </template>
 
 <script>
+	import axios from 'axios'
 	export default{
 		data(){
 			return({
 				serach:'',
-				currentPage:5
+				currentPage:5,
+				tadingList:[],
+				gjList:[]
 			})
 		}
 		,
@@ -370,9 +121,25 @@
 				alert(index  + '页')
 
 			},
-			toTradDetali(){
-				this.$router.push('/index/tradDetali/:id')
+			toTradDetali(val){
+				
+				this.$router.push(`/index/tradDetali/${val}`)
+				
+
 			}
+		},
+		mounted(){
+			axios.get(`http://sdd.xtype.cn/api/exchange/list?&take=12`)//平台列表
+					.then((res)=>{
+						console.log(res.data.data.list)
+						this.tadingList = res.data.data.list
+			})
+			axios.get(`http://sdd.xtype.cn/api/exchange/countries`)
+				.then((res)=>{
+					this.gjList =res.data.data
+					console.log(this.gjList)
+
+				})
 		}
 	}
 </script>
@@ -452,13 +219,14 @@
 			margin-top: 28px;
 			display:flex;
 			padding: 0 30px; 
-			flex-wrap: wrap;
+			flex-wrap: wrap;		
+			transform: translateX(15px);
 
 			>.tradingContentItem{
 				width: 360px;
 				height: 230px;
 				border:1px solid #eeeeee;
-				margin-right: 29px;
+				margin-right: 15px;
 				margin-bottom: 45px;
 				padding: 16px 13px 0 15px;
 				cursor: pointer;

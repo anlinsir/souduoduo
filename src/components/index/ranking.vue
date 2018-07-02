@@ -3,14 +3,14 @@
 	<div class="rankingWarp">
 		<div class="rankHeadChoose">
 			<ul class="rankUl1">
-				<li  @click='rachange(index)' :class="rankavtive == index ? 'rankavtive' : '' " v-for='(item,index) in headChoose'>{{item}}</li>
+				<li  style="cursor: pointer;" @click='rachange(index)' :class="rankavtive == index ? 'rankavtive' : '' " v-for='(item,index) in headChoose'>{{item}}</li>
 			</ul>
 			<ul class="rankUl2">
-				<li @click='headeractivesChange(0,index,item.id)' :class="headeractives0 == index ? 'headeractives0' : '' " :data-id='item.id' v-if='rankavtive == 0' v-for='(item,index) in headTchoose0'>{{item.pr}}
+				<li :style="{color:index == 2 ? '#4277ff' : ''}" @click='headeractivesChange(0,index,item.id)' :class="headeractives0 == index ? 'headeractives0' : '' " :data-id='item.id' v-if='rankavtive == 0' v-for='(item,index) in headTchoose0'>{{item.pr}}
 					<span @click='more' class="rankUl2SpanIcon" v-if='item.ci '></span>
 
-					<ul v-if='item.ci && moreShow'><!-- 有下拉的时候出来 -->
-						<li @click='childChoose($event,indexs)'  :class="headeractives0Chi ==indexs ? 'headeractives0Chi' : '' "  :data-id='items.id' v-for="(items,indexs) in item.ci" :key='indexs'>{{items.pr}}</li>
+					<ul style="background-color: #fff;border:1px solid #eee; border-radius: 20px;" v-if='item.ci && moreShow'><!-- 有下拉的时候出来 -->
+						<li style="cursor: pointer;" @click='childChoose($event,indexs)'  :class="headeractives0Chi ==indexs ? 'headeractives0Chi' : '' "  :data-id='items.id' v-for="(items,indexs) in item.ci" :key='indexs'>{{items.pr}}</li>
 					</ul>
 				</li>
 
@@ -36,30 +36,32 @@
 				</thead>
 
 				<tbody cellspacing="0">
-					<tr @click='Bdetalis(index)' v-for="(item,index) in tbody">
-						<td>{{item.id}}</td>
-						<td>
-							<img  style="transform: translateY(5px);height: 21px;width: 21px;" :src="item.img" />
-						{{item.name}}</td>
+					<tr @click='Bdetalis(item.slug)' v-for="(item,index) in rankingRise">
+						<td style="width: 90px;">{{item.id}}</td>
+						<td style="width: 160px;padding-right: 10px;box-sizing: border-box;overflow: hidden;white-space:nowrap;text-overflow: ellipsis;">
+							<img  style="transform: translateY(5px);height: 21px;width: 21px;" :src="item.logo" />
+						{{item.name}}{{item.cn_name ? '-' + item.cn_name : ''}}</td>
 						<td v-if='rankavtive != 2'>{{item.price}}</td>
-						<td v-if='rankavtive != 2'>{{item.shi}}</td>
-						<td v-if='rankavtive != 2'>{{item.num}}</td>
-						<td v-if='rankavtive != 2'>{{item.cj}}</td>
-						<td  v-if='rankavtive != 2' :style="{color: item.zf.indexOf('+') != -1 ? '#33b862' : 'red' }">{{item.zf}}</td>
+						<td v-if='rankavtive != 2'>{{item.market_cap}}</td>
+						<td v-if='rankavtive != 2'>{{item.circulating_supply}}</td>
+						<td v-if='rankavtive != 2'>{{item.volume_24h}}</td>
+						<td  v-if='rankavtive != 2' :style="{color: item.percent_change_1h >= 0 ?  '#33b862' : 'red' }">{{item.percent_change_1h}}</td>
 
-						<td v-if='rankavtive == 2'>{{item.jydou}}</td>
-						<td v-if='rankavtive == 2'>{{item.con}}</td>
+						<td v-if='rankavtive == 2'>vblok</td>
+						<td style="width:100px;" v-if='rankavtive == 2'>{{item.country_code}}</td>
 
-						<td style="    width: 280px;" class="type" v-if='rankavtive == 2'>
-							<span class="xh" v-if='item.type[0]'>{{item.type[0] ? '现货' : ''}}</span>
-							<span class="qh" v-if='item.type[1]'>{{item.type[1] ? '期货' : ''}}</span>
-							<span class="fb" v-if='item.type[2]'>{{item.type[2] ? '法币' : ''}}</span>
+						<td style="width: 280px;" class="type" v-if='rankavtive == 2'>
+							<!-- {{item.type[0] ? '' : ''  {{item.type[1] ? '' : ''}}}} {{item.type[2] ? '' : ''}}  {{item.cjl}} {{item.zb}} {{item.gx}}-->
+							<!-- v-if='item.types.indexOf(0) != -1'              -->
+							<span class="xh"  v-if="(JSON.stringify(item.types)).indexOf('0') != -1">现货</span>
+							<span class="qh" v-if="(JSON.stringify(item.types)).indexOf('1') != -1">期货</span>
+							<span  class="fb" v-if="(JSON.stringify(item.types)).indexOf('2') != -1" >法币</span>
 
 						</td>
 
-						<td v-if='rankavtive == 2'>{{item.cjl}}</td>
-						<td v-if='rankavtive == 2'>{{item.zb}}</td>
-						<td v-if='rankavtive == 2'>{{item.gx}}</td>
+						<td v-if='rankavtive == 2'>${{Number(item.volume_24h).toFixed(2)}}</td>
+						<td v-if='rankavtive == 2'>%</td>
+						<td v-if='rankavtive == 2'>{{item.updated_at}}</td>
 
 
 
@@ -68,6 +70,21 @@
 					</tr>
 				</tbody>
 			</table>
+			<div class="pagesW" style="text-align: center;width:100%;     transform: translateX(-151px);">
+				<div class="block" style="display: inline-block;width: 100px; top: 4px;left: 51px;">
+
+
+				 <el-pagination :current-page.sync='currentPage0'  @current-change="handleCurrentChange" style="width: 100px;"
+				   layout="prev, pager, next"
+				   :total="total" 
+				   	
+				   >
+				  </el-pagination>
+
+
+
+				</div>
+			</div>
 		</div>
 
 
@@ -79,6 +96,7 @@
 
 
 <script>
+	import axios from 'axios'
 	export default{
 		data(){
 			return({
@@ -102,11 +120,11 @@
 								id:20
 							},
 							{
-								pr:'两小时',
+								pr:'24小时',
 								id:20
 							},
 							{
-								pr:'三小时',
+								pr:'7天',
 								id:21
 							}
 						]
@@ -475,100 +493,210 @@
 						cj:'¥4,208,503万',
 						zf:'-5.84%'
 					}
-				]
+				],
+				rankingRise:[],
+				currentPage0:1,
+				total:null,
+				time:null,
+				rank:null,
+				jys:false,
+				jysType:null
 			})
 		},
 		methods:{
 			rachange(index){
 				console.log()
 				this.rankavtive = index
+				if(index == 0){
+					this.currentPage0 = 1
+					this.jys = false
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h`)
+						.then((res)=>{
+							this.rankingRise = res.data.data.list
+							console.log(this.rankingRise)
+							this.total  = Math.ceil(res.data.data.count)
+						})
+				}
 				if(index == 1){
-					console.log('24小时')
+					this.currentPage0 = 1
+					this.jys = false
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h`)
+						.then((res)=>{
+							this.rankingRise = res.data.data.list
+						})
+				}else if(index == 2){
+					this.jysType = 'asc'
+					this.currentPage0 = 1
+					this.jys = true
+					axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=asc`)
+						.then((res)=>{
+							console.log(res.data.data)
+							this.rankingRise = res.data.data.list
+							this.total = Math.ceil(res.data.data.count)
+							console.log(this.rankingRise[0].types.indexOf('0'))
+
+						})
 				}
 			},
 			more(){
 				this.moreShow = true
 			},
 			headeractivesChange(inx,index,dataid){
+				var _this = this 
 				switch (inx){
-					case 0:
-						this.headeractives0 = index
+					case 0:						
 						if(index == 0){
-							// this.tbody =[
-							// 		{
-							// 			id:1,
-							// 			img:'/static/img/rise.png',
-							// 			name:'RISE-R币',
-							// 			price:'¥49,128',
-							// 			shi:'¥8,377亿',
-							// 			num:'1,705万',
-							// 			cj:'¥4,208,503万',
-							// 			zf:'+8.84%'
-							// 		},
-							// 		{
-							// 			id:2,
-							// 			img:'/static/img/ejoy.png',
-							// 			name:'RISE-R币',
-							// 			price:'¥49,128',
-							// 			shi:'¥8,377亿',
-							// 			num:'1,705万',
-							// 			cj:'¥4,208,503万',
-							// 			zf:'+18.84%'
-							// 		},
-							// 		{
-							// 			id:3,
-							// 			name:'RISE-R币',
-							// 			price:'¥49,128',
-							// 			shi:'¥8,377亿',
-							// 			num:'1,705万',
-							// 			cj:'¥4,208,503万',
-							// 			zf:'-8.84%'
-							// 		},
-							// 		{
-							// 			id:4,
-							// 			name:'RISE-R币',
-							// 			price:'¥49,128',
-							// 			shi:'¥8,377亿',
-							// 			num:'1,705万',
-							// 			cj:'¥4,208,503万',
-							// 			zf:'-5.84%'
-							// 		}
-							// 	]
+							this.headeractives0 = index
+							this.currentPage0 = 1
+							this.rank = 'asc'
+							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
+								.then((res)=>{
+									this.rankingRise = res.data.data.list
+									console.log(this.rankingRise)
+								})
+						}else if(index == 1){
+						this.currentPage0 = 1
+							this.headeractives0 = index
+							this.rank = 'desc'
+							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
+								.then((res)=>{
+									this.rankingRise = res.data.data.list
+									console.log(this.rankingRise)
+								})
 						}
-						// if(index == 1){
-						// 	this.tbody = this.tbody2
-						// }
-						console.log(dataid)
 						break;
 					case 1:
 						this.headeractives1 = index
-						if(index == 0){
-							alert('涨幅')
-						}
-						console.log(dataid)
-
+					
 						break;
 					case 2:
 						this.headeractives2 = index
-						
-						console.log(dataid)
+						if(dataid == 0 ){
+							this.currentPage0 = 1
+							this.jysType = 'asc'
+							axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=asc`)
+						.then((res)=>{
+							console.log(res.data.data)
+							this.rankingRise = res.data.data.list
+							console.log(this.rankingRise[0].types.indexOf('0'))
+
+						})
+					}else if(dataid == 1){
+						this.currentPage0 = 1
+							this.jysType = 'desc'
+
+						axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=desc`)
+						.then((res)=>{
+							console.log(res.data.data)
+							this.rankingRise = res.data.data.list
+
+						})
+					}
 
 						break;
 
 				}
 			},
 			childChoose(e,index){
+				var _this = this
 				this.headeractives0Chi = index
-				console.log(e.target.innerHTML)
+				if(index == 0){
+					this.time = 'percent_change_1h'
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
+						.then((res)=>{
+						this.rankingRise = res.data.data.list
+						console.log(this.rankingRise)
+					})
+				}else if(index == 1){
+					this.time = 'percent_change_24h'
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
+						.then((res)=>{
+						this.rankingRise = res.data.data.list
+						console.log(this.rankingRise)
+					})
+				}else if(index == 2){
+					this.time = 'percent_change_7d'
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
+						.then((res)=>{
+						this.rankingRise = res.data.data.list
+						console.log(this.rankingRise)
+					})
+				}
 				this.headTchoose0[2].pr = e.target.innerHTML
 				this.moreShow = false
 			},
 			Bdetalis(index){
-				this.$router.push('/index/cion/' + index)
-			}
+				if(this.rankavtive == 0 || this.rankavtive == 1){
+
+						this.$router.push('/index/cion/' + index)
+				}else if(this.rankavtive == 2){
+					this.$router.push('/index/tradDetali/2')
+				}
+			},
+			handleCurrentChange(pages){
+				var _this = this
+				this.currentPage0 =  pages
+				
+				if(this.rankavtive == 0){
+					if(this.headeractives0 == 0){
+						this.rank = 'asc'
+							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
+								.then((res)=>{
+									this.rankingRise = res.data.data.list
+									console.log(this.rankingRise)
+						})
+					}else if(this.headeractives0 == 1){
+						this.rank = 'desc'
+							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
+								.then((res)=>{
+									this.rankingRise = res.data.data.list
+									console.log(this.rankingRise)
+								})
+					}
+				}else if(this.rankavtive == 1){
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&skip=${(Number(pages)-1)*10}`)
+						.then((res)=>{
+							this.rankingRise = res.data.data.list
+						})
+					}else if(this.rankavtive == 2){
+							
+								axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=${_this.jysType}&skip=${(Number(pages)-1)*10}`)
+									.then((res)=>{
+										console.log(res.data.data)
+										this.rankingRise = res.data.data.list
+										this.total = Math.ceil(res.data.data.count)
+										console.log(this.rankingRise[0].types.indexOf('0'))
+
+								})
+					}
+
+
+
+
+
+					
+				// else{
+				// 	axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
+				// 	.then((res)=>{
+				// 		this.rankingRise = res.data.data.list
+				// 		console.log(this.rankingRise)
+				// 		this.total  = Math.ceil(res.data.data.count)
+				// 	})			
+				// }
+
+					
+			},
+			
 		},
 		mounted(){
-			
+			this.time = 'percent_change_1h'
+			this.rank = 'asc'
+			axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h`)
+				.then((res)=>{
+					this.rankingRise = res.data.data.list
+					console.log(this.rankingRise)
+					this.total  = Math.ceil(res.data.data.count)
+				})
 		}
 	}
 </script>
@@ -696,6 +824,8 @@
 							>.qh{
 								background-color: #7a85e9;
 								background-image: url('/static/img/scales.png');
+								 background-position: 7px 5px;
+								 line-height: 	28px;
 							}
 							>.fb{
 								background-color: #f19f5f;

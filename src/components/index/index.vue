@@ -27,10 +27,12 @@
 							<li @click='changeActives(index)' :class="actives == index ? 'actives' : '' "  v-for='(item,index) in 5'>{{item}}</li>
 						</ul> -->
 
-						<div class="block" style="width: 100px; position: absolute;top: 4px;left: 51px;">
+						<div class="block" style="width: 50px; position: absolute;top: 4px;left: 51px;">
 						  <el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
 						    layout="prev, pager, next"
-						    :total="50" >
+						    :total="total"
+						     >
+						     <!-- pager-count='3'  -->
 						  </el-pagination>
 						</div>
 					</div>
@@ -42,22 +44,23 @@
 					<table class="dataTable">
 						<thead>
 							<tr>
-								<td :class="'th' + (index) " v-for='(item,index) in thead' :key='index'>{{item}}</td>
+								<td  :class="'th' + (index) " v-for='(item,index) in thead' :key='index'>{{item}}</td>
 							</tr>
 						</thead>
 						<tbody>
-							<tr  @click='toIconDetali' v-for='(item,index) in tbody' :key='index'>
+							<tr   @click='toIconDetali(item.slug)' v-for='(item,index) in cionList' :key='index'>
 								<td class="td0">{{item.id}}</td>
-								<td class="name td1"><img :src="item.img" /><span>{{item.name}}</span></td>
-								<td class="td2">{{item.circulationVale}}</td>
-								<td class="td3">{{item.price}}</td>
-								<td class="td4">{{item.sum}}</td>
-								<td class="td5">{{item.transaction}}</td>
-								<td class="td6" >{{item.rises}}</td>
+								<td class="name td1" ><img style="width: 15px;transform: translateY(-1px);" :src="item.logo" /><span>{{item.symbol}}  {{item.cn_name ? '-' + item.cn_name : ''}}</span></td>
+								<td class="td2">{{moneyid == 0 ? '￥' + (Number(item.market_cap_cny)/100000000).toFixed(2) :  '$' + (Number(item.market_cap)/100000000).toFixed(2)}}亿</td>
+								<td class="td3">{{moneyid == 0 ?  '￥' +(Number(item.price_cny)).toFixed(2)  : '$' + (item.price).toFixed(4)}}</td>
+								<td class="td4">{{(Number(item.circulating_supply)/10000).toFixed(2)}}万</td>
+								<td class="td5">{{moneyid == 0 ? '￥' + (Number(item.volume24h_cny)/10000).toFixed(2)	: '$' +  (Number(item.volume_24h)/10000).toFixed(2)}}万</td>
+								<td class="td6" :style="{color:item.percent_change_1h >=0 ? '#3ba316' : '#e40202'}">{{item.percent_change_24h}}%</td>
 								<td class="td7">
-									<svg width='80' height='20' style='margin-top: 20px;'>
-										 <polyline :points="item.tendency" style="fill:none;stroke:#3f7cdc;stroke-width:1" />
-									</svg>
+									<!-- <svg width='80' height='20' style='margin-top: 20px;'>
+										 <polyline points="0 1 20 15" style="fill:none;stroke:#3f7cdc;stroke-width:1" />
+									</svg> -->
+									<peity :type="'line'" :options=" { width: 50, height: 13, fill: '#fff', strokeWidth: 1, min: 99999, stroke: '#0291d6' }" :data="item.price_7d_line"></peity>
 								</td>
 
 
@@ -66,11 +69,11 @@
 						</tbody>
 
 					</table>
-					<div class="pagesW" style="text-align: center;width:100%; ">
+					<div class="pagesW" style="text-align: center;width:100%;     transform: translateX(-151px);">
 						<div class="block" style="display: inline-block;width: 100px; top: 4px;left: 51px;">
 						  <el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
 						    layout="prev, pager, next"
-						    :total="50" >
+						    :total="total" >
 						  </el-pagination>
 						</div>
 					</div>
@@ -285,15 +288,21 @@
 			</div>
 
 		</div>
+
+
+
+
 	</div>
 </template>
 
 
 <script>
-
+	import axios from 'axios'
+	import Peity from 'vue-peity'
 	export default{
 		data(){
 			return({
+				  pieData: '1, 2, 3, 2,2',
 				nav:['货币','关注'],
 				active:0,
 				actives:0,
@@ -501,9 +510,13 @@
 				],
 				datar:['数据存储','匿名货币','公正防伪','去中心化交易所','比特币山寨币','侧链概念','支付概念','平台币','资产交易','数据经济'],
 				money:'人民币CNY',
+				moneyid:0,
 				moneyList:['人民币CNY','美元USD'],
 				moneyShow:false,
-				currentPage:5
+				currentPage:1,
+				total:null,
+				// pagerCount:3,
+				cionList:[]
 
 			})
 		}
@@ -511,12 +524,17 @@
 		methods:{
 			handleCurrentChange(val){
 				this.currentPage =val
-				console.log(val)
+				axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${(Number(val)-1)*10}`)
+				.then((res)=>{
+					console.log(res.data.data.list)
+					this.cionList = res.data.data.list
+				})
 			},
-			toIconDetali(){
-				this.$router.push('/index/cion/1')
+			toIconDetali(sug){
+				this.$router.push(`/index/cion/${sug}`)
 			},
 			choosemoneyItem(id){
+				this.moneyid = id
 				this.money = this.moneyList[id]
 				if(this.moneyShow){
 					this.moneyShow =true
@@ -534,7 +552,27 @@
 
 			},
 			choosed(index){
-				this.active = index			
+				this.active = index	
+				switch (index){
+					case 0:
+						
+								this.cionList = JSON.parse(localStorage.cionList1)
+								this.total = Number(localStorage.cionList1sum)
+						
+						break;
+					case 1 :
+						axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}`)
+							.then((res)=>{
+								console.log(res.data.data.list)
+								var aa = []
+								aa.push(res.data.data.list[0])
+								aa.push(res.data.data.list[1])
+								this.cionList = aa
+
+								this.total = (this.cionList.length)*10
+						})
+						break;
+				}		
 			},
 			// changeActives(index){
 			// 	this.actives = index
@@ -570,6 +608,22 @@
 			}
 			
 
+		},
+		 components: {
+    Peity
+  },
+		mounted(){
+			
+			axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}`)
+				.then((res)=>{
+					console.log(res.data.data.list)
+					this.cionList = res.data.data.list
+					localStorage.cionList1 = JSON.stringify(res.data.data.list)
+					localStorage.cionList1sum = Math.ceil(Number(res.data.data.count))
+					this.total = Math.ceil(Number(res.data.data.count))
+
+				})
+			
 		}
 	}
 </script>
@@ -800,7 +854,7 @@
 								width: 40px;
 							}
 							>.th1{
-								width: 186px;
+								width: 140px;
 							}
 							>.th2{
 								width: 100px;
@@ -846,7 +900,7 @@
 								width: 40px;
 							}
 							>.td1{
-								width: 186px;
+								width: 140px;
 							}
 							>.td2{
 								width: 100px;

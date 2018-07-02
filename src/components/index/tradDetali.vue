@@ -1,18 +1,18 @@
 <template>
 	<div class="TradDeWarp">
-		<div class="detaliTop">
+		<div class="detaliTop" v-for="(ii,id) in cionDetali">
 			<div class="detaliTopImg">
 				<dl>
 					<dt>
-						<img src="/static/img/pic_logobg.png">
+						<img :src="ii.logo">
 					</dt>
 					<dd>
-						<p class="detaliName">BitMEX</p>
-						<p class="detaliiPai">排名No.1</p>
+						<p class="detaliName">{{ii.name}}</p>
+						<p class="detaliiPai">排名No.{{ii.rank}}</p>
 						<p class="detaliFen">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;">法币</span>
+							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;"  v-if="JSON.stringify(ii.types).indexOf('0') != -1" >现货</span>
+							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;" v-if="JSON.stringify(ii.types).indexOf('1') != -1">期货</span>
+							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;" v-if="JSON.stringify(ii.types).indexOf('2') != -1">法币</span>
 
 						</p>
 					</dd>
@@ -22,7 +22,7 @@
 			<div class="detaliTopText">
 				<ul>
 					<li class="detaliss1" >
-						<p>#BitMEX建立于塞舌尔共和国，是最先进的比特币衍生品交易所,对于比特币类产品提供高达100倍的杠杆，同时也提供针对其它数字#BitMEX建立于塞舌尔共和国，是最先进的比特币衍生品交易所,对于比特币类产品提供高达100倍的杠杆，同时也提供针对其它数字#BitMEX建立于塞舌尔共和国，是最先进的比特币衍生品交易所,对于比特币类产品提供高达100倍的杠杆，同时也提供针对其它数字</p>
+						<p >{{ii.introduce}}</p>
 							<i >查看更多</i>
 					</li>
 
@@ -30,7 +30,7 @@
 					<li class="detaliss2" >
 						<div class="jz" >
 							<p>官网地址：yfuhvhjvyhi</p>
-							<p>地区: <i>中国</i></p>
+							<p>地区: <i>{{ii.country_code}}</i></p>
 						</div>
 					</li>
 
@@ -42,8 +42,8 @@
 								margin-bottom: 20px;
 							">24小时平台成交量：</p>
 							<p style="font-size: 20px;
-							color: #4277ff;font-weight: bold;margin-bottom: 10px;">￥1451621265</p>
-							<p style="margin-bottom: 13px;">≈ $564153</p>
+							color: #4277ff;font-weight: bold;margin-bottom: 10px;">${{ii.volume_24h}}</p>
+							<p style="margin-bottom: 13px;">≈ $564153+xx</p>
 							<p>≈ 5641BTC</p>
 						</div>
 
@@ -84,16 +84,16 @@
 
 					</tr>
 				</thead>
-				<tbody>
+				<tbody >
 			
 
-					<tr>
-						<td>1</td>
+					<tr v-for="(ii,id) in jyd" style="min-height: 70px;">
+						<td>{{id}}</td>
 						<td>
 							<img style="vertical-align: middle;" src="/static/img/rise.png">
 							<span>Rioj-币</span>
 						</td>
-						<td>12</td>
+						<td>{{ii.symbol}}/{{ii.to_symbol}}</td>
 						<td>中国</td>
 						<td>￥3423</td>
 						<td>31.3万</td>
@@ -102,151 +102,6 @@
 						<td style="width: 100px;">刚刚</td>
 						<td style="width: 100px;">星星</td>
 					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>
-							<img style="vertical-align: middle;" src="/static/img/rise.png">
-							<span>Rioj-币</span>
-						</td>
-						<td>12</td>
-						<td>中国</td>
-						<td>￥3423</td>
-						<td>31.3万</td>
-						<td>￥3423万</td>
-						<td>99%</td>
-						<td style="width: 100px;">刚刚</td>
-						<td style="width: 100px;">星星</td>
-					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>
-							<img style="vertical-align: middle;" src="/static/img/rise.png">
-							<span>Rioj-币</span>
-						</td>
-						<td>12</td>
-						<td>中国</td>
-						<td>￥3423</td>
-						<td>31.3万</td>
-						<td>￥3423万</td>
-						<td>99%</td>
-						<td style="width: 100px;">刚刚</td>
-						<td style="width: 100px;">星星</td>
-					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>
-							<img style="vertical-align: middle;" src="/static/img/rise.png">
-							<span>Rioj-币</span>
-						</td>
-						<td>12</td>
-						<td>中国</td>
-						<td>￥3423</td>
-						<td>31.3万</td>
-						<td>￥3423万</td>
-						<td>99%</td>
-						<td style="width: 100px;">刚刚</td>
-						<td style="width: 100px;">星星</td>
-					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>
-							<img style="vertical-align: middle;" src="/static/img/rise.png">
-							<span>Rioj-币</span>
-						</td>
-						<td>12</td>
-						<td>中国</td>
-						<td>￥3423</td>
-						<td>31.3万</td>
-						<td>￥3423万</td>
-						<td>99%</td>
-						<td style="width: 100px;">刚刚</td>
-						<td style="width: 100px;">星星</td>
-					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>
-							<img style="vertical-align: middle;" src="/static/img/rise.png">
-							<span>Rioj-币</span>
-						</td>
-						<td>12</td>
-						<td>中国</td>
-						<td>￥3423</td>
-						<td>31.3万</td>
-						<td>￥3423万</td>
-						<td>99%</td>
-						<td style="width: 100px;">刚刚</td>
-						<td style="width: 100px;">星星</td>
-					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>
-							<img style="vertical-align: middle;" src="/static/img/rise.png">
-							<span>Rioj-币</span>
-						</td>
-						<td>12</td>
-						<td>中国</td>
-						<td>￥3423</td>
-						<td>31.3万</td>
-						<td>￥3423万</td>
-						<td>99%</td>
-						<td style="width: 100px;">刚刚</td>
-						<td style="width: 100px;">星星</td>
-					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>
-							<img style="vertical-align: middle;" src="/static/img/rise.png">
-							<span>Rioj-币</span>
-						</td>
-						<td>12</td>
-						<td>中国</td>
-						<td>￥3423</td>
-						<td>31.3万</td>
-						<td>￥3423万</td>
-						<td>99%</td>
-						<td style="width: 100px;">刚刚</td>
-						<td style="width: 100px;">星星</td>
-					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>
-							<img style="vertical-align: middle;" src="/static/img/rise.png">
-							<span>Rioj-币</span>
-						</td>
-						<td>12</td>
-						<td>中国</td>
-						<td>￥3423</td>
-						<td>31.3万</td>
-						<td>￥3423万</td>
-						<td>99%</td>
-						<td style="width: 100px;">刚刚</td>
-						<td style="width: 100px;">星星</td>
-					</tr>
-
-					<tr>
-						<td>1</td>
-						<td>
-							<img style="vertical-align: middle;" src="/static/img/rise.png">
-							<span>Rioj-币</span>
-						</td>
-						<td>12</td>
-						<td>中国</td>
-						<td>￥3423</td>
-						<td>31.3万</td>
-						<td>￥3423万</td>
-						<td>99%</td>
-						<td style="width: 100px;">刚刚</td>
-						<td style="width: 100px;">星星</td>
-					</tr>
-
 
 					
 				</tbody>
@@ -258,14 +113,30 @@
 </template>
 
 <script>
+	import axios from 'axios'
 	export default{
 		data(){
 			return({
-
+				cionDetali:[],
+				jyd:[]
 			})
 		},
 		methods:{
 
+		},
+		mounted(){
+			var _this =  this
+			console.log(this.$route.params.id)
+			axios.get(`http://sdd.xtype.cn/api/exchange/item?&slug=${_this.$route.params.id}`)
+					.then((res)=>{
+						this.cionDetali = res.data.data
+			})
+			axios.get(`http://sdd.xtype.cn/api/pair/list?&exchange_slug=${_this.$route.params.id}`)
+				.then((res)=>{
+						console.log(res.data.data)
+						this.jyd = res.data.data.list
+
+				})
 		}
 	}
 </script>
