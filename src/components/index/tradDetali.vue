@@ -29,7 +29,7 @@
 
 					<li class="detaliss2" >
 						<div class="jz" >
-							<p>官网地址：yfuhvhjvyhi</p>
+							<p>官网地址： <a :href="ii.website">{{ii.website}}</a>	</p>
 							<p>地区: <i>{{ii.country_code}}</i></p>
 						</div>
 					</li>
@@ -42,8 +42,8 @@
 								margin-bottom: 20px;
 							">24小时平台成交量：</p>
 							<p style="font-size: 20px;
-							color: #4277ff;font-weight: bold;margin-bottom: 10px;">${{ii.volume_24h}}</p>
-							<p style="margin-bottom: 13px;">≈ $564153+xx</p>
+							color: #4277ff;font-weight: bold;margin-bottom: 10px;">￥{{Number(ii.volume_24h)*6.6322}}</p>
+							<p style="margin-bottom: 13px;">≈ ${{ii.volume_24h}}</p>
 							<p>≈ 5641BTC</p>
 						</div>
 
@@ -58,9 +58,8 @@
 			<div class="BomTopChoose">
 				<div class="Left">平台行情</div>
 				<div class="Right">
-					<select>
-						<option>人民币CNY</option>
-						<option>美国USD</option>
+					<select style="text-align: center;" @change='optionChange'>
+						<option   :value='[ii.code,ii.symbol,ii.value]' v-for="(ii,id) in ct">{{ii.cn_name}}{{ii.code}}</option>
 
 					</select>	
 				</div>
@@ -72,7 +71,6 @@
 						<td>#</td>
 						<td>名称</td>
 						<td>交易对</td>
-						<td>国家</td>
 						<td>价格</td>
 						<td>成交量</td>
 						<td>成交额</td>
@@ -88,19 +86,21 @@
 			
 
 					<tr v-for="(ii,id) in jyd" style="min-height: 70px;">
-						<td>{{id}}</td>
-						<td>
-							<img style="vertical-align: middle;" src="/static/img/rise.png">
-							<span>Rioj-币</span>
+						<td >{{id}}</td>
+						<td >
+							<img style="vertical-align: middle;width: 21px;" :src="ii.exchange.logo">
+							<span>{{ii.exchange.slug}}</span>
 						</td>
-						<td>{{ii.symbol}}/{{ii.to_symbol}}</td>
-						<td>中国</td>
-						<td>￥3423</td>
-						<td>31.3万</td>
-						<td>￥3423万</td>
-						<td>99%</td>
-						<td style="width: 100px;">刚刚</td>
-						<td style="width: 100px;">星星</td>
+						<td style="color: #4277ff;width: 100px;">{{ii.symbol}}/{{ii.to_symbol}}</td>
+						<td >{{ranges[1]}}{{(Number(ii.price_usd)*Number(ranges[2])).toFixed(2)}}</td>
+						<td>{{((ii.volume_usd/ii.price_usd)/10000).toFixed(2)}}万</td>
+						<td>{{ranges[1]}}{{(Number(ii.volume_usd)*Number(ranges[2])).toFixed(2)}}</td>
+						<td>{{((ii.volume_usd/Number(sum24))*100).toFixed(2)}}%</td>
+						<td >{{ii.updated_at}}</td>
+						<td @click='chengChoose(id)' style="transform: translateX(17px);">
+								<img v-if='chooseArr.indexOf(id) == -1 '   src="/static/img/startNO.png">
+								<img v-else-if='chooseArr.indexOf(id) != -1' src="/static/img/stratY.png">
+						</td>
 					</tr>
 
 					
@@ -118,26 +118,71 @@
 		data(){
 			return({
 				cionDetali:[],
-				jyd:[]
+				jyd:[],
+				ct:[],
+				ranges:['us','$',1],
+				sum24:null,
+				chooseArr:[]
+
 			})
 		},
 		methods:{
+			optionChange(e){
+				this.ranges = (e.target.value).split(',')
+				console.log(this.ranges)
 
+			},
+			chengChoose(id){
+				if(this.chooseArr.indexOf(id) != -1){
+					this.chooseArr = this.chooseArr.filter(function(i,d){
+							return i != id
+						})
+					console.log(this.chooseArr)
+					return
+
+				}
+				this.chooseArr.push(id)
+				console.log(this.chooseArr)
+			}
 		},
 		mounted(){
+			
+			this.ct.push(JSON.parse(localStorage.Rate).USD,JSON.parse(localStorage.Rate).CNY,JSON.parse(localStorage.Rate).JPY,JSON.parse(localStorage.Rate).EUR)
+			console.log(this.ct)
 			var _this =  this
-			console.log(this.$route.params.id)
 			axios.get(`http://sdd.xtype.cn/api/exchange/item?&slug=${_this.$route.params.id}`)
 					.then((res)=>{
 						this.cionDetali = res.data.data
+
 			})
 			axios.get(`http://sdd.xtype.cn/api/pair/list?&exchange_slug=${_this.$route.params.id}`)
 				.then((res)=>{
 						console.log(res.data.data)
-						this.jyd = res.data.data.list
 
-				})
-		}
+						this.jyd = res.data.data.list
+						this.sum24 =res.data.data.sum_volume24h
+
+			})
+		},
+		 watch: {
+		   '$route' (to, from) {
+		     console.log(this.$route.path)
+		     var _this = this 
+		     axios.get(`http://sdd.xtype.cn/api/exchange/item?&slug=${_this.$route.params.id}`)
+					.then((res)=>{
+						this.cionDetali = res.data.data
+
+			})
+			axios.get(`http://sdd.xtype.cn/api/pair/list?&exchange_slug=${_this.$route.params.id}`)
+				.then((res)=>{
+						console.log(res.data.data)
+
+						this.jyd = res.data.data.list
+						this.sum24 =res.data.data.sum_volume24h
+
+			})
+		   }
+		 },
 	}
 </script>
 
@@ -317,6 +362,8 @@
 						>td{
 							height: 40px;
 							border-bottom:1px solid #e5e5e5;
+							width: 133px;
+							text-align: center;
 							
 						}
 					}
@@ -325,6 +372,8 @@
 					>tr{
 						>td{
 							height: 53px;
+							width: 133px;
+							text-align: center;
 						}
 					}
 				}

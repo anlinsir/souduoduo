@@ -6,25 +6,28 @@
 			</div>
 
 			<div class="titleRightChose">
-				<span style="font-size: 12px;color: #9c9c9c;">筛选：</span><select @change='changeCount' >
-					<option value="0" v-for='(key,val,id) in gjList'>{{key.cn_name}}</option>
+				<span style="font-size: 12px;color: #9c9c9c;">筛选：</span>
+				<select @change='changeCount($event)'>
+					<option :value="null">所有</option>
+					<option  :value="key.code" v-for='(key,val,id) in gjList'>{{key.cn_name}}</option>
 					
 
 
 				</select>
 
-				<select @change='changeCount' >
-					<option value="0">类型</option>
-					<option value="1">xx</option>
-					<option value="2">llll</option>
+				<select @change='changeCount2' >
+					<option value="0">全部</option>
+					<option value="1">期货</option>
+					<option value="2">现货</option>
+					<option value="3">法币</option>
+
 
 
 				</select>
 
-				<select style="width: 98px;margin-right: 30px;" @change='changeCount' >
-					<option value="0">默认排序</option>
-					<option value="1">升序</option>
-					<option value="2">降序</option>
+				<select style="width: 98px;margin-right: 30px;" @change='changeCount3' >
+					<option value="asc">升序</option>
+					<option value="desc">降序</option>
 
 
 				</select>
@@ -84,7 +87,7 @@
 		<div class="block" style="width: 100px;margin-left: 450px;">
 				<el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
 			    layout="prev, pager, next"
-			    :total="50" >
+			    :total="pagestotal" >
 			  </el-pagination>
 		</div>
 	</div>	
@@ -96,23 +99,75 @@
 		data(){
 			return({
 				serach:'',
-				currentPage:5,
+				currentPage:1,
+				pagestotal:null,
 				tadingList:[],
-				gjList:[]
+				gjList:[],
+				countryCode:'',
+				orderType:'asc',
+				type:0
+
 			})
 		}
 		,
 		methods:{
 			handleCurrentChange(val){
-				this.currentPage =val
-				console.log(val)
+				var _this = this
+				this.currentPage = val
+				console.log(this.currentPage)
+				axios.get(`http://sdd.xtype.cn/api/exchange/list?&country_code=${_this.countryCode}&take=12&skip=${(Number(_this.currentPage)-1)*12}&order_type=${this.orderType}&type=${this.type}`)
+					.then((res)=>{
+						console.log(res.data.data)
+						this.tadingList = res.data.data.list
+						this.pagestotal = Math.ceil(res.data.data.count)
+						document.documentElement.scrollTop = 0
+
+				})
 			},
-			changeCount(e){
-				if(e.target.selectedIndex == 0){
-					return
-				}
-				alert(e.target.selectedIndex)
-				alert(e.target.options[e.target.selectedIndex].text)
+
+			changeCount(e,code){
+
+				var _this = this
+				this.countryCode = e.target.value
+				// alert(e.target.value)
+				// alert(e.target.options[e.target.selectedIndex].text)
+
+				axios.get(`http://sdd.xtype.cn/api/exchange/list?&country_code=${_this.countryCode}&take=12&order_type=${this.orderType}&type=${this.type}`)
+					.then((res)=>{
+						this.tadingList = res.data.data.list
+						this.pagestotal = Math.ceil(res.data.data.count)
+						this.currentPage  = 1
+
+				})
+			},
+			changeCount2(e){
+				var _this = this
+				console.log(e.target.value)
+				this.type = e.target.value
+				axios.get(`http://sdd.xtype.cn/api/exchange/list?&country_code=${_this.countryCode}&take=12&order_type=${this.orderType}&type=${this.type}`)
+					.then((res)=>{
+						this.tadingList = res.data.data.list
+						this.pagestotal = Math.ceil(res.data.data.count)
+						this.currentPage  = 1
+
+				})
+
+
+			},
+			changeCount3(e){
+				var _this = this
+				this.orderType = e.target.value
+				console.log(this.orderType)
+
+				axios.get(`http://sdd.xtype.cn/api/exchange/list?&country_code=${_this.countryCode}&take=12&order_type=${this.orderType}&type=${this.type}`)
+					.then((res)=>{
+						this.tadingList = res.data.data.list
+						this.pagestotal = Math.ceil(res.data.data.count)
+						this.currentPage  = 1
+
+				})
+
+
 			},
 			searchTrading(serach){
 				alert(this.serach + ' 暂无数据')
@@ -129,10 +184,12 @@
 			}
 		},
 		mounted(){
-			axios.get(`http://sdd.xtype.cn/api/exchange/list?&take=12`)//平台列表
+			axios.get(`http://sdd.xtype.cn/api/exchange/list?&take=12&order_type=${this.orderType}`)//平台列表
 					.then((res)=>{
 						console.log(res.data.data.list)
 						this.tadingList = res.data.data.list
+						this.pagestotal = (Number(res.data.data.count)/12)*10
+
 			})
 			axios.get(`http://sdd.xtype.cn/api/exchange/countries`)
 				.then((res)=>{

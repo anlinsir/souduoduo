@@ -13,12 +13,13 @@
 				<div  class="headerPicWarp">
 					<div class="headerPic">
 						<dl v-for='(item,index) in headerData'>
-							<dt>{{item.name}}</dt>
+							<dt>{{item.symbol}} /  {{item.name}}</dt>
 							<dd>
-								<span>{{'￥' + item.price}}</span>
-								 <svg class="peity" height="30" width="70" >	
+								<span>{{'$' + item.price}}</span>
+								<!--  <svg class="peity" height="30" width="70" >	
 									 <polyline :points="item.pic" style="fill:none;stroke:#5a8bf9;stroke-width:1" />
-								</svg>
+								</svg> -->
+								<peity :type="'line'" :options=" { width: 50, height: 13, fill: '#fff', strokeWidth: 1, min: 99999, stroke: '#0291d6' }" :data="item.price_7d_line"></peity>
 							</dd>
 							
 						</dl>
@@ -87,18 +88,18 @@
 						<div class="Tip" v-if='tip'>
 							<div  class="hb" style="width: 45%;float: left;overflow: hidden;margin-top: 40px;">
 									<div style="width: 100%;height: 30px;;padding-left: 20px;line-height: 20px;border-bottom: 1px solid #e5e5e5;">货币</div>
-									<div style="padding: 5px;" >
-										<img src="/static/img/ejoy.png" style="vertical-align: middle;">
-										<p  class="activesssss" @click='unquery' style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width: 87%;line-height: 35px;">dsd</p>
+									<div style="padding: 5px;" v-for="(ii,id) in currenciesTip">
+										<img :src="ii.logo" style="vertical-align: middle;width: 21px;">
+										<p   class="activesssss" @click='unquery(ii.symbol,ii.slug)' style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width: 87%;line-height: 35px;">{{ii.name}}{{ii.symbol?'(' + ii.symbol+ ')' : '' }}</p>
 
 									</div>
 								</div>
 
 								<div class="pt" style="width: 45%;float: right;margin-top:40px;">
 									<div style="width: 100%;height: 30px;padding-left: 20px;line-height: 20px;border-bottom: 1px solid #e5e5e5;">交易所</div>
-									<div style="min-height: 100px;padding: 5px;">
-										<img src="/static/img/ejoy.png" style="vertical-align: middle;">
-										<p  class="activesssss" @click='unquery'style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width:87%;line-height: 35px;">dsd</p>
+									<div style="padding: 5px;" v-for="(ii,id) in exchangesTip">
+										<img :src="ii.logo" style="vertical-align: middle;width: 21px;">
+										<p  class="activesssss" @click='unqueryss(ii.slug)'style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width:87%;line-height: 35px;">{{ii.name}}</p>
 									</div>
 									
 								</div>	
@@ -184,27 +185,12 @@
 </template>
 
 <script>
+	import axios from 'axios'
+	import Peity from 'vue-peity'
 	export default{
 		data(){
 			return({
-				headerData:[
-					{
-						name:'BTC/Bitfinex',
-						price:'48321.98',
-						pic:'0 3.1511627906976756 2.962962962962963 6.244186046511624 5.925925925925926 6.02325581395349 8.88888888888889 5.802325581395355 11.851851851851851 4.697674418604642 14.814814814814813 0.5 17.77777777777778 1.1627906976744242 20.74074074074074 4.034883720930237 23.703703703703702 5.360465116279066 26.666666666666664 8.674418604651157 29.629629629629626 14.197674418604645 32.59259259259259 15.081395348837205 35.55555555555556 11.325581395348832 38.51851851851852 19.5 41.48148148148148 16.62790697674419 44.44444444444444 14.639534883720925 47.407407407407405 15.523255813953485 50.37037037037037 17.953488372093027 53.33333333333333 13.534883720930232 56.29629629629629 14.41860465116279 59.25925925925925 13.534883720930232 62.22222222222222 10.220930232558139 65.18518518518518 10.220930232558139 68.14814814814814 12.430232558139537 71.11111111111111 14.639534883720925 74.07407407407408 12.430232558139537 77.03703703703704 13.313953488372086 80 15.523255813953485 80 19.5'
-					}
-					,
-					{
-						name:'ETH/Binance',
-						price:'3761.48',
-						pic:'0 3.1511627906976756 2.962962962962963 6.244186046511624 5.925925925925926 6.02325581395349 8.88888888888889 5.802325581395355 11.851851851851851 4.697674418604642 14.814814814814813 0.5 17.77777777777778 1.1627906976744242 20.74074074074074 4.034883720930237 23.703703703703702 5.360465116279066 26.666666666666664 8.674418604651157 29.629629629629626 14.197674418604645 32.59259259259259 15.081395348837205 35.55555555555556 11.325581395348832 38.51851851851852 19.5 41.48148148148148 16.62790697674419 44.44444444444444 14.639534883720925 47.407407407407405 15.523255813953485 50.37037037037037 17.953488372093027 53.33333333333333 13.534883720930232 56.29629629629629 14.41860465116279 59.25925925925925 13.534883720930232 62.22222222222222 10.220930232558139 65.18518518518518 10.220930232558139 68.14814814814814 12.430232558139537 71.11111111111111 14.639534883720925 74.07407407407408 12.430232558139537 77.03703703703704 13.313953488372086 80 15.523255813953485 80 19.5'
-					},
-					{
-						name:'EOS/Bitfinex',
-						price:'69.83',
-						pic:'0 3.1511627906976756 2.962962962962963 6.244186046511624 5.925925925925926 6.02325581395349 8.88888888888889 5.802325581395355 11.851851851851851 4.697674418604642 14.814814814814813 0.5 17.77777777777778 1.1627906976744242 20.74074074074074 4.034883720930237 23.703703703703702 5.360465116279066 26.666666666666664 8.674418604651157 29.629629629629626 14.197674418604645 32.59259259259259 15.081395348837205 35.55555555555556 11.325581395348832 38.51851851851852 19.5 41.48148148148148 16.62790697674419 44.44444444444444 14.639534883720925 47.407407407407405 15.523255813953485 50.37037037037037 17.953488372093027 53.33333333333333 13.534883720930232 56.29629629629629 14.41860465116279 59.25925925925925 13.534883720930232 62.22222222222222 10.220930232558139 65.18518518518518 10.220930232558139 68.14814814814814 12.430232558139537 71.11111111111111 14.639534883720925 74.07407407407408 12.430232558139537 77.03703703703704 13.313953488372086 80 15.523255813953485 80 19.5'
-					}
-				],
+				headerData:[],
 				quAddress:'',
 				iconTypeModel:'',
 				loginInfo:'',
@@ -216,7 +202,9 @@
 				languageList:['简体中文','繁体中文','Deutsch','English','Rosstsch'],
 				iconList:['BTN','RNG','IJF','PHX'],
 				iconTypeShows:false,
-				icon:'ETH'
+				icon:'ETH',
+				currenciesTip:[],
+				exchangesTip:[]
 			})
 		},
 		methods:{
@@ -238,9 +226,26 @@
 			query(){
 				console.log(this.iconTypeModel)
 				this.tip = true
+				axios.get(`http://sdd.xtype.cn/api/search/index?&word=${this.iconTypeModel}`)
+					.then((res)=>{
+						console.log(res.data.data)
+						this.currenciesTip = res.data.data.currencies
+						this.exchangesTip  = res.data.data.exchanges
+
+					})
 			},
-			unquery(){
+			unquery(symbol,slug){
+					console.log(symbol)
+					this.$router.push({path:`/index/cion/${slug}`,query:{symbol:symbol}})
+
+					// window.location = `/index/tradDetali/${slug ?}`
 				this.tip = false
+
+			},
+			unqueryss(slug){
+				this.$router.push(`/index/tradDetali/${slug}`)
+				this.tip = false
+				
 
 			},
 			toLogin(e){
@@ -300,7 +305,18 @@
 					alert('请输入关键词')
 					return
 				}
-				this.$router.push({path:'/index/searchIcontypes',query:{searchText:this.iconTypeModel}})
+				// if(this.$route.name == 'searchIcontypes'){
+				// 	axios.get(`http://sdd.xtype.cn/api/search/index?&word=${this.iconTypeModel}`)
+				// 		.then((res)=>{
+				// 			localStorage.searchList = JSON.stringify(res.data.data)
+				// 			console.log(JSON.parse(localStorage.searchList))
+				// 			location.reload()
+
+				// 		})
+				// }else{
+					this.$router.push({path:'/index/searchIcontypes',query:{searchText:this.iconTypeModel}})	
+				// }
+				
 				console.log(this.iconTypeModel)
 			},
 			toUser(id){
@@ -323,12 +339,24 @@
 			}
 		},
 		mounted(){
+
+			axios.get('http://sdd.xtype.cn/api/currencie/list')
+				.then((res)=>{
+					this.headerData.push(res.data.data.list[0])
+					this.headerData.push(res.data.data.list[1])
+					this.headerData.push(res.data.data.list[2])
+
+				})
+
 			this.loginInfo = localStorage.login
 			console.log(localStorage.login)
 			if(this.$route.name == 'robot'){
 
 				this.show =  false
 			}
+		},
+		components:{
+			Peity
 		}
 	}
 

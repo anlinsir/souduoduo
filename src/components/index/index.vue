@@ -17,7 +17,7 @@
     					leave-active-class="animated flipOutX">
 
 							<div  v-if='moneyShow' class="yuanItem">
-								<p @click='choosemoneyItem(id)' v-for='(ii,id) in moneyList'>{{ii}}</p>
+								<p @click='choosemoneyItem(index,item.value,item.symbol)' v-for='(item,index) in moneyList'>{{item.cn_name}}{{item.code}}</p>
 							</div>
 						</transition>
 
@@ -48,13 +48,21 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr   @click='toIconDetali(item.slug)' v-for='(item,index) in cionList' :key='index'>
+							<tr   @click='toIconDetali(item.slug,item.symbol)' v-for='(item,index) in cionList' :key='index'>
 								<td class="td0">{{item.id}}</td>
 								<td class="name td1" ><img style="width: 15px;transform: translateY(-1px);" :src="item.logo" /><span>{{item.symbol}}  {{item.cn_name ? '-' + item.cn_name : ''}}</span></td>
-								<td class="td2">{{moneyid == 0 ? '￥' + (Number(item.market_cap_cny)/100000000).toFixed(2) :  '$' + (Number(item.market_cap)/100000000).toFixed(2)}}亿</td>
-								<td class="td3">{{moneyid == 0 ?  '￥' +(Number(item.price_cny)).toFixed(2)  : '$' + (item.price).toFixed(4)}}</td>
+								<td class="td2">
+									{{moneySymbol + ((Number(item.market_cap)*moneyrage)/100000000).toFixed(2) }}亿
+								</td>
+
+								<td class="td3">
+									{{ moneySymbol + (Number(item.price)*moneyrage).toFixed(4)}}
+								</td>
+
 								<td class="td4">{{(Number(item.circulating_supply)/10000).toFixed(2)}}万</td>
-								<td class="td5">{{moneyid == 0 ? '￥' + (Number(item.volume24h_cny)/10000).toFixed(2)	: '$' +  (Number(item.volume_24h)/10000).toFixed(2)}}万</td>
+								<td class="td5">
+									{{item.volume_24h ?  moneySymbol + ((Number(item.volume_24h)*moneyrage)/10000).toFixed(2) : ''}}万
+									</td>
 								<td class="td6" :style="{color:item.percent_change_1h >=0 ? '#3ba316' : '#e40202'}">{{item.percent_change_24h}}%</td>
 								<td class="td7">
 									<!-- <svg width='80' height='20' style='margin-top: 20px;'>
@@ -509,9 +517,11 @@
 					
 				],
 				datar:['数据存储','匿名货币','公正防伪','去中心化交易所','比特币山寨币','侧链概念','支付概念','平台币','资产交易','数据经济'],
-				money:'人民币CNY',
+				money:'美元USD',
 				moneyid:0,
-				moneyList:['人民币CNY','美元USD'],
+				moneyrage:1,
+				moneySymbol:'$',
+				moneyList:[],
 				moneyShow:false,
 				currentPage:1,
 				total:null,
@@ -530,12 +540,15 @@
 					this.cionList = res.data.data.list
 				})
 			},
-			toIconDetali(sug){
-				this.$router.push(`/index/cion/${sug}`)
+			toIconDetali(sug,syb){
+				this.$router.push({path:`/index/cion/${sug}`,query:{symbol:syb}})
 			},
-			choosemoneyItem(id){
+			choosemoneyItem(id,value,symbol){
 				this.moneyid = id
-				this.money = this.moneyList[id]
+				this.money = this.moneyList[id].cn_name + this.moneyList[id].code
+				this.moneyrage = Number(value)
+				this.moneySymbol =symbol 
+				console.log(this.moneyrage,this.moneySymbol)
 				if(this.moneyShow){
 					this.moneyShow =true
 					return
@@ -613,6 +626,20 @@
     Peity
   },
 		mounted(){
+
+			if(!localStorage.Rate){
+			         axios.get('http://sdd.xtype.cn/api/exchange/rate')
+			              .then((res)=>{
+			                localStorage.Rate = JSON.stringify(res.data.data)
+			                this.moneyList.push(JSON.parse(localStorage.Rate).USD)
+							this.moneyList.push(JSON.parse(localStorage.Rate).CNY)
+							this.moneyList.push(JSON.parse(localStorage.Rate).JPY)
+							this.moneyList.push(JSON.parse(localStorage.Rate).EUR)
+
+			       })
+   						}
+			
+		
 			
 			axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}`)
 				.then((res)=>{

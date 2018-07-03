@@ -65,6 +65,7 @@
 
 <script>
 	import Nav from '../nav'
+	import axios from 'axios'
 	export default {
 		data(){
 			return({
@@ -72,6 +73,7 @@
 				chooseArr:[]
 				,
 				choosea:-1,
+				searchList:[]
 			})
 		},
 		components:{
@@ -106,6 +108,25 @@
 		},
 		created(){
 			console.log(this.$route.query.searchText) // 做数据查询
+
+
+
+			
+			// if(localStorage.searchList){
+			// 	this.searchList = localStorage.searchList
+			// 	console.log(JSON.parse(localStorage.searchList))
+			// 	localStorage.removeItem('searchList')
+							
+
+			// }else{
+			// 	axios.get(`http://sdd.xtype.cn/api/search/index?&word=${this.$route.query.searchText}`)
+			// 	.then((res)=>{
+			// 		console.log(res.data.data)
+			// 		this.searchList = res.data.data
+			// 	})	
+			// }
+			
+
 		}
 	}
 </script>
