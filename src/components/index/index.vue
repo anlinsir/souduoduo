@@ -84,7 +84,7 @@
 						</thead>
 						<tbody>
 							<tr   @click='toIconDetali(item.slug,item.symbol)' v-for='(item,index) in cionList' :key='index'>
-								<td class="td0">{{item.id}}</td>
+								<td class="td0">{{((currentPage-1)*50) + (index)+1}}</td>
 								<td class="name td1" ><img style="width: 15px;transform: translateY(-1px);" :src="item.logo" /><span>{{item.symbol}}  {{item.cn_name ? '-' + item.cn_name : ''}}</span></td>
 								<td class="td2">
 									{{moneySymbol + ((Number(item.market_cap)*moneyrage)/100000000).toFixed(2) }}亿
@@ -98,7 +98,7 @@
 								<td class="td5">
 									{{item.volume_24h ?  moneySymbol + ((Number(item.volume_24h)*moneyrage)/10000).toFixed(2) : ''}}万
 									</td>
-								<td class="td6" :style="{color:item.percent_change_1h >=0 ? '#3ba316' : '#e40202'}">{{item.percent_change_24h}}%</td>
+								<td class="td6" :style="{color:item.percent_change_24h >=0 ? '#3ba316' : '#e40202'}">{{item.percent_change_24h}}%</td>
 								<td class="td7">
 									<!-- <svg width='80' height='20' style='margin-top: 20px;'>
 										 <polyline points="0 1 20 15" style="fill:none;stroke:#3f7cdc;stroke-width:1" />
@@ -212,7 +212,7 @@
 								display: inline-block;
 								">{{index+1}}</span>{{index < 4 ? '' : index }}</td>
 								<td style="color: #4277ff">{{item.symbol}}-{{item.cn_name ? item.cn_name : item.name}}</td>
-								<td>{{item.volume_24h?item.volume_24h : '??'}}</td>
+								<td>{{item.volume_24h?(Number(item.volume_24h)/10000).toFixed(2) + '万' : '??'}}</td>
 								
 
 							</tr>
@@ -240,7 +240,7 @@
 								display: inline-block;
 								">{{index+1}}</span>{{index < 4 ? '' : index }}</td>
 								<td style="color: #4277ff">{{item.name}}</td>
-								<td>{{item.volume_24h?item.volume_24h : '??'}}</td>
+								<td>{{item.volume_24h?(Number(item.volume_24h)/10000).toFixed(2) + '万': '??'}}</td>
 								
 
 							</tr>
@@ -272,7 +272,7 @@
 							<span style='width: 20px;height: 20px;transform: translateY(6px);display: inline-block;text-align: center;line-height: 20px;margin-left: 10px;'><span v-if='index < 4' style='width: 20px;height: 20px;background-color: #fba73e;color: #FFF;display: inline-block;text-align: center;line-height: 20px;transform: translateY(0px);'>{{index}}</span>{{index >= 4 ? index : ''}}</span>
 							<span style="width: 70px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{items.symbol}}-{{items.cn_name?items.cn_name:items.name}}</span>
 							<span style="width: 50px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">${{Number(items.price).toFixed(4)}}</span>
-							<span style="width: 30px" :style="{color: parseFloat(items.rises) < 0 ? '#33b862' : 'red' }">{{items.percent_change_1h ? items.percent_change_1h : '??'}}</span>
+							<span style="width: 30px" :style="{color: parseFloat(items.rises) <= 0 ? 'rgb(59, 163, 22)' : 'rgb(59, 163, 22)' }">{{items.percent_change_1h ? items.percent_change_1h : '??'}}</span>
 
 							
 						</li>
@@ -607,10 +607,14 @@
 			handleCurrentChange(val){
 				this.currentPage =val
 				this.datatrue = false
-				axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${(Number(val)-1)*10}`)
+					document.documentElement.scrollTop = 0
+
+				document.body.scrollTop = 0
+				axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${(Number(val)-1)*50}&take=50`)
 				.then((res)=>{
 					this.cionList = res.data.data.list
 					this.datatrue = true
+
 
 				})
 			},
@@ -648,7 +652,7 @@
 						break;
 					case 1 :
 						this.datatrue = false
-						axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}`)
+						axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}&take=50`)
 							.then((res)=>{
 								var aa = []
 								aa.push(res.data.data.list[0])
@@ -668,7 +672,7 @@
 				this.rankingActives = index
 				console.log(this.rankingActives)
 				if(this.rankingActives == 0){
-					axios.get('http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&take=7')
+					axios.get('http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&take=7&order_type=desc')
 			 			.then((res)=>{
 			 				console.table(res.data.data.list)
 			 				this.rankvolumeList = res.data.data.list
@@ -676,7 +680,7 @@
 			 		})
 
 				}else if(this.rankingActives == 1){
-					axios.get('http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&take=7')
+					axios.get('http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&take=7&order_type=desc')
 						.then((res)=>{
 			 				this.rankvolumeListex = res.data.data.list
 
@@ -687,14 +691,14 @@
 				this.rofActive = index
 
 				if(this.rofActive == 0){
-					this.roforderType = 'asc'
+					this.roforderType = 'desc'
 					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
 			 			.then((res)=>{
 			 				console.log(res.data.data)
 			 				this.rofList = res.data.data.list
 			 		})
 				}else if(this.rofActive == 1){
-					this.roforderType = 'desc'
+					this.roforderType = 'asc'
 					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
 			 			.then((res)=>{
 			 				console.log(res.data.data)
@@ -774,7 +778,7 @@
 			 window.onscroll = ()=>{
 			 	if((document.documentElement.scrollTop >= 270 || document.body.scrollTop>=270) && cishu1 == 0){
 			 		console.log('ftughy')
-			 		axios.get('http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&take=7')
+			 		axios.get('http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&take=7&order_type=desc')
 			 			.then((res)=>{
 			 				console.table(res.data.data.list)
 			 				this.rankvolumeList = res.data.data.list
@@ -783,7 +787,7 @@
 			 		cishu1 = 1
 			 	}
 			 	if((document.documentElement.scrollTop >=650   ||	document.body.scrollTop>=650) && cishu == 0){
-			 		axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=asc`)//侧边栏涨跌幅
+			 		axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=asc&order_type=desc`)//侧边栏涨跌幅
 			 			.then((res)=>{
 			 				this.rofList = res.data.data.list
 			 			})
@@ -812,12 +816,12 @@
 			
 		
 			
-			axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}`)
+			axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}&take=50&order_by=rank&order_type=asc`)
 				.then((res)=>{
 					this.cionList = res.data.data.list
 					localStorage.cionList1 = JSON.stringify(res.data.data.list)
-					localStorage.cionList1sum = Math.ceil(Number(res.data.data.count))
-					this.total = Math.ceil(Number(res.data.data.count))
+					localStorage.cionList1sum = Math.ceil(Number(res.data.data.count)/50)*10
+					this.total = Math.ceil(Number(res.data.data.count)/50)*10
 					this.datatrue = true
 
 				})
@@ -1615,7 +1619,7 @@
 			>.market{
 				width: 320px;
 				height: 235px;
-				margin-top: 11px;
+				margin-top: 18px;
 				border:1px solid #e4e4e4;
 				border-top:3px solid #4277ff;
 				>.marketTitle{

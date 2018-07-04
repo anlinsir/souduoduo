@@ -5,7 +5,7 @@
 			<ul class="rankUl1">
 				<li  style="cursor: pointer;" @click='rachange(index)' :class="rankavtive == index ? 'rankavtive' : '' " v-for='(item,index) in headChoose'>{{item}}</li>
 			</ul>
-			<ul class="rankUl2">
+			<ul class="rankUl2" v-if='rankavtive == 0'>
 				<li :style="{color:index == 2 ? '#4277ff' : ''}" @click='headeractivesChange(0,index,item.id)' :class="headeractives0 == index ? 'headeractives0' : '' " :data-id='item.id' v-if='rankavtive == 0' v-for='(item,index) in headTchoose0'>{{item.pr}}
 					<span @click='more' class="rankUl2SpanIcon" v-if='item.ci '></span>
 
@@ -18,10 +18,6 @@
 					
 				</li>
 				
-				<li @click='headeractivesChange(2,index,item.id)' :class="headeractives2 == index ? 'headeractives2' : '' "  :data-id='item.id' v-if='rankavtive == 2' v-for='(item,index) in headTchoose2' :key='index'>
-					{{item.pr}}
-				</li>
-
 			</ul>	
 		</div>
 
@@ -65,7 +61,7 @@
 
 				<tbody cellspacing="0">
 					<tr @click='Bdetalis(item.slug)' v-for="(item,index) in rankingRise">
-						<td style="width: 90px;">{{item.id}}</td>
+						<td style="width: 90px;">{{index+1}}</td>
 						<td style="width: 160px;padding-right: 10px;box-sizing: border-box;overflow: hidden;white-space:nowrap;text-overflow: ellipsis;">
 							<img  style="transform: translateY(5px);height: 21px;width: 21px;" :src="item.logo" />
 						{{item.name}}{{item.cn_name ? '-' + item.cn_name : ''}}</td>
@@ -98,7 +94,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="pagesW" style="text-align: center;width:100%;  transform: translateX(-151px);margin-top: 50px;" v-show='datature'>
+			<!-- <div class="pagesW" style="text-align: center;width:100%;  transform: translateX(-151px);margin-top: 50px;" v-show='datature'>
 				<div class="block" style="display: inline-block;width: 100px; top: 0px;left: 0px;bottom: 0;right: 0;margin: auto;" >
 
 
@@ -112,7 +108,7 @@
 
 
 				</div>
-			</div>
+			</div> -->
 		</div>
 
 
@@ -537,6 +533,10 @@
 				console.log()
 				this.rankavtive = index
 				if(index == 0){
+					this.headeractives0 = 0
+					this.headeractives1 = 0
+					this.headeractives2 = 0
+
 					this.currentPage0 = 1
 					this.jys = false
 					this.datature = false
@@ -549,20 +549,26 @@
 						})
 				}
 				if(index == 1){
+					this.headeractives0 = 0
+					this.headeractives1 = 0
+					this.headeractives2 = 0
 					this.currentPage0 = 1
 					this.jys = false
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h`)
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&take=30&order_type=desc`)
 						.then((res)=>{
 							this.rankingRise = res.data.data.list
 							this.datature = true
 						})
 				}else if(index == 2){
+					this.headeractives0 = 0
+					this.headeractives1 = 0
+					this.headeractives2 = 0
 					this.jysType = 'asc'
 					this.currentPage0 = 1
 					this.jys = true
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=asc`)
+					axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=asc&take=30`)
 						.then((res)=>{
 							console.log(res.data.data)
 							this.rankingRise = res.data.data.list
@@ -583,9 +589,9 @@
 						if(index == 0){
 							this.headeractives0 = index
 							this.currentPage0 = 1
-							this.rank = 'asc'
+							this.rank = 'desc'
 							this.datature = false
-							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
+							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
 								.then((res)=>{
 									this.rankingRise = res.data.data.list
 									console.log(this.rankingRise)
@@ -594,9 +600,9 @@
 						}else if(index == 1){
 						this.currentPage0 = 1
 							this.headeractives0 = index
-							this.rank = 'desc'
+							this.rank = 'asc'
 							this.datature = false
-							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
+							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
 								.then((res)=>{
 									this.rankingRise = res.data.data.list
 									console.log(this.rankingRise)
@@ -747,8 +753,8 @@
 			document.documentElement.scrollTop   = 0
 			document.body.scrollTop = 0
 			this.time = 'percent_change_1h'
-			this.rank = 'asc'
-			axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h`)
+			this.rank = 'desc'
+			axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&order_type=${this.rank}&take=30`)
 				.then((res)=>{
 					this.rankingRise = res.data.data.list
 					console.log(this.rankingRise)
@@ -869,19 +875,18 @@
 							height: 46px;
 							line-height: 46px;
 							color: #666666;
-							text-align: center;
 							border-bottom:1px solid #e5e5e5;
 						}
 					}
 				}
 				>tbody{
 					>tr{
+
 						>td{
 							height: 56px;
 							line-height: 56px;
 							font-size: 12px;
 							color: #666666;
-							text-align: center;
 
 							cursor: pointer;
 						}

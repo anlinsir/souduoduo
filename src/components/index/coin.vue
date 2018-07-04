@@ -46,7 +46,11 @@
 
 					<li >上架交易所：{{item.created_at}}</li>
 					<li >发行时间：{{item.updated_at}}</li>
-					<li >白皮书： <a :href="item.bps">{{whitePaper}}</a>	</li>
+					<li >白皮书： <a :href="item.bps" style="display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 174px;
+    height: 37px;">{{whitePaper}}</a>	</li>
 					<li >相关概念</li>
 					<li >区块站： <a :href='ii'  v-for='(ii,id) in JSON.parse(blockUrl)'>{{ii}}</a></li>
 					<li >网站： <a :href='it'  v-for='(it,id) in JSON.parse(website)'>{{it}}</a></li>
@@ -232,6 +236,8 @@
 	var ccc ,timer1 ,timer2, timer3 , timer4;
 	import $ from 'jquery'
 	import axios from 'axios'
+	Highcharts.setOptions({ global: { useUTC: false } }); 
+
 	export default{
 
 		data(){
@@ -1360,99 +1366,7 @@
 								    ]
 					});
 
-				// timer2 = setInterval(()=>{
-					// 	// this.turnover += 1 
-					// 	// if(this.turnover >= 10){
-					// 	// 	this.turnover = 1
-					// 	// }
-					// 	var turnover1 = echarts.init(document.getElementById('turnover1'));
-					// 	turnover1.setOption({
-					// 	    title: { },
-					// 	    			    series: [{
-					// 	         type: 'pie',
-					// 	         radius: ['60%', '80%'],
-					// 	         hoverAnimation:false,
-					// 	         legendHoverLink:false,
-					// 	         data:[
-					//                 {value:this.turnover,itemStyle:{ normal:{color:'#84bbff'} }},
-					//                 {value:100 - (this.turnover),itemStyle:{ normal:{color:'transparent'} }},
-
-					              
-					//             ],
-
-					//             labelLine:{show:false},
-					            
-					// 	    }]
-					// 	});
-
-					// 		turnover.setOption({
-					// 		    title:{
-					// 		    	text:this.turnover + '%',
-					// 		    	subtext:'流通率',
-					// 		    	subtextStyle:{
-					// 		    		color:'#333333',
-					// 		    		fontWeight:'normal',
-					// 		    		fontSize:14,
-					// 		    		textAlign:'center',
-							    		
-					// 		    	},
-					// 		    	subtextStyle:{
-					// 		    		color:"#8e8d8d",
-					// 		    		fontWeight:'normal',
-					// 		    		fontSize:12,
-					// 		    		textAlign:'center',
-					// 		    		lineHeight:'200'
-					// 		    	},
-					// 		    	padding:[80, 0, 0, 63],
-					// 		    	 left:'center'
-							    	
-
-					// 		    },
-					// 		    	 series: [
-					// 				        {
-									           
-					// 				            type:'pie',
-					// 				            radius: ['50%', '70%'],
-					// 				           hoverAnimation:false,
-					// 	        			 legendHoverLink:false,
-					// 				            label: {
-					// 				                normal: {
-					// 				                    show: false,
-					// 				                    position: 'center'
-					// 				                },
-									              
-					// 				            },
-									           
-					// 				            data:[
-					// 				                {value:335, },
-									             
-					// 				            ],
-					// 				            itemStyle: {
-					// 				            	shadowBlur:20,
-					// 				            	shadowOffsetX:-3,
-					// 				            	shadowOffsetY:7,
-					// 				            	shadowColor:'#3d5286',
-					// 				                color: {
-					// 				                    type: 'linear',
-					// 				                    x: 0,
-					// 				                    y: 0,
-					// 				                    x2: 0,
-					// 				                    y2: 1,
-					// 				                    colorStops: [{
-					// 				                        offset: 0, color: '#32a6ff' // 0% 处的颜色
-					// 				                    }, {
-					// 				                        offset: 0.8, color: '#3d5286' // 100% 处的颜色
-					// 				                    }],
-					// 				                    globalCoord: false // 缺省为 false
-					// 				                }
-					// 				            }
-					// 				        }
-					// 				    ]
-					// 	});
-					// },1000)
-
-
-				//第二个图
+	
 
 
 
@@ -1546,96 +1460,6 @@
 									    ]
 							});
 
-							//  timer1 = setInterval(()=>{
-							// 	// this.value1 += 1 
-							// 	// if(this.value1 == 30){
-							// 	// 	this.value1 =1
-							// 	// }
-							// 	var EFAMC1 = echarts.init(document.getElementById('EFAMC1'));
-							// 	EFAMC1.setOption({
-							//     title: { },
-							//     	series: [{
-							//          type: 'pie',
-							//          radius: ['60%', '80%'],
-							//          hoverAnimation:false,
-							//          legendHoverLink:false,
-							//          data:[
-						 //                {value:this.value1,itemStyle:{ normal:{color:'#7696eb'} }},
-						 //                {value:100 - (this.value1),itemStyle:{ normal:{color:'transparent'} }},
-
-						              
-						 //            ],
-
-							//             labelLine:{show:false},
-							            
-							// 	    }]
-							// 	});
-
-							// 	EFAMC.setOption({
-							//     title:{
-							//     	text:this.value1 + '%',
-							//     	subtext:'占全球总市值',
-							//     	subtextStyle:{
-							//     		color:'#333333',
-							//     		fontWeight:'normal',
-							//     		fontSize:14,
-							//     		textAlign:'center',
-							    		
-							//     	},
-							//     	subtextStyle:{
-							//     		color:"#8e8d8d",
-							//     		fontWeight:'normal',
-							//     		fontSize:12,
-							//     		align:'center',
-							//     		lineHeight:'200'
-							//     	},
-							//     	padding:[80, 0, 0, 63],
-							//     	 left:'center'
-
-							//     },
-
-							//     	 series: [
-							// 		        {
-									           
-							// 		            type:'pie',
-							// 		            radius: ['50%', '70%'],
-							// 		           hoverAnimation:false,
-						 //        			 legendHoverLink:false,
-							// 		            label: {
-							// 		                normal: {
-							// 		                    show: false,
-							// 		                    position: 'center'
-							// 		                },
-									              
-							// 		            },
-									           
-							// 		            data:[
-							// 		                {value:335, },
-									             
-							// 		            ],
-							// 		            itemStyle: {
-							// 		            	shadowBlur:20,
-							// 		            	shadowOffsetX:-3,
-							// 		            	shadowOffsetY:7,
-							// 		            	shadowColor:'#556fb5',
-							// 		                color: {
-							// 		                    type: 'linear',
-							// 		                    x: 0,
-							// 		                    y: 0,
-							// 		                    x2: 0,
-							// 		                    y2: 1,
-							// 		                    colorStops: [{
-							// 		                        offset: 0, color: '#556fb5' // 0% 处的颜色
-							// 		                    }, {
-							// 		                        offset: 0.8, color: '#45447c' // 100% 处的颜色
-							// 		                    }],
-							// 		                    globalCoord: false // 缺省为 false
-							// 		                }
-							// 		            }
-							// 		        }
-							// 		    ]
-							// 	});
-							// },1000)
 
 
 							//第一个图
@@ -1655,17 +1479,7 @@
 
 
 
-						
-			// if(timer1 || timer2 || timer3){
-			// clearInterval(timer1)
-			// clearInterval(timer2)
-			// clearInterval(timer3)
-			// clearInterval(timer4)
-
-
-			// }
-			
-
+		
 
 
 			
@@ -1756,97 +1570,6 @@
 							        }
 							    ]
 				});
-
-					// timer3 = setInterval(()=>{
-						// 	var pay241 = echarts.init(document.getElementById('24pay1'));
-						// 		// this.pay1 += 4.5
-						// 		// if(this.pay1 >= 88){
-						// 		// 	this.pay1 = 10 
-						// 		// }
-						// 			pay241.setOption({
-						// 		    title: { },
-						// 		    	series: [{
-						// 		         type: 'pie',
-						// 		         radius: ['60%', '80%'],
-						// 		         hoverAnimation:false,
-						// 		         legendHoverLink:false,
-						// 		         data:[
-						// 	                {value:this.pay1,itemStyle:{ normal:{color:'#87f8c2'} }},
-						// 	                {value:100 - (this.pay1),itemStyle:{ normal:{color:'transparent'} }},
-
-							              
-						// 	            ],
-
-						// 	            labelLine:{show:false},
-							            
-						// 		    }]
-						// 		});
-
-
-						// 			pay.setOption({
-						//     title:{
-						//     	text:this.pay1 + '%',
-						//     	subtext:'换手率',
-						//     	subtextStyle:{
-						//     		color:'#333333',
-						//     		fontWeight:'normal',
-						//     		fontSize:14,
-						//     		align:'center',
-						    		
-						//     	},
-						//     	subtextStyle:{
-						//     		color:"#8e8d8d",
-						//     		fontWeight:'normal',
-						//     		fontSize:12,
-						//     		align:'center',
-						//     		lineHeight:'200'
-						//     	},
-						//     	padding:[80, 0, 0, 63],
-						//     	 left:'center'
-
-						//     },
-						//     	 series: [
-						// 		        {
-								           
-						// 		            type:'pie',
-						// 		            radius: ['50%', '70%'],
-						// 		           hoverAnimation:false,
-					 //        			 legendHoverLink:false,
-						// 		            label: {
-						// 		                normal: {
-						// 		                    show: false,
-						// 		                    position: 'center'
-						// 		                },
-								              
-						// 		            },
-								           
-						// 		            data:[
-						// 		                {value:335, },
-								             
-						// 		            ],
-						// 		            itemStyle: {
-						// 		            	shadowBlur:20,
-						// 		            	shadowOffsetX:-3,
-						// 		            	shadowOffsetY:7,
-						// 		            	shadowColor:'#287f66',
-						// 		                color: {
-						// 		                    type: 'linear',
-						// 		                    x: 0,
-						// 		                    y: 0,
-						// 		                    x2: 0,
-						// 		                    y2: 1,
-						// 		                    colorStops: [{
-						// 		                        offset: 0, color: '#5dd186' // 0% 处的颜色
-						// 		                    }, {
-						// 		                        offset: 0.8, color: '#287f66' // 100% 处的颜色
-						// 		                    }],
-						// 		                    globalCoord: false // 缺省为 false
-						// 		                }
-						// 		            }
-						// 		        }
-						// 		    ]
-						// 	});
-						// },500)
 
 						//第三个图
 
@@ -1966,119 +1689,6 @@
 
 
 
-				//  timer4 = setInterval(()=>{
-					// 	// this.cionin -= 3
-					// 	// if(this.cionin <= 10){
-					// 	// 	this.cionin = 99
-					// 	// }
-					// 	cionin1.setOption({
-					// 		    title: { },
-					// 		    	series: [{
-					// 		         type: 'pie',
-					// 		         radius: ['60%', '80%'],
-					// 		         hoverAnimation:false,
-					// 		         legendHoverLink:false,
-					// 		         data:[
-					// 	                {value:50,itemStyle:{ normal:{color:'#fee387'} }},
-					// 	                {value:50,itemStyle:{ normal:{color:'transparent'} }},
-
-						              
-					// 	            ],
-
-					// 	            labelLine:{show:false},
-						            
-					// 		    }]
-					// 		});
-
-
-					// 	cionin2.setOption({
-					// 	    title: { },
-					// 	    	series: [{
-					// 	         type: 'pie',
-					// 	         radius: ['60%', '80%'],
-					// 	         hoverAnimation:false,
-					// 	         legendHoverLink:false,
-					// 	         data:[
-					//                 {value:this.cionin,itemStyle:{ normal:{color:'#f7cc69'} }},
-					//                 {value:100 - this.cionin,itemStyle:{ normal:{color:'transparent'} }},
-
-					              
-					//             ],
-
-					//             labelLine:{show:false},
-					            
-					// 	    }]
-					// 	});
-
-					// 	cionin.setOption({
-					// 	    title:{
-					// 	    	text:this.cionin + '%',
-					// 	    	subtext:'净流入',
-					// 	    	subtextStyle:{
-					// 	    		color:'#333333',
-					// 	    		fontWeight:'normal',
-					// 	    		fontSize:14,
-					// 	    		align:'center',
-						    		
-					// 	    	},
-					// 	    	subtextStyle:{
-					// 	    		color:"#8e8d8d",
-					// 	    		fontWeight:'normal',
-					// 	    		fontSize:12,
-					// 	    		align:'center',
-					// 	    		lineHeight:'200'
-					// 	    	},
-					// 	    	padding:[80, 0, 0, 63],
-					// 	    	 left:'center'
-
-					// 	    },
-					// 	    	 series: [
-					// 			        {
-								           
-					// 			            type:'pie',
-					// 			            radius: ['50%', '70%'],
-					// 			           hoverAnimation:false,
-					//         			 legendHoverLink:false,
-					// 			            label: {
-					// 			                normal: {
-					// 			                    show: false,
-					// 			                    position: 'center'
-					// 			                },
-								              
-					// 			            },
-								           
-					// 			            data:[
-					// 			                {value:335, },
-								             
-					// 			            ],
-					// 			            itemStyle: {
-					// 			            	shadowBlur:20,
-					// 			            	shadowOffsetX:-3,
-					// 			            	shadowOffsetY:7,
-					// 			            	shadowColor:'#f9b25c',
-					// 			                color: {
-					// 			                    type: 'linear',
-					// 			                    x: 0,
-					// 			                    y: 0,
-					// 			                    x2: 0,
-					// 			                    y2: 1,
-					// 			                    colorStops: [{
-					// 			                        offset: 0, color: '#f9b25c' // 0% 处的颜色
-					// 			                    }, {
-					// 			                        offset: 0.8, color: '#d68f37' // 100% 处的颜色
-					// 			                    }],
-					// 			                    globalCoord: false // 缺省为 false
-					// 			                }
-					// 			            }
-					// 			        }
-					// 			    ]
-					// });
-
-
-
-					//},2000)
-
-
 
 
 
@@ -2086,7 +1696,120 @@
 
 
 			//图4
+			// var chart = null;
+			// 	$.getJSON(`http://sdd.xtype.cn//api/snapshot/index?start=1498727792&end=1530263792&slug=${_this.$route.params.id}`, function (data) {
+			// 		console.log(data.data)
+			// 					var price = [],fullhour = [],shizhi=[],liut=[], aa = [];
+			// 					for(var i in data.data){
+			// 						price.push([Number(data.data[i][0]),data.data[i][1]])
+			// 						fullhour.push([Number(data.data[i][0]),data.data[i][2]])
+			// 						shizhi.push([Number(data.data[i][0]),data.data[i][3]])
+			// 						liut.push([Number(data.data[i][0]),data.data[i][4]])
+			// 					}
+			// 					console.log(price)
+			// 			chart = Highcharts.chart('container', {
+								
+								
+			// 					xAxis: {
+			// 									dateTimeLabelFormats: {
+			// 											millisecond: '%H:%M:%S.%L',
+			// 											second: '%H:%M:%S',
+			// 											minute: '%H:%M',
+			// 											hour: '%H:%M',
+			// 											day: '%m-%d',
+			// 											week: '%m-%d',
+			// 											month: '%y-%m',
+			// 											year: '%Y'
+			// 									}
+			// 							},
+			// 					tooltip: {
+			// 							dateTimeLabelFormats: {
+			// 									millisecond: '%H:%M:%S.%L',
+			// 									second: '%H:%M:%S',
+			// 									minute: '%H:%M',
+			// 									hour: '%H:%M',
+			// 									day: '%Y-%m-%d',
+			// 									week: '%m-%d',
+			// 									month: '%Y-%m',
+			// 									year: '%Y'
+			// 							}
+			// 					},
+			// 				yAxis: [{
+			// 									labels: {
+			// 										 formatter:function (){ 
+			// 						                     return this.value/1000000000 + '十亿' ; 
+			// 						                 },
 
+			// 									},
+			// 									title: {
+			// 										text: '市值'
+			// 									},
+			// 									height: '100%',
+			// 									resize: {
+			// 											enabled: true
+			// 									},
+
+			// 							},
+			// 							 {
+			// 							 		labels: {
+			// 										align:'',
+													 
+			// 									},
+			// 									title: {
+			// 											text: '价格(美元)'
+			// 									},
+
+			// 									height: '100%',
+			// 							        opposite: true,
+			// 							        reserveSpace:false,
+
+
+												 
+			// 							}
+			// 							],
+			// 					plotOptions: {
+			// 									series: {
+			// 										showInLegend: true
+			// 									}
+			// 							},
+			// 							tooltip: {
+			// 									split: false,
+			// 									shared: true
+			// 							},
+			// 							series: [
+			// 							{
+			// 									// type: 'line',
+			// 									id: '000001',
+			// 									name: '价格-USD',
+			// 									data: price,
+			// 									yAxis: 1,
+
+			// 							},
+			// 							{
+			// 									 type: 'column',
+			// 									id: '000002',
+			// 									name: '24小时交易额 - USD',
+			// 									data: fullhour,
+			// 									yAxis: 0,
+			// 							},
+			// 							{
+			// 									// type: 'line',shizhi
+			// 									id: '000002',
+			// 									name: '市值-USD ',
+			// 									data: shizhi,
+			// 									yAxis: 0,
+			// 							},
+
+			// 							{
+			// 									// type: 'line',shizhi
+			// 									id: '000002',
+			// 									name: '流通量',
+			// 									data: liut,
+			// 									yAxis: 1,
+			// 							},
+			// 							]
+			// 			});
+			// 	});
 
 
 				$.getJSON(`http://sdd.xtype.cn//api/snapshot/index?start=1498727792&end=1530263792&slug=${_this.$route.params.id}`, function (data) {
@@ -2114,7 +1837,7 @@
 										title: {
 												text: ''
 										},
-											xAxis: {
+										xAxis: {
 												dateTimeLabelFormats: {
 														millisecond: '%H:%M:%S.%L',
 														second: '%H:%M:%S',
@@ -2124,58 +1847,61 @@
 														week: '%m-%d',
 														month: '%y-%m',
 														year: '%Y'
-												}
+												},
 										},
 										credits: {
-            	text: '搜多多',
-            	href: 'http://www.example.com'
-        	},
+							            	text: '搜多多',
+							            	href: '#'
+							        	},
+
+
+
 										yAxis: [{
 												labels: {
-														align: 'right',
-														x: -3
+													 formatter:function (){ 
+									                     return this.value/1000000000 + '十亿' ; 
+									                 },
+
 												},
 												title: {
-														text: ''
+													text: '市值'
 												},
-												height: '25%',
+												height: '100%',
 												resize: {
 														enabled: true
 												},
-												lineWidth: 2
+												opposite:true
+
+
 										},
 										 {
-												labels: {
-														align: 'right',
-														x: -3
+										 		labels: {
+													align:'',
+													 x:-650,
 												},
 												title: {
-														text: ''
+														text: '价格(美元)',
+														x:-70,
+														rotation:270
+
 												},
-												top:'25%',
-												height: '25%',
-												offset: 0,
-												lineWidth: 2
-										},
-										 {
-												labels: {
-														align: 'right',
-														x: -3
-												},
-												title: {
-														text: ''
-												},
-												top:'50%',
-												height: '25%',
-												offset: 0,
-												lineWidth: 2
+
+												height: '100%',
+										        opposite: true,
+										        reserveSpace:false,
+
+
+												 
 										}
 										],
-										plotOptions: {
-												series: {
-														showInLegend: true
-												}
-										},
+											plotOptions: {
+													series: {
+															label: {
+																	connectorAllowed: false
+															},
+															pointStart: 2010
+													}
+											},
 										tooltip: {
 												split: false,
 												shared: true
@@ -2186,6 +1912,7 @@
 												id: '000001',
 												name: '价格-USD',
 												data: price,
+												yAxis: 1,
 
 										},
 										{
@@ -2193,14 +1920,14 @@
 												id: '000002',
 												name: '24小时交易额 - USD',
 												data: fullhour,
-												yAxis: 2,
+												yAxis: 0,
 										},
 										{
 												// type: 'line',shizhi
 												id: '000002',
 												name: '市值-USD ',
 												data: shizhi,
-												yAxis: 1,
+												yAxis: 0,
 										},
 
 										{
@@ -2212,7 +1939,7 @@
 										},
 										]
 								});
-						});
+				});
 
 
 
