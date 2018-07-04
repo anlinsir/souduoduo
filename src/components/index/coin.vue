@@ -218,7 +218,7 @@
 					<div class="TablessWarp">
 						<div class="Tabless">
 							<!-- <div id="K" style="width:685px; height:680px;"></div> -->
-							<div id="container" style="width: 700px;height:700px;"></div>
+							<div id="container" style="width: 800px;height:650px;margin-top: 29px;"></div>
 						</div>
 					</div>
 
@@ -1136,7 +1136,7 @@
 										title: {
 												text: ''
 										},
-											xAxis: {
+										xAxis: {
 												dateTimeLabelFormats: {
 														millisecond: '%H:%M:%S.%L',
 														second: '%H:%M:%S',
@@ -1146,54 +1146,79 @@
 														week: '%m-%d',
 														month: '%y-%m',
 														year: '%Y'
-												}
+												},
 										},
-										yAxis: [{
+										credits: {
+							            	text: '搜多多',
+							            	href: '#'
+							        	},
+																		        	
+											    legend: {
+											        enabled: true,
+											        // align: 'center',
+											        // layout: 'vertical',
+											        // verticalAlign: 'middle',
+											        				layout: 'vertical',
+															align: 'right',
+															verticalAlign: 'middle'
+											    },
+
+
+										yAxis: [
+										{
+											minorTickInterval: 'auto',
+								            showLastLabel: false,
+								            showFirstLabel: false,
 												labels: {
-														align: 'right',
-														x: -3
+													align:'',
+													 formatter:function (){ 
+									                     return this.value/1000000000 + '十亿' ; 
+									                 },
+
 												},
 												title: {
-														text: ''
+													text: '市值',
 												},
-												height: '25%',
+												height: '100%',
 												resize: {
 														enabled: true
 												},
-												lineWidth: 2
+												
+									            height: '100%',
+									            
+
+
 										},
+										
 										 {
-												labels: {
-														align: 'right',
-														x: -3
+										 	minorTickInterval: 'auto',
+								            showLastLabel: false,
+								            showFirstLabel: false,
+										 		labels: {
+													align:'',
 												},
 												title: {
-														text: ''
+														text: '价格(美元)',
+
 												},
-												top:'25%',
-												height: '25%',
-												offset: 0,
-												lineWidth: 2
-										},
-										 {
-												labels: {
-														align: 'right',
-														x: -3
-												},
-												title: {
-														text: ''
-												},
-												top:'50%',
-												height: '25%',
-												offset: 0,
-												lineWidth: 2
+
+												height: '100%',
+										      
+										        lineWidth: 0,
+									            opposite: false //true,
+
+
+												 
 										}
 										],
-										plotOptions: {
-												series: {
-														showInLegend: true
-												}
-										},
+											plotOptions: {
+													series: {
+															label: {
+																	connectorAllowed: false
+															},
+															pointStart: 2010
+													}
+											},
 										tooltip: {
 												split: false,
 												shared: true
@@ -1204,6 +1229,7 @@
 												id: '000001',
 												name: '价格-USD',
 												data: price,
+												yAxis: 1,
 
 										},
 										{
@@ -1211,14 +1237,14 @@
 												id: '000002',
 												name: '24小时交易额 - USD',
 												data: fullhour,
-												yAxis: 2,
+												yAxis: 0,
 										},
 										{
 												// type: 'line',shizhi
 												id: '000002',
 												name: '市值-USD ',
 												data: shizhi,
-												yAxis: 1,
+												yAxis: 0,
 										},
 
 										{
@@ -1230,7 +1256,7 @@
 										},
 										]
 								});
-						});
+				});
 
 
 
@@ -1832,7 +1858,7 @@
 								console.log(price)
 								Highcharts.stockChart('container', {
 										rangeSelector: {
-												selected: 2
+												selected: 4
 										},
 										title: {
 												text: ''
@@ -1853,48 +1879,66 @@
 							            	text: '搜多多',
 							            	href: '#'
 							        	},
+																		        	
+										legend: {
+											enabled: true,
+											// align: 'center',
+											// layout: 'vertical',
+											// verticalAlign: 'middle',
+										},
 
-
-
-										yAxis: [{
+										 navigator: {
+								            adaptToUpdatedData: false,
+								            series: {
+								                data: price
+								            },
+								           
+								        },
+										yAxis: [
+											{
+											minorTickInterval: 'auto',
+								            showLastLabel: false,
+								            showFirstLabel: false,
 												labels: {
+													align:'',
 													 formatter:function (){ 
 									                     return this.value/1000000000 + '十亿' ; 
 									                 },
 
 												},
 												title: {
-													text: '市值'
+													text: '市值',
 												},
 												height: '100%',
 												resize: {
 														enabled: true
 												},
-												opposite:true
-
-
+												
+									            height: '100%',
 										},
+										
 										 {
+										 	minorTickInterval: 'auto',
+								            showLastLabel: false,
+								            showFirstLabel: false,
 										 		labels: {
 													align:'',
-													 x:-650,
 												},
 												title: {
 														text: '价格(美元)',
-														x:-70,
-														rotation:270
 
 												},
 
 												height: '100%',
-										        opposite: true,
-										        reserveSpace:false,
+										      
+										        lineWidth: 0,
+									            opposite: false //true,
 
 
 												 
 										}
 										],
-											plotOptions: {
+										plotOptions: {
 													series: {
 															label: {
 																	connectorAllowed: false
@@ -1907,36 +1951,36 @@
 												shared: true
 										},
 										series: [
-										{
-												// type: 'line',
-												id: '000001',
-												name: '价格-USD',
-												data: price,
-												yAxis: 1,
+											{
+													// type: 'line',
+													id: '000001',
+													name: '价格-USD',
+													data: price,
+													yAxis: 1,
 
-										},
-										{
-												 type: 'column',
-												id: '000002',
-												name: '24小时交易额 - USD',
-												data: fullhour,
-												yAxis: 0,
-										},
-										{
-												// type: 'line',shizhi
-												id: '000002',
-												name: '市值-USD ',
-												data: shizhi,
-												yAxis: 0,
-										},
+											},
+											{
+													 type: 'column',
+													id: '000002',
+													name: '24小时交易额 - USD',
+													data: fullhour,
+													yAxis: 0,
+											},
+											{
+													// type: 'line',shizhi
+													id: '000002',
+													name: '市值-USD ',
+													data: shizhi,
+													yAxis: 0,
+											},
 
-										{
-												// type: 'line',shizhi
-												id: '000002',
-												name: '流通量',
-												data: liut,
-												yAxis: 1,
-										},
+											{
+													// type: 'line',shizhi
+													id: '000002',
+													name: '流通量',
+													data: liut,
+													yAxis: 1,
+											},
 										]
 								});
 				});
@@ -2213,7 +2257,7 @@
 					>.TablessWarp{
 						min-height: 670px;
 						width: 100%;
-						padding: 0 54px 0 56px;
+						/*padding: 0 54px 0 56px;*/
 						>.Tabless{
 							width:100%;
 							min-height: 100px;
