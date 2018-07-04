@@ -1238,6 +1238,8 @@
 		// },
 
 		mounted() {
+			document.documentElement.scrollTop   = 0
+			document.body.scrollTop = 0
 			this.cny = JSON.parse(localStorage.Rate).CNY.value
 			console.log(this.cny)
 			axios.get(`http://sdd.xtype.cn/api/pair/list?&symbol=${this.$route.query.symbol}`)
@@ -2124,6 +2126,10 @@
 														year: '%Y'
 												}
 										},
+										credits: {
+            	text: '搜多多',
+            	href: 'http://www.example.com'
+        	},
 										yAxis: [{
 												labels: {
 														align: 'right',

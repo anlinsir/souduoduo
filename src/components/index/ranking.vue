@@ -26,7 +26,35 @@
 		</div>
 
 		<div class="listDataWarp">
-			<table class="listData">
+			<div class="jizaizhon" v-show='!datature'>
+				
+				<svg version="1.1" id="L1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+							    <circle fill="none" stroke="rgba(0,0,0,0.6)" stroke-width="6" stroke-miterlimit="15" stroke-dasharray="14.2472,14.2472" cx="50" cy="50" r="47" transform="rotate(14.4021 50 50)">
+							      <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="5s" from="0 50 50" to="360 50 50" repeatCount="indefinite"></animateTransform>
+							  </circle>
+							  <circle fill="none" stroke="rgba(0,0,0,0.6)" stroke-width="1" stroke-miterlimit="10" stroke-dasharray="10,10" cx="50" cy="50" r="39" transform="rotate(-14.4021 50 50)">
+							      <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="5s" from="0 50 50" to="-360 50 50" repeatCount="indefinite"></animateTransform>
+							  </circle>
+							  <g fill="rgba(0,0,0,0.6)">
+							  <rect x="30" y="35" width="5" height="30" transform="translate(0 2.99941)">
+							    <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatCount="indefinite" begin="0.1"></animateTransform>
+							  </rect>
+							  <rect x="40" y="35" width="5" height="30" transform="translate(0 4.99941)">
+							    <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatCount="indefinite" begin="0.2"></animateTransform>
+							  </rect>
+							  <rect x="50" y="35" width="5" height="30" transform="translate(0 3.00059)">
+							    <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatCount="indefinite" begin="0.3"></animateTransform>
+							  </rect>
+							  <rect x="60" y="35" width="5" height="30" transform="translate(0 1.00059)">
+							    <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatCount="indefinite" begin="0.4"></animateTransform>
+							  </rect>
+							  <rect x="70" y="35" width="5" height="30" transform="translate(0 -0.999405)">
+							    <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatCount="indefinite" begin="0.5"></animateTransform>
+							  </rect>
+							  </g>
+							</svg>
+			</div>
+			<table class="listData" v-show='datature'>
 				<thead>
 					<tr>
 						<td v-if='rankavtive != 2' v-for='(item,index) in thead'>{{item}}</td>
@@ -42,20 +70,20 @@
 							<img  style="transform: translateY(5px);height: 21px;width: 21px;" :src="item.logo" />
 						{{item.name}}{{item.cn_name ? '-' + item.cn_name : ''}}</td>
 						<td v-if='rankavtive != 2'>{{item.price}}</td>
-						<td v-if='rankavtive != 2'>{{item.market_cap}}</td>
-						<td v-if='rankavtive != 2'>{{item.circulating_supply}}</td>
-						<td v-if='rankavtive != 2'>{{item.volume_24h}}</td>
-						<td  v-if='rankavtive != 2' :style="{color: item.percent_change_1h >= 0 ?  '#33b862' : 'red' }">{{item.percent_change_1h}}</td>
+						<td v-if='rankavtive != 2'>{{item.market_cap ? item.market_cap : '??'}}</td>
+						<td v-if='rankavtive != 2'>{{item.circulating_supply ? item.circulating_supply : '??'}}</td>
+						<td v-if='rankavtive != 2'>{{item.volume_24h ? item.volume_24h : '??'}}</td>
+						<td  v-if='rankavtive != 2' :style="{color: item.percent_change_1h >= 0 ?  '#33b862' : 'red' }">{{item.percent_change_1h ? item.percent_change_1h : '??'}}</td>
 
-						<td v-if='rankavtive == 2'>vblok</td>
+						<td  v-if='rankavtive == 2'>{{item.pairs_count}}</td>
 						<td style="width:100px;" v-if='rankavtive == 2'>{{item.country_code}}</td>
 
 						<td style="width: 280px;" class="type" v-if='rankavtive == 2'>
 							<!-- {{item.type[0] ? '' : ''  {{item.type[1] ? '' : ''}}}} {{item.type[2] ? '' : ''}}  {{item.cjl}} {{item.zb}} {{item.gx}}-->
 							<!-- v-if='item.types.indexOf(0) != -1'              -->
-							<span class="xh"  v-if="(JSON.stringify(item.types)).indexOf('0') != -1">现货</span>
-							<span class="qh" v-if="(JSON.stringify(item.types)).indexOf('1') != -1">期货</span>
-							<span  class="fb" v-if="(JSON.stringify(item.types)).indexOf('2') != -1" >法币</span>
+							<span class="xh"  v-show="(JSON.stringify(item.types)).indexOf('0') != -1">现货</span>
+							<span class="qh" v-show="(JSON.stringify(item.types)).indexOf('1') != -1">期货</span>
+							<span  class="fb" v-show="(JSON.stringify(item.types)).indexOf('2') != -1" >法币</span>
 
 						</td>
 
@@ -70,8 +98,8 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="pagesW" style="text-align: center;width:100%;     transform: translateX(-151px);">
-				<div class="block" style="display: inline-block;width: 100px; top: 4px;left: 51px;">
+			<div class="pagesW" style="text-align: center;width:100%;  transform: translateX(-151px);margin-top: 50px;" v-show='datature'>
+				<div class="block" style="display: inline-block;width: 100px; top: 0px;left: 0px;bottom: 0;right: 0;margin: auto;" >
 
 
 				 <el-pagination :current-page.sync='currentPage0'  @current-change="handleCurrentChange" style="width: 100px;"
@@ -100,6 +128,7 @@
 	export default{
 		data(){
 			return({
+				datature:false,
 				headChoose:['涨跌幅排行榜','24小时成交额排行榜（币种）','24小时成交额排行榜（交易所）'],
 				rankavtive:0,
 				headTchoose0:[
@@ -510,30 +539,36 @@
 				if(index == 0){
 					this.currentPage0 = 1
 					this.jys = false
+					this.datature = false
 					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h`)
 						.then((res)=>{
 							this.rankingRise = res.data.data.list
 							console.log(this.rankingRise)
 							this.total  = Math.ceil(res.data.data.count)
+							this.datature = true
 						})
 				}
 				if(index == 1){
 					this.currentPage0 = 1
 					this.jys = false
+					this.datature = false
 					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h`)
 						.then((res)=>{
 							this.rankingRise = res.data.data.list
+							this.datature = true
 						})
 				}else if(index == 2){
 					this.jysType = 'asc'
 					this.currentPage0 = 1
 					this.jys = true
+					this.datature = false
 					axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=asc`)
 						.then((res)=>{
 							console.log(res.data.data)
 							this.rankingRise = res.data.data.list
 							this.total = Math.ceil(res.data.data.count)
 							console.log(this.rankingRise[0].types.indexOf('0'))
+							this.datature = true
 
 						})
 				}
@@ -549,19 +584,23 @@
 							this.headeractives0 = index
 							this.currentPage0 = 1
 							this.rank = 'asc'
+							this.datature = false
 							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
 								.then((res)=>{
 									this.rankingRise = res.data.data.list
 									console.log(this.rankingRise)
+									this.datature = true
 								})
 						}else if(index == 1){
 						this.currentPage0 = 1
 							this.headeractives0 = index
 							this.rank = 'desc'
+							this.datature = false
 							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
 								.then((res)=>{
 									this.rankingRise = res.data.data.list
 									console.log(this.rankingRise)
+									this.datature = true
 								})
 						}
 						break;
@@ -574,21 +613,24 @@
 						if(dataid == 0 ){
 							this.currentPage0 = 1
 							this.jysType = 'asc'
+							this.datature = false
 							axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=asc`)
 						.then((res)=>{
 							console.log(res.data.data)
 							this.rankingRise = res.data.data.list
 							console.log(this.rankingRise[0].types.indexOf('0'))
+							this.datature = true
 
 						})
 					}else if(dataid == 1){
 						this.currentPage0 = 1
 							this.jysType = 'desc'
-
+							this.datature = false
 						axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=desc`)
 						.then((res)=>{
 							console.log(res.data.data)
 							this.rankingRise = res.data.data.list
+							this.datature = true
 
 						})
 					}
@@ -602,24 +644,30 @@
 				this.headeractives0Chi = index
 				if(index == 0){
 					this.time = 'percent_change_1h'
+					this.datature = false
 					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
 						.then((res)=>{
 						this.rankingRise = res.data.data.list
 						console.log(this.rankingRise)
+						this.datature = true
 					})
 				}else if(index == 1){
 					this.time = 'percent_change_24h'
+					this.datature = false
 					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
 						.then((res)=>{
 						this.rankingRise = res.data.data.list
 						console.log(this.rankingRise)
+						this.datature = true
 					})
 				}else if(index == 2){
 					this.time = 'percent_change_7d'
+					this.datature = false
 					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
 						.then((res)=>{
 						this.rankingRise = res.data.data.list
 						console.log(this.rankingRise)
+						this.datature = true
 					})
 				}
 				this.headTchoose0[2].pr = e.target.innerHTML
@@ -640,32 +688,39 @@
 				if(this.rankavtive == 0){
 					if(this.headeractives0 == 0){
 						this.rank = 'asc'
+						this.datature = false
 							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
 								.then((res)=>{
 									this.rankingRise = res.data.data.list
 									console.log(this.rankingRise)
+									this.datature = true
 						})
 					}else if(this.headeractives0 == 1){
 						this.rank = 'desc'
+						this.datature = false
 							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
 								.then((res)=>{
 									this.rankingRise = res.data.data.list
 									console.log(this.rankingRise)
+									this.datature = true
 								})
 					}
 				}else if(this.rankavtive == 1){
+					this.datature = false
 					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&skip=${(Number(pages)-1)*10}`)
 						.then((res)=>{
 							this.rankingRise = res.data.data.list
+							this.datature = true
 						})
 					}else if(this.rankavtive == 2){
-							
+							this.datature = false
 								axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=${_this.jysType}&skip=${(Number(pages)-1)*10}`)
 									.then((res)=>{
 										console.log(res.data.data)
 										this.rankingRise = res.data.data.list
 										this.total = Math.ceil(res.data.data.count)
 										console.log(this.rankingRise[0].types.indexOf('0'))
+										this.datature = true
 
 								})
 					}
@@ -689,6 +744,8 @@
 			
 		},
 		mounted(){
+			document.documentElement.scrollTop   = 0
+			document.body.scrollTop = 0
 			this.time = 'percent_change_1h'
 			this.rank = 'asc'
 			axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h`)
@@ -696,6 +753,7 @@
 					this.rankingRise = res.data.data.list
 					console.log(this.rankingRise)
 					this.total  = Math.ceil(res.data.data.count)
+					this.datature = true
 				})
 		}
 	}
@@ -765,6 +823,10 @@
 
 					}
 					>ul{
+						position: absolute;
+						width: 100%;
+						min-height: 100%;
+						z-index: 50;
 						>.headeractives0Chi{
 							color: #4277ff;
 						}
@@ -778,7 +840,25 @@
 		>.listDataWarp{
 			width: 100%;
 			padding: 0 21px 0 17px;
-			min-height:200px;
+			min-height:400px;
+			position: relative;
+			>.jizaizhon{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(255,255,255,0.6);
+				z-index: 2;
+				>svg{
+					width: 50px;
+					height: 50px;
+					position: absolute;
+					top:0;
+					left: 0;
+					bottom: 0;
+					right: 0;
+					margin: auto;
+				}
+			}
 			>.listData{
 				padding: 0 21px 0 17px;
 				width: 100%;
@@ -789,6 +869,7 @@
 							height: 46px;
 							line-height: 46px;
 							color: #666666;
+							text-align: center;
 							border-bottom:1px solid #e5e5e5;
 						}
 					}
@@ -800,6 +881,8 @@
 							line-height: 56px;
 							font-size: 12px;
 							color: #666666;
+							text-align: center;
+
 							cursor: pointer;
 						}
 						>.type{

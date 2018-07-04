@@ -40,7 +40,7 @@
 			</div>
 		</div>
 
-		<ul class="tradingContent">
+		<ul class="tradingContent" v-show='!none'>
 			<li @click='toTradDetali(ii.slug)' class="tradingContentItem" v-for="(ii,id) in tadingList">
 				<dl class="itemImg">
 					<dt><img :src="ii.logo"></dt>
@@ -74,17 +74,13 @@
 					</p>
 				</div>
 			</li>
-
-			
-
-			
-
-			
-
 		</ul>
 
+		<div class="none" style="text-align: center;height: 200px;line-height: 200px;" v-show='none'>没有更多数据了</div>
+
+
 		
-		<div class="block" style="width: 100px;margin-left: 450px;">
+		<div class="block" style="width: 100px;margin-left: 450px;" v-show='!none'>
 				<el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
 			    layout="prev, pager, next"
 			    :total="pagestotal" >
@@ -105,7 +101,8 @@
 				gjList:[],
 				countryCode:'',
 				orderType:'asc',
-				type:0
+				type:0,
+				none:false
 
 			})
 		}
@@ -119,6 +116,13 @@
 					.then((res)=>{
 						console.log(res.data.data)
 						this.tadingList = res.data.data.list
+						if(res.data.data.list.length == 0){
+							this.none = true
+							
+						}else {
+							this.none = false
+
+						}
 						this.pagestotal = Math.ceil(res.data.data.count)
 						document.documentElement.scrollTop = 0
 
@@ -134,7 +138,15 @@
 
 				axios.get(`http://sdd.xtype.cn/api/exchange/list?&country_code=${_this.countryCode}&take=12&order_type=${this.orderType}&type=${this.type}`)
 					.then((res)=>{
+						if(res.data.data.list.length == 0){
+							this.none = true
+							
+						}else {
+							this.none = false
+
+						}
 						this.tadingList = res.data.data.list
+
 						this.pagestotal = Math.ceil(res.data.data.count)
 						this.currentPage  = 1
 
@@ -146,6 +158,13 @@
 				this.type = e.target.value
 				axios.get(`http://sdd.xtype.cn/api/exchange/list?&country_code=${_this.countryCode}&take=12&order_type=${this.orderType}&type=${this.type}`)
 					.then((res)=>{
+						if(res.data.data.list.length == 0){
+							this.none = true
+							
+						}else {
+							this.none = false
+
+						}
 						this.tadingList = res.data.data.list
 						this.pagestotal = Math.ceil(res.data.data.count)
 						this.currentPage  = 1
@@ -161,6 +180,13 @@
 
 				axios.get(`http://sdd.xtype.cn/api/exchange/list?&country_code=${_this.countryCode}&take=12&order_type=${this.orderType}&type=${this.type}`)
 					.then((res)=>{
+						if(res.data.data.list.length == 0){
+							this.none = true
+							
+						}else {
+							this.none = false
+
+						}
 						this.tadingList = res.data.data.list
 						this.pagestotal = Math.ceil(res.data.data.count)
 						this.currentPage  = 1
@@ -184,9 +210,18 @@
 			}
 		},
 		mounted(){
+			document.documentElement.scrollTop   = 0
+			document.body.scrollTop = 0
 			axios.get(`http://sdd.xtype.cn/api/exchange/list?&take=12&order_type=${this.orderType}`)//平台列表
 					.then((res)=>{
 						console.log(res.data.data.list)
+						if(res.data.data.list.length == 0){
+							this.none = true
+
+						}else {
+							this.none = false
+
+						}
 						this.tadingList = res.data.data.list
 						this.pagestotal = (Number(res.data.data.count)/12)*10
 

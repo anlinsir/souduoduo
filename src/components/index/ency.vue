@@ -3,7 +3,7 @@
 		<div class="encyTop">
 			<ul>
 				<li>分类</li>
-				<li @click='changeNav(index)' :class="navActive == index ? 'navActive': '' "   v-for='(item,index) in navList' :key='index'>{{item}}</li>
+				<li @click='changeNav(index)' :class="navActive == index ? 'navActive': '' "   v-for='(item,index) in navList' :key='index'>{{item.name}}</li>
 			</ul>	
 
 			<div class="input">
@@ -14,13 +14,13 @@
 		</div>
 
 		<div class="encyBom">
-			<dl @click='toEncyDetali' v-for='(item,index) in 11'>
-				<dt><img src="/static/img/ency.png"></dt>
-				<dd style="color: #000;font-weight: bold;">DTA币简介、网址及交易平台</dd>
-				<dd style="color: #9a9a9a;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 96%;">Date是为了解决互信问题而创建的ICO产品…</dd>
+			<dl @click='toEncyDetali(item.id)' v-for='(item,index) in encyList' :data-id='item.id' :data-type='item.type_id'>
+				<dt><img :src="item.cover"></dt>
+				<dd style="color: #000;font-weight: bold;">{{item.title}}</dd>
+				<dd style="color: #9a9a9a;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 96%;" :title="item.tiny_content">{{item.tiny_content}}</dd>
 				<dd style="color: #9a9a9a;">
-					<span style="margin-right: 23px;"><img style="margin-right: 5px;" src="/static/img/auge.png">100</span>
-					<span><img  src="/static/img/Share.png" style="margin-right: 5px;">99</span>
+					<span style="margin-right: 23px;"><img style="margin-right: 5px;" src="/static/img/auge.png">{{item.read}}</span>
+					<span><img  src="/static/img/Share.png" style="margin-right: 5px;">{{item.shared}}</span>
 				</dd>
 			</dl>
 			
@@ -40,13 +40,15 @@
 
 
 <script>
+	import axios from 'axios'
 	export default{
 		data(){
 			return({
 				navList:['全部','基本原理','交易平台','钱包储蓄','挖矿指南','开发教程','其他'],
 				navActive:0,
 				pages:0,
-				searchModel:''
+				searchModel:'',
+				encyList:[]
 			})
 		},
 		methods:{
@@ -56,14 +58,28 @@
 			pagechange(index){
 				this.pages = index
 			},
-			toEncyDetali(){
-				this.$router.push('/index/encyDetali/0')
+			toEncyDetali(id){
+				this.$router.push(`/index/encyDetali/${id}`)
 			},
 			serach(){
 				alert(this.searchModel + '暂无结果')
 			}
 
 
+		},
+		mounted(){
+			document.documentElement.scrollTop   = 0
+			document.body.scrollTop = 0
+			axios.get(`http://sdd.xtype.cn/api/ency/types`)//获取百科分类
+				.then((res)=>{
+					this.navList = res.data.data
+					this.navList.unshift({id:-1,name:'全部'})
+			})
+
+			axios.get(`http://sdd.xtype.cn/api/ency/list`)
+				.then((res)=>{
+					this.encyList = res.data.data.list
+				})
 		}
 	}
 </script>

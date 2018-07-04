@@ -2,12 +2,12 @@
 	<div class="Sicon">
 		<div class="Left">
 			<div class="searchAb">
-				含 “<span style="color: #4277ff;">{{this.$route.query.searchText}}</span>	”的搜索共47个结果，25个币种，22个交易所
+				含 “<span style="color: #4277ff;">{{this.$route.query.searchText}}</span>	”的搜索共{{CionNum  + exNum}}个结果，{{CionNum}}个币种，{{exNum}}个交易所
 			</div>
 
 			<div class="searchInfo">
 				<Nav :navList='navList' @choose='choose'/>
-				<table cellspacing="0">
+				<table cellspacing="0" v-show='searchType == 0'>
 
 					<thead>
 						<tr>
@@ -24,14 +24,16 @@
 					</thead>
 
 					<tbody>
-						<tr v-for="(ii,id) in 18">
-							<td>1</td>
-							<td><img style="vertical-align: middle;    transform: translateY(-2px);margin-right: 9px;" src="/static/img/btc.png"><span style="color: #4277ff;">BTC-比特币</span></td>
-							<td>¥8,377亿</td>
-							<td> ¥49,128</td>
-							<td>1,705万</td>
-							<td> ¥4,208,503万</td>
-							<td>-2.75%</td>
+						<tr @click='toCion(ii.slug,ii.symbol)' v-for="(ii,id) in searchList0">
+							<td>{{id+1}}</td>
+							<td><img style="vertical-align: middle;transform: translateY(-2px);margin-right: 9px;width: 15px;" :src="ii.logo">
+								<span style="color: #4277ff;width: 160px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 100px;display: inline-block;transform: translateY(2px);">{{ii.symbol}}-{{ii.cn_name ? ii.cn_name : ii.name}}</span>
+							</td>
+							<td>${{(Number(ii.market_cap)/100000000).toFixed(2)}}亿</td>
+							<td>${{(ii.price).toFixed(4)}}</td>
+							<td>{{(Number(ii.circulating_supply)/10000).toFixed(2)}}万</td>
+							<td>${{(Number(ii.volume_24h)/10000).toFixed(2)}}万</td>
+							<td>{{ii.percent_change_1h}}%</td>
 							<td @click='chengChoose(id)' style="transform: translateX(17px);">
 								<img v-if='chooseArr.indexOf(id) == -1 '   src="/static/img/startNO.png">
 								<img v-else-if='chooseArr.indexOf(id) != -1' src="/static/img/stratY.png">
@@ -43,6 +45,52 @@
 					</tbody>
 
 				</table>
+
+
+				<table cellspacing="0" v-show='searchType == 1'>
+
+					<thead>
+						<tr>
+							<td style="width: 45px;">#</td>
+							<td>名称</td>
+							<td>交易对</td>
+							<td>国家</td>
+							<td>类型</td>
+							<td>成交量(24h)</td>
+
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr v-for="(ii,id) in searchList1" @click='toTrd(ii.slug)'>
+							<td>{{id+1}}</td>
+							<td style="width: 160px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;height: 20px;max-width: 100px;"><img style="vertical-align: middle;transform: translateY(-2px);margin-right: 9px;width: 15px;" :src="ii.logo">
+								<span style="color: #4277ff;width: 160px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;max-width: 100px;display: inline-block;transform: translateY(2px);">{{ii.cn_name ? ii.cn_name : ii.name}}</span>
+							</td>
+							<td title='交易对'>{{ii.pairs_count ?ii.pairs_count : 0 }}</td>
+							<td title='国家'>{{ii.country_code}}</td>
+							<td title='类型'>
+								<span class="xh"  v-if="(JSON.stringify(ii.types)).indexOf('0') != -1">现货</span>
+								<span class="qh" v-if="(JSON.stringify(ii.types)).indexOf('1') != -1">期货</span>
+								<span  class="fb" v-if="(JSON.stringify(ii.types)).indexOf('2') != -1" >法币</span>
+							</td>
+							<td title='类型'>
+								${{(Number(ii.volume_24h)/10000).toFixed(2)}}万
+							</td>
+							
+							
+
+						</tr>
+
+						
+					</tbody>
+
+				</table>
+
+				<div @click='clickMoreCion' v-if='searchType == 0' class="more" style="display: block;background: #f1f1f1;height: 35px;line-height: 35px;text-align: center;color: #666;cursor: pointer;">加载更多</div>
+				<div @click='clickMoreexchang' v-if='searchType == 1' class="more" style="display: block;background: #f1f1f1;height: 35px;line-height: 35px;text-align: center;color: #666;cursor: pointer;">加载更多</div>
+
+
 			</div>
 		</div>
 
@@ -73,14 +121,25 @@
 				chooseArr:[]
 				,
 				choosea:-1,
-				searchList:[]
+				searchList0:[],
+				searchList1:[],
+				searchType:0,
+				moreSumCion:1,
+				moreSumexchang:1,
+				CionNum:null,
+				exNum:null
 			})
 		},
 		components:{
 			Nav
 		},
+		mounted(){
+			document.documentElement.scrollTop   = 0
+			document.body.scrollTop = 0
+		},
 		methods:{
 			choose(index){
+				this.searchType = index
 				switch (index){
 					case 0:
 						alert('币种')
@@ -104,6 +163,42 @@
 				}
 				this.chooseArr.push(id)
 				console.log(this.chooseArr)
+			},
+			clickMoreCion(){
+				axios.get(`http://sdd.xtype.cn/api/search/currenciemore?&word=${this.$route.query.searchText}&take=10&skip=${(this.moreSumCion)*10}`)
+				.then((res)=>{
+					console.log(res.data.data)
+					if(res.data.data.length == 0){
+						alert('没有了')
+						return
+					}
+					for(var i of res.data.data){
+						this.searchList0.push(i)	
+					} 
+					this.moreSumCion++
+				})
+			},
+			clickMoreexchang(){
+				axios.get(`http://sdd.xtype.cn/api/search/exchangemore?&word=${this.$route.query.searchText}&skip=${(this.moreSumexchang)*10}&take=10`)
+					.then((res)=>{
+						console.log(res.data.data)
+						if(res.data.data.length == 0){
+							alert('没有了')
+							return
+						}
+						for(var i of res.data.data){
+							this.searchList1.push(i)	
+						} 
+						this.moreSumexchang ++
+
+					})
+			},
+			toCion(slug,sym){
+				this.$router.push({path:`/index/cion/${slug}`,query:{symbol:sym}})
+			},
+			toTrd(sul){
+				this.$router.push(`/index/tradDetali/${sul}`)
+
 			}
 		},
 		created(){
@@ -111,23 +206,37 @@
 
 
 
-			
-			// if(localStorage.searchList){
-			// 	this.searchList = localStorage.searchList
-			// 	console.log(JSON.parse(localStorage.searchList))
-			// 	localStorage.removeItem('searchList')
-							
+			axios.get(`http://sdd.xtype.cn/api/search/currenciemore?&word=${this.$route.query.searchText}&take=10`)
+				.then((res)=>{
+					console.log(res.data.data)
+					this.searchList0 = res.data.data
 
-			// }else{
-			// 	axios.get(`http://sdd.xtype.cn/api/search/index?&word=${this.$route.query.searchText}`)
-			// 	.then((res)=>{
-			// 		console.log(res.data.data)
-			// 		this.searchList = res.data.data
-			// 	})	
-			// }
-			
+			})
+			axios.get(`http://sdd.xtype.cn/api/search/exchangemore?&word=${this.$route.query.searchText}&take=10`)
+				.then((res)=>{
+					this.searchList1 = res.data.data
+			})
 
-		}
+			axios.get(`http://sdd.xtype.cn/api/search/index?&word=${this.$route.query.searchText}`)
+				.then((res)=>{					
+					this.CionNum  = res.data.data.currencie_count 
+					this.exNum = res.data.data.exchange_count
+				})
+		},
+		watch: {
+		   '$route' (to, from) {
+		    	axios.get(`http://sdd.xtype.cn/api/search/currenciemore?&word=${this.$route.query.searchText}&take=10`)
+				.then((res)=>{
+					console.log(res.data.data)
+					this.searchList0 = res.data.data
+				})
+
+				axios.get(`http://sdd.xtype.cn/api/search/exchangemore?&word=${this.$route.query.searchText}&take=10`)
+					.then((res)=>{
+						this.searchList1 = res.data.data
+				})
+		 	}
+		 }
 	}
 </script>
 
@@ -175,6 +284,36 @@
 							height: 54px;
 							>td{
 								cursor: pointer;
+								>.xh,.qh,.fb{
+								width: 58px;
+								height: 26px;
+								border-radius: 20px;
+								text-align: center;
+								line-height: 26px;
+								display: inline-block;
+								font-size: 12px;
+								background-repeat: no-repeat;
+								background-position: 7px 7px;
+								color: #fff;
+								padding-left:15px; 
+							}
+							>.xh{
+								background-color: #5094f1;							
+								background-image: url('/static/img/stock_up.png');					
+
+							}
+							>.qh{
+								background-color: #7a85e9;
+								background-image: url('/static/img/scales.png');
+								 background-position: 7px 5px;
+								 line-height: 	28px;
+							}
+							>.fb{
+								background-color: #f19f5f;
+							    background-position: 6px 8px;
+								padding-left: 20px;
+								background-image: url('/static/img/money.png');
+							}
 
 							}
 						}

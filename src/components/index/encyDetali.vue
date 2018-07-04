@@ -1,17 +1,17 @@
 <template>
 	<div class="encyDetaWarp">
-		<div class="DetaliText">
+		<div class="DetaliText" v-for='(ii,id) in detali'>
 			<div class="TextTop">
 				<div class="topiInfo">
-					搜多多 > 币圈百科 > 通证经济（Tokenomics）的三种定义
+					搜多多 > 币圈百科 > {{ii.title}}
 				</div>
 			</div>
 
 			<div class="TextTtile">
 				<div class="TtileInfo">
-					<p class="p1">通证经济（Tokenomics）的三种定义</p>
+					<p class="p1">{{ii.title}}</p>
 					<p class="p2">
-						<span>Alan</span>|
+						<span>{{ii.author}}</span>|
 						<span>2018-05-26</span>|
 						<span>276次阅读</span>
 					</p>
@@ -19,24 +19,15 @@
 			</div>
 
 			<div class="mainText">
-				<div class="mainInfo">
-					<p>Dr. Paul J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司</p>
-					<p>Dr. Paul J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司</p>
-					<img src="/static/img/encyimg.png" />
-					<p>Dr. Paul J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司</p>
-					<p>Dr. Paul J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司</p>
-					<p>Dr. Paul J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司</p>
-					<p>Dr. Paul J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司</p>
-					<p>Dr. Paul J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司</p>
-					<p>Dr. Paul J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司</p>
-					<p>Dr. Paul J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司</p>
-					<p>Dr. Paul J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司J. Ennis是都柏林大学商学院的一位ico顾问和讲师。James Waugh是Blueblock咨询公司</p>
+				<div class="mainInfo" >
+					<div class="mainInfoss" v-html='ii.content'></div>	
+					<!-- 文本 -->
 					<br/>
 					<p>
 						分享到：
-						<img style="vertical-align: middle;margin-right: 6px; cursor: pointer;" src="/static/img/weixin.png">
-						<img style="vertical-align: middle;margin-right: 6px;cursor: pointer;" src="/static/img/weio.png">
-						<img style="vertical-align: middle;margin-right: 6px;cursor: pointer;" src="/static/img/qq.png">
+						<img class="cions" style="vertical-align: middle;margin-right: 6px; cursor: pointer;transform: translateY(13px); " src="/static/img/weixin.png">
+						<img class="cions" style="vertical-align: middle;margin-right: 6px;cursor: pointer;transform: translateY(13px);" src="/static/img/weio.png">
+						<img class="cions" style="vertical-align: middle;margin-right: 6px;cursor: pointer;transform: translateY(13px);" src="/static/img/qq.png">
 
 					</p>
 				</div>
@@ -69,8 +60,29 @@
 </template>
 
 <script>
+	import axios from 'axios'
+	import $ from 'jquery'
 	export default{
+		data(){
+			return({
+				detali:[]
+			})
+		},
+		updated(){
+			$('.mainInfoss').find('img').css({width:'100%'})
 
+
+		},
+		mounted(){
+			document.documentElement.scrollTop   = 0
+			document.body.scrollTop = 0
+			console.log(this.$route.params.id)
+			axios.get(`http://sdd.xtype.cn/api/ency/item?&item_id=${this.$route.params.id}`)
+				.then((res)=>{
+					console.log(res.data.data)
+					this.detali = [res.data.data]
+				})
+		}
 	}
 </script>
 
@@ -131,7 +143,7 @@
 						margin-bottom: 36px;
 						text-align: left;
 					}
-					>img{
+					img{
 						margin-bottom: 37px;
 					}
 				}

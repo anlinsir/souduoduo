@@ -3,8 +3,8 @@
 		<ul class="MLeft">
 			<li class="UserImg">
 				<img src="/static/img/myImg.png">
-				<span style="margin-bottom: 5px;color: #333;">ID:13526410256</span>
-				<span style="color: #666;">昵称：{{loginInfo}}</span>
+				<span style="margin-bottom: 5px;color: #333;">ID:{{userID}}</span>
+				<span style="color: #666;">昵称：{{userNick}}</span>
 			</li>
 
 			<li @click='chengAc(index)' class="myUser" :style="{borderBottom : index  == 1 ? 'none' : '' }"  :class="useChooseAc == index ? 'active' : '' " v-for='(item,index) in useChoose'> <span v-if='useChooseAc == index'></span>{{item}}</li>
@@ -60,7 +60,14 @@
 				oldPass:'',
 				newPass:'',
 				newPassAngin:'',
-				checkdPass:false
+				checkdPass:false,
+				userInfo:null,
+				userID:null,//用户id
+				userNick:null,//昵称
+				userEndLogin:null,//最后登录
+				usercrete:null,//创建时间
+				userTel:null,//用户电话
+				userUpte:null,//更新时间
 			})
 		},
 		methods:{
@@ -107,7 +114,13 @@
 
 		},
 		mounted(){
+			document.documentElement.scrollTop   = 0
+			document.body.scrollTop = 0
 			this.loginInfo = localStorage.login
+			this.userInfo = JSON.parse(localStorage.userInfoIToken)
+			this.userID = this.userInfo.id
+			this.userNick = this.userInfo.nickname ? this.userInfo.nickname : this.userInfo.tel
+
 		}
 	}
 </script>

@@ -107,7 +107,7 @@
 			</transition>
 
 					<input class="lefleflef"  v-model='quAddress' type="text" placeholder="请输入需要查询的区块地址">
-					<input style="position: relative;z-index: 2;" @input='query'  @blur='unquery' @keydown.enter='seIconYype' v-model='iconTypeModel' type="text" placeholder="输入关键词搜索币种、平台">
+					<input style="position: relative;z-index: 2;" @input='query'  @blur='unqueryid' @keydown.enter='seIconYype' v-model='iconTypeModel' type="text" placeholder="输入关键词搜索币种、平台">
 					<span @click='iconTypeShow'  class="iconType" >
 						<span style="display: inline-block;width: 30px;overflow-x: hidden;text-overflow: ellipsis;white-space: nowrap;">{{icon}}</span>
 						<transition name="custom-classes-transition"
@@ -248,6 +248,10 @@
 				
 
 			},
+			unqueryid(){
+				this.tip = false
+
+			},
 			toLogin(e){
 				if(e.target.innerText == '退出登录'){
 					this.loginInfo = ''
@@ -305,19 +309,8 @@
 					alert('请输入关键词')
 					return
 				}
-				// if(this.$route.name == 'searchIcontypes'){
-				// 	axios.get(`http://sdd.xtype.cn/api/search/index?&word=${this.iconTypeModel}`)
-				// 		.then((res)=>{
-				// 			localStorage.searchList = JSON.stringify(res.data.data)
-				// 			console.log(JSON.parse(localStorage.searchList))
-				// 			location.reload()
+				 	this.$router.push({path:'/index/searchIcontypes',query:{searchText:this.iconTypeModel}})	
 
-				// 		})
-				// }else{
-					this.$router.push({path:'/index/searchIcontypes',query:{searchText:this.iconTypeModel}})	
-				// }
-				
-				console.log(this.iconTypeModel)
 			},
 			toUser(id){
 				switch (id){
@@ -329,6 +322,7 @@
 						console.log('去退出登录')
 						this.loginInfo = ''
 						localStorage.removeItem('login')
+						localStorage.removeItem('token')
 						this.$router.push('/index/index')
 						break;
 				}

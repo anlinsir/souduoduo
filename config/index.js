@@ -12,6 +12,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+        // '/api/auth/register': {
+        //     target: 'http://sdd.xtype.cn',
+        //     changeOrigin: true,
+           
+        // }
 
     },
 

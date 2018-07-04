@@ -146,6 +146,8 @@
 			}
 		},
 		mounted(){
+			document.documentElement.scrollTop   = 0
+			document.body.scrollTop = 0
 			
 			this.ct.push(JSON.parse(localStorage.Rate).USD,JSON.parse(localStorage.Rate).CNY,JSON.parse(localStorage.Rate).JPY,JSON.parse(localStorage.Rate).EUR)
 			console.log(this.ct)

@@ -22,7 +22,12 @@
 						</transition>
 
 						</div>
-						<div class="flesh"><img src="/static/img/refresh.png"></div>
+						<div class="flesh">
+							<div class="ro">
+								<img src="/static/img/refresh.png">	
+							</div>
+							
+						</div>
 					<!-- 	<ul> 
 							<li @click='changeActives(index)' :class="actives == index ? 'actives' : '' "  v-for='(item,index) in 5'>{{item}}</li>
 						</ul> -->
@@ -31,6 +36,7 @@
 						  <el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
 						    layout="prev, pager, next"
 						    :total="total"
+						    :pager-count="total_page"
 						     >
 						     <!-- pager-count='3'  -->
 						  </el-pagination>
@@ -41,7 +47,36 @@
 				</div>
 
 				<div class="indexLeftBomTable">
-					<table class="dataTable">
+					<div class="jiazaizh" v-show='!datatrue'>
+						<svg version="1.1" id="L1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+							    <circle fill="none" stroke="rgba(0,0,0,0.6)" stroke-width="6" stroke-miterlimit="15" stroke-dasharray="14.2472,14.2472" cx="50" cy="50" r="47" transform="rotate(14.4021 50 50)">
+							      <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="5s" from="0 50 50" to="360 50 50" repeatCount="indefinite"></animateTransform>
+							  </circle>
+							  <circle fill="none" stroke="rgba(0,0,0,0.6)" stroke-width="1" stroke-miterlimit="10" stroke-dasharray="10,10" cx="50" cy="50" r="39" transform="rotate(-14.4021 50 50)">
+							      <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="5s" from="0 50 50" to="-360 50 50" repeatCount="indefinite"></animateTransform>
+							  </circle>
+							  <g fill="rgba(0,0,0,0.6)">
+							  <rect x="30" y="35" width="5" height="30" transform="translate(0 2.99941)">
+							    <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatCount="indefinite" begin="0.1"></animateTransform>
+							  </rect>
+							  <rect x="40" y="35" width="5" height="30" transform="translate(0 4.99941)">
+							    <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatCount="indefinite" begin="0.2"></animateTransform>
+							  </rect>
+							  <rect x="50" y="35" width="5" height="30" transform="translate(0 3.00059)">
+							    <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatCount="indefinite" begin="0.3"></animateTransform>
+							  </rect>
+							  <rect x="60" y="35" width="5" height="30" transform="translate(0 1.00059)">
+							    <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatCount="indefinite" begin="0.4"></animateTransform>
+							  </rect>
+							  <rect x="70" y="35" width="5" height="30" transform="translate(0 -0.999405)">
+							    <animateTransform attributeName="transform" dur="1s" type="translate" values="0 5 ; 0 -5; 0 5" repeatCount="indefinite" begin="0.5"></animateTransform>
+							  </rect>
+							  </g>
+							</svg>
+
+					</div>
+
+					<table class="dataTable" v-show='datatrue'>
 						<thead>
 							<tr>
 								<td  :class="'th' + (index) " v-for='(item,index) in thead' :key='index'>{{item}}</td>
@@ -77,7 +112,7 @@
 						</tbody>
 
 					</table>
-					<div class="pagesW" style="text-align: center;width:100%;     transform: translateX(-151px);">
+					<div v-show='datatrue' class="pagesW" style="text-align: center;width:100%;     transform: translateX(-151px);">
 						<div class="block" style="display: inline-block;width: 100px; top: 4px;left: 51px;">
 						  <el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
 						    layout="prev, pager, next"
@@ -157,7 +192,7 @@
 						</li>
 					</ul>
 
-					<table>
+					<table v-show='rankingActives == 0'>
 						<thead>
 							<tr>
 								<td>排名 </td>
@@ -167,17 +202,45 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr  class="tbr" v-for='(item,index) in tbody' :key='index'>
-								<td :style="{paddingLeft: item < 4 ?  '20px' : '0' , marginLeft:item < 4 ?  '0' : '-6px'}"><span v-if='item.id<4' style="width: 20px;
+							<tr  class="tbr" v-for='(item,index) in rankvolumeList' :key='index'>
+								<td :style="{paddingLeft: item < 4 ?  '20px' : '0' , marginLeft:item < 4 ?  '0' : '-6px'}"><span v-if='index<4' style="width: 20px;
 								height: 20px;
 								background-color: #fba73e;
 								color: #fff;
 								text-align: center;
 								line-height:20px; 
 								display: inline-block;
-								">{{item.id}}</span>{{item.id < 4 ? '' : item.id }}</td>
+								">{{index+1}}</span>{{index < 4 ? '' : index }}</td>
+								<td style="color: #4277ff">{{item.symbol}}-{{item.cn_name ? item.cn_name : item.name}}</td>
+								<td>{{item.volume_24h?item.volume_24h : '??'}}</td>
+								
+
+							</tr>
+						</tbody>	
+					</table>
+
+
+					<table v-show='rankingActives == 1'>
+						<thead>
+							<tr >
+								<td>排名 </td>
+								<td>名称</td>
+								<td>成交量</td>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr   class="tbr" v-for='(item,index) in rankvolumeListex' :key='index'>
+								<td :style="{paddingLeft: item < 4 ?  '20px' : '0' , marginLeft:item < 4 ?  '0' : '-6px'}"><span v-if='index<4' style="width: 20px;
+								height: 20px;
+								background-color: #fba73e;
+								color: #fff;
+								text-align: center;
+								line-height:20px; 
+								display: inline-block;
+								">{{index+1}}</span>{{index < 4 ? '' : index }}</td>
 								<td style="color: #4277ff">{{item.name}}</td>
-								<td>{{item.transaction}}</td>
+								<td>{{item.volume_24h?item.volume_24h : '??'}}</td>
 								
 
 							</tr>
@@ -193,7 +256,7 @@
 				<div class="rOf">
 					<div class="rOfTitle">
 						<p>
-							<span @click='rofChoose(index)' v-for='(item,index) in rof' :key='index' :class="rofActive == index ? 'rofActive' : '' ">{{item}}<img v-if='index == 1' src="/static/img/right_arrow.png"></span>
+							<span @click='rofChoose(index)' v-for='(item,index) in rof' :key='index' :class="rofActive == index ? 'rofActive' : '' ">{{item}}<img @click='toRank' style="cursor: pointer;" v-if='index == 1' src="/static/img/right_arrow.png"></span>
 							
 						</p>
 					</div>	
@@ -205,11 +268,11 @@
 
 					<ul class="rofDatadetails">
 						<li class="head"><span v-for='(item,index) in rofdetalislist' :key='index'>{{item}}</span></li>
-						<li class="body" v-for='(items,index) in tbody'>
-							<span style='width: 20px;height: 20px;transform: translateY(6px);display: inline-block;text-align: center;line-height: 20px;'><span v-if='items.id < 4' style='width: 20px;height: 20px;background-color: #fba73e;color: #FFF;display: inline-block;text-align: center;line-height: 20px;transform: translateY(0px);'>{{items.id}}</span>{{items.id >= 4 ? items.id : ''}}</span>
-							<span>{{items.name}}</span>
-							<span>{{items.price}}</span>
-							<span :style="{color: parseFloat(items.rises) < 0 ? '#33b862' : 'red' }">{{items.rises}}</span>
+						<li class="body" v-for='(items,index) in rofList' style="text-align: left;">
+							<span style='width: 20px;height: 20px;transform: translateY(6px);display: inline-block;text-align: center;line-height: 20px;margin-left: 10px;'><span v-if='index < 4' style='width: 20px;height: 20px;background-color: #fba73e;color: #FFF;display: inline-block;text-align: center;line-height: 20px;transform: translateY(0px);'>{{index}}</span>{{index >= 4 ? index : ''}}</span>
+							<span style="width: 70px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{items.symbol}}-{{items.cn_name?items.cn_name:items.name}}</span>
+							<span style="width: 50px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">${{Number(items.price).toFixed(4)}}</span>
+							<span style="width: 30px" :style="{color: parseFloat(items.rises) < 0 ? '#33b862' : 'red' }">{{items.percent_change_1h ? items.percent_change_1h : '??'}}</span>
 
 							
 						</li>
@@ -524,20 +587,31 @@
 				moneyList:[],
 				moneyShow:false,
 				currentPage:1,
-				total:null,
-				// pagerCount:3,
-				cionList:[]
+				total:1,
+				total_page:3,
+				cionList:[],
+				rofList:[],
+				roforderType:'asc',
+				roforderBy:'percent_change_1h',
+				rankvolumeList:[],
+				rankvolumeListex:[],
+				datatrue:false
 
 			})
 		}
 		,
 		methods:{
+			toRank(){
+				this.$router.push('/index/ranking')
+			},
 			handleCurrentChange(val){
 				this.currentPage =val
+				this.datatrue = false
 				axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${(Number(val)-1)*10}`)
 				.then((res)=>{
-					console.log(res.data.data.list)
 					this.cionList = res.data.data.list
+					this.datatrue = true
+
 				})
 			},
 			toIconDetali(sug,syb){
@@ -548,7 +622,6 @@
 				this.money = this.moneyList[id].cn_name + this.moneyList[id].code
 				this.moneyrage = Number(value)
 				this.moneySymbol =symbol 
-				console.log(this.moneyrage,this.moneySymbol)
 				if(this.moneyShow){
 					this.moneyShow =true
 					return
@@ -569,20 +642,21 @@
 				switch (index){
 					case 0:
 						
-								this.cionList = JSON.parse(localStorage.cionList1)
-								this.total = Number(localStorage.cionList1sum)
+							this.cionList = JSON.parse(localStorage.cionList1)
+							this.total = Number(localStorage.cionList1sum)
 						
 						break;
 					case 1 :
+						this.datatrue = false
 						axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}`)
 							.then((res)=>{
-								console.log(res.data.data.list)
 								var aa = []
 								aa.push(res.data.data.list[0])
 								aa.push(res.data.data.list[1])
 								this.cionList = aa
 
 								this.total = (this.cionList.length)*10
+								this.datatrue = true
 						})
 						break;
 				}		
@@ -592,12 +666,71 @@
 			// },
 			changeRanChoose(index){
 				this.rankingActives = index
+				console.log(this.rankingActives)
+				if(this.rankingActives == 0){
+					axios.get('http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&take=7')
+			 			.then((res)=>{
+			 				console.table(res.data.data.list)
+			 				this.rankvolumeList = res.data.data.list
+			 				
+			 		})
+
+				}else if(this.rankingActives == 1){
+					axios.get('http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&take=7')
+						.then((res)=>{
+			 				this.rankvolumeListex = res.data.data.list
+
+						})
+				}
 			},
 			rofChoose(index){
 				this.rofActive = index
+
+				if(this.rofActive == 0){
+					this.roforderType = 'asc'
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
+			 			.then((res)=>{
+			 				console.log(res.data.data)
+			 				this.rofList = res.data.data.list
+			 		})
+				}else if(this.rofActive == 1){
+					this.roforderType = 'desc'
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
+			 			.then((res)=>{
+			 				console.log(res.data.data)
+			 				this.rofList = res.data.data.list
+			 		})
+				}
+
 			},
 			rofChooses(index){
 				this.rofActives = index
+
+				if(this.rofActives == 0){
+					this.roforderBy = 'percent_change_1h'
+						axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
+				 			.then((res)=>{
+				 				console.log(res.data.data)
+				 				this.rofList = res.data.data.list
+				 		})
+				}else if(this.rofActives == 1){
+					this.roforderBy = 'percent_change_24h'
+						axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
+			 			.then((res)=>{
+			 				console.log(res.data.data)
+			 				this.rofList = res.data.data.list
+			 		})
+
+				}else if(this.rofActives == 2){
+					this.roforderBy = 'percent_change_7d'
+
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
+			 			.then((res)=>{
+			 				console.log(res.data.data)
+			 				this.rofList = res.data.data.list
+			 		})
+				}
+
 			},
 			minidatachange(index){
 				this.minidataAvtive = index
@@ -626,6 +759,39 @@
     Peity
   },
 		mounted(){
+			document.documentElement.scrollTop   = 0
+			document.body.scrollTop = 0
+			if(localStorage.token && localStorage.login){
+				axios.get(`http://sdd.xtype.cn//api/user/info?&_api_token=${localStorage.token}`)
+					.then((res)=>{
+						console.log(res.data.data)
+						localStorage.userInfoIToken = JSON.stringify(res.data.data)
+				})
+			}
+
+			var cishu = 0;
+			 var cishu1 = 0
+			 window.onscroll = ()=>{
+			 	if((document.documentElement.scrollTop >= 270 || document.body.scrollTop>=270) && cishu1 == 0){
+			 		console.log('ftughy')
+			 		axios.get('http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&take=7')
+			 			.then((res)=>{
+			 				console.table(res.data.data.list)
+			 				this.rankvolumeList = res.data.data.list
+			 				
+			 			})
+			 		cishu1 = 1
+			 	}
+			 	if((document.documentElement.scrollTop >=650   ||	document.body.scrollTop>=650) && cishu == 0){
+			 		axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=asc`)//侧边栏涨跌幅
+			 			.then((res)=>{
+			 				this.rofList = res.data.data.list
+			 			})
+			 		cishu = 1
+			 	}
+			 }
+
+
 
 			if(!localStorage.Rate){
 			         axios.get('http://sdd.xtype.cn/api/exchange/rate')
@@ -637,17 +803,22 @@
 							this.moneyList.push(JSON.parse(localStorage.Rate).EUR)
 
 			       })
-   						}
+   			}else{
+   				this.moneyList.push(JSON.parse(localStorage.Rate).USD)
+							this.moneyList.push(JSON.parse(localStorage.Rate).CNY)
+							this.moneyList.push(JSON.parse(localStorage.Rate).JPY)
+							this.moneyList.push(JSON.parse(localStorage.Rate).EUR)
+   			}
 			
 		
 			
 			axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}`)
 				.then((res)=>{
-					console.log(res.data.data.list)
 					this.cionList = res.data.data.list
 					localStorage.cionList1 = JSON.stringify(res.data.data.list)
 					localStorage.cionList1sum = Math.ceil(Number(res.data.data.count))
 					this.total = Math.ceil(Number(res.data.data.count))
+					this.datatrue = true
 
 				})
 			
@@ -799,6 +970,7 @@
 							position: absolute;
 							top:30px;
 							left:0px;
+							z-index: 50;
 							width: 90px;
 							min-height: 20px;
 							border:1px solid #e5e5e5;
@@ -831,13 +1003,29 @@
 
 					}
 					>.flesh{
-						width: 45px;
-						height: 37px;
+						width: 30px;
+						height: 30px;
 						cursor: pointer;
 
 						text-align: center;line-height: 37px;
 						margin-right: 9px;
 						background-color: #fff;
+						transform: translateX(5px) translateY(5px);
+						>.ro{
+							width: 30px;
+							height: 30px;
+							transition: all 1s;
+
+						}
+						img{
+							transform: translateY(-3px);
+							transition: all 1s;
+						}
+					}
+					>.flesh:hover .ro{
+						transform:rotate(360deg);
+						-webkit-transform-origin: center ;
+						transform-origin: center ;	
 					}
 					>ul{
 						width: 241px;
@@ -860,7 +1048,25 @@
 				width: 866px;
 				min-height: 500px;
 				padding: 0 31px 0 17px;
-				border:1px solid #e5e5e5;				
+				border:1px solid #e5e5e5;
+				position: relative;				
+				>.jiazaizh{
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					background-color: rgba(255,255,255,0.6);
+					z-index: 2;
+					>svg{
+						width: 50px;
+						height: 50px;
+						position: absolute;
+						top:0;
+						left: 0;
+						bottom: 0;
+						right: 0;
+						margin: auto;
+					}
+				}
 				>.dataTable{
 					width: 100%;
 					min-height: 300px;
@@ -1175,10 +1381,13 @@
 						>tr{
 							background-color: #f4f4f4;
 							>td{
-								padding: 0 0 0 9px;
+								width: 33%;
 								height: 32px;
+								margin-left: 10px;
 								font-size: 12px;
 								color: #666;
+								text-align: center;
+								transform: translateX(-13px);
 
 							}
 						}
@@ -1189,13 +1398,16 @@
 							width: 100%;
 
 							>td{
-								width: 20px;
+								width: 33%;
 								height: 20px;
 								text-align: center;
 								line-height: 20px;
 								transform: translateX(-15px);
 								font-size: 12px;
 								color: #666;
+								white-space: nowrap;
+								text-overflow: ellipsis;
+								overflow: hidden;
 							}
 						}
 					}

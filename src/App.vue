@@ -14,14 +14,12 @@ export default {
     })
   },
   mounted(){
-    if(!localStorage.countries){
        axios.get('http://sdd.xtype.cn/api/exchange/countries')
               .then((res)=>{
                 localStorage.countries = JSON.stringify(res.data.data)
 
        })
-    }else if(localStorage.countries){
-    }
+   
 
     
    

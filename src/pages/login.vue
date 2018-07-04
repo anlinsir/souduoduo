@@ -27,8 +27,8 @@
 						<div class="phone" v-for='(item,ind) in input' :key='ind' :style="{marginBottom : active == 0 ? '24px' : '15px'}">
 							<img class="limg" :src="item.img">	
 							<input :type="item.type" :placeholder="item.place" :name='item.name' v-model='item.model'>
-							<img v-if='item.rimg' class="rimg" :src="item.rimg" >
-							<span v-if='item.yz' class="clicl">获取验证码</span>
+							<img v-if='item.rimg' class="rimg" :src="yzm" style="cursor: pointer;" @click='chengYzm'>
+							<span v-if='item.yz' class="clicl" @click='telyzm'>获取验证码</span>
 						</div>
 						
 						<div class="btng">
@@ -50,6 +50,9 @@
 
 
 <script>
+	import axios  from 'axios'
+	import qs from 'qs';
+	import $ from 'jquery'
 	export default {
 		data(){
 			return({
@@ -79,13 +82,30 @@
 						model:''				
 					}
 
-				]
+				],
+				yzm:null
 			})
 		},
 		methods:{
+			telyzm(){
+				console.log(this.input[0].model)
+				axios.get(`http://sdd.xtype.cn/api/auth/sendCode?&tel=${this.input[0].model}`)
+					.then((res)=>{
+						console.log(res.data)
+					})
+			},
+			chengYzm(){
+				axios.get('http://sdd.xtype.cn/api/auth/captcha', {responseType: 'arraybuffer'}).then(response => {return 'data:image/png;base64,' + btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))})
+				.then(data => {
+					this.yzm = data
+				})
+			},
 			changeActive(index){
 				this.active = index
-
+				axios.get('http://sdd.xtype.cn/api/auth/captcha', {responseType: 'arraybuffer'}).then(response => {return 'data:image/png;base64,' + btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))})
+				.then(data => {
+					this.yzm = data
+				})
 				if(index == 0){
 					this.input = [
 							{
@@ -140,7 +160,7 @@
 						},
 						{
 							img:"/static/img/loginlock.png",
-							type:'text',
+							type:'password',
 							place:'请再次输入密码',											
 							name:'doupass',
 							model:''	
@@ -181,7 +201,7 @@
 							},
 							{
 								img:"/static/img/loginlock.png",
-								type:'text',
+								type:'password',
 								place:'请再次输入密码',											
 								name:'doupass'
 							},
@@ -220,7 +240,7 @@
 				console.log(this.active) //通过active判断提交类型
 				for(var i in this.input){
 					if(this.input[i].model == ''){
-						alert('non')
+						alert('至少有一项未填写')
 						return
 					}
 					// if(this.input[i].name == 'doupass'){ 不知道干啥的
@@ -229,20 +249,116 @@
 					logininfo.push(this.input[i].model)
 				}
 
+				var tel = /^[1][0-9]{10}$/;
+				var reg = /^.{6,}$/;
 				switch (this.active){
+
 					case 0:
-						console.log('登录')
-						console.log(logininfo)
-						localStorage.login =  logininfo[0]
-						this.$router.push('/index/index')
+
+						if(!logininfo[0] || !logininfo[1] || !logininfo[2]){
+							window.alert('至少有一个字段未填写')
+							return
+						}else if(!tel.test(logininfo[0])){
+							window.alert('手机号格式错误')
+							return
+						}else if(!reg.test(logininfo[1])){
+							window.alert('密码错误')
+							return
+						}
+
+
+					console.log(logininfo[0],logininfo[1],logininfo[2])
+					axios.get(`http://sdd.xtype.cn/api/auth/login?&tel=${logininfo[0]}&password=${logininfo[1]}&captcha=${logininfo[2]}`)
+						.then((res)=>{
+							console.log(res.data)
+							if(res.data.code == 0 && res.data.msg == 'ok'){
+								localStorage.token = res.data.data.token
+								localStorage.login =  logininfo[0]
+								this.$router.push('/index/index')
+							}
+
+					})
+						// console.log('登录')
+						// console.log(logininfo)
+						// localStorage.login =  logininfo[0]
+						// this.$router.push('/index/index')
 						break;
 					case 1:
-						console.log('注册')
-						console.log(logininfo)
+					// console.log({tel:logininfo[0],password:logininfo[2],sms_code:logininfo[1],captcha:logininfo[4]})
+					if(!logininfo[0] || !logininfo[1] || !logininfo[2] || !logininfo[3] || !logininfo[4]){
+							window.alert('至少有一个字段未填写')
+							return
+						}else if(!tel.test(logininfo[0])){
+							window.alert('手机号格式错误')
+							return
+						}else if(!reg.test(logininfo[2])){
+							window.alert('密码错误')
+							return
+						}else if(logininfo[2] != logininfo[3]){
+							window.alert('两次密码不一致')
+							return
+						}
+
+					var pro = {tel:logininfo[0],password:logininfo[2],sms_code:logininfo[1],captcha:logininfo[4]}
+					var headers = {'X-Requested-With': 'XMLHttpRequest'}
+
+					console.log("http://sdd.xtype.cn/api/auth/register",pro, headers)
+						axios.get(`http://sdd.xtype.cn/api/auth/register?&tel=${logininfo[0]}&password=${logininfo[2]}&sms_code=${logininfo[1]}&captcha=${logininfo[4]}`)
+							.then((res)=>{
+								console.log(res.data)
+								if(res.data.code == 0 && res.data.msg == '注册成功'){
+									this.active = 0
+									this.input = [
+												{
+														img:"/static/img/loginUser.png",
+														type:'text',
+														place:'请输入手机号',
+														name:'phone',
+														model:''	
+																			
+													},
+													{
+														img:"/static/img/loginlock.png",
+														type:'password',
+														place:'请输入密码',
+														name:'pass'	,
+														model:''						
+													},
+													{
+														img:"/static/img/loginkey.png",
+														type:'text',
+														place:'请输入验证码',	
+														rimg:"/static/img/loginyzm.png",
+														name:'yz'	,
+														model:''			
+													}
+
+									]
+									this.input[0].model = logininfo[0]
+								}
+
+							})
+						
+																	
 						break;
 					case 3:
-						console.log('改密')
-						console.log(logininfo)
+						if(!logininfo[0]  || !logininfo[1] || !logininfo[2] || !logininfo[3]){
+							window.alert('至少有一个字段未填写')
+							return
+						}else if(!tel.test(logininfo[0])){
+							window.alert('手机号格式错误')
+							return
+						}else if(logininfo[2] != logininfo[3]){
+							window.alert('两次密码不一致')
+							return
+						}
+
+						axios.get(`http://sdd.xtype.cn/api/auth/password?&tel=${logininfo[0]}&password=${logininfo[2]}&sms_code=${logininfo[1]}`)					
+							.then((res)=>{
+								console.log(res.data)
+								//
+
+							})
 						break;
 						default:
 						console.log('错误')
@@ -251,6 +367,12 @@
 				}
 				
 			}
+		},
+		mounted(){
+			axios.get('http://sdd.xtype.cn/api/auth/captcha', {responseType: 'arraybuffer'}).then(response => {return 'data:image/png;base64,' + btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))})
+			.then(data => {
+				this.yzm = data
+				})
 		}
 	}
 </script>
@@ -308,6 +430,7 @@
 						width: 105px;
 						text-align: center;
 						line-height: 45px;
+						cursor: pointer;
 						font-size: 16px;
 						color: #232323;
 
@@ -321,6 +444,7 @@
 					letter-spacing: 4px;
 					>img{
 						transform: translateX(-131px);
+						cursor: pointer;
 					}
 				}
 				>.logins{
@@ -339,6 +463,7 @@
 							color: #4277ff;
 							font-size: 14px;
 							text-align: center;
+							cursor: pointer;
 							line-height: 36px;
 							border-radius: 7px;
 						}
