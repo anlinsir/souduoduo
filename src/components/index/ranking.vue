@@ -9,7 +9,7 @@
 				<li :style="{color:index == 2 ? '#4277ff' : ''}" @click='headeractivesChange(0,index,item.id)' :class="headeractives0 == index ? 'headeractives0' : '' " :data-id='item.id' v-if='rankavtive == 0' v-for='(item,index) in headTchoose0'>{{item.pr}}
 					<span @click='more' class="rankUl2SpanIcon" v-if='item.ci '></span>
 
-					<ul style="background-color: #fff;border:1px solid #eee; border-radius: 20px;" v-if='item.ci && moreShow'><!-- 有下拉的时候出来 -->
+					<ul style="background-color: #fff;border:1px solid #eee; border-radius: 20px;z-index: 2;" v-if='item.ci && moreShow'><!-- 有下拉的时候出来 -->
 						<li style="cursor: pointer;" @click='childChoose($event,indexs)'  :class="headeractives0Chi ==indexs ? 'headeractives0Chi' : '' "  :data-id='items.id' v-for="(items,indexs) in item.ci" :key='indexs'>{{items.pr}}</li>
 					</ul>
 				</li>
@@ -60,16 +60,16 @@
 				</thead>
 
 				<tbody cellspacing="0">
-					<tr @click='Bdetalis(item.slug)' v-for="(item,index) in rankingRise">
+					<tr @click='Bdetalis(item.slug,item.symbol)' v-for="(item,index) in rankingRise">
 						<td style="width: 90px;">{{index+1}}</td>
 						<td style="width: 160px;padding-right: 10px;box-sizing: border-box;overflow: hidden;white-space:nowrap;text-overflow: ellipsis;">
 							<img  style="transform: translateY(5px);height: 21px;width: 21px;" :src="item.logo" />
 						{{item.name}}{{item.cn_name ? '-' + item.cn_name : ''}}</td>
-						<td v-if='rankavtive != 2'>{{item.price}}</td>
-						<td v-if='rankavtive != 2'>{{item.market_cap ? item.market_cap : '??'}}</td>
-						<td v-if='rankavtive != 2'>{{item.circulating_supply ? item.circulating_supply : '??'}}</td>
-						<td v-if='rankavtive != 2'>{{item.volume_24h ? item.volume_24h : '??'}}</td>
-						<td  v-if='rankavtive != 2' :style="{color: item.percent_change_1h >= 0 ?  '#33b862' : 'red' }">{{item.percent_change_1h ? item.percent_change_1h : '??'}}</td>
+						<td v-if='rankavtive != 2'>{{moneySymbol}}{{((item.price)*moneyrage).toFixed(4)}}</td>
+						<td v-if='rankavtive != 2'>{{moneySymbol}}{{item.market_cap ? ((item.market_cap)*moneyrage).toFixed(2) : '?'}}</td>
+						<td v-if='rankavtive != 2'>{{item.circulating_supply ? ((item.circulating_supply)/10000).toFixed(2)  +  '万' : '?'}}</td>
+						<td v-if='rankavtive != 2'>{{moneySymbol}}{{item.volume_24h ? (((item.volume_24h)*moneyrage)/10000).toFixed(2) + '万' : '?'}}</td>
+						<td  v-if='rankavtive != 2' :style="{color: item.percent_change_1h >= 0 ?  '#33b862' : 'red' }">{{item.percent_change_1h ? item.percent_change_1h : '?'}}%</td>
 
 						<td  v-if='rankavtive == 2'>{{item.pairs_count}}</td>
 						<td style="width:100px;" v-if='rankavtive == 2'>{{item.country_code}}</td>
@@ -83,7 +83,7 @@
 
 						</td>
 
-						<td v-if='rankavtive == 2'>${{Number(item.volume_24h).toFixed(2)}}</td>
+						<td v-if='rankavtive == 2'>{{moneySymbol}}{{(Number(item.volume_24h)*moneyrage).toFixed(2)}}</td>
 						<td v-if='rankavtive == 2'>%</td>
 						<td v-if='rankavtive == 2'>{{item.updated_at}}</td>
 
@@ -525,7 +525,10 @@
 				time:null,
 				rank:null,
 				jys:false,
-				jysType:null
+				jysType:null,
+				moneyrage:6.67,
+				moneySymbol:'￥'
+				
 			})
 		},
 		methods:{
@@ -608,6 +611,8 @@
 									console.log(this.rankingRise)
 									this.datature = true
 								})
+						}else if(index == 2){
+
 						}
 						break;
 					case 1:
@@ -646,12 +651,13 @@
 				}
 			},
 			childChoose(e,index){
+				
 				var _this = this
 				this.headeractives0Chi = index
 				if(index == 0){
 					this.time = 'percent_change_1h'
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
 						.then((res)=>{
 						this.rankingRise = res.data.data.list
 						console.log(this.rankingRise)
@@ -660,7 +666,7 @@
 				}else if(index == 1){
 					this.time = 'percent_change_24h'
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
 						.then((res)=>{
 						this.rankingRise = res.data.data.list
 						console.log(this.rankingRise)
@@ -669,7 +675,7 @@
 				}else if(index == 2){
 					this.time = 'percent_change_7d'
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}`)
+					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
 						.then((res)=>{
 						this.rankingRise = res.data.data.list
 						console.log(this.rankingRise)
@@ -679,12 +685,12 @@
 				this.headTchoose0[2].pr = e.target.innerHTML
 				this.moreShow = false
 			},
-			Bdetalis(index){
+			Bdetalis(sug,syb,val){
 				if(this.rankavtive == 0 || this.rankavtive == 1){
 
-						this.$router.push('/index/cion/' + index)
+						this.$router.push({path:`/index/cion/${sug}`,query:{symbol:syb}})
 				}else if(this.rankavtive == 2){
-					this.$router.push('/index/tradDetali/2')
+					this.$router.push(`/index/tradDetali/${sug}`)
 				}
 			},
 			handleCurrentChange(pages){
@@ -749,6 +755,14 @@
 			},
 			
 		},
+		beforeRouteEnter (to, from, next) {
+		  next(vm => {
+		  	console.log(vm.$route)
+		  	vm.moneyrage =localStorage.moneyrage
+		  	vm.moneySymbol = localStorage.moneySymbol
+
+		  })
+		},	
 		mounted(){
 			document.documentElement.scrollTop   = 0
 			document.body.scrollTop = 0
@@ -814,6 +828,7 @@
 					position: relative;
 					text-align: center;
 					line-height: 40px;
+					cursor: pointer;
 					>.rankUl2SpanIcon{
 						position: absolute;
 						display: inline-block;

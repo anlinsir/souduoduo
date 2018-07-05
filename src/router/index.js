@@ -83,7 +83,10 @@ export default new Router({
      	{
      		path:'/index/index',
      		name:'pindex',
-     		component:PartIndex
+     		component:PartIndex,
+             meta: {
+                keepAlive: true // 不需要缓存
+              }
      	},
         {
             path:'/index/ranking',

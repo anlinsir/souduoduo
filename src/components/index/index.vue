@@ -11,7 +11,7 @@
 					<div class="TopChooseRight">
 						<div  @click='ShowmoneyItem'  class="yuan">
 							<span :title='money' style="display: inline-block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{money}}</span>
-				<transition name="custom-classes-transition"
+					<transition name="custom-classes-transition"
 
 					 enter-active-class="animated flipInX"
     					leave-active-class="animated flipOutX">
@@ -46,6 +46,7 @@
 
 				</div>
 
+<keep-alive include="test-keep-alive">
 				<div class="indexLeftBomTable">
 					<div class="jiazaizh" v-show='!datatrue'>
 						<svg version="1.1" id="L1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
@@ -76,7 +77,7 @@
 
 					</div>
 
-					<table class="dataTable" v-show='datatrue'>
+					<table class="dataTable" v-show='datatrue && active == 0 || (active == 1 && logintrue && datatrue)' >
 						<thead>
 							<tr>
 								<td  :class="'th' + (index) " v-for='(item,index) in thead' :key='index'>{{item}}</td>
@@ -112,9 +113,17 @@
 						</tbody>
 
 					</table>
-					<div v-show='datatrue' class="pagesW" style="text-align: center;width:100%;     transform: translateX(-151px);">
-						<div class="block" style="display: inline-block;width: 100px; top: 4px;left: 51px;">
-						  <el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
+					<div class="loginFalse" v-if='active == 1 && !logintrue' v-show='(active == 1 && !logintrue)'>
+						<div class="box">
+							<span>登陆后可查看自选</span><br>
+							<button class="lo" @click='toLogin(0)'>立即登陆</button>
+							<button class="re" @click='toLogin(1)'>立即注册</button>
+
+						</div>
+					</div>
+					<div v-show='datatrue && active == 0 || (active == 1 && logintrue && datatrue)' class="pagesW" style="text-align: center;width:100%;">
+						<div class="block" style="display: inline-block;width: 100%;text-align: center;">
+						  <el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style=""
 						    layout="prev, pager, next"
 						    :total="total" >
 						  </el-pagination>
@@ -122,6 +131,7 @@
 					</div>
 
 				</div>
+</keep-alive>
 			</div>
 
 
@@ -373,6 +383,7 @@
 	export default{
 		data(){
 			return({
+				logintrue:true,
 				  pieData: '1, 2, 3, 2,2',
 				nav:['货币','关注'],
 				active:0,
@@ -580,7 +591,7 @@
 					
 				],
 				datar:['数据存储','匿名货币','公正防伪','去中心化交易所','比特币山寨币','侧链概念','支付概念','平台币','资产交易','数据经济'],
-				money:'美元USD',
+				money:'人民币CNY',
 				moneyid:0,
 				moneyrage:1,
 				moneySymbol:'$',
@@ -601,6 +612,10 @@
 		}
 		,
 		methods:{
+			toLogin(){
+				this.$router.push('/login')
+			},
+
 			toRank(){
 				this.$router.push('/index/ranking')
 			},
@@ -626,6 +641,11 @@
 				this.money = this.moneyList[id].cn_name + this.moneyList[id].code
 				this.moneyrage = Number(value)
 				this.moneySymbol =symbol 
+
+				localStorage.moneyrage = Number(value)
+				localStorage.moneySymbol = symbol 
+				console.log(localStorage.moneySymbol,localStorage.moneyrage)
+
 				if(this.moneyShow){
 					this.moneyShow =true
 					return
@@ -651,6 +671,7 @@
 						
 						break;
 					case 1 :
+					if(this.logintrue){
 						this.datatrue = false
 						axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}&take=50`)
 							.then((res)=>{
@@ -663,6 +684,9 @@
 								this.datatrue = true
 						})
 						break;
+					}else {
+						this.datatrue = true
+					}
 				}		
 			},
 			// changeActives(index){
@@ -766,11 +790,15 @@
 			document.documentElement.scrollTop   = 0
 			document.body.scrollTop = 0
 			if(localStorage.token && localStorage.login){
+				this.logintrue = true
 				axios.get(`http://sdd.xtype.cn//api/user/info?&_api_token=${localStorage.token}`)
 					.then((res)=>{
 						console.log(res.data.data)
 						localStorage.userInfoIToken = JSON.stringify(res.data.data)
 				})
+			}else{
+				this.logintrue = false
+
 			}
 
 			var cishu = 0;
@@ -801,17 +829,28 @@
 			         axios.get('http://sdd.xtype.cn/api/exchange/rate')
 			              .then((res)=>{
 			                localStorage.Rate = JSON.stringify(res.data.data)
+			                this.moneyList.push(JSON.parse(localStorage.Rate).CNY)
 			                this.moneyList.push(JSON.parse(localStorage.Rate).USD)
-							this.moneyList.push(JSON.parse(localStorage.Rate).CNY)
+							
 							this.moneyList.push(JSON.parse(localStorage.Rate).JPY)
 							this.moneyList.push(JSON.parse(localStorage.Rate).EUR)
+							this.moneyrage = JSON.parse(localStorage.Rate).CNY.value
+							this.moneySymbol = JSON.parse(localStorage.Rate).CNY.symbol
+							localStorage.moneyrage = this.moneyrage
+							localStorage.moneySymbol = this.moneySymbol
+
 
 			       })
    			}else{
-   				this.moneyList.push(JSON.parse(localStorage.Rate).USD)
+   				
 							this.moneyList.push(JSON.parse(localStorage.Rate).CNY)
+							this.moneyList.push(JSON.parse(localStorage.Rate).USD)
 							this.moneyList.push(JSON.parse(localStorage.Rate).JPY)
 							this.moneyList.push(JSON.parse(localStorage.Rate).EUR)
+							this.moneyrage = JSON.parse(localStorage.Rate).CNY.value
+							this.moneySymbol = JSON.parse(localStorage.Rate).CNY.symbol
+							localStorage.moneyrage = this.moneyrage
+							localStorage.moneySymbol = this.moneySymbol
    			}
 			
 		
@@ -1054,6 +1093,47 @@
 				padding: 0 31px 0 17px;
 				border:1px solid #e5e5e5;
 				position: relative;				
+				>.loginFalse{
+					position: absolute;
+					top:0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background-color: #fff;
+					>.box{
+						width: 500px;
+						padding-top: 90px;
+						height: 300px;
+						position: absolute;top:0;
+						left: 0;
+						background-color: #eee;
+						right: 0;
+						bottom:0;
+						margin: auto;
+						font-size: 14px;
+						color: #333;
+						box-shadow: 0 0 10px 10px #fff inset;
+						text-align: center;
+						>button{
+							width: 80px;
+							height: 30px;
+							border:none;
+							margin-right: 30px;
+							margin-left: 30px;
+							text-align: center;
+							line-height: 30px;
+							color: #fff;
+							font-size: 14px;
+							margin-top: 50px;
+							border-radius: 10px;
+							cursor: pointer;
+
+						}
+						>.lo{background-color: #2599f2}
+						>.re{background-color: #464680}
+
+					}
+				}
 				>.jiazaizh{
 					position: absolute;
 					width: 100%;

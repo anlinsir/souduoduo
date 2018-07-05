@@ -34,7 +34,8 @@
 
 
 				<input  @keydown.enter='searchTrading' type="text" name="" v-model="serach" placeholder="搜索交易平台名称">
-				<span @click='searchTrading' style="position: absolute;top: 0;right: 35px;">s</span>
+				<span @click='searchTrading' style="width: 25px;height: 25px;
+				border-radius: 54%;background-color: #556fb5;text-align:center;line-height: 32px;position: absolute;right: 20px;top:16px;cursor: pointer;"><img src="/static/img/headersearch.png"></span>
 
 
 			</div>
@@ -80,8 +81,8 @@
 
 
 		
-		<div class="block" style="width: 100px;margin-left: 450px;" v-show='!none'>
-				<el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
+		<div class="block" style="width: 100%;text-align: center;" v-show='!none'>
+				<el-pagination :current-page="currentPage" @current-change="handleCurrentChange" 
 			    layout="prev, pager, next"
 			    :total="pagestotal" >
 			  </el-pagination>
@@ -102,7 +103,8 @@
 				countryCode:'',
 				orderType:'asc',
 				type:0,
-				none:false
+				none:false,
+				tem:[]
 
 			})
 		}
@@ -123,7 +125,7 @@
 							this.none = false
 
 						}
-						this.pagestotal = Math.ceil(res.data.data.count)
+						this.pagestotal = (Number(res.data.data.count)/12)*10
 						document.documentElement.scrollTop = 0
 
 				})
@@ -147,7 +149,7 @@
 						}
 						this.tadingList = res.data.data.list
 
-						this.pagestotal = Math.ceil(res.data.data.count)
+						this.pagestotal = (Number(res.data.data.count)/12)*10
 						this.currentPage  = 1
 
 				})
@@ -166,7 +168,7 @@
 
 						}
 						this.tadingList = res.data.data.list
-						this.pagestotal = Math.ceil(res.data.data.count)
+						this.pagestotal = (Number(res.data.data.count)/12)*10
 						this.currentPage  = 1
 
 				})
@@ -188,7 +190,7 @@
 
 						}
 						this.tadingList = res.data.data.list
-						this.pagestotal = Math.ceil(res.data.data.count)
+						this.pagestotal = (Number(res.data.data.count)/12)*10
 						this.currentPage  = 1
 
 				})
@@ -196,7 +198,18 @@
 
 			},
 			searchTrading(serach){
-				alert(this.serach + ' 暂无数据')
+				var aa ;
+				aa = this.tadingList
+				this.tadingList =  this.tem.filter((ii,id)=>{
+					return  ((ii.name).toLocaleUpperCase()).indexOf(((this.serach).toLocaleUpperCase())) != -1 ||  ((ii.slug).toLocaleUpperCase()).indexOf(((this.serach).toLocaleUpperCase())) != -1 
+				})
+				if(!this.tadingList.length){
+					alert('暂无数据')
+				
+					this.tadingList = aa
+				}
+				this.pagestotal = 1
+
 			},
 			pages(index){
 				alert(index  + '页')
@@ -212,7 +225,8 @@
 		mounted(){
 			document.documentElement.scrollTop   = 0
 			document.body.scrollTop = 0
-			axios.get(`http://sdd.xtype.cn/api/exchange/list?&take=12&order_type=${this.orderType}`)//平台列表
+
+			axios.get(`http://sdd.xtype.cn/api/exchange/list?&take=12&order_type=${this.orderType}&order_by=rank`)//平台列表
 					.then((res)=>{
 						console.log(res.data.data.list)
 						if(res.data.data.list.length == 0){
@@ -225,6 +239,13 @@
 						this.tadingList = res.data.data.list
 						this.pagestotal = (Number(res.data.data.count)/12)*10
 
+			})
+			axios.get(`http://sdd.xtype.cn/api/exchange/list?&take=12&order_type=${this.orderType}&take=100`)//平台列表
+				.then((res)=>{
+					axios.get(`http://sdd.xtype.cn/api/exchange/list?&take=12&order_type=${this.orderType}&take=100&skip=100`)//平台列表
+						.then((res)=>{
+							this.tem = res.data.data.list
+						})
 			})
 			axios.get(`http://sdd.xtype.cn/api/exchange/countries`)
 				.then((res)=>{

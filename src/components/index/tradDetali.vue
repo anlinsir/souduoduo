@@ -86,12 +86,12 @@
 			
 
 					<tr v-for="(ii,id) in jyd" style="min-height: 70px;">
-						<td >{{id}}</td>
+						<td >{{((Number(currentPage)-1)*30) + (id)+1}}</td>
 						<td >
-							<img style="vertical-align: middle;width: 21px;" :src="ii.exchange.logo">
-							<span>{{ii.exchange.slug}}</span>
+							<img style="vertical-align: text-top;width: 15px;display: inline-block;transform: translateY(-23px);" :src="ii.currencie.logo">
+							<span  style="width: 80%;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;display: inline-block;color: #4277ff;" >{{ii.currencie.name +'-' + ii.currencie.cn_name}}</span>
 						</td>
-						<td style="color: #4277ff;width: 100px;">{{ii.symbol}}/{{ii.to_symbol}}</td>
+						<td style="color: #4277ff;"> <a :href="ii.url" :style="{color: ii.url ? '#4277ff' : '#000'}">{{ii.symbol}}/{{ii.to_symbol}}</a></td>
 						<td >{{ranges[1]}}{{(Number(ii.price_usd)*Number(ranges[2])).toFixed(2)}}</td>
 						<td>{{((ii.volume_usd/ii.price_usd)/10000).toFixed(2)}}万</td>
 						<td>{{ranges[1]}}{{(Number(ii.volume_usd)*Number(ranges[2])).toFixed(2)}}</td>
@@ -102,10 +102,19 @@
 								<img v-else-if='chooseArr.indexOf(id) != -1' src="/static/img/stratY.png">
 						</td>
 					</tr>
-
+					
 					
 				</tbody>
+
 			</table>
+					<div class="block" style="width:100%;text-align: center;margin-top: 20px;margin-bottom: 20px;">
+						  <el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="display: inline-block;"
+						    layout="prev, pager, next"
+						    :total="total"
+						     >
+						     <!-- pager-count='3'  -->
+						  </el-pagination>
+			</div>
 
 		</div>
 
@@ -122,11 +131,27 @@
 				ct:[],
 				ranges:['us','$',1],
 				sum24:null,
-				chooseArr:[]
+				chooseArr:[],
+				currentPage:1,
+				total:50
+
 
 			})
 		},
 		methods:{
+			handleCurrentChange(pages){
+				var _this = this
+				this.currentPage = pages
+				axios.get(`http://sdd.xtype.cn/api/pair/list?&exchange_slug=${_this.$route.params.id}&take=30&skip=${(this.currentPage-1)*30}`)
+					.then((res)=>{
+							console.log(res.data.data)
+
+							this.jyd = res.data.data.list
+							this.sum24 =res.data.data.sum_volume24h
+							this.total = Math.ceil(Number(res.data.data.count)/30)*10
+
+				})
+			},
 			optionChange(e){
 				this.ranges = (e.target.value).split(',')
 				console.log(this.ranges)
@@ -157,12 +182,13 @@
 						this.cionDetali = res.data.data
 
 			})
-			axios.get(`http://sdd.xtype.cn/api/pair/list?&exchange_slug=${_this.$route.params.id}`)
+			axios.get(`http://sdd.xtype.cn/api/pair/list?&exchange_slug=${_this.$route.params.id}&take=30`)
 				.then((res)=>{
 						console.log(res.data.data)
 
 						this.jyd = res.data.data.list
 						this.sum24 =res.data.data.sum_volume24h
+						this.total = Math.ceil(Number(res.data.data.count)/30)*10
 
 			})
 		},
@@ -173,6 +199,7 @@
 		     axios.get(`http://sdd.xtype.cn/api/exchange/item?&slug=${_this.$route.params.id}`)
 					.then((res)=>{
 						this.cionDetali = res.data.data
+
 
 			})
 			axios.get(`http://sdd.xtype.cn/api/pair/list?&exchange_slug=${_this.$route.params.id}`)
@@ -356,26 +383,37 @@
 			>.BomBomTable{
 				width: 100%;
 				min-height: 200px;
-				padding: 0 21px 0 17px;
+				padding: 0 21px 0 17px;	
 				>thead{
 					width: 100%;
 					height: 40px;
 					>tr{
-						>td{
-							height: 40px;
-							border-bottom:1px solid #e5e5e5;
-							width: 133px;
+						display: flex;
+						justify-content:space-between;
+						>:nth-child(1){
 							text-align: center;
+						}
+						>td{
+							width: 11.11%;
+							height: 40px;
+							line-height: 40px;
+							border-bottom:1px solid #e5e5e5;
 							
 						}
 					}
 				}
 				>tbody{
 					>tr{
-						>td{
-							height: 53px;
-							width: 133px;
+						display: flex;
+						justify-content:space-between;
+						>:nth-child(1){
 							text-align: center;
+						}
+						>td{
+
+							height: 53px;
+							width: 11.11%;
+							line-height: 53px;
 						}
 					}
 				}

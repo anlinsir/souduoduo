@@ -88,19 +88,22 @@
 						<div class="Tip" v-if='tip'>
 							<div  class="hb" style="width: 45%;float: left;overflow: hidden;margin-top: 40px;">
 									<div style="width: 100%;height: 30px;;padding-left: 20px;line-height: 20px;border-bottom: 1px solid #e5e5e5;">货币</div>
-									<div style="padding: 5px;" v-for="(ii,id) in currenciesTip">
+									<div style="padding: 5px;" v-for="(ii,id) in resCion" v-if='resCion.length'>
 										<img :src="ii.logo" style="vertical-align: middle;width: 21px;">
-										<p   class="activesssss" @click='unquery(ii.symbol,ii.slug)' style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width: 87%;line-height: 35px;">{{ii.name}}{{ii.symbol?'(' + ii.symbol+ ')' : '' }}</p>
+										<p   class="activesssss" @click='unquery(ii.sym,ii.low)' style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width: 87%;line-height: 35px;">{{ii.big}}{{ii.sym?'(' + ii.sym+ ')' : '' }}</p>
 
 									</div>
+									<div  v-if='!resCion.length' style="text-align: center;font-size: 14px;color: #bbb">没有更多数据了</div>
 								</div>
 
 								<div class="pt" style="width: 45%;float: right;margin-top:40px;">
 									<div style="width: 100%;height: 30px;padding-left: 20px;line-height: 20px;border-bottom: 1px solid #e5e5e5;">交易所</div>
-									<div style="padding: 5px;" v-for="(ii,id) in exchangesTip">
-										<img :src="ii.logo" style="vertical-align: middle;width: 21px;">
-										<p  class="activesssss" @click='unqueryss(ii.slug)'style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width:87%;line-height: 35px;">{{ii.name}}</p>
+									<div style="padding: 5px;" v-for="(ii,id) in resEx">
+										<img :src="ii.cn" style="vertical-align: middle;width: 21px;">
+										<p  class="activesssss" @click='unqueryss(ii.sym)'style="height: 35px;width: 100px;color: #676a6c;text-decoration: none;font-size: 14px;display: inline-block;cursor: pointer;width:87%;line-height: 35px;">{{ii.low}}</p>
 									</div>
+									<div  v-if='!resEx.length' style="text-align: center;font-size: 14px;color: #bbb">没有更多数据了</div>
+
 									
 								</div>	
 					</div>
@@ -187,6 +190,54 @@
 <script>
 	import axios from 'axios'
 	import Peity from 'vue-peity'
+	import $ from 'jquery'
+	/*pro1[i] = {
+			                id:cc[i][0],
+			                low:cc[i][1],
+			                big:cc[i][2],
+			                cn:cc[i][3],
+			                logo:cc[i][4],
+
+			            }*/ 
+	 if(!localStorage.seacrhAll){
+	 	var aa ;
+		 var pro = [];
+		 var bb;
+		 var cc = [];
+		 var pro1 =[]; 
+		 var pro2 = [];
+		$.get('http://sdd.xtype.cn//api/search/allcoinexchange',function(res){
+		    
+		    aa = res
+		      bb = JSON.parse( aa )
+		      console.log(bb)
+		      
+		        for(var i in bb){
+
+		           cc.push(bb[i].split('|'))
+		        }
+		        for(var i in cc){
+			            	pro[i] = {
+			                id:cc[i][0],
+			                sym:cc[i][1],
+			                low:cc[i][2],
+			                big:cc[i][3],
+			                cn:cc[i][4],
+			                logo:cc[i][5],
+
+			            }
+		           
+
+		        }
+		      
+
+		   	
+		        localStorage.seacrhAll = JSON.stringify(pro)
+		       
+
+		})
+	 }
+
 	export default{
 		data(){
 			return({
@@ -196,7 +247,7 @@
 				loginInfo:'',
 				loginInfoActive:false,
 				show:true,
-				tip:false,
+				tip:0,
 				laugageShow:false,
 				language:'简体中文',
 				languageList:['简体中文','繁体中文','Deutsch','English','Rosstsch'],
@@ -204,7 +255,13 @@
 				iconTypeShows:false,
 				icon:'ETH',
 				currenciesTip:[],
-				exchangesTip:[]
+				exchangesTip:[],
+				seacrhAll:[],
+				seacrhAll1:[],
+				resCion:[],
+				resEx:[],
+				cionRage:1,
+				cionSymbol:"$"
 			})
 		},
 		methods:{
@@ -224,15 +281,41 @@
 
 			},
 			query(){
+				var a =[];
+				var b = [];
 				console.log(this.iconTypeModel)
 				this.tip = true
-				axios.get(`http://sdd.xtype.cn/api/search/index?&word=${this.iconTypeModel}`)
-					.then((res)=>{
-						console.log(res.data.data)
-						this.currenciesTip = res.data.data.currencies
-						this.exchangesTip  = res.data.data.exchanges
+				var infoCion  = this.seacrhAll.filter((ii,id)=>{
+					return  ii.id == 0 && (((ii.low).toLocaleUpperCase()).indexOf((this.iconTypeModel).toLocaleUpperCase()) != -1 ||  ((ii.sym).toLocaleUpperCase()).indexOf((this.iconTypeModel).toLocaleUpperCase())	!= -1 ) 
+				})
 
-					})
+				for(var i in infoCion){
+					if(i<=4){
+						a.push(infoCion[i])
+					}
+
+				}
+				this.resCion = a
+				var infoEx  = this.seacrhAll.filter((ii,id)=>{
+					return  ii.id == 1 && (((ii.big).toLocaleUpperCase()).indexOf((this.iconTypeModel).toLocaleUpperCase()) != -1 ||  ((ii.low).toLocaleUpperCase()).indexOf((this.iconTypeModel).toLocaleUpperCase())	!= -1 || ((ii.sym).toLocaleUpperCase()).indexOf((this.iconTypeModel).toLocaleUpperCase())	!= -1	 ) 
+				})
+				console.log(infoEx)
+				for(var i in infoEx){
+					if(i<=4){
+						b.push(infoEx[i])
+					}
+
+				}
+				this.resEx = b
+				console.log(this.resEx)
+
+				// axios.get(`http://sdd.xtype.cn/api/search/index?&word=${this.iconTypeModel}`)
+				// 	.then((res)=>{
+				// 		console.log(res.data.data)
+				// 		this.currenciesTip = res.data.data.currencies
+				// 		this.exchangesTip  = res.data.data.exchanges
+
+				// 	})
 			},
 			unquery(symbol,slug){
 					console.log(symbol)
@@ -274,7 +357,7 @@
 			activeBtn(id,e){
 				switch (id){
 					case 0:
-						this.$router.push('/index/ranking')
+						this.$router.push({path:'/index/ranking',query:{rage:this.cionRage,sym:this.cionSymbol}})
 						break;
 					case 1:
 						this.$router.push('/index/trading')
@@ -332,13 +415,18 @@
 				this.$router.push('/robot')
 			}
 		},
+	
 		mounted(){
+			this.cionRage = localStorage.moneyrage
+			this.cionSymbol = localStorage.moneySymbol  
 
-			axios.get('http://sdd.xtype.cn/api/currencie/list')
+			this.seacrhAll = JSON.parse(localStorage.seacrhAll)
+
+			axios.get('http://sdd.xtype.cn/api/currencie/list?&order_by=rank')
 				.then((res)=>{
 					this.headerData.push(res.data.data.list[0])
 					this.headerData.push(res.data.data.list[1])
-					this.headerData.push(res.data.data.list[2])
+					this.headerData.push(res.data.data.list[4])
 
 				})
 

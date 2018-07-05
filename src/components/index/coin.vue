@@ -10,7 +10,7 @@
 					</p>
 
 					<p class="p2" style="width: 401px">
-						<span class="priceY">￥{{(ii.price_cny).toFixed(2)}}</span>
+						<span class="priceY">￥{{(Number(ii.price)*cny).toFixed(2)}}</span>
 						<span class="zf" :style="{backgroundColor:Number(ii.percent_change_24h) >=0 ? '' : '#e74343' }">{{ii.percent_change_24h}}%</span>
 						<span class="add">添加自选</span>
 					</p>
@@ -44,7 +44,7 @@
 				<ul class="iconTopTable"  v-for='(item,index) in cionDetalis'>
 					<li >英文名：{{item.name}} / {{item.symbol}}</li>
 
-					<li >上架交易所：{{item.created_at}}</li>
+					<li >上架交易所：{{item.exchange_number}}</li>
 					<li >发行时间：{{item.updated_at}}</li>
 					<li >白皮书： <a :href="item.bps" style="display: inline-block;
     overflow: hidden;
@@ -55,7 +55,7 @@
 					<li >区块站： <a :href='ii'  v-for='(ii,id) in JSON.parse(blockUrl)'>{{ii}}</a></li>
 					<li >网站： <a :href='it'  v-for='(it,id) in JSON.parse(website)'>{{it}}</a></li>
 					<li >GitHub地址：<a :href="github">{{github}}</a>	</li>
-					<li >Twitter:<a :href="twitter">点击查看</a></li>
+					<li >Twitter：<a :href="twitter">点击查看</a></li>
 					<li >持币排行： <a :href="haveRank">点击查看</a></li>
 					<li >众筹价： <span class="jiage"></span> <span class="beishu">{{publishedprice}}<span style="display: inline-block;transform: translateX(2px) translateY(-2px);">↑</span></span></li>
 				</ul>
@@ -68,10 +68,10 @@
 					<li>
 						<div class="Left">
 						<p style="margin-bottom: 8px;font-size: 12px;">流通市值</p>
-						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">$ {{marketCap}}</p>
+						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">￥ {{(Number(marketCap)*cny).toFixed(0)}}</p>
 						<p style="height: 23px;background-color: #4277ff;color: #fff;border-radius: 10px;text-align: center;line-height: 24px;margin-bottom: 20px;padding: 0 15px;box-sizing: border-box;display: inline-block;">排名NO.{{rank}}</p>
-						<p style="margin-bottom: 8px;font-size: 12px;">≈$127,464,800,199 </p>
-						<p style="font-size: 12px;"> ≈17,053,787BTC</p>
+						<p style="margin-bottom: 8px;font-size: 12px;">≈ ${{Number(marketCap)}} </p>
+						<p style="font-size: 12px;"> ≈ xxBTC</p>
 						</div>
 						<div class="right">
 							 <div id="EFAMC" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
@@ -83,10 +83,10 @@
 					<li>
 						<div class="Left">
 						<p style="margin-bottom: 8px;font-size: 12px;">流通量</p>
-						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">{{(Number(circulatingSupply)/10000).toFixed(2)}}</p>
+						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">{{(circulatingSupply)}}{{symbol}}</p>
 							
 						<p style="margin-top: 45px;margin-bottom: 8px;font-size: 12px;">发行总量</p>
-						<p style="color:#4277ff;font-weight: bold;font-size: 16px; ">2100000000 BTC</p>							
+						<p style="color:#4277ff;font-weight: bold;font-size: 16px; ">{{totalSupply}} BTC</p>							
 						</div>
 						<div class="right">
 							
@@ -105,27 +105,27 @@
 					<li>
 						<div class="Left">
 						<p style="margin-bottom: 8px;font-size: 12px;">24H成交额</p>
-						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">${{volume24h}}</p>
+						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">￥{{Number(volume24h)*cny}}</p>
 						<p style="height: 23px;background-color: #33b862;color: #fff;border-radius: 10px;text-align: center;line-height: 23px;margin-bottom: 20px;display: inline-block;padding: 0 15px;box-sizing: border-box;">排名NO.{{rankFor24}}</p>
-						<p style="margin-bottom: 8px;font-size: 12px;">≈$127,464,800,199 </p>
-						<p style="font-size: 12px;"> ≈17,053,787BTC</p>
+						<p style="margin-bottom: 8px;font-size: 12px;">≈ ${{Number(volume24h)}}  </p>
+						<p style="font-size: 12px;"> ≈ xxBTC</p>
 						</div>
-						<div class="right">
+						<div class="right" style="opacity: 0.5;">
 							<div id="24pay" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>
 
 							 <div id="24pay1" style="width:200px; height:200px;position: absolute;top: -13px;left: 125px;"></div>	
 						</div>
 					</li>
 
-					<li>
-						<div class="Left">
+					<li >
+						<div class="Left" style="opacity: 0.5;">
 						<p style="margin-bottom: 8px;font-size: 12px;">24H资金流入</p>
 						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">814,238,7BTC</p>
 							
 						<p style="margin-top: 45px;margin-bottom: 8px;font-size: 12px;">24H资金流出</p>
 						<p style="color:#4277ff;font-weight: bold;font-size: 16px; ">210000000 BTC</p>	
 						</div>
-						<div class="right">
+						<div class="right" style="opacity: 0.5;">
 							<div id="cionin" style="width:200px; height:200px;position: absolute;top: -13px;left: 110px;"></div>
 
 							 <div id="cionin1" style="width:200px; height:200px;position: absolute;top: -13px;left: 110px;"></div>	
@@ -146,35 +146,50 @@
 						<li >最新价</li>
 						<li >24H额(￥)</li>
 						<li >占比</li>
+						<li >自选</li>
 
 					</ul>
 
-					<ul @mouseenter='cancel' @mouseout='cann' class="Body" style="position: relative;overflow: auto;height: 647px;">
+					<ul @scroll='jiazaimore' @mouseenter='cancel' @mouseout='cann' class="Body" style="position: relative;overflow: auto;height: 647px;">
 						<!-- style="position: absolute;width: 100%" :style="{top:(top)+(50*(id)) + 'px'}" -->
-						<li v-for='(ii,id) in jiaoyiduiList' >
-							<p style="width: 30px">
+						<li @click='totrdingdet(ii.exchange.slug,$event)' v-for='(ii,id) in jiaoyiduiList' >
+							<p style="padding-left:10px;width: 10%;">
 								<span></span><br>
-								<span><img style="transform: translateY(-3px);" src="/static/img/startNO.png"></span><br>
+								<span>
+									<img style="width: 15px;transform: translateY(-5px);" :src="ii.exchange.logo">
+								</span>
 								<span></span>								
 							</p>
 
-							<p><span>{{ii.exchange_slug}}</span><br>
+							<p style="padding-left: 0px;"><span style="    display: inline-block;
+    width: 58px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;">{{ii.exchange.name}}</span><br>
 								<span></span><br>
 								<span>{{ii.symbol}}/{{ii.to_symbol}}</span>
 							</p>
-							<p><span>{{ii.price_usd}}</span><br>
+							<p style="padding-left: 0px;"><span>{{(ii.price_usd).toFixed(2)}}</span><br>
 								<span></span><br>
 								<span>￥{{(Number(ii.price_usd)*cny).toFixed(2)}}</span>
 							</p>
-							<p style="padding-left: 33px;box-sizing: border-box;">
+							<p style="padding-left: 0px;box-sizing: border-box;width: 26%;">
 								<span></span><br>
-								<span>{{Number(ii.volume_usd)/10000}}万</span><br>
+								<span>{{(Number(ii.volume_usd)/10000).toFixed(2)}}万</span><br>
 								<span></span>
 							</p>
-							<p style="padding-left: 33px;box-sizing: border-box;">
+							<p style="padding-left: 5px;box-sizing: border-box;">
 								<span></span><br>
 								<span>{{((Number(ii.volume_usd)/sum24)*100).toFixed(2) + '%'}}</span><br>
 								<span></span>
+							</p>
+							<p style="padding-left: 5px;width: 10%;">
+								<span></span><br>
+								<span data-id='add' @click='chengChoose(id)'  style="cursor: crosshair;">
+									<img v-if='chooseArr.indexOf(id) == -1 '   src="/static/img/startNO.png">
+									<img v-else-if='chooseArr.indexOf(id) != -1' src="/static/img/stratY.png">
+								</span>
+								<span></span>								
 							</p>
 
 
@@ -204,8 +219,15 @@
 						
 						
 
-
+						<li v-if='loading' style="background-color: #fff;text-align:center;"><svg version="1.1" id="L3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+						<circle fill="none" stroke="#000" stroke-width="4" cx="50" cy="50" r="44" style="opacity:0.5;"></circle>
+						  <circle fill="#000" stroke="#fff" stroke-width="3" cx="8" cy="54" r="6" transform="rotate(114.001 50 49.2667)">
+						    <animateTransform attributeName="transform" dur="2s" type="rotate" from="0 50 48" to="360 50 52" repeatCount="indefinite"></animateTransform>
+						    
+						  </circle>
+						</svg></li>
 					</ul>
+					
 				</div>
 
 
@@ -237,6 +259,7 @@
 	import $ from 'jquery'
 	import axios from 'axios'
 	Highcharts.setOptions({ global: { useUTC: false } }); 
+	var num = 0,sun = 1
 
 	export default{
 
@@ -270,7 +293,10 @@
 				publishedprice:null,//众筹价
 				jiaoyiduiList:[],
 				cny:null,
-				sum24:null
+				sum24:null,
+				totalSupply:null,
+				loading:0,
+				chooseArr:[]
 			})
 		}
 		,
@@ -290,6 +316,49 @@
 			,
 			cionMoreInfo(idx){
 				this.dataShow = idx
+			},
+			jiazaimore(e){
+				
+
+				if(e.target.scrollHeight - (e.target.scrollTop + e.target.clientHeight) <=100 && num == 0){
+					num = 1
+					this.loading = 1
+					axios.get(`http://sdd.xtype.cn/api/pair/list?&symbol=${this.$route.query.symbol}&take=15&skip=${Number(sun)*15}`)
+						.then((res)=>{
+							this.loading =0
+							if(res.data.data.list.length == 0){
+								return
+							}
+							for(var i in res.data.data.list){
+								this.jiaoyiduiList.push(res.data.data.list[i])	
+							}
+							 
+							this.sum24 = res.data.data.sum_volume24h
+							num = 0
+							sun ++ 
+
+					})
+				}
+				
+
+			},
+			totrdingdet(sug,e){
+				if(e.target.dataset.id  == 'add'){
+					return
+				}
+				this.$router.push(`/index/tradDetali/${sug}`)
+			},
+			chengChoose(id){
+				if(this.chooseArr.indexOf(id) != -1){
+					this.chooseArr = this.chooseArr.filter(function(i,d){
+							return i != id
+						})
+					console.log(this.chooseArr)
+					return
+
+				}
+				this.chooseArr.push(id)
+				console.log(this.chooseArr)
 			}
 			
 		}
@@ -300,7 +369,7 @@
 		watch: {
 		   '$route' (to, from) {
 		     console.log(this.$route.path)
-		     axios.get(`http://sdd.xtype.cn/api/pair/list?&symbol=${this.$route.query.symbol}`)
+		     axios.get(`http://sdd.xtype.cn/api/pair/list?&symbol=${this.$route.query.symbol}&take=20`)
 				.then((res)=>{
 					this.jiaoyiduiList = res.data.data.list
 					this.sum24 = res.data.data.sum_volume24h
@@ -310,6 +379,8 @@
 
 
 			var _this = this
+		     console.log(this.$route.params.id)
+
 			axios.get(`http://sdd.xtype.cn/api/currencie/item?&slug=${this.$route.params.id}`)
 				.then((res)=>{
 					this.cionDetalis = ([res.data.data])									
@@ -329,7 +400,8 @@
 					this.twitter = this.cionDetalis[0].twitter
 					this.haveRank = this.cionDetalis[0].have_rank
 					this.publishedprice = this.cionDetalis[0].published_price		
-
+					this.totalSupply =this.cionDetalis[0].total_supply
+					
 
 					var turnover1 = echarts.init(document.getElementById('turnover1'));
 
@@ -418,96 +490,7 @@
 								    ]
 					});
 
-				// timer2 = setInterval(()=>{
-					// 	// this.turnover += 1 
-					// 	// if(this.turnover >= 10){
-					// 	// 	this.turnover = 1
-					// 	// }
-					// 	var turnover1 = echarts.init(document.getElementById('turnover1'));
-					// 	turnover1.setOption({
-					// 	    title: { },
-					// 	    			    series: [{
-					// 	         type: 'pie',
-					// 	         radius: ['60%', '80%'],
-					// 	         hoverAnimation:false,
-					// 	         legendHoverLink:false,
-					// 	         data:[
-					//                 {value:this.turnover,itemStyle:{ normal:{color:'#84bbff'} }},
-					//                 {value:100 - (this.turnover),itemStyle:{ normal:{color:'transparent'} }},
-
-					              
-					//             ],
-
-					//             labelLine:{show:false},
-					            
-					// 	    }]
-					// 	});
-
-					// 		turnover.setOption({
-					// 		    title:{
-					// 		    	text:this.turnover + '%',
-					// 		    	subtext:'流通率',
-					// 		    	subtextStyle:{
-					// 		    		color:'#333333',
-					// 		    		fontWeight:'normal',
-					// 		    		fontSize:14,
-					// 		    		textAlign:'center',
-							    		
-					// 		    	},
-					// 		    	subtextStyle:{
-					// 		    		color:"#8e8d8d",
-					// 		    		fontWeight:'normal',
-					// 		    		fontSize:12,
-					// 		    		textAlign:'center',
-					// 		    		lineHeight:'200'
-					// 		    	},
-					// 		    	padding:[80, 0, 0, 63],
-					// 		    	 left:'center'
-							    	
-
-					// 		    },
-					// 		    	 series: [
-					// 				        {
-									           
-					// 				            type:'pie',
-					// 				            radius: ['50%', '70%'],
-					// 				           hoverAnimation:false,
-					// 	        			 legendHoverLink:false,
-					// 				            label: {
-					// 				                normal: {
-					// 				                    show: false,
-					// 				                    position: 'center'
-					// 				                },
-									              
-					// 				            },
-									           
-					// 				            data:[
-					// 				                {value:335, },
-									             
-					// 				            ],
-					// 				            itemStyle: {
-					// 				            	shadowBlur:20,
-					// 				            	shadowOffsetX:-3,
-					// 				            	shadowOffsetY:7,
-					// 				            	shadowColor:'#3d5286',
-					// 				                color: {
-					// 				                    type: 'linear',
-					// 				                    x: 0,
-					// 				                    y: 0,
-					// 				                    x2: 0,
-					// 				                    y2: 1,
-					// 				                    colorStops: [{
-					// 				                        offset: 0, color: '#32a6ff' // 0% 处的颜色
-					// 				                    }, {
-					// 				                        offset: 0.8, color: '#3d5286' // 100% 处的颜色
-					// 				                    }],
-					// 				                    globalCoord: false // 缺省为 false
-					// 				                }
-					// 				            }
-					// 				        }
-					// 				    ]
-					// 	});
-					// },1000)
+				
 
 
 				//第二个图
@@ -706,12 +689,7 @@
 								this.top = 0
 							}
 						},100)
-			// if(timer1 || timer2 || timer3){
-			// clearInterval(timer1)
-			// clearInterval(timer2)
-			// clearInterval(timer3)
-			// clearInterval(timer4)
-			// }
+		
 				var pay241 = echarts.init(document.getElementById('24pay1'));
 
 					pay241.setOption({
@@ -798,99 +776,7 @@
 							    ]
 				});
 
-					// timer3 = setInterval(()=>{
-						// 	var pay241 = echarts.init(document.getElementById('24pay1'));
-						// 		// this.pay1 += 4.5
-						// 		// if(this.pay1 >= 88){
-						// 		// 	this.pay1 = 10 
-						// 		// }
-						// 			pay241.setOption({
-						// 		    title: { },
-						// 		    	series: [{
-						// 		         type: 'pie',
-						// 		         radius: ['60%', '80%'],
-						// 		         hoverAnimation:false,
-						// 		         legendHoverLink:false,
-						// 		         data:[
-						// 	                {value:this.pay1,itemStyle:{ normal:{color:'#87f8c2'} }},
-						// 	                {value:100 - (this.pay1),itemStyle:{ normal:{color:'transparent'} }},
-
-							              
-						// 	            ],
-
-						// 	            labelLine:{show:false},
-							            
-						// 		    }]
-						// 		});
-
-
-						// 			pay.setOption({
-						//     title:{
-						//     	text:this.pay1 + '%',
-						//     	subtext:'换手率',
-						//     	subtextStyle:{
-						//     		color:'#333333',
-						//     		fontWeight:'normal',
-						//     		fontSize:14,
-						//     		align:'center',
-						    		
-						//     	},
-						//     	subtextStyle:{
-						//     		color:"#8e8d8d",
-						//     		fontWeight:'normal',
-						//     		fontSize:12,
-						//     		align:'center',
-						//     		lineHeight:'200'
-						//     	},
-						//     	padding:[80, 0, 0, 63],
-						//     	 left:'center'
-
-						//     },
-						//     	 series: [
-						// 		        {
-								           
-						// 		            type:'pie',
-						// 		            radius: ['50%', '70%'],
-						// 		           hoverAnimation:false,
-					 //        			 legendHoverLink:false,
-						// 		            label: {
-						// 		                normal: {
-						// 		                    show: false,
-						// 		                    position: 'center'
-						// 		                },
-								              
-						// 		            },
-								           
-						// 		            data:[
-						// 		                {value:335, },
-								             
-						// 		            ],
-						// 		            itemStyle: {
-						// 		            	shadowBlur:20,
-						// 		            	shadowOffsetX:-3,
-						// 		            	shadowOffsetY:7,
-						// 		            	shadowColor:'#287f66',
-						// 		                color: {
-						// 		                    type: 'linear',
-						// 		                    x: 0,
-						// 		                    y: 0,
-						// 		                    x2: 0,
-						// 		                    y2: 1,
-						// 		                    colorStops: [{
-						// 		                        offset: 0, color: '#5dd186' // 0% 处的颜色
-						// 		                    }, {
-						// 		                        offset: 0.8, color: '#287f66' // 100% 处的颜色
-						// 		                    }],
-						// 		                    globalCoord: false // 缺省为 false
-						// 		                }
-						// 		            }
-						// 		        }
-						// 		    ]
-						// 	});
-						// },500)
-
-						//第三个图
-
+				
 
 
 				var cionin2 = echarts.init(document.getElementById('cionin2'));
@@ -999,117 +885,7 @@
 							        }
 							    ]
 				});	
-				//  timer4 = setInterval(()=>{
-					// 	// this.cionin -= 3
-					// 	// if(this.cionin <= 10){
-					// 	// 	this.cionin = 99
-					// 	// }
-					// 	cionin1.setOption({
-					// 		    title: { },
-					// 		    	series: [{
-					// 		         type: 'pie',
-					// 		         radius: ['60%', '80%'],
-					// 		         hoverAnimation:false,
-					// 		         legendHoverLink:false,
-					// 		         data:[
-					// 	                {value:50,itemStyle:{ normal:{color:'#fee387'} }},
-					// 	                {value:50,itemStyle:{ normal:{color:'transparent'} }},
-
-						              
-					// 	            ],
-
-					// 	            labelLine:{show:false},
-						            
-					// 		    }]
-					// 		});
-
-
-					// 	cionin2.setOption({
-					// 	    title: { },
-					// 	    	series: [{
-					// 	         type: 'pie',
-					// 	         radius: ['60%', '80%'],
-					// 	         hoverAnimation:false,
-					// 	         legendHoverLink:false,
-					// 	         data:[
-					//                 {value:this.cionin,itemStyle:{ normal:{color:'#f7cc69'} }},
-					//                 {value:100 - this.cionin,itemStyle:{ normal:{color:'transparent'} }},
-
-					              
-					//             ],
-
-					//             labelLine:{show:false},
-					            
-					// 	    }]
-					// 	});
-
-					// 	cionin.setOption({
-					// 	    title:{
-					// 	    	text:this.cionin + '%',
-					// 	    	subtext:'净流入',
-					// 	    	subtextStyle:{
-					// 	    		color:'#333333',
-					// 	    		fontWeight:'normal',
-					// 	    		fontSize:14,
-					// 	    		align:'center',
-						    		
-					// 	    	},
-					// 	    	subtextStyle:{
-					// 	    		color:"#8e8d8d",
-					// 	    		fontWeight:'normal',
-					// 	    		fontSize:12,
-					// 	    		align:'center',
-					// 	    		lineHeight:'200'
-					// 	    	},
-					// 	    	padding:[80, 0, 0, 63],
-					// 	    	 left:'center'
-
-					// 	    },
-					// 	    	 series: [
-					// 			        {
-								           
-					// 			            type:'pie',
-					// 			            radius: ['50%', '70%'],
-					// 			           hoverAnimation:false,
-					//         			 legendHoverLink:false,
-					// 			            label: {
-					// 			                normal: {
-					// 			                    show: false,
-					// 			                    position: 'center'
-					// 			                },
-								              
-					// 			            },
-								           
-					// 			            data:[
-					// 			                {value:335, },
-								             
-					// 			            ],
-					// 			            itemStyle: {
-					// 			            	shadowBlur:20,
-					// 			            	shadowOffsetX:-3,
-					// 			            	shadowOffsetY:7,
-					// 			            	shadowColor:'#f9b25c',
-					// 			                color: {
-					// 			                    type: 'linear',
-					// 			                    x: 0,
-					// 			                    y: 0,
-					// 			                    x2: 0,
-					// 			                    y2: 1,
-					// 			                    colorStops: [{
-					// 			                        offset: 0, color: '#f9b25c' // 0% 处的颜色
-					// 			                    }, {
-					// 			                        offset: 0.8, color: '#d68f37' // 100% 处的颜色
-					// 			                    }],
-					// 			                    globalCoord: false // 缺省为 false
-					// 			                }
-					// 			            }
-					// 			        }
-					// 			    ]
-					// });
-
-
-
-					//},2000)
+				
 			//图4
 				$.getJSON(`http://sdd.xtype.cn//api/snapshot/index?start=1498727792&end=1530263792&slug=${_this.$route.params.id}`, function (data) {
 								if(data.code !== 0) {
@@ -1274,12 +1050,12 @@
 			document.body.scrollTop = 0
 			this.cny = JSON.parse(localStorage.Rate).CNY.value
 			console.log(this.cny)
-			axios.get(`http://sdd.xtype.cn/api/pair/list?&symbol=${this.$route.query.symbol}`)
+			axios.get(`http://sdd.xtype.cn/api/pair/list?&symbol=${this.$route.query.symbol}&take=15`)
 				.then((res)=>{
 					this.jiaoyiduiList = res.data.data.list
 					this.sum24 = res.data.data.sum_volume24h
 
-				})
+			})
 
 
 
@@ -1302,7 +1078,9 @@
 					this.github = this.cionDetalis[0].github
 					this.twitter = this.cionDetalis[0].twitter
 					this.haveRank = this.cionDetalis[0].have_rank
-					this.publishedprice = this.cionDetalis[0].published_price		
+					this.publishedprice = this.cionDetalis[0].published_price	
+					this.totalSupply =this.cionDetalis[0].total_supply
+
 
 
 					var turnover1 = echarts.init(document.getElementById('turnover1'));
@@ -1722,121 +1500,7 @@
 
 
 			//图4
-			// var chart = null;
-			// 	$.getJSON(`http://sdd.xtype.cn//api/snapshot/index?start=1498727792&end=1530263792&slug=${_this.$route.params.id}`, function (data) {
-			// 		console.log(data.data)
-			// 					var price = [],fullhour = [],shizhi=[],liut=[], aa = [];
-			// 					for(var i in data.data){
-			// 						price.push([Number(data.data[i][0]),data.data[i][1]])
-			// 						fullhour.push([Number(data.data[i][0]),data.data[i][2]])
-			// 						shizhi.push([Number(data.data[i][0]),data.data[i][3]])
-			// 						liut.push([Number(data.data[i][0]),data.data[i][4]])
-			// 					}
-			// 					console.log(price)
-			// 			chart = Highcharts.chart('container', {
-								
-								
-			// 					xAxis: {
-			// 									dateTimeLabelFormats: {
-			// 											millisecond: '%H:%M:%S.%L',
-			// 											second: '%H:%M:%S',
-			// 											minute: '%H:%M',
-			// 											hour: '%H:%M',
-			// 											day: '%m-%d',
-			// 											week: '%m-%d',
-			// 											month: '%y-%m',
-			// 											year: '%Y'
-			// 									}
-			// 							},
-			// 					tooltip: {
-			// 							dateTimeLabelFormats: {
-			// 									millisecond: '%H:%M:%S.%L',
-			// 									second: '%H:%M:%S',
-			// 									minute: '%H:%M',
-			// 									hour: '%H:%M',
-			// 									day: '%Y-%m-%d',
-			// 									week: '%m-%d',
-			// 									month: '%Y-%m',
-			// 									year: '%Y'
-			// 							}
-			// 					},
-			// 				yAxis: [{
-			// 									labels: {
-			// 										 formatter:function (){ 
-			// 						                     return this.value/1000000000 + '十亿' ; 
-			// 						                 },
-
-			// 									},
-			// 									title: {
-			// 										text: '市值'
-			// 									},
-			// 									height: '100%',
-			// 									resize: {
-			// 											enabled: true
-			// 									},
-
-			// 							},
-			// 							 {
-			// 							 		labels: {
-			// 										align:'',
-													 
-			// 									},
-			// 									title: {
-			// 											text: '价格(美元)'
-			// 									},
-
-			// 									height: '100%',
-			// 							        opposite: true,
-			// 							        reserveSpace:false,
-
-
-												 
-			// 							}
-			// 							],
-			// 					plotOptions: {
-			// 									series: {
-			// 										showInLegend: true
-			// 									}
-			// 							},
-			// 							tooltip: {
-			// 									split: false,
-			// 									shared: true
-			// 							},
-			// 							series: [
-			// 							{
-			// 									// type: 'line',
-			// 									id: '000001',
-			// 									name: '价格-USD',
-			// 									data: price,
-			// 									yAxis: 1,
-
-			// 							},
-			// 							{
-			// 									 type: 'column',
-			// 									id: '000002',
-			// 									name: '24小时交易额 - USD',
-			// 									data: fullhour,
-			// 									yAxis: 0,
-			// 							},
-			// 							{
-			// 									// type: 'line',shizhi
-			// 									id: '000002',
-			// 									name: '市值-USD ',
-			// 									data: shizhi,
-			// 									yAxis: 0,
-			// 							},
-
-			// 							{
-			// 									// type: 'line',shizhi
-			// 									id: '000002',
-			// 									name: '流通量',
-			// 									data: liut,
-			// 									yAxis: 1,
-			// 							},
-			// 							]
-			// 			});
-			// 	});
-
+			
 
 				$.getJSON(`http://sdd.xtype.cn//api/snapshot/index?start=1498727792&end=1530263792&slug=${_this.$route.params.id}`, function (data) {
 								if(data.code !== 0) {
@@ -2116,9 +1780,15 @@
 						color: #333;				
 						line-height: 65px;
 						padding-left: 23px;
+
 						>a{
 							color: #4277ff;
 							margin-right: 5px;
+							display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 174px;
+    height: 37px;
 						}
 						>.jiage{
 							margin-right: 24px;
@@ -2182,8 +1852,18 @@
 				>.BomBOMLeft{
 					width: 400px;
 					float: left;
+
 					border-right: 1px solid #e5e5e5;
 					border-bottom: 1px solid #e5e5e5;
+					svg{
+						width: 30px;
+						position: absolute;
+						
+						height: 30px;
+						left: 0;
+						right: 0;
+						margin: auto;
+					}
 					>.Head{
 						display: flex;
 						font-size: 12px;
@@ -2192,14 +1872,15 @@
 						>li{
 							width: 33.33%;
 							height: 52px;
-							padding-left: 20px;
+							padding-left: 10px;
 							line-height: 52px;
+							position: relative;
+
 						}
 					}
 					>.Body{
 						width: 100%;
 						min-height:100px; 
-
 						padding-bottom:20px; 
 						>:nth-child(2n+1){
 							background-color: #f9f9f9;
@@ -2214,10 +1895,12 @@
 							font-size: 12px;
 							line-height: 50px;
 							color: #666;
+							cursor: pointer;
+
 
 							>p{
 								display: inline-block;
-								width: 33.33%;
+								width: 20%;
 								line-height: 10px;
 								padding-left: 20px;
 								margin-top: 10px; 

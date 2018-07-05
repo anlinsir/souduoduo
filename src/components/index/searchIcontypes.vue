@@ -142,10 +142,8 @@
 				this.searchType = index
 				switch (index){
 					case 0:
-						alert('币种')
 						break;
 					case 1:
-						alert('交易平台')
 						break;
 						default:
 						break;
