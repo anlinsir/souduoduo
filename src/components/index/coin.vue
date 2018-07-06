@@ -122,8 +122,7 @@
 						<p style="margin-bottom: 8px;font-size: 12px;">24H资金流入</p>
 						<p style="color: #4277ff;font-weight: bold;margin-bottom: 6px;font-size: 16px;">814,238,7BTC</p>
 							
-						<p style="margin-top: 45px;margin-bottom: 8px;font-size: 12px;">24H资金流出</p>
-						<p style="color:#4277ff;font-weight: bold;font-size: 16px; ">210000000 BTC</p>	
+						
 						</div>
 						<div class="right" style="opacity: 0.5;">
 							<div id="cionin" style="width:200px; height:200px;position: absolute;top: -13px;left: 110px;"></div>
@@ -186,8 +185,8 @@
 							<p style="padding-left: 5px;width: 10%;">
 								<span></span><br>
 								<span data-id='add' @click='chengChoose(id)'  style="cursor: crosshair;">
-									<img v-if='chooseArr.indexOf(id) == -1 '   src="/static/img/startNO.png">
-									<img v-else-if='chooseArr.indexOf(id) != -1' src="/static/img/stratY.png">
+									<img data-id='add' v-if='chooseArr.indexOf(id) == -1 '   src="/static/img/startNO.png">
+									<img data-id='add' v-else-if='chooseArr.indexOf(id) != -1' src="/static/img/stratY.png">
 								</span>
 								<span></span>								
 							</p>
@@ -273,7 +272,7 @@
 				value1:18,
 				turnover:10.3,
 				pay1:40.34,
-				cionin:5.5,
+				cionin:1.23,
 				top:0,
 				cionDetalis:[],
 				marketCap:null,//流通市值
@@ -323,7 +322,7 @@
 				if(e.target.scrollHeight - (e.target.scrollTop + e.target.clientHeight) <=100 && num == 0){
 					num = 1
 					this.loading = 1
-					axios.get(`http://sdd.xtype.cn/api/pair/list?&symbol=${this.$route.query.symbol}&take=15&skip=${Number(sun)*15}`)
+					axios.get(`${href}/api/pair/list?&symbol=${this.$route.query.symbol}&take=15&skip=${Number(sun)*15}`)
 						.then((res)=>{
 							this.loading =0
 							if(res.data.data.list.length == 0){
@@ -369,7 +368,7 @@
 		watch: {
 		   '$route' (to, from) {
 		     console.log(this.$route.path)
-		     axios.get(`http://sdd.xtype.cn/api/pair/list?&symbol=${this.$route.query.symbol}&take=20`)
+		     axios.get(`${href}/api/pair/list?&symbol=${this.$route.query.symbol}&take=20`)
 				.then((res)=>{
 					this.jiaoyiduiList = res.data.data.list
 					this.sum24 = res.data.data.sum_volume24h
@@ -381,7 +380,7 @@
 			var _this = this
 		     console.log(this.$route.params.id)
 
-			axios.get(`http://sdd.xtype.cn/api/currencie/item?&slug=${this.$route.params.id}`)
+			axios.get(`${href}/api/currencie/item?&slug=${this.$route.params.id}`)
 				.then((res)=>{
 					this.cionDetalis = ([res.data.data])									
 					console.log(this.cionDetalis)
@@ -824,7 +823,7 @@
 				var cionin = echarts.init(document.getElementById('cionin'));
 					cionin.setOption({
 					    title:{
-					    	text:this.cionin + '%',
+					    	text:this.cionin + '亿',
 					    	subtext:'净流入',
 					    	subtextStyle:{
 					    		color:'#333333',
@@ -887,7 +886,7 @@
 				});	
 				
 			//图4
-				$.getJSON(`http://sdd.xtype.cn//api/snapshot/index?start=1498727792&end=1530263792&slug=${_this.$route.params.id}`, function (data) {
+				$.getJSON(`${href}//api/snapshot/index?start=1498727792&end=1530263792&slug=${_this.$route.params.id}`, function (data) {
 								if(data.code !== 0) {
 										alert('读取股票数据失败！');
 										return false;
@@ -1050,7 +1049,7 @@
 			document.body.scrollTop = 0
 			this.cny = JSON.parse(localStorage.Rate).CNY.value
 			console.log(this.cny)
-			axios.get(`http://sdd.xtype.cn/api/pair/list?&symbol=${this.$route.query.symbol}&take=15`)
+			axios.get(`${href}/api/pair/list?&symbol=${this.$route.query.symbol}&take=15`)
 				.then((res)=>{
 					this.jiaoyiduiList = res.data.data.list
 					this.sum24 = res.data.data.sum_volume24h
@@ -1060,7 +1059,7 @@
 
 
 			var _this = this
-			axios.get(`http://sdd.xtype.cn/api/currencie/item?&slug=${this.$route.params.id}`)
+			axios.get(`${href}/api/currencie/item?&slug=${this.$route.params.id}`)
 				.then((res)=>{
 					this.cionDetalis.push(res.data.data)									
 					console.log(this.cionDetalis)
@@ -1424,7 +1423,7 @@
 				var cionin = echarts.init(document.getElementById('cionin'));
 					cionin.setOption({
 					    title:{
-					    	text:this.cionin + '%',
+					    	text:this.cionin + '亿',
 					    	subtext:'净流入',
 					    	subtextStyle:{
 					    		color:'#333333',
@@ -1502,7 +1501,7 @@
 			//图4
 			
 
-				$.getJSON(`http://sdd.xtype.cn//api/snapshot/index?start=1498727792&end=1530263792&slug=${_this.$route.params.id}`, function (data) {
+				$.getJSON(`${href}/api/snapshot/index?start=1498727792&end=1530263792&slug=${_this.$route.params.id}`, function (data) {
 								if(data.code !== 0) {
 										alert('读取股票数据失败！');
 										return false;

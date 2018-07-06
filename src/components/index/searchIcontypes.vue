@@ -163,7 +163,7 @@
 				console.log(this.chooseArr)
 			},
 			clickMoreCion(){
-				axios.get(`http://sdd.xtype.cn/api/search/currenciemore?&word=${this.$route.query.searchText}&take=10&skip=${(this.moreSumCion)*10}`)
+				axios.get(`${href}/api/search/currenciemore?&word=${this.$route.query.searchText}&take=10&skip=${(this.moreSumCion)*10}`)
 				.then((res)=>{
 					console.log(res.data.data)
 					if(res.data.data.length == 0){
@@ -177,7 +177,7 @@
 				})
 			},
 			clickMoreexchang(){
-				axios.get(`http://sdd.xtype.cn/api/search/exchangemore?&word=${this.$route.query.searchText}&skip=${(this.moreSumexchang)*10}&take=10`)
+				axios.get(`${href}/api/search/exchangemore?&word=${this.$route.query.searchText}&skip=${(this.moreSumexchang)*10}&take=10`)
 					.then((res)=>{
 						console.log(res.data.data)
 						if(res.data.data.length == 0){
@@ -204,18 +204,18 @@
 
 
 
-			axios.get(`http://sdd.xtype.cn/api/search/currenciemore?&word=${this.$route.query.searchText}&take=10`)
+			axios.get(`${href}/api/search/currenciemore?&word=${this.$route.query.searchText}&take=10`)
 				.then((res)=>{
 					console.log(res.data.data)
 					this.searchList0 = res.data.data
 
 			})
-			axios.get(`http://sdd.xtype.cn/api/search/exchangemore?&word=${this.$route.query.searchText}&take=10`)
+			axios.get(`${href}/api/search/exchangemore?&word=${this.$route.query.searchText}&take=10`)
 				.then((res)=>{
 					this.searchList1 = res.data.data
 			})
 
-			axios.get(`http://sdd.xtype.cn/api/search/index?&word=${this.$route.query.searchText}`)
+			axios.get(`${href}/api/search/index?&word=${this.$route.query.searchText}`)
 				.then((res)=>{					
 					this.CionNum  = res.data.data.currencie_count 
 					this.exNum = res.data.data.exchange_count
@@ -223,13 +223,13 @@
 		},
 		watch: {
 		   '$route' (to, from) {
-		    	axios.get(`http://sdd.xtype.cn/api/search/currenciemore?&word=${this.$route.query.searchText}&take=10`)
+		    	axios.get(`${href}/api/search/currenciemore?&word=${this.$route.query.searchText}&take=10`)
 				.then((res)=>{
 					console.log(res.data.data)
 					this.searchList0 = res.data.data
 				})
 
-				axios.get(`http://sdd.xtype.cn/api/search/exchangemore?&word=${this.$route.query.searchText}&take=10`)
+				axios.get(`${href}/api/search/exchangemore?&word=${this.$route.query.searchText}&take=10`)
 					.then((res)=>{
 						this.searchList1 = res.data.data
 				})

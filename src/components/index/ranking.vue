@@ -543,7 +543,7 @@
 					this.currentPage0 = 1
 					this.jys = false
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h`)
+					axios.get(`${href}/api/currencie/list?&order_by=percent_change_1h`)
 						.then((res)=>{
 							this.rankingRise = res.data.data.list
 							console.log(this.rankingRise)
@@ -558,7 +558,7 @@
 					this.currentPage0 = 1
 					this.jys = false
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&take=30&order_type=desc`)
+					axios.get(`${href}/api/currencie/list?&order_by=volume_24h&take=30&order_type=desc`)
 						.then((res)=>{
 							this.rankingRise = res.data.data.list
 							this.datature = true
@@ -571,7 +571,7 @@
 					this.currentPage0 = 1
 					this.jys = true
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=asc&take=30`)
+					axios.get(`${href}/api/exchange/list?&order_by=volume_24h&order_type=asc&take=30`)
 						.then((res)=>{
 							console.log(res.data.data)
 							this.rankingRise = res.data.data.list
@@ -594,7 +594,7 @@
 							this.currentPage0 = 1
 							this.rank = 'desc'
 							this.datature = false
-							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
+							axios.get(`${href}/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
 								.then((res)=>{
 									this.rankingRise = res.data.data.list
 									console.log(this.rankingRise)
@@ -605,7 +605,7 @@
 							this.headeractives0 = index
 							this.rank = 'asc'
 							this.datature = false
-							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
+							axios.get(`${href}/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
 								.then((res)=>{
 									this.rankingRise = res.data.data.list
 									console.log(this.rankingRise)
@@ -625,7 +625,7 @@
 							this.currentPage0 = 1
 							this.jysType = 'asc'
 							this.datature = false
-							axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=asc`)
+							axios.get(`${href}/api/exchange/list?&order_by=volume_24h&order_type=asc`)
 						.then((res)=>{
 							console.log(res.data.data)
 							this.rankingRise = res.data.data.list
@@ -637,7 +637,7 @@
 						this.currentPage0 = 1
 							this.jysType = 'desc'
 							this.datature = false
-						axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=desc`)
+						axios.get(`${href}/api/exchange/list?&order_by=volume_24h&order_type=desc`)
 						.then((res)=>{
 							console.log(res.data.data)
 							this.rankingRise = res.data.data.list
@@ -657,7 +657,7 @@
 				if(index == 0){
 					this.time = 'percent_change_1h'
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
+					axios.get(`${href}/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
 						.then((res)=>{
 						this.rankingRise = res.data.data.list
 						console.log(this.rankingRise)
@@ -666,7 +666,7 @@
 				}else if(index == 1){
 					this.time = 'percent_change_24h'
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
+					axios.get(`${href}/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
 						.then((res)=>{
 						this.rankingRise = res.data.data.list
 						console.log(this.rankingRise)
@@ -675,7 +675,7 @@
 				}else if(index == 2){
 					this.time = 'percent_change_7d'
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
+					axios.get(`${href}/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&take=30`)
 						.then((res)=>{
 						this.rankingRise = res.data.data.list
 						console.log(this.rankingRise)
@@ -701,7 +701,7 @@
 					if(this.headeractives0 == 0){
 						this.rank = 'asc'
 						this.datature = false
-							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
+							axios.get(`${href}/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
 								.then((res)=>{
 									this.rankingRise = res.data.data.list
 									console.log(this.rankingRise)
@@ -710,7 +710,7 @@
 					}else if(this.headeractives0 == 1){
 						this.rank = 'desc'
 						this.datature = false
-							axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
+							axios.get(`${href}/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
 								.then((res)=>{
 									this.rankingRise = res.data.data.list
 									console.log(this.rankingRise)
@@ -719,14 +719,14 @@
 					}
 				}else if(this.rankavtive == 1){
 					this.datature = false
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&skip=${(Number(pages)-1)*10}`)
+					axios.get(`${href}/api/currencie/list?&order_by=volume_24h&skip=${(Number(pages)-1)*10}`)
 						.then((res)=>{
 							this.rankingRise = res.data.data.list
 							this.datature = true
 						})
 					}else if(this.rankavtive == 2){
 							this.datature = false
-								axios.get(`http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&order_type=${_this.jysType}&skip=${(Number(pages)-1)*10}`)
+								axios.get(`${href}/api/exchange/list?&order_by=volume_24h&order_type=${_this.jysType}&skip=${(Number(pages)-1)*10}`)
 									.then((res)=>{
 										console.log(res.data.data)
 										this.rankingRise = res.data.data.list
@@ -743,7 +743,7 @@
 
 					
 				// else{
-				// 	axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
+				// 	axios.get(`${href}/api/currencie/list?&order_by=${_this.time}&order_type=${_this.rank}&skip=${(Number(pages)-1)*10}`)
 				// 	.then((res)=>{
 				// 		this.rankingRise = res.data.data.list
 				// 		console.log(this.rankingRise)
@@ -768,7 +768,7 @@
 			document.body.scrollTop = 0
 			this.time = 'percent_change_1h'
 			this.rank = 'desc'
-			axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&order_type=${this.rank}&take=30`)
+			axios.get(`${href}/api/currencie/list?&order_by=percent_change_1h&order_type=${this.rank}&take=30`)
 				.then((res)=>{
 					this.rankingRise = res.data.data.list
 					console.log(this.rankingRise)

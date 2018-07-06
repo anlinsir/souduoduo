@@ -142,7 +142,7 @@
 			handleCurrentChange(pages){
 				var _this = this
 				this.currentPage = pages
-				axios.get(`http://sdd.xtype.cn/api/pair/list?&exchange_slug=${_this.$route.params.id}&take=30&skip=${(this.currentPage-1)*30}`)
+				axios.get(`${href}/api/pair/list?&exchange_slug=${_this.$route.params.id}&take=30&skip=${(this.currentPage-1)*30}`)
 					.then((res)=>{
 							console.log(res.data.data)
 
@@ -177,12 +177,12 @@
 			this.ct.push(JSON.parse(localStorage.Rate).USD,JSON.parse(localStorage.Rate).CNY,JSON.parse(localStorage.Rate).JPY,JSON.parse(localStorage.Rate).EUR)
 			console.log(this.ct)
 			var _this =  this
-			axios.get(`http://sdd.xtype.cn/api/exchange/item?&slug=${_this.$route.params.id}`)
+			axios.get(`${href}/api/exchange/item?&slug=${_this.$route.params.id}`)
 					.then((res)=>{
 						this.cionDetali = res.data.data
 
 			})
-			axios.get(`http://sdd.xtype.cn/api/pair/list?&exchange_slug=${_this.$route.params.id}&take=30`)
+			axios.get(`${href}/api/pair/list?&exchange_slug=${_this.$route.params.id}&take=30`)
 				.then((res)=>{
 						console.log(res.data.data)
 
@@ -196,13 +196,13 @@
 		   '$route' (to, from) {
 		     console.log(this.$route.path)
 		     var _this = this 
-		     axios.get(`http://sdd.xtype.cn/api/exchange/item?&slug=${_this.$route.params.id}`)
+		     axios.get(`${href}/api/exchange/item?&slug=${_this.$route.params.id}`)
 					.then((res)=>{
 						this.cionDetali = res.data.data
 
 
 			})
-			axios.get(`http://sdd.xtype.cn/api/pair/list?&exchange_slug=${_this.$route.params.id}`)
+			axios.get(`${href}/api/pair/list?&exchange_slug=${_this.$route.params.id}`)
 				.then((res)=>{
 						console.log(res.data.data)
 

@@ -15,7 +15,7 @@
 						<dl v-for='(item,index) in headerData'>
 							<dt>{{item.symbol}} /  {{item.name}}</dt>
 							<dd>
-								<span>{{'$' + item.price}}</span>
+								<span>{{'￥' + ((item.price)*cny).toFixed(2)}}</span>
 								<!--  <svg class="peity" height="30" width="70" >	
 									 <polyline :points="item.pic" style="fill:none;stroke:#5a8bf9;stroke-width:1" />
 								</svg> -->
@@ -206,7 +206,7 @@
 		 var cc = [];
 		 var pro1 =[]; 
 		 var pro2 = [];
-		$.get('http://sdd.xtype.cn//api/search/allcoinexchange',function(res){
+		$.get(`${href}//api/search/allcoinexchange`,function(res){
 		    
 		    aa = res
 		      bb = JSON.parse( aa )
@@ -309,7 +309,7 @@
 				this.resEx = b
 				console.log(this.resEx)
 
-				// axios.get(`http://sdd.xtype.cn/api/search/index?&word=${this.iconTypeModel}`)
+				// axios.get(`${href}/api/search/index?&word=${this.iconTypeModel}`)
 				// 	.then((res)=>{
 				// 		console.log(res.data.data)
 				// 		this.currenciesTip = res.data.data.currencies
@@ -421,8 +421,13 @@
 			this.cionSymbol = localStorage.moneySymbol  
 
 			this.seacrhAll = JSON.parse(localStorage.seacrhAll)
+			axios.get(`${href}//api/exchange/rate`)
+				.then((res)=>{
+					this.cny= res.data.data.CNY.value
+					console.log(this.cny)
 
-			axios.get('http://sdd.xtype.cn/api/currencie/list?&order_by=rank')
+				})
+			axios.get(`${href}/api/currencie/list?&order_by=rank`)
 				.then((res)=>{
 					this.headerData.push(res.data.data.list[0])
 					this.headerData.push(res.data.data.list[1])

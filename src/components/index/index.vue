@@ -11,7 +11,7 @@
 					<div class="TopChooseRight">
 						<div  @click='ShowmoneyItem'  class="yuan">
 							<span :title='money' style="display: inline-block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{money}}</span>
-					<transition name="custom-classes-transition"
+						<transition name="custom-classes-transition"
 
 					 enter-active-class="animated flipInX"
     					leave-active-class="animated flipOutX">
@@ -36,9 +36,9 @@
 						  <el-pagination :current-page="currentPage" @current-change="handleCurrentChange" style="width: 100px;"
 						    layout="prev, pager, next"
 						    :total="total"
-						    :pager-count="total_page"
+						    
 						     >
-						     <!-- pager-count='3'  -->
+						     <!-- pager-count='3' :pager-count="total_page"  -->
 						  </el-pagination>
 						</div>
 					</div>
@@ -46,7 +46,7 @@
 
 				</div>
 
-<keep-alive include="test-keep-alive">
+				<keep-alive include="test-keep-alive">
 				<div class="indexLeftBomTable">
 					<div class="jiazaizh" v-show='!datatrue'>
 						<svg version="1.1" id="L1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
@@ -80,7 +80,43 @@
 					<table class="dataTable" v-show='datatrue && active == 0 || (active == 1 && logintrue && datatrue)' >
 						<thead>
 							<tr>
-								<td  :class="'th' + (index) " v-for='(item,index) in thead' :key='index'>{{item}}</td>
+								<td >
+								<span style="margin-right: 5px;">#</span>
+								
+							 	</td>
+							 	<td >
+								<span style="margin-right: 5px;">名称</span>
+								
+							 	</td>
+							 	<td >
+								<span style="margin-right: 5px;">流通市值</span>
+								
+							 	</td>
+							 	<td @click='paixun(0)' style="cursor: pointer;">
+								<span style="margin-right: 5px;">价格</span>
+								<span v-if='!pricepaixun' class="auswahl" style="top: 0px;left: 28px;" >▲</span>
+								<span v-if='pricepaixun'  class="auswahl" style="top: 0px;left: 28px;" >▼</span>
+							 	</td>
+				
+							 	<td @click='paixun(1)' >
+								<span style="margin-right: 5px;">流通数量</span>
+								<span  v-if='!liutongshuliangpaixun' class="auswahl" style="top: 0px;    left: 51px;" >▲</span>
+								<span  v-if='liutongshuliangpaixun' class="auswahl" style="top: 0px;    left: 51px;" >▼</span>
+							 	</td>
+							 	<td @click='paixun(2)' style="cursor: pointer;">
+								<span style="margin-right: 5px;">成交额(24h)</span>
+								<span v-if='!volume24h'  class="auswahl" style="top: 0px;    left: 65px;" >▲</span>
+								<span v-if='volume24h' class="auswahl" style="top: 0px;    left: 65px;" >▼</span>
+							 	</td>
+							 	<td @click='paixun(3)' style="cursor: pointer;">
+								<span style="margin-right: 5px;">涨幅(24h)</span>
+								<span v-if='!percent_change24h'  class="auswahl" style="top: 0px;left: 55px;" >▲</span>
+								<span v-if='percent_change24h' class="auswahl" style="top: 0px;left: 55px;" >▼</span>
+							 	</td>
+							 	<td >
+								<span style="margin-right: 5px;">价格趋势(7D)</span>
+								
+							 	</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -95,16 +131,16 @@
 									{{ moneySymbol + (Number(item.price)*moneyrage).toFixed(4)}}
 								</td>
 
-								<td class="td4">{{(Number(item.circulating_supply)/10000).toFixed(2)}}万</td>
+								<td class="td4">{{item.circulating_supply ? (Number(item.circulating_supply)/10000).toFixed(2) : '?'}}万</td>
 								<td class="td5">
-									{{item.volume_24h ?  moneySymbol + ((Number(item.volume_24h)*moneyrage)/10000).toFixed(2) : ''}}万
+									{{item.volume_24h ?  moneySymbol + ((Number(item.volume_24h)*moneyrage)/10000).toFixed(2) : '?'}}万
 									</td>
-								<td class="td6" :style="{color:item.percent_change_24h >=0 ? '#3ba316' : '#e40202'}">{{item.percent_change_24h}}%</td>
+								<td class="td6" :style="{color:item.percent_change_24h >=0 ? '#3ba316' : '#e40202'}">{{item.percent_change_24h ? item.percent_change_24h : '?'}}%</td>
 								<td class="td7">
 									<!-- <svg width='80' height='20' style='margin-top: 20px;'>
 										 <polyline points="0 1 20 15" style="fill:none;stroke:#3f7cdc;stroke-width:1" />
 									</svg> -->
-									<peity :type="'line'" :options=" { width: 50, height: 13, fill: '#fff', strokeWidth: 1, min: 99999, stroke: '#0291d6' }" :data="item.price_7d_line"></peity>
+									<peity :type="'line'" :options=" { width: 80, height: 15, fill: '#fff', strokeWidth: 1, min: 99999, stroke: '#0291d6' }" :data="item.price_7d_line"></peity>
 								</td>
 
 
@@ -131,7 +167,7 @@
 					</div>
 
 				</div>
-</keep-alive>
+				</keep-alive>
 			</div>
 
 
@@ -213,15 +249,15 @@
 						</thead>
 						<tbody>
 							<tr  class="tbr" v-for='(item,index) in rankvolumeList' :key='index'>
-								<td :style="{paddingLeft: item < 4 ?  '20px' : '0' , marginLeft:item < 4 ?  '0' : '-6px'}"><span v-if='index<4' style="width: 20px;
+								<td :style="{paddingLeft: index < 4 ?  '' : '35px' , marginLeft:item < 4 ?  '0' : '0px'}"><span v-if='index<4' style="width: 20px;
 								height: 20px;
 								background-color: #fba73e;
 								color: #fff;
 								text-align: center;
 								line-height:20px; 
 								display: inline-block;
-								">{{index+1}}</span>{{index < 4 ? '' : index }}</td>
-								<td style="color: #4277ff">{{item.symbol}}-{{item.cn_name ? item.cn_name : item.name}}</td>
+								">{{index+1}}</span>{{index < 4 ? '' : index+1 }}</td>
+								<td style="color: #4277ff"><img style="width: 15px;transform: translateY(3px) translateX(-5px);" :src="item.logo">{{item.symbol}}-{{item.cn_name ? item.cn_name : item.name}}</td>
 								<td>{{item.volume_24h?(Number(item.volume_24h)/10000).toFixed(2) + '万' : '??'}}</td>
 								
 
@@ -241,15 +277,15 @@
 						</thead>
 						<tbody>
 							<tr   class="tbr" v-for='(item,index) in rankvolumeListex' :key='index'>
-								<td :style="{paddingLeft: item < 4 ?  '20px' : '0' , marginLeft:item < 4 ?  '0' : '-6px'}"><span v-if='index<4' style="width: 20px;
+								<td :style="{paddingLeft: index < 4 ?  '40px' : '45px' , marginLeft:item < 4 ?  '0' : '-6px'}"><span v-if='index<4' style="width: 20px;
 								height: 20px;
 								background-color: #fba73e;
 								color: #fff;
 								text-align: center;
 								line-height:20px; 
 								display: inline-block;
-								">{{index+1}}</span>{{index < 4 ? '' : index }}</td>
-								<td style="color: #4277ff">{{item.name}}</td>
+								">{{index+1}}</span>{{index < 4 ? '' : index+1 }}</td>
+								<td style="color: #4277ff"><img style="width: 15px;transform: translateY(3px) translateX(-5px);" :src="item.logo">{{item.name}}</td>
 								<td>{{item.volume_24h?(Number(item.volume_24h)/10000).toFixed(2) + '万': '??'}}</td>
 								
 
@@ -279,8 +315,8 @@
 					<ul class="rofDatadetails">
 						<li class="head"><span v-for='(item,index) in rofdetalislist' :key='index'>{{item}}</span></li>
 						<li class="body" v-for='(items,index) in rofList' style="text-align: left;">
-							<span style='width: 20px;height: 20px;transform: translateY(6px);display: inline-block;text-align: center;line-height: 20px;margin-left: 10px;'><span v-if='index < 4' style='width: 20px;height: 20px;background-color: #fba73e;color: #FFF;display: inline-block;text-align: center;line-height: 20px;transform: translateY(0px);'>{{index}}</span>{{index >= 4 ? index : ''}}</span>
-							<span style="width: 70px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{items.symbol}}-{{items.cn_name?items.cn_name:items.name}}</span>
+							<span style='width: 20px;height: 20px;transform: translateY(6px);display: inline-block;text-align: center;line-height: 20px;margin-left: 10px;'><span v-if='index < 4' style='width: 20px;height: 20px;background-color: #fba73e;color: #FFF;display: inline-block;text-align: center;line-height: 20px;transform: translateY(0px);'>{{index+1}}</span>{{index >= 4 ? index+1 : ''}}</span>
+							<span style="width: 70px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;"><img style="width: 15px;transform: translateX(-0px) translateY(3px);margin-right: 4px" :src="items.logo">{{items.symbol}}-{{items.cn_name?items.cn_name:items.name}}</span>
 							<span style="width: 50px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">${{Number(items.price).toFixed(4)}}</span>
 							<span style="width: 30px" :style="{color: parseFloat(items.rises) <= 0 ? 'rgb(59, 163, 22)' : 'rgb(59, 163, 22)' }">{{items.percent_change_1h ? items.percent_change_1h : '??'}}</span>
 
@@ -380,6 +416,7 @@
 <script>
 	import axios from 'axios'
 	import Peity from 'vue-peity'
+	var flag = true
 	export default{
 		data(){
 			return({
@@ -389,7 +426,7 @@
 				active:0,
 				actives:0,
 				rankingActives:0,
-				thead:['#','名称','流通市值','价格','流通数量','成交额(24h)','涨幅(24h)','价格趋势(7D)'],
+			
 				tbody:[
 					{
 						id:1,
@@ -606,12 +643,98 @@
 				roforderBy:'percent_change_1h',
 				rankvolumeList:[],
 				rankvolumeListex:[],
-				datatrue:false
+				datatrue:false,
+				pricepaixun:true,
+				liutongshuliangpaixun:true,
+				volume24h:true,
+				percent_change24h:true
 
 			})
 		}
 		,
 		methods:{
+			paixun(id){
+				if(flag == false) {return}
+					flag = false
+				
+
+				switch (id){
+					case 0:
+					this.datatrue = false
+						this.pricepaixun = !this.pricepaixun
+						if(!this.pricepaixun){
+							this.liutongshuliangpaixu=true
+							this.volume24h=true
+							this.percent_change24h=true
+						}
+						
+
+						
+						axios.get(`${href}/api/currencie/list?&order_by=price&take=50`)
+							.then((res)=>{
+								this.cionList = res.data.data.list
+								this.datatrue = true
+								flag = true
+
+							})
+						break;
+					case 1:
+					this.datatrue = false
+
+						this.liutongshuliangpaixun = !this.liutongshuliangpaixun
+						if(!this.liutongshuliangpaixun){
+							this.pricepaixun=true
+							this.volume24h=true
+							this.percent_change24h=true
+						}
+						this.datatrue = false
+							axios.get(`${href}/api/currencie/list?&order_by=circulating_supply&take=50`)
+							.then((res)=>{
+								this.cionList = res.data.data.list
+								this.datatrue = true
+								flag = true
+
+							})
+						break;
+					case 2:
+					this.datatrue = false
+
+						this.volume24h = !this.volume24h
+						if(!this.volume24h){
+							this.pricepaixun=true
+							this.liutongshuliangpaixun=true
+							this.percent_change24h=true
+						}
+						axios.get(`${href}/api/currencie/list?&order_by=volume_24h&take=50`)
+							.then((res)=>{
+								this.cionList = res.data.data.list
+								this.datatrue = true
+								flag = true
+
+							})
+						break;
+					case 3:
+					this.datatrue = false
+
+						this.percent_change24h = !this.percent_change24h
+						if(!this.volume24h){
+							this.pricepaixun=true
+							this.liutongshuliangpaixun=true
+							this.volume24h=true
+						
+						}
+						axios.get(`${href}/api/currencie/list?&order_by=percent_change_24h&take=50`)
+							.then((res)=>{
+								this.cionList = res.data.data.list
+								this.datatrue = true
+								flag = true
+
+							})
+
+								break;
+				}
+
+			},
 			toLogin(){
 				this.$router.push('/login')
 			},
@@ -622,10 +745,11 @@
 			handleCurrentChange(val){
 				this.currentPage =val
 				this.datatrue = false
-					document.documentElement.scrollTop = 0
-
+				document.documentElement.scrollTop = 0
 				document.body.scrollTop = 0
-				axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${(Number(val)-1)*50}&take=50`)
+				var ode = this.pricepaixun == false ? 'price': this.liutongshuliangpaixun == false ? 'circulating_supply' : this.volume24h == false ? 'volume_24h'  : this.percent_change24h ==false?  'percent_change_24h': ''			
+				
+				axios.get(`${href}/api/currencie/list?&skip=${(Number(val)-1)*50}&take=50&order_by=${ode}`)
 				.then((res)=>{
 					this.cionList = res.data.data.list
 					this.datatrue = true
@@ -673,7 +797,7 @@
 					case 1 :
 					if(this.logintrue){
 						this.datatrue = false
-						axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}&take=50`)
+						axios.get(`${href}/api/currencie/list?&skip=${0}&take=50`)
 							.then((res)=>{
 								var aa = []
 								aa.push(res.data.data.list[0])
@@ -696,7 +820,7 @@
 				this.rankingActives = index
 				console.log(this.rankingActives)
 				if(this.rankingActives == 0){
-					axios.get('http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&take=7&order_type=desc')
+					axios.get(`${href}/api/currencie/list?&order_by=volume_24h&take=7&order_type=desc`)
 			 			.then((res)=>{
 			 				console.table(res.data.data.list)
 			 				this.rankvolumeList = res.data.data.list
@@ -704,7 +828,7 @@
 			 		})
 
 				}else if(this.rankingActives == 1){
-					axios.get('http://sdd.xtype.cn/api/exchange/list?&order_by=volume_24h&take=7&order_type=desc')
+					axios.get(`${href}/api/exchange/list?&order_by=volume_24h&take=7&order_type=desc`)
 						.then((res)=>{
 			 				this.rankvolumeListex = res.data.data.list
 
@@ -716,14 +840,14 @@
 
 				if(this.rofActive == 0){
 					this.roforderType = 'desc'
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
+					axios.get(`${href}/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
 			 			.then((res)=>{
 			 				console.log(res.data.data)
 			 				this.rofList = res.data.data.list
 			 		})
 				}else if(this.rofActive == 1){
 					this.roforderType = 'asc'
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
+					axios.get(`${href}/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
 			 			.then((res)=>{
 			 				console.log(res.data.data)
 			 				this.rofList = res.data.data.list
@@ -736,14 +860,14 @@
 
 				if(this.rofActives == 0){
 					this.roforderBy = 'percent_change_1h'
-						axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
+						axios.get(`${href}/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
 				 			.then((res)=>{
 				 				console.log(res.data.data)
 				 				this.rofList = res.data.data.list
 				 		})
 				}else if(this.rofActives == 1){
 					this.roforderBy = 'percent_change_24h'
-						axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
+						axios.get(`${href}/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
 			 			.then((res)=>{
 			 				console.log(res.data.data)
 			 				this.rofList = res.data.data.list
@@ -752,7 +876,7 @@
 				}else if(this.rofActives == 2){
 					this.roforderBy = 'percent_change_7d'
 
-					axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
+					axios.get(`${href}/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=${this.roforderType}&order_by=${this.roforderBy}`)//侧边栏涨跌幅
 			 			.then((res)=>{
 			 				console.log(res.data.data)
 			 				this.rofList = res.data.data.list
@@ -791,7 +915,7 @@
 			document.body.scrollTop = 0
 			if(localStorage.token && localStorage.login){
 				this.logintrue = true
-				axios.get(`http://sdd.xtype.cn//api/user/info?&_api_token=${localStorage.token}`)
+				axios.get(`${href}//api/user/info?&_api_token=${localStorage.token}`)
 					.then((res)=>{
 						console.log(res.data.data)
 						localStorage.userInfoIToken = JSON.stringify(res.data.data)
@@ -806,7 +930,7 @@
 			 window.onscroll = ()=>{
 			 	if((document.documentElement.scrollTop >= 270 || document.body.scrollTop>=270) && cishu1 == 0){
 			 		console.log('ftughy')
-			 		axios.get('http://sdd.xtype.cn/api/currencie/list?&order_by=volume_24h&take=7&order_type=desc')
+			 		axios.get(`${href}/api/currencie/list?&order_by=volume_24h&take=7&order_type=desc`)
 			 			.then((res)=>{
 			 				console.table(res.data.data.list)
 			 				this.rankvolumeList = res.data.data.list
@@ -815,7 +939,7 @@
 			 		cishu1 = 1
 			 	}
 			 	if((document.documentElement.scrollTop >=650   ||	document.body.scrollTop>=650) && cishu == 0){
-			 		axios.get(`http://sdd.xtype.cn/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=asc&order_type=desc`)//侧边栏涨跌幅
+			 		axios.get(`${href}/api/currencie/list?&order_by=percent_change_1h&take=7&order_type=asc&order_type=desc`)//侧边栏涨跌幅
 			 			.then((res)=>{
 			 				this.rofList = res.data.data.list
 			 			})
@@ -826,7 +950,7 @@
 
 
 			if(!localStorage.Rate){
-			         axios.get('http://sdd.xtype.cn/api/exchange/rate')
+			         axios.get(`${href}/api/exchange/rate`)
 			              .then((res)=>{
 			                localStorage.Rate = JSON.stringify(res.data.data)
 			                this.moneyList.push(JSON.parse(localStorage.Rate).CNY)
@@ -855,7 +979,7 @@
 			
 		
 			
-			axios.get(`http://sdd.xtype.cn/api/currencie/list?&skip=${0}&take=50&order_by=rank&order_type=asc`)
+			axios.get(`${href}/api/currencie/list?&skip=${0}&take=50&order_by=rank&order_type=asc`)
 				.then((res)=>{
 					this.cionList = res.data.data.list
 					localStorage.cionList1 = JSON.stringify(res.data.data.list)
@@ -1164,8 +1288,13 @@
 								height: 50px;
 								font-size: 12px;
 								color: #666666;
-
 								text-align: left;
+								position: relative;
+								>.auswahl{
+									position: absolute;
+									font-size: 12px;
+
+								}
 							}
 							>.th0{
 								width: 40px;
@@ -1484,11 +1613,11 @@
 							>td{
 								width: 33%;
 								height: 20px;
-								text-align: center;
 								line-height: 20px;
 								transform: translateX(-15px);
 								font-size: 12px;
 								color: #666;
+								padding-left: 26px;
 								white-space: nowrap;
 								text-overflow: ellipsis;
 								overflow: hidden;

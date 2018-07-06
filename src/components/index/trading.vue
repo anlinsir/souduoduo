@@ -50,9 +50,9 @@
 						<p class="itempaim">排名No.{{ii.rank}}</p>
 
 						<p class="xx">
-							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;" v-if="JSON.stringify(ii.types).indexOf('0') != -1">现货</span>
-							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;" v-if="JSON.stringify(ii.types).indexOf('1') != -1">期货</span>
-							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;" v-if="JSON.stringify(ii.types).indexOf('2') != -1">法币</span>
+							<span style="background-color: #5094f1;background-image:url('/static/img/scales.png'); background-position: 6px 6px;line-height: 29px;" v-if="JSON.stringify(ii.types).indexOf('1') != -1">现货</span>
+							<span style="background-color: #7a85e9;background-image:url('/static/img/stock_up.png'); background-position: 6px 6px;line-height: 29px;" v-if="JSON.stringify(ii.types).indexOf('2') != -1">期货</span>
+							<span style="background-color: #f19f5f;background-image:url('/static/img/money.png'); background-position: 5px 8px;line-height: 29px;" v-if="JSON.stringify(ii.types).indexOf('3') != -1">法币</span>
 
 						</p>
 
@@ -198,6 +198,10 @@
 
 			},
 			searchTrading(serach){
+				if(!this.serach){
+					alert('请输入关键字')
+					return
+				}
 				var aa ;
 				aa = this.tadingList
 				this.tadingList =  this.tem.filter((ii,id)=>{
