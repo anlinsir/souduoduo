@@ -29,22 +29,35 @@
 				switch (index){
 					case 0:
 						this.$router.push('/index/faq/about')
-						console.log('5')
+						document.documentElement.scrollTop =0
+			document.body.scrollTop =0
 						break;
 					case 1:
 						
 					this.$router.push('/index/faq/call')
+					document.documentElement.scrollTop =0
+			document.body.scrollTop =0
 						console.log('5')
 						break;
 					case 2:
 					this.$router.push('/index/faq/faq')
+					document.documentElement.scrollTop =0
+			document.body.scrollTop =0
 						console.log('5')
 						break;
 				}
 			}
 		},
+		watch:{
+			'$route'(){
+				document.documentElement.scrollTop =0
+				document.body.scrollTop =0
+			}
+		},
 		mounted(){
 			document.documentElement.scrollTop =0
+			document.body.scrollTop =0
+
 		}
 	}
 </script>

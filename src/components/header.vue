@@ -199,44 +199,8 @@
 			                logo:cc[i][4],
 
 			            }*/ 
-	 if(!localStorage.seacrhAll){
-	 	var aa ;
-		 var pro = [];
-		 var bb;
-		 var cc = [];
-		 var pro1 =[]; 
-		 var pro2 = [];
-		$.get(`${href}//api/search/allcoinexchange`,function(res){
-		    
-		    aa = res
-		      bb = JSON.parse( aa )
-		      console.log(bb)
-		      
-		        for(var i in bb){
-
-		           cc.push(bb[i].split('|'))
-		        }
-		        for(var i in cc){
-			            	pro[i] = {
-			                id:cc[i][0],
-			                sym:cc[i][1],
-			                low:cc[i][2],
-			                big:cc[i][3],
-			                cn:cc[i][4],
-			                logo:cc[i][5],
-
-			            }
-		           
-
-		        }
-		      
-
-		   	
-		        localStorage.seacrhAll = JSON.stringify(pro)
-		       
-
-		})
-	 }
+	
+	 
 
 	export default{
 		data(){
@@ -417,10 +381,101 @@
 		},
 	
 		mounted(){
+			if(!localStorage.ccccc){
+				localStorage.ccccc = 0
+			}
+			if(localStorage.ccccc == 0){
+				localStorage.clear()
+				localStorage.ccccc = 1 
+
+			}
+
+			if(localStorage.time <= new Date().getTime() - 7200000 ){
+				var aa ;
+				 var pro = [];
+				 var bb;
+				 var cc = [];
+				 var pro1 =[]; 
+				 var pro2 = [];
+
+				$.get(`${href}//api/search/allcoinexchange`,function(res){
+				 	localStorage.time =  new Date().getTime()  
+				    aa = res
+				      bb = JSON.parse( aa )
+				      console.log(bb)
+				      
+				        for(var i in bb){
+
+				           cc.push(bb[i].split('|'))
+				        }
+				        for(var i in cc){
+					            	pro[i] = {
+					                id:cc[i][0],
+					                sym:cc[i][1],
+					                low:cc[i][2],
+					                big:cc[i][3],
+					                cn:cc[i][4],
+					                logo:cc[i][5],
+
+					            }
+				           
+
+				        }
+				      
+
+				   	
+				        localStorage.seacrhAll = JSON.stringify(pro)
+				        this.seacrhAll = JSON.parse(localStorage.seacrhAll)
+				       
+
+				})
+			}
+
+			if(!localStorage.seacrhAll){
+				 	var aa ;
+					 var pro = [];
+					 var bb;
+					 var cc = [];
+					 var pro1 =[]; 
+					 var pro2 = [];
+
+					$.get(`${href}//api/search/allcoinexchange`,(res)=>{
+					 	localStorage.time =  new Date().getTime()  
+					    aa = res
+					      bb = JSON.parse( aa )
+					      
+					        for(var i in bb){
+
+					           cc.push(bb[i].split('|'))
+					        }
+					        for(var i in cc){
+						            	pro[i] = {
+						                id:cc[i][0],
+						                sym:cc[i][1],
+						                low:cc[i][2],
+						                big:cc[i][3],
+						                cn:cc[i][4],
+						                logo:cc[i][5],
+
+						            }
+					           
+
+					        }
+					      
+
+					   	
+					        localStorage.seacrhAll = JSON.stringify(pro)
+					        this.seacrhAll = JSON.parse(localStorage.seacrhAll)
+					        console.log(this.seacrhAll)
+					       
+
+					})
+				 }
 			this.cionRage = localStorage.moneyrage
 			this.cionSymbol = localStorage.moneySymbol  
-
 			this.seacrhAll = JSON.parse(localStorage.seacrhAll)
+			console.log(this.seacrhAll)
+			
 			axios.get(`${href}//api/exchange/rate`)
 				.then((res)=>{
 					this.cny= res.data.data.CNY.value

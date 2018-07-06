@@ -88,7 +88,7 @@
 					<tr v-for="(ii,id) in jyd" style="min-height: 70px;">
 						<td >{{((Number(currentPage)-1)*30) + (id)+1}}</td>
 						<td >
-							<img style="vertical-align: text-top;width: 15px;display: inline-block;transform: translateY(-23px);" :src="ii.currencie.logo">
+							<img style="vertical-align: text-top;width: 15px;display: inline-block;transform: translateY(-23px);" :src="ii.logo">
 							<span  style="width: 80%;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;display: inline-block;color: #4277ff;" >{{ii.currencie.name +'-' + ii.currencie.cn_name}}</span>
 						</td>
 						<td style="color: #4277ff;"> <a :href="ii.url" :style="{color: ii.url ? '#4277ff' : '#000'}">{{ii.symbol}}/{{ii.to_symbol}}</a></td>
@@ -179,6 +179,8 @@
 			var _this =  this
 			axios.get(`${href}/api/exchange/item?&slug=${_this.$route.params.id}`)
 					.then((res)=>{
+						console.log(res.data.data)
+
 						this.cionDetali = res.data.data
 
 			})

@@ -65,7 +65,9 @@
 				
 				switch (id){
 					case 0:
-					this.$router.push('/index/faq/about')						
+
+					this.$router.push('/index/faq/about')	
+										
 						break;
 					case 1:
 						this.$router.push('/index/faq/call')
